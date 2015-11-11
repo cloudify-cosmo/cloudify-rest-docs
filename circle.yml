@@ -1,0 +1,21 @@
+machine:
+  hosts:
+    api.getcloudify.org: 127.0.0.1
+  ruby:
+    version:
+      2.2.1
+
+## Customize dependencies
+dependencies:
+  override:
+    - bundle install:
+        timeout: 3600
+    - rake build:
+        timeout: 3600
+
+## Customize deployment commands
+deployment:
+  production:
+    branch: master
+    commands:
+      - bundle exec s3_website push

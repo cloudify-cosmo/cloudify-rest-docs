@@ -30,9 +30,13 @@ The base URI for the v2 REST API is: `/api/v2`.
 
 ## Filter Response Fields
 
+> Request Example
+
 ```shell
 curl -XGET http://localhost/api/v2/blueprints?_include=id,created_at
 ```
+
+> Response Example
 
 ```json
 {
@@ -54,10 +58,6 @@ curl -XGET http://localhost/api/v2/blueprints?_include=id,created_at
 
 In order to include only certain fields in a response the `_include` query parameter can be used for specifying the fields to include in the response. The `_include` query parameter accepts a comma separated list of fields to include in the response. Specified field names should be a part of the queried resource structure otherwise an error is raised.
 
-Example:
-
-`GET /api/v2/blueprints?_include=id,created_at`
-
 <aside class="notice">
   The "_include" query parameter can be used with all endpoints.
 </aside>
@@ -68,3 +68,5 @@ Example:
 ## Pagination
 
 ## Sorting
+
+## Authentication

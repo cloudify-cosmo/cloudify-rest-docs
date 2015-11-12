@@ -463,6 +463,10 @@ html, body {
     @extend %code-font;
   }
 
+  code.prettyprint {
+    color: #cf115b;
+  }
+
   pre>code {
     background-color: transparent;
     padding: 0;

@@ -42,7 +42,7 @@ $search-notice-bg: #c97a7e;
 
 // TEXT COLORS
 ////////////////////
-$main-text: #333; // main content text color
+$main-text: #000; // main content text color
 $nav-text: #fff;
 $nav-active-text: #000;
 $lang-select-text: #fff; // color of unselected language tab text
@@ -68,7 +68,7 @@ $phone-width: $tablet-width - $nav-width; // min width before reverting to mobil
 // FONTS
 ////////////////////
 %default-font {
-  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 13px;
 }
 

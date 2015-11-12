@@ -31,12 +31,12 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-id | string | A unique identifier for the blueprint.
-description | string | The blueprint's description.
-main_file_name | string | The blueprint's main file name.
-plan | dict | The parsed result of the blueprint.
-created_at | datetime | The time the blueprint was uploaded to the manager.
-updated_at | datetime | The last time the blueprint was updated.
+`id` | string | A unique identifier for the blueprint.
+`description` | string | The blueprint's description.
+`main_file_name` | string | The blueprint's main file name.
+`plan` | dict | The parsed result of the blueprint.
+`created_at` | datetime | The time the blueprint was uploaded to the manager.
+`updated_at` | datetime | The last time the blueprint was updated.
 
 
 ## Upload Blueprint
@@ -53,8 +53,8 @@ It is possible to upload a blueprint from a URL by specifying the URL in the `bl
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-application_file_name | string | The main blueprint file name in the blueprint's archive.
-blueprint_archive_url | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
+`application_file_name` | string | The main blueprint file name in the blueprint's archive.
+`blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
 
 ### Response
 A `Blueprint` resource.
@@ -68,7 +68,7 @@ Lists all blueprints.
 
 Field | Type | Description
 --------- | ------- | -------
-items | list | A list of `Blueprint` resources.
+`items` | list | A list of `Blueprint` resources.
 
 
 ## Get Blueprint

@@ -18,4 +18,4 @@ deployment:
   production:
     branch: master
     commands:
-      - bundle exec s3_website push
+      - deploy.sh

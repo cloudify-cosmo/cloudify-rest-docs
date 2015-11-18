@@ -2,7 +2,31 @@
 
 ## The Deployment Resource
 
-> Deployment JSON Structure
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | A unique identifier for the deployment.
+`blueprint_id` | string | The id of the blueprint the deployment is based on.
+`created_at` | datetime | The time the blueprint was uploaded to the manager.
+`updated_at` | datetime | The last time the blueprint was updated.
+`workflows` | list | A list of workflows that can be executed on a deployment.
+`inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
+`policy_types` | object | A dictionary containing policies of a deployment.
+`policy_triggers` | object | A dictionary containing policy triggers of a deployment.
+`groups` | object | A dictionary containing the groups definition of deployment.
+`outputs` | object | A dictionary containing an outputs definition of a deployment.
+
+
+## Get Deployment
+
+> Request Example
+
+```shell
+$ curl -XGET http://localhost/api/v2/deployments/hello1
+```
+
+> Response Example
 
 ```json
 {
@@ -124,20 +148,17 @@
 }
 ```
 
-### Attributes:
 
-Attribute | Type | Description
---------- | ------- | -------
-id | string | A unique identifier for the deployment.
-blueprint_id | string | The id of the blueprint the deployment is based on.
-created_at | datetime | The time the blueprint was uploaded to the manager.
-updated_at | datetime | The last time the blueprint was updated.
-workflows | list | A list of workflows that can be executed on a deployment.
-inputs | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
-policy_types | object | A dictionary containing policies of a deployment.
-policy_triggers | A dictionary containing policy triggers of a deployment.
-groups | object | A dictionary containing the groups definition of deployment.
-outputs | object | A dictionary containing an outputs definition of a deployment.
+`GET /api/v2/deployments/{deployment-id}`
+
+Gets a deployment.
+
+### URI Parameters
+* deployment-id: The id of the deployment.
+
+### Response
+A `Deployment` resource.
+
 
 
 ## List Deployments
@@ -149,7 +170,7 @@ Lists all deployments.
 
 Field | Type | Description
 --------- | ------- | -------
-items | list | A list of `Deployment` resources.
+`items` | list | A list of `Deployment` resources.
 
 
 
@@ -164,19 +185,7 @@ Creates a new deployment.
 ### Request Body
 Property | Default | Description
 --------- | ------- | -----------
-blueprint_id | string | The id of the blueprint the new deployment will be based on (required).
-
-### Response
-A `Deployment` resource.
-
-
-## Get Deployment
-`GET /api/v2/deployments/{deployment-id}`
-
-Gets a deployment.
-
-### URI Parameters
-* deployment-id: The id of the deployment.
+`blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 
 ### Response
 A `Deployment` resource.
@@ -195,7 +204,7 @@ An error is raised if the deployment has any live node instances. In order to ig
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-ignore_live_nodes | boolean | Specifies whether to ignore the live nodes validation.
+`ignore_live_nodes` | boolean | Specifies whether to ignore the live nodes validation.
 
 
 

@@ -2,7 +2,27 @@
 
 ## The Blueprint Resource
 
-> Blueprint JSON Structure
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | A unique identifier for the blueprint.
+`description` | string | The blueprint's description.
+`main_file_name` | string | The blueprint's main file name.
+`plan` | dict | The parsed result of the blueprint.
+`created_at` | datetime | The time the blueprint was uploaded to the manager.
+`updated_at` | datetime | The last time the blueprint was updated.
+
+
+## Get Blueprint
+
+> Request Example
+
+```shell
+$ curl -XGET http://localhost/api/v2/blueprints/hello-world
+```
+
+> Response Example
 
 ```json
 {
@@ -27,16 +47,15 @@
 }
 ```
 
-### Attributes:
+`GET /api/v2/blueprints/{blueprint-id}`
 
-Attribute | Type | Description
---------- | ------- | -------
-`id` | string | A unique identifier for the blueprint.
-`description` | string | The blueprint's description.
-`main_file_name` | string | The blueprint's main file name.
-`plan` | dict | The parsed result of the blueprint.
-`created_at` | datetime | The time the blueprint was uploaded to the manager.
-`updated_at` | datetime | The last time the blueprint was updated.
+Gets a specific blueprint.
+
+### URI Parameters
+* blueprint-id: The id of the blueprint to retrieve.
+
+### Response
+A `Blueprint` resource.
 
 
 ## Upload Blueprint
@@ -70,18 +89,6 @@ Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `Blueprint` resources.
 
-
-## Get Blueprint
-`GET /api/v2/blueprints/{blueprint-id}`
-
-Gets a specific blueprint.
-
-
-### URI Parameters
-* blueprint-id: The id of the blueprint to retrieve.
-
-### Response
-A `Blueprint` resource.
 
 ## Delete Blueprint
 `DELETE /api/v2/blueprints/{blueprint-id}`

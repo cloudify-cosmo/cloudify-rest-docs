@@ -33,7 +33,7 @@ The base URI for the v2 REST API is: `/api/v2`.
 > Request Example
 
 ```shell
-curl -XGET http://localhost/api/v2/blueprints?_include=id,created_at
+$ curl -XGET http://localhost/api/v2/blueprints?_include=id,created_at
 ```
 
 > Response Example

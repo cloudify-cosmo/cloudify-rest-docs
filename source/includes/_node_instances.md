@@ -2,7 +2,28 @@
 
 ## The NodeInstance Resource
 
-> NodeInstance JSON Structure
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | The id of the node instance.
+`deployment_id` | string | The id of the deployment the node instance belongs to.
+`host_id` | string | The Compute node instance id the node is contained within.
+`runtime_properties` | object | The runtime properties of the node instance.
+`relationships` | list | The relationships the node has with other nodes.
+`state` | string | The node instance state.
+`version` | integer | A version attribute used for optimistic locking when updating the node instance.
+
+
+## Get Node Instance
+
+> Request Example
+
+```shell
+$ curl -XGET http://localhost/api/v2/node_instances/vm_150f1
+```
+
+> Response Example
 
 ```json
 {
@@ -23,17 +44,16 @@
 }
 ```
 
-### Attributes:
+`GET /api/v2/node_instances/{node-instance-id}`
 
-Attribute | Type | Description
---------- | ------- | -------
-id | string | The id of the node instance.
-deployment_id | string | The id of the deployment the node instance belongs to.
-host_id | string | The Compute node instance id the node is contained within.
-runtime_properties | object | The runtime properties of the node instance.
-relationships | list | The relationships the node has with other nodes.
-state | string | The node instance state.
-version | integer | A version attribute used for optimistic locking when updating the node instance.
+Gets a node instance.
+
+### URI Parameters
+* node-instance-id: The id of the node instance.
+
+### Response
+A `NodeInstance` resource.
+
 
 ## List Node Instances
 `GET /api/v2/node_instances`
@@ -44,19 +64,7 @@ Lists all node instances.
 
 Field | Type | Description
 --------- | ------- | -------
-items | list | A list of `NodeInstance` resources.
-
-
-## Get Node Instance
-`GET /api/v2/node_instances/{node-instance-id}`
-
-Gets a node instance.
-
-### URI Parameters
-* node-instance-id: The id of the node instance.
-
-### Response
-A `NodeInstance` resource.
+`items` | list | A list of `NodeInstance` resources.
 
 
 ## Update Node Instance
@@ -71,9 +79,9 @@ Updates a node instance.
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-runtime_properties | object | A dictionary containing the updated runtime properties of the node instance.
-state | string | The new state of the node instance.
-version | integer | The node instance current version (used for optimistic locking).
+`runtime_properties` | object | A dictionary containing the updated runtime properties of the node instance.
+`state` | string | The new state of the node instance.
+`version` | integer | The node instance current version (used for optimistic locking).
 
 * The version property should be set to the current value of the node instance. The version is auto incremented by Cloudify on every update.
 

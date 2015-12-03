@@ -10,6 +10,7 @@ The documentation is available at [api.getcloudify.org](http://api.getcloudify.o
 
 * Clone this repository.
 * Make sure you have `ruby` in your path with `bundler` installed (gem install bundler).
+* Install ruby-dev
 * Run `bundler install` for installing the necessary dependencies.
 
 # Running A Local Server

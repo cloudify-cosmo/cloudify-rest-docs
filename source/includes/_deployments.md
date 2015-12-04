@@ -8,8 +8,8 @@ Attribute | Type | Description
 --------- | ------- | -------
 `id` | string | A unique identifier for the deployment.
 `blueprint_id` | string | The id of the blueprint the deployment is based on.
-`created_at` | datetime | The time the blueprint was uploaded to the manager.
-`updated_at` | datetime | The last time the blueprint was updated.
+`created_at` | datetime | The time when the deployment was created.
+`updated_at` | datetime | The time the deployment was last updated at.
 `workflows` | list | A list of workflows that can be executed on a deployment.
 `inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `policy_types` | object | A dictionary containing policies of a deployment.

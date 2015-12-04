@@ -13,6 +13,13 @@ dependencies:
     - rake build:
         timeout: 3600
 
+test:
+  override:
+    - cd build; python -m SimpleHTTPServer 8080:
+        background: true
+    - sleep 5
+    - curl http://localhost:8080/
+
 ## Customize deployment commands
 deployment:
   production:

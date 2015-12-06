@@ -25,5 +25,5 @@ deployment:
   production:
     branch: master
     commands:
-      - pip install boto
+      - sudo pip install boto
       - python deploy.py

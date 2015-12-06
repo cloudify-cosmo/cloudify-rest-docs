@@ -41,8 +41,8 @@ def set_docs_public():
 
 
 if __name__ == '__main__':
-    build_docs()
-    create_api_dir()
-    push_docs_to_s3()
+    # build_docs()
+    # create_api_dir()
+    # push_docs_to_s3()
     set_docs_public()
     print('-- Done!')

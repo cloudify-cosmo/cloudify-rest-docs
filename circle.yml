@@ -25,4 +25,5 @@ deployment:
   production:
     branch: master
     commands:
-      - ./deploy.sh
+      - pip install boto
+      - python deploy.py

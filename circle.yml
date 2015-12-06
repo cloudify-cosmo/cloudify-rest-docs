@@ -28,4 +28,4 @@ deployment:
       - mv build api; mkdir build; mv api build
       - bundle exec s3_website push --verbose
       - sudo pip install boto
-      - python deploy.py
+      - python make_public.py

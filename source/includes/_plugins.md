@@ -1,6 +1,6 @@
-# Managed-Plugins
+# Plugins
 
-## The Managed-Plugin Resource
+## The Plugin Resource
 
 ### Attributes:
 
@@ -21,7 +21,7 @@ Attribute | Type | Description
 `uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
 
 
-## Get Managed-Plugin
+## Get Plugin
 
 > Request Example
 
@@ -52,33 +52,33 @@ $ curl -XGET http://localhost/api/v2/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de9636
 }
 ```
 
-`GET /api/v2/plugin/{managed-plugin-id}`
+`GET /api/v2/plugins/{plugin-id}`
 
-Gets a managed-plugin.
+Gets a plugin.
 
 ### URI Parameters
-* managed-plugin-id: The id of the managed-plugin.
+* plugin-id: The id of the plugin.
 
 ### Response
 A `Plugin` resource.
 
 
-## Delete Managed-Plugin
-`DELETE /api/v2/plugin/{managed-plugin-id}`
+## Delete Plugin
+`DELETE /api/v2/plugins/{plugin-id}`
 
-Deletes a managed-plugin from the Cloudify-Manager.
+Deletes a plugin from the Cloudify-Manager.
 
 ### URI Parameters
-* managed-plugin-id: The id of the managed-plugin.
+* plugin-id: The id of the plugin.
 
 ### Response
 The deleted `Plugin` resource.
 
 
-## List Managed-Plugins
+## List Plugins
 `GET /api/v2/plugins`
 
-Lists all managed-plugins.
+Lists all plugins.
 
 ### Response
 Field | Type | Description
@@ -87,10 +87,10 @@ Field | Type | Description
 `metadata` | dict | Metadata relevant to the list response.
 
 
-## Upload Managed-Plugin
+## Upload Plugin
 `POST /api/v2/plugins`
 
-Upload a managed-plugins
+Upload a plugins
 
 ### Request Body
 Property | Type | Description
@@ -102,13 +102,13 @@ Property | Type | Description
 The new uploaded `Plugin` resource.
 
 
-## Download Managed-Plugin
-`GET /api/v2/plugins/{managed-plugin-id}/archive`
+## Download Plugin
+`GET /api/v2/plugins/{plugin-id}/archive`
 
-Downloads a managed-plugin.
+Downloads a plugin.
 
 ### URI Parameters
-* managed-plugin-id: The id of the managed-plugin.
+* plugin-id: The id of the plugin.
 
 ### Response
 The requested plugin archive.

@@ -87,13 +87,13 @@ Filters also accept multiple values (OR) by using multiple parameters of the sam
 
 ## Sorting
 
-> Request Example (sort deployments by `id` descending)
+> Request Example #1 (sort deployments by `id` descending)
 
 ```shell
 $ curl -XGET http://localhost/api/v2/deployments?_sort=-id&_include=blueprint_id,id
 ```
 
-> Response Example
+> Response Example #1
 
 ```json
 {
@@ -171,21 +171,22 @@ $ curl -XGET http://localhost/api/v2/deployments?_sort=blueprint_id&_sort=-id&_i
 }
 ```
 
-You can sort resources by using the `_sort` query parameter, e.g. `_sort=id`
+Sort resources by using the `_sort` query parameter, e.g. `_sort=id`
 
-The default sort order is ascending; to make it descending, prefix the field with a minus sign, e.g. `_sort=-id`
+The default sort order is ascending; to make it descending, prefix the field with a minus sign, e.g. `_sort=-id`  (example #1)
 
-Sorting also works on multiple fields by using multiple `_sort` parameters, where the sort sequence corresponds to the order of `_sort` parameters in the request.
+Sorting also works on multiple fields by using multiple `_sort` parameters, where the sort sequence corresponds to the
+order of `_sort` parameters in the request (example #2).
 
 ## Pagination
 
-> Request example (skip `1` resource, get `size` of `4`)
+> Request Example (skip `1` resource, get `size` of `4`)
 
 ```shell
 $ curl -XGET http://localhost/api/v2/events?_size=4&_offset=1&_include=@timestamp
 ```
 
-> Request response
+> Response Example
 
 ```json
 {
@@ -213,13 +214,90 @@ $ curl -XGET http://localhost/api/v2/events?_size=4&_offset=1&_include=@timestam
 }
 ```
 
-You can receive a subset of your query by using two parameters:
+If the response includes too many items for the client to handle at once, use pagination to get only a subset of the
+results, defined by two parameters:
 
-* `_size` (default: 10000) the max size of the result subset you'd receive.
+* `_size` (default: 10000) the max size of the result subset to receive.
 * `_offset` (default: 0) the number of resources to skip, i.e. `_offset=1` means you skip the first resource.
 
 \* both parameters are optional.
 
-The response metadata returns your requested parameters, and a `total` field which indicates the size of the full set.
+The response metadata returns the requested parameters, and a `total` field which indicates the size of the full set.
 
 ## Authentication
+
+Authentication headers should be added to each request sent to a secured manager.<br>
+Any header can be used, as long as it's support by the manager's authentication provider which will eventually process it.<br>
+The default manager configuration support basic HTTP authentication (example2 #1, #2) and tokens (example #2).<br>
+Valid credentials do not affect the returned response, but invalid credentials return a "401: User Unauthorized" error
+(example #3).
+
+> Request Example #1 (Get the server’s status, authenticate with username and password)
+
+```shell
+$ curl -u 'MY_USERNAME':'MY_PASSWORD' <manager-ip-address>:<port>/api/v2/status
+```
+
+> Response Example #1
+
+```json
+{
+   "status":"running",
+   "services":[
+      {
+         "display_name":"Celery Management",
+         "instances":[
+            {
+               "Id": "cloudify-mgmtworker.service",
+               "Description":"Cloudify Management Worker Service",
+               "LoadState":"loaded",
+               "state":"running"
+            },
+         ]
+      },
+      ...
+   ]
+}
+```
+
+> Request Example #2 (Get a token, authenticate with username and password)
+
+```shell
+$  curl -u 'MY_USERNAME':'MY_PASSWORD' <manager-ip-address>:<port>/api/v2/tokens
+```
+
+> Response Example #2
+
+```json
+{
+   "value":"eyJhbGciOiJIUzI1NiIsImV4cCI6MTQ1MDAzMjI0MiwiaWF0IjoxNDUwMDMxNjQyfQ.eyJ1c2VybmFtZSI6ImF"
+}
+```
+> Request Example #3 (Get all the blueprints, authenticate with a token)
+
+```shell
+$ curl -H 'Authentication-Token:MY_TOKEN' <manager-ip-address>:<port>/api/v2/blueprints
+```
+
+> Response Example #3
+
+```json
+{
+   "items":[
+      {
+         "main_file_name":"openstack-blueprint.yaml",
+         "description":"This Blueprint installs a nodecellar application on an openstack environment",
+         "created_at":"2015-12-13 19:00:03.160167",
+         "updated_at":"2015-12-13 19:00:03.160167",
+         "plan":{
+            "relationships":{
+               "cloudify.openstack.server_connected_to_port":{
+                                 "name":"cloudify.openstack.server_connected_to_port",
+               ...
+               }
+            }
+         }
+      }
+   ]
+}
+```

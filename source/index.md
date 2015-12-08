@@ -16,6 +16,7 @@ includes:
   - executions
   - events
   - plugins
+  - tokens
   - snapshots
   - manager
   - deployment_modification

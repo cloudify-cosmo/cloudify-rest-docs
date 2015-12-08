@@ -183,7 +183,7 @@ Creates a new deployment.
 * deployment-id: The id of the new deployment.
 
 ### Request Body
-Property | Default | Description
+Property | Type | Description
 --------- | ------- | -----------
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 

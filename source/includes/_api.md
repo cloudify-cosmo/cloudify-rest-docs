@@ -226,11 +226,10 @@ The response metadata returns the requested parameters, and a `total` field whic
 
 ## Authentication
 
-Authentication headers should be added to each request sent to a secured manager.<br>
-Any header can be used, as long as it's support by the manager's authentication provider which will eventually process it.<br>
-The default manager configuration support basic HTTP authentication (example2 #1, #2) and tokens (example #2).<br>
-Valid credentials do not affect the returned response, but invalid credentials return a "401: User Unauthorized" error
-(example #3).
+Authentication headers should be added to every request sent to a secured manager.<br>
+Any header can be used, as long as it's support by one of the manager's authentication providers.
+The default manager configuration supports basic HTTP authentication (examples #1, #2) and tokens (example #3).<br>
+Valid credentials do not affect the returned response, but invalid credentials return a "User Unauthorized" error.
 
 > Request Example #1 (Get the server’s status, authenticate with username and password)
 

@@ -20,7 +20,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/node_instances/vm_150f1
+$ curl -XGET http://localhost/api/v2/node-instances/vm_150f1
 ```
 
 > Response Example
@@ -44,7 +44,7 @@ $ curl -XGET http://localhost/api/v2/node_instances/vm_150f1
 }
 ```
 
-`GET /api/v2/node_instances/{node-instance-id}`
+`GET /api/v2/node-instances/{node-instance-id}`
 
 Gets a node instance.
 
@@ -56,7 +56,7 @@ A `NodeInstance` resource.
 
 
 ## List Node Instances
-`GET /api/v2/node_instances`
+`GET /api/v2/node-instances`
 
 Lists all node instances.
 
@@ -68,7 +68,7 @@ Field | Type | Description
 
 
 ## Update Node Instance
-`PATCH /api/v2/node_instances/{node-instance-id}`
+`PATCH /api/v2/node-instances/{node-instance-id}`
 
 Updates a node instance.
 

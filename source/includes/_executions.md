@@ -76,6 +76,9 @@ Property | Type | Description
 --------- | ------- | -----------
 `workflow_id` | string | The workflow id/name to execute.
 `deployment_id` | string | The id of the deployment the workflow should be executed on.
+`allow_custom_parameters` | boolean | Specifies whether to allow custom parameters, which are not present in the parameters schema of the workflow, to be passed when starting the execution (default=false).
+`parameters` | object | A dictionary containing parameters to be passed to the execution when starting it.
+`force` | boolean | Specifies whether to force the workflow execution in a case where there is already a running execution in the context of the same deployment or system wide workflow (default=false).
 
 ### Response
 An `Execution` resource.

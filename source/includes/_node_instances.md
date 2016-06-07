@@ -2,6 +2,21 @@
 
 ## The NodeInstance Resource
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 ### Attributes:
 
 Attribute | Type | Description
@@ -20,7 +35,38 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/node-instances/vm_150f1
+$ curl -X GET "http://<manager-ip>/api/v2.1/node-instances/vm_150f1"
+```
+
+```python
+# Python Client-
+print client.node_instances.get(node_instance_id='vm_150f1')
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/node-instances/vm_150f1"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/node-instances/vm_150f1",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.nodeInstances.get('vm_150f1', null);
+</script>
 ```
 
 > Response Example
@@ -44,19 +90,126 @@ $ curl -XGET http://localhost/api/v2/node-instances/vm_150f1
 }
 ```
 
-`GET /api/v2/node-instances/{node-instance-id}`
+`GET "{manager-ip}/api/v2.1/node-instances/{node-instance-id}"`
 
 Gets a node instance.
 
 ### URI Parameters
-* node-instance-id: The id of the node instance.
+* `node-instance-id`: The id of the node instance.
 
 ### Response
 A `NodeInstance` resource.
 
 
 ## List Node Instances
-`GET /api/v2/node-instances`
+
+> Request Example
+
+```shell
+$ curl -X GET "http://<manager-ip>/api/v2.1/node-instances"
+```
+
+```python
+# Python Client-
+instances = client.node_instances.list()
+for instance in instances:
+    print instance
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/node-instances"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/node-instances",
+  "method": "GET",
+  "headers": {"content-type": "application/json"},
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.nodeInstances.list('<deployment-id>', null);
+</script>
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "relationships": [
+        {
+          "target_name": "nodejs_host",
+          "target_id": "nodejs_host_7f66d",
+          "type": "cloudify.relationships.contained_in"
+        }
+      ],
+      "version": null,
+      "runtime_properties": {},
+      "state": "uninitialized",
+      "node_id": "nodejs",
+      "host_id": "nodejs_host_7f66d",
+      "deployment_id": "d1",
+      "scaling_groups": [],
+      "id": "nodejs_d5a3e"
+    },
+    {
+      "relationships": [
+        {
+          "target_name": "nodejs_host",
+          "target_id": "nodejs_host_83396",
+          "type": "cloudify.relationships.contained_in"
+        }
+      ],
+      "version": null,
+      "runtime_properties": {},
+      "state": "uninitialized",
+      "node_id": "nodejs",
+      "host_id": "nodejs_host_83396",
+      "deployment_id": "d1",
+      "scaling_groups": [],
+      "id": "nodejs_836e3"
+    },
+    {
+      "relationships": [
+        {
+          "target_name": "mongod_host",
+          "target_id": "mongod_host_fa1d1",
+          "type": "cloudify.relationships.contained_in"
+        }
+      ],
+      "version": null,
+      "runtime_properties": {},
+      "state": "uninitialized",
+      "node_id": "mongod",
+      "host_id": "mongod_host_fa1d1",
+      "deployment_id": "d1",
+      "scaling_groups": [],
+      "id": "mongod_9961b"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 28,
+      "offset": 0,
+      "size": 10000
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v2.1/node-instances"`
 
 Lists all node instances.
 
@@ -68,12 +221,79 @@ Field | Type | Description
 
 
 ## Update Node Instance
-`PATCH /api/v2/node-instances/{node-instance-id}`
+
+> Requests Example
+
+```shell
+$ curl -X PATCH -H "Content-Type: application/json" -d 'version=0&state=starting&
+runtime_properties={key: value}' "http://<manager-ip>/api/v2.1/node-instances?id=nodejs_host_7f66d"
+```
+
+```python
+# Python Client-
+client.node_instances.update(node_instance_id='nodejs_host_7f66d', state='starting',
+                             runtime_properties={'key': 'value'}, version=0)
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/node-instances"
+querystring = {"id":"<node-instance-id>"}
+headers = {'content-type': "application/json"}
+response = requests.request("PATCH", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/node-instances?id=nodejs_host_7f66d",
+  "method": "PATCH",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    var newState = 'starting';
+    var newProperties = {
+        'key': 'value'
+    };
+    client.nodeInstances.update('<node-instance-id>', newState, newProperties, 0)
+</script>
+```
+
+> Response Example
+
+```json
+{
+    "relationships": [
+      {
+      "target_name": "nodecellar_security_group",
+      "type": "cloudify.openstack.server_connected_to_security_group",
+      "target_id": "nodecellar_security_group_deb08"
+      }
+    ],
+    "runtime_properties": {"key": "value"},
+    "state": "starting",
+    "version": 3,
+    "host_id": "nodejs_host_7f66d",
+    "deployment_id": "d1",
+    "scaling_groups": [],
+    "id": "nodejs_host_7f66d",
+    "node_id": "nodejs_host"
+}
+```
+
+`PATCH "{manager-ip}/api/v2.1/node-instances?id={node-instance-id}"`
 
 Updates a node instance.
 
 ### URI Parameters
-* node-instance-id: The id of the node instance.
+* `node-instance-id`: The id of the node instance.
 
 
 ### Request Body

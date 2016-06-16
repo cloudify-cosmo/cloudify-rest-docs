@@ -2,6 +2,21 @@
 
 ## The Event Resource
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 ### Attributes:
 
 Attribute | Type | Description
@@ -48,7 +63,40 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/events
+$ curl -X GET "http://<manager-ip>/api/v2.1/events"
+```
+
+```python
+# Python Client-
+events = client.events.list()
+for event in events:
+    print event
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/events"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/events",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.events.get( { execution_id : <execution-id> } );
+</script>
 ```
 
 > Response Example
@@ -127,11 +175,11 @@ $ curl -XGET http://localhost/api/v2/events
 }
 ```
 
-`GET /api/v2/events`
+`GET "{manager-ip}/api/v2.1/events"`
 
 Lists all events.
 
-`GET /api/v2/events?_range=@timestamp,[time_start],[time_end]`
+`GET "{manager-ip}/api/v2.1/events?_range=@timestamp,[time_start],[time_end]"`
 
 Lists all events within a time range:
 
@@ -140,11 +188,11 @@ Parameter | Type | Description
 `time_start` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | optional value to begin range with.
 `time_end` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | optional value to end range with.
 
-time range: `/api/v2/events?_range=@timestamp,2015-12-01,2015-12-31T14:30:00Z`
+time range: `/api/v2.1/events?_range=@timestamp,2015-12-01,2015-12-31T14:30:00Z`
 
-all events since: `/api/v2/events?_range=@timestamp,2015-12-01,`
+all events since: `/api/v2.1/events?_range=@timestamp,2015-12-01,`
 
-all events until: `/api/v2/events?_range=@timestamp,,2015-12-31`
+all events until: `/api/v2.1/events?_range=@timestamp,,2015-12-31`
 
 <aside class="notice">
 Always include the commas, even when the values are omitted

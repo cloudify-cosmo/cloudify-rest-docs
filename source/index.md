@@ -5,7 +5,10 @@ toc_footers:
   - <a href='http://docs.getcloudify.org'>Cloudify Documentation</a>
 
 language_tabs:
-  - shell
+  - shell: cURL
+  - python: Python
+  - javascript: JQuery AJAX
+  - html: JavaScript Client
 
 includes:
   - api

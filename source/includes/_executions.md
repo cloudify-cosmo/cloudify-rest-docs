@@ -2,6 +2,21 @@
 
 ## The Execution Resource
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 ### Attributes:
 
 Attribute | Type | Description
@@ -22,7 +37,44 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d
+$ curl -X GET "<manager-ip>/api/v2.1/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d?
+deployment_id=hello1&_include=id,status,created_at"
+```
+
+```python
+# Python Client-
+print client.executions.get(execution_id='2b422fb2-38b4-4b02-95ac-e9b91390599d',
+                            _include=['id','created_at','status'])
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d"
+querystring = {"deployment_id":"hello1","_include":"id,status,create_at"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d?
+         deployment_id=hello1&_include=id%2Cstatus%2Ccreated_at",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.executions.get('execution-id', null, function(err, response, body) {
+                    var execution = body;
+    });
+</script>
 ```
 
 > Response Example
@@ -42,12 +94,12 @@ $ curl -XGET http://localhost/api/v2/executions/2b422fb2-38b4-4b02-95ac-e9b91390
 ```
 
 
-`GET /api/v2/executions/{execution-id}`
+`GET "{manager-ip}/api/v2.1/executions/{execution-id}?deployment_id={deployment_id}"`
 
 Gets an execution.
 
 ### URI Parameters
-* execution-id: The id of the execution.
+* `execution-id`: The id of the execution.
 
 ### Response
 An `Execution` resource.
@@ -55,7 +107,53 @@ An `Execution` resource.
 
 
 ## List Executions
-`GET /api/v2/executions`
+
+> Request Example
+
+```shell
+$ curl -X GET "<manager-ip>/api/v2.1/executions?deployment_id=<deployment-id>&_include=id,status,
+workflow_id,created_at"
+```
+
+```python
+# Python Client-
+executions = client.executions.list(deployment_id='<deployment-id>',_include=['id','status',
+                                    'workflow_id','created_at'])
+for execution in executions:
+  print execution
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/executions"
+querystring = {"deployment_id":"<deployments-id>","_include":"id,created_at,workflow_id,status"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/executions?deployment_id=<deployment-id>&
+         _include=id%2Ccreated_at%2Cworkflow_id",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.executions.list({_include: 'id'}, function(err, response, body){
+                var executions = body.items;
+    });
+</script>
+```
+
+`GET "{manager-ip}/api/v2.1/executions?deployment_id={deployment-id}"`
 
 Lists all executions.
 
@@ -67,7 +165,53 @@ Field | Type | Description
 
 
 ## Start Execution
-`POST /api/v2/executions`
+
+> Request Example
+
+```shell
+$ curl -X POST -H "Content-Type: application/json" -d '{"deployment_id":"sample-dep",
+"workflow_id":"install"}' "<manager-ip>/api/v2.1/executions"
+```
+
+```python
+# Python Client-
+client.executions.start(deployment_id='<deployment-id>', workflow_id='install')
+
+#Python Requests-
+url = "http://<manager-ip>/api/v2.1/executions"
+payload = "{\"deployment_id\":\"<deployment-id>\",\"workflow_id\":\"install\"}"
+headers = {'content-type': "application/json"}
+response = requests.request("POST", url, data=payload, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/executions",
+  "method": "POST",
+  "headers": {"content-type": "application/json"},
+  "data": "{\"deployment_id\":\"<deployment-id>\",\"workflow_id\":\"install\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.deployments.get('<deployment-id>', null, function (err, response, body) {
+                var deployment = body;
+                var workflow = _.find(deployment.workflows, {'name': 'install'});
+
+                client.executions.start('<deployment-id>', workflow.name, workflow.parameters, false, false);
+    });
+</script>
+```
+
+`POST -d '{"deployment_id":{deployments-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v2.1/executions"`
 
 Starts an execution.
 
@@ -85,7 +229,48 @@ An `Execution` resource.
 
 
 ## Cancel Execution
-`POST /api/v2/executions/{execution-id}`
+
+> Request Example
+
+```shell
+$ curl -X POST -H "Content-Type: application/json" -d '{"deployment_id":"<deployment-id>",
+"action":"cancel"}' "<manager-ip>/api/v2.1/executions/<execution-id>"
+```
+
+```python
+# Python Client-
+client.executions.cancel(execution_id='<execution-id>')
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/executions/<execution-id>"
+payload = "{\"deployment_id\":\"<deployment-id>\",\"action\":\"cancel\"}"
+headers = {'content-type': "application/json"}
+response = requests.request("POST", url, data=payload, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/executions/<execution-id>",
+  "method": "POST",
+  "headers": {"content-type": "application/json"},
+  "data": "{\"deployment_id\":\"<deployment-id>\",\"action\":\"cancel\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.executions.cancel(execution.id, true);
+</script>
+```
+
+`POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v2.1/executions/{execution-id}"`
 
 Cancels an execution.
 
@@ -93,7 +278,7 @@ If passing `cancel` as the action fails to cancel the execution, `force-cancel` 
 
 
 ### URI Parameters
-* execution-id: The id of the execution.
+* `execution-id`: The id of the execution.
 
 ### Request Body
 Property | Type | Description
@@ -105,12 +290,12 @@ An `Execution` resource.
 
 
 ## Update Execution
-`PATCH /api/v2/executions/{execution-id}`
+`PATCH "{manager-ip}/api/v2.1/executions/{execution-id}"`
 
 Updates an execution.
 
 ### URI Parameters
-* execution-id: The id of the execution.
+* `execution-id`: The id of the execution.
 
 ### Request Body
 Property | Type | Description

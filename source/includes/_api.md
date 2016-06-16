@@ -1,18 +1,72 @@
-# Cloudify REST API V2
+# Cloudify REST API V2.1
+
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 Welcome to Cloudify's REST API Documentation!
 
-The base URI for the v2 REST API is: `/api/v2`.
+The base URI for the v2.1 REST API is: `/api/v2.1`.
 
 <aside class="notice">
 This section describes various API features that apply to all resources
 </aside>
+
+### Variable ###
+* `<manager-ip>`: replace with your manager ip
 
 ## Response Fields Filtering (Projection)
 
 > Request Example (receive only the `id` and `created_at` fields)
 
 ```shell
-$ curl -XGET http://localhost/api/v2/blueprints?_include=id,created_at
+$ curl -X GET "<manager-ip>/api/v2.1/blueprints?_include=id,created_at"
+```
+
+```python
+# Python Client-
+blueprints = client.blueprints.list(_include=['id','created_at'])
+for blueprint in blueprints:
+  print blueprint
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/blueprints"
+querystring = {"_include":"id,created_at"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/blueprints",
+  "method": "GET",
+  "data": {_include='id,created_at'},
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.blueprints.delete('<blueprint-id>');
+</script>
 ```
 
 > Response Example
@@ -35,6 +89,7 @@ $ curl -XGET http://localhost/api/v2/blueprints?_include=id,created_at
 }
 ```
 
+
 You can choose to have only specific fields in the response by using the  `_include` query parameter.
 
 The parameter value is a comma separated list of fields to include in the response, e.g. `_include=field1,field2,field3`
@@ -48,7 +103,41 @@ Note that specified field names must be part of the resource schema, otherwise a
 > Request Example (requesting only blueprints which `id` is _my_blueprint1_ or _my_blueprint2_)
 
 ```shell
-$ curl -XGET http://localhost/api/v2/blueprints?id=my_blueprint1&id=my_blueprint2&_include=id,created_at
+$ curl -X GET "<manager-ip>/api/v2.1/blueprints?id=my_blueprint1&id=my_blueprint2&_include=id,created_at"
+```
+
+```python
+# Python Client-
+blueprints = client.blueprints.list(_include=['id','created_at'],id=['my_blueprint1','my_blueprint2'])
+for blueprint in blueprints:
+    print blueprint
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/blueprints"
+querystring = {"_include":"id,created_at","id":{"my_blueprint1","my_blueprint2"}}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/blueprints?id=my_blueprint1&id=my_blueprint2&_include=id%2Ccreated_at",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.blueprints.get(['my_blueprint1','my_blueprint2'],['id','created_at']);
+</script>
 ```
 
 > Response Example
@@ -75,6 +164,7 @@ $ curl -XGET http://localhost/api/v2/blueprints?id=my_blueprint1&id=my_blueprint
 }
 ```
 
+
 You can make your query more specific by using filters.
 
 Filters are query parameters where the key is a field name and the value is a field value, e.g. `id=my-specific-id`
@@ -90,7 +180,29 @@ Filters also accept multiple values (OR) by using multiple parameters of the sam
 > Request Example #1 (sort deployments by `id` descending)
 
 ```shell
-$ curl -XGET http://localhost/api/v2/deployments?_sort=-id&_include=blueprint_id,id
+$ curl -X GET "<manager-ip>/api/v2.1/deployments?_sort=-id&_include=blueprint_id,id"
+```
+
+```python
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/deployments"
+querystring = {"_sort":"-id","_include":"blueprint_id,id"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/deployments?_sort=-id&_include=blueprint_id%2Cid",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
 ```
 
 > Response Example #1
@@ -132,7 +244,29 @@ $ curl -XGET http://localhost/api/v2/deployments?_sort=-id&_include=blueprint_id
 > Request Example #2 (sort deployments by `blueprint_id` ascending and `id` descending)
 
 ```shell
-$ curl -XGET http://localhost/api/v2/deployments?_sort=blueprint_id&_sort=-id&_include=blueprint_id,id
+$ curl -X GET "http://<manager-ip>/api/v2.1/deployments?_sort=blueprint_id&_sort=-id&_include=blueprint_id,id"
+```
+
+```python
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/deployments"
+querystring = {"_sort":"blueprint_id,-id","_include":"blueprint_id,id"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/deployments?_sort=blueprint_id&_sort=-id&_include=blueprint_id%2Cid",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
 ```
 
 > Response Example #2
@@ -183,7 +317,29 @@ order of `_sort` parameters in the request (example #2).
 > Request Example (skip `1` resource, get `size` of `4`)
 
 ```shell
-$ curl -XGET http://localhost/api/v2/events?_size=4&_offset=1&_include=@timestamp
+$ curl -X GET "http://<manager-ip>/api/v2.1/events?_size=4&_offset=1&_include=@timestamp"
+```
+
+```python
+# Python Requests
+url = "http://<manager-ip>/api/v2.1/events"
+querystring = {"_size":"4","_offset":"1","_include":"@timestamp"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/events?_size=4&_offset=1&_include=%40timestamp",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
 ```
 
 > Response Example
@@ -234,7 +390,38 @@ Valid credentials do not affect the returned response, but invalid credentials r
 > Request Example #1 (Get the server’s status, authenticate with username and password)
 
 ```shell
-$ curl -u 'MY_USERNAME':'MY_PASSWORD' <manager-ip-address>:<port>/api/v2/status
+$ curl -X GET "<manager-ip>/api/v2.1/status"
+```
+
+```python
+# Python Client-
+client.manager.get_status()
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/status"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/status",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.manager.get_status();
+</script>
 ```
 
 > Response Example #1
@@ -262,7 +449,7 @@ $ curl -u 'MY_USERNAME':'MY_PASSWORD' <manager-ip-address>:<port>/api/v2/status
 > Request Example #2 (Get a token, authenticate with username and password)
 
 ```shell
-$  curl -u 'MY_USERNAME':'MY_PASSWORD' <manager-ip-address>:<port>/api/v2/tokens
+$ curl -u 'MY_USERNAME':'MY_PASSWORD' "<manager-ip>/api/v2.1/token"
 ```
 
 > Response Example #2
@@ -275,7 +462,7 @@ $  curl -u 'MY_USERNAME':'MY_PASSWORD' <manager-ip-address>:<port>/api/v2/tokens
 > Request Example #3 (Get all the blueprints, authenticate with a token)
 
 ```shell
-$ curl -H 'Authentication-Token:MY_TOKEN' <manager-ip-address>:<port>/api/v2/blueprints
+$ curl -H 'Authentication-Token:MY_TOKEN' "<manager-ip>/api/v2.1/blueprints"
 ```
 
 > Response Example #3

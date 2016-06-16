@@ -2,6 +2,21 @@
 
 ## The Snapshot Resource
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 ### Attributes:
 
 
@@ -13,14 +28,46 @@ Attribute | Type | Description
 `error` | string | Message of an error if snapshot creation failed.
 
 ## List Snapshots
-`GET /api/v2/snapshots`
-
-Lists all snapshots.
 
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/snapshots
+$ curl -X GET "http://<manager-ip>/api/v2.1/snapshots"
+```
+
+```python
+# Python Client-
+snapshots = client.snapshots.list()
+for snapshot in snapshots:
+    print snapshot
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/snapshots"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/snapshots",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.snapshots.list(function(err, response, body){
+              var snapshots = body.items;
+  });
+</script>
 ```
 
 > Response Example
@@ -51,6 +98,11 @@ $ curl -XGET http://localhost/api/v2/snapshots
 }
 ```
 
+`GET "{manager-ip}/api/v2.1/snapshots"`
+
+Lists all snapshots.
+
+
 ### Response
 
 Attribute | Type | Description
@@ -59,12 +111,50 @@ Attribute | Type | Description
 
 
 ## Create Snapshot
-`PUT /api/v2/snapshots/{snapshot-id}`
+
+> Requests Example
+
+```shell
+$ curl -X PUT "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+```
+
+```python
+# Python Client-
+client.snapshots.create(snapshot_id='<snapshot-id>')
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+headers = {'content-type': "application/json"}
+response = requests.request("PUT", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>",
+  "method": "PUT",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.snapshots.create('<snapshot-id>');
+</script>
+```
+
+`PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
 
 Creates a new snapshot.
 
 ### URI Parameters
-* snapshot-id: The id of the new snapshot.
+* `snapshot-id`: The id of the new snapshot.
 
 ### Request Body
 Property | Type | Description
@@ -77,23 +167,61 @@ An [Execution](#the-execution-resource) resource representing the create snapsho
 
 
 ## Delete Snapshot
-`DELETE /api/v2/snapshots/{snapshot-id}`
+
+> Requests Example
+
+```shell
+$ curl -X DELETE "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+```
+
+```python
+# Python Client-
+client.snapshots.delete(snapshot_id='<snapshot-id>')
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+headers = {'content-type': "application/json"}
+response = requests.request("DELETE", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>",
+  "method": "DELETE",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.snapshots.delete('<snapshot-id>');
+</script>
+```
+
+`DELETE "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
 
 Deletes an existing snapshot.
 
 ### URI Parameters
-* snapshot-id: The id of the snapshot to be deleted.
+* `snapshot-id`: The id of the snapshot to be deleted.
 
 ### Response
 An empty [Snapshot](#the-snapshot-resource) resource, with one non-empty field (its id).
 
 ## Restore Snapshot
-`POST /api/v2/snapshots/{snapshot-id}/restore`
+`POST "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/restore"`
 
 Restores the specified snapshot on the manager.
 
 ### URI Parameters
-* snapshot-id: The id of the snapshot to be restored.
+* `snapshot-id`: The id of the snapshot to be restored.
 
 ### Request Body
 Property | Default | Description
@@ -106,25 +234,25 @@ An [Execution](#the-execution-resource) resource representing the restore snapsh
 
 
 ## Download Snapshot
-`GET /api/v2/snapshots/{snapshot-id}/archive`
+`GET "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/archive"`
 
 Downloads an existing snapshot.
 
 ### URI Parameters
-* snapshot-id: The id of the snapshot to be downloaded.
+* `snapshot-id`: The id of the snapshot to be downloaded.
 
 ### Response
 A streamed response (content type `application/octet-stream`), which is a zip archive containing the snapshot data.
 
 ## Upload Snapshot
-`PUT /api/v2/snapshots/{snapshot-id}/archive`
+`PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/archive"`
 
 Uploads a snapshot to the Cloudify Manager.
 The call expects a `application/octet-stream` content type where the content is a zip archive.
 It is possible to upload a snapshot from a URL by specifying the URL in the `snapshot_archive_url` request body property.
 
 ### URI Parameters
-* snapshot-id: The id of the snapshot to be uploaded.
+* `snapshot-id`: The id of the snapshot to be uploaded.
 
 ### Request Body
 Property | Type | Description

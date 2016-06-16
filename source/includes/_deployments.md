@@ -2,6 +2,21 @@
 
 ## The Deployment Resource
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 ### Attributes:
 
 Attribute | Type | Description
@@ -23,7 +38,39 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/deployments/hello1
+$ curl -X GET "<manager-ip>/api/v2.1/deployments?id=hello1"
+```
+
+```python
+# Python Client-
+print client.deployments.get(deployment_id='hello1')
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/deployments"
+querystring = {"id":"hello1"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/deployments?id=hello1",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.deployments.get('hello1');
+</script>
 ```
 
 > Response Example
@@ -38,31 +85,14 @@ $ curl -XGET http://localhost/api/v2/deployments/hello1
   },
   "policy_triggers": {
     "cloudify.policies.triggers.execute_workflow": {
-      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/master/resources/rest-service/cloudify/triggers/execute_workflow.clj",
+      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/
+                master/resources/rest-service/cloudify/triggers/execute_workflow.clj",
       "parameters": {
         "workflow_parameters": {
           "default": {},
           "description": "Workflow paramters"
-        },
-        "force": {
-          "default": false,
-          "description": "Should the workflow be executed even when another execution\nfor the same workflow is currently in progress\n"
-        },
-        "workflow": {
-          "description": "Workflow name to execute"
-        },
-        "socket_timeout": {
-          "default": 1000,
-          "description": "Socket timeout when making request to manager REST in ms"
-        },
-        "allow_custom_parameters": {
-          "default": false,
-          "description": "Should parameters not defined in the workflow parameters\nschema be accepted\n"
-        },
-        "conn_timeout": {
-          "default": 1000,
-          "description": "Connection timeout when making request to manager REST in ms"
         }
+        ...
       }
     }
   },
@@ -70,37 +100,14 @@ $ curl -XGET http://localhost/api/v2/deployments/hello1
   "blueprint_id": "hello-world",
   "policy_types": {
     "cloudify.policies.types.threshold": {
-      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/master/resources/rest-service/cloudify/policies/threshold.clj",
+      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/
+                master/resources/rest-service/cloudify/policies/threshold.clj",
       "properties": {
         "is_node_started_before_workflow": {
           "default": true,
           "description": "Before triggering workflow, check if the node state is started"
-        },
-        "upper_bound": {
-          "default": true,
-          "description": "boolean value for describing the semantics of the threshold.\nif 'true': metrics whose value is bigger than the threshold will cause the triggers to be processed.\nif 'false': metrics with values lower than the threshold will do so.\n"
-        },
-        "service": {
-          "default": [
-            "service"
-          ],
-          "description": "Service names whose events should be taken into consideration"
-        },
-        "stability_time": {
-          "default": 0,
-          "description": "How long a threshold must be breached before the triggers will be processed"
-        },
-        "policy_operates_on_group": {
-          "default": false,
-          "description": "If the policy should maintain its state for the whole group\nor each node instance individually.\n"
-        },
-        "threshold": {
-          "description": "The metric threshold value"
-        },
-        "interval_between_workflows": {
-          "default": 300,
-          "description": "Trigger workflow only if the last workflow was triggered earlier than interval-between-workflows seconds ago.\nif < 0  workflows can run concurrently.\n"
         }
+        ...
       }
     }
   },
@@ -118,23 +125,8 @@ $ curl -XGET http://localhost/api/v2/deployments/hello1
       "parameters": {
         "operation_kwargs": {
           "default": {}
-        },
-        "node_ids": {
-          "default": []
-        },
-        "node_instance_ids": {
-          "default": []
-        },
-        "run_by_dependency_order": {
-          "default": false
-        },
-        "operation": {},
-        "allow_kwargs_override": {
-          "default": null
-        },
-        "type_names": {
-          "default": []
         }
+        ...
       }
     },
     {
@@ -149,12 +141,12 @@ $ curl -XGET http://localhost/api/v2/deployments/hello1
 ```
 
 
-`GET /api/v2/deployments/{deployment-id}`
+`GET "{manager-ip}/api/v2.1/deployments?id={deployment-id}"`
 
 Gets a deployment.
 
 ### URI Parameters
-* deployment-id: The id of the deployment.
+* `deployment-id`: The id of the deployment.
 
 ### Response
 A `Deployment` resource.
@@ -162,7 +154,50 @@ A `Deployment` resource.
 
 
 ## List Deployments
-`GET /api/v2/deployments`
+
+> Request Example
+
+```shell
+$ curl -X GET "<manager-ip>/api/v2.1/deployments?blueprint_id=<blueprint-id>&_include=id,created_at"
+```
+
+```python
+# Python Client-
+deployments = client.deployments.list(blueprint_id='<blueprint-id>',_include=['id','created_at'])
+for deployment in deployments:
+  print deployment
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/deployments"
+querystring = {"blueprint_id":"<blueprint-id>","_include":"id,created_at"}
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/deployments?blueprint_id=<blueprint-id>&_include=id%2Ccreated_at",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.deployments.list(null, function(err, response, body){
+                var deployments = body.items;
+    });
+</script>
+```
+
+`GET "{manager-ip}/api/v2.1/deployments"`
 
 Lists all deployments.
 
@@ -175,31 +210,115 @@ Field | Type | Description
 
 
 ## Create Deployment
-`PUT /api/v2/deployments/{deployment-id}`
+
+> Request Example
+
+```shell
+$ curl -X PUT -H "Content-Type: application/json" -d '{"inputs":{"image":"<image-id>","flavor":"<flavor-id>",
+"agent_user":"<user-name>"}, "blueprint_id":"<blueprint-id>"}' "<manager-ip>/api/v2.1/deployments/<deployment-id>"
+```
+
+```python
+# Python Client-
+client.deployments.create(blueprint_id='<blueprint-id>', deployment_id='<deployment-id>', inputs={
+                          'image':'<image-id>','flavor':'<flavor-id>','agent_user':'<user-name>'})
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/deployments/<deployment-id>"
+payload = "{\"inputs\":{\"image\":\"<image-id>\",\"flavor\":\"<flavor-id>\",\"agent_user\":\"<user-name>\"},
+            \"blueprint_id\":\"<blueprint-id>\"}"
+headers = {'content-type': "application/json"}
+response = requests.request("PUT", url, data=payload, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/deployments/<deployment-id>",
+  "method": "PUT",
+  "headers": {"content-type": "application/json"},
+  "data": "{\"inputs\":{\"image\":\"<image-id>\",\"flavor\":\"<flavor-id>\",\"agent_user\":\"<user-name>\"},
+            \"blueprint_id\":\"<blueprint-id>\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.deployments.create('<blueprint-id>', '<deployment-id>',
+                              {'image':'<image-id>','flavor':'<flavor-id>','agent_user':'<user-name>'});
+</script>
+```
+
+`PUT -d '{"inputs":{...}, "blueprint_id":"<blueprint-id>"}' "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
 
 Creates a new deployment.
 
 ### URI Parameters
-* deployment-id: The id of the new deployment.
+* `deployment-id`: The id of the new deployment.
 
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
+`inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
 
 ### Response
 A `Deployment` resource.
 
 
 ## Delete Deployment
-`DELETE /api/v2/deployments/{deployment-id}`
+
+> Request Example
+
+```shell
+$ curl -X DELETE "<manager-ip>/deployments/<deployments-id>"
+```
+
+```python
+# Python Client-
+client.deployments.delete(deployment_id='<deployments-id>')
+
+# Python Requests-
+url = "http://<manager-ip>/deployments/<deployment-id>"
+headers = {'content-type': "application/json"}
+response = requests.request("DELETE", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http:<manager-ip>/deployments/<deployment-id>",
+  "method": "DELETE",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.deployments.delete('<deployment-id>');
+</script>
+```
+
+`DELETE "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
 
 Deletes a deployment.
 
 An error is raised if the deployment has any live node instances. In order to ignore this validation, the `ignore_live_nodes` argument in request body can be used.
 
 ### URI Parameters
-* deployment-id: The id of the deployment.
+* `deployment-id`: The id of the deployment.
 
 ### Request Body
 Property | Type | Description

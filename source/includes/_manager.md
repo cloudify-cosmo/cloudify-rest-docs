@@ -2,18 +2,60 @@
 
 The following REST API calls provide information about Cloudify's manager.
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
 
 ## Status
-
-`GET /api/v2/events`
-
-Gets Cloudify manager status.
 
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/status
+$ curl -X GET "http://<manager-ip>/api/v2.1/status"
 ```
+
+```python
+# Python Client-
+client.manager.get_status()
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/status"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/status",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.manager.get_status();
+</script>
+```
+
 > Response Example
 
 ```json
@@ -47,122 +89,15 @@ $ curl -XGET http://localhost/api/v2/status
         }
       ],
       "display_name": "Celery Management"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "LSB: Starts Logstash as a daemon.",
-          "state": "running",
-          "MainPID": 0,
-          "Id": "logstash.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Logstash"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "RabbitMQ Service",
-          "state": "running",
-          "MainPID": 2697,
-          "Id": "cloudify-rabbitmq.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "RabbitMQ"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "Cloudify AMQP InfluxDB Broker Service",
-          "state": "running",
-          "MainPID": 4293,
-          "Id": "cloudify-amqpinflux.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "AMQP InfluxDB"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "Cloudify REST Service",
-          "state": "running",
-          "MainPID": 5021,
-          "Id": "cloudify-restservice.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Manager Rest-Service"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "Cloudify WebUI Service",
-          "state": "running",
-          "MainPID": 5831,
-          "Id": "cloudify-webui.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Cloudify UI"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "nginx - high performance web server",
-          "state": "running",
-          "MainPID": 5893,
-          "Id": "nginx.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Webserver"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "Riemann Service",
-          "state": "running",
-          "MainPID": 6500,
-          "Id": "cloudify-riemann.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Riemann"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "Elasticsearch",
-          "state": "running",
-          "MainPID": 4219,
-          "Id": "elasticsearch.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Elasticsearch"
     }
+    ...
   ]
 }
 ```
+
+`GET "{manager-ip}/api/v2.1/events"`
+
+Gets Cloudify manager status.
 
 ### Attributes:
 
@@ -195,15 +130,41 @@ Information about the instance fields can be found in the [DBus reference](http:
 
 ## Version
 
-`GET /api/v2/version`
-
-Gets Cloudify manager version information.
-
-
 > Request Example
 
 ```shell
-$ curl -XGET http://localhost/api/v2/version
+$ curl -X GET "http://<manager-ip>/api/v2.1/version"
+```
+
+```python
+# Python Client-
+client.manager.get_version()
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/version"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manaer-ip>/api/v2.1/version",
+  "method": "GET",
+  "headers": {"content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.manager.get_version();
+</script>
 ```
 
 > Response Example
@@ -212,10 +173,14 @@ $ curl -XGET http://localhost/api/v2/version
 {
   "date": "",
   "commit": "",
-  "version": "3.3.0",
+  "version": "3.4.0-m5",
   "build": "85"
 }
 ```
+
+`GET "{manager-ip}/api/v2.1/version"`
+
+Gets Cloudify manager version information.
 
 ### Attributes:
 

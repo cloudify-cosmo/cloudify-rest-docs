@@ -2,6 +2,21 @@
 
 ## The Node Resource
 
+> `Note`
+
+```python
+# include this code when using cloudify python client-
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient('<manager-ip>')
+
+# include this code when using python requests-
+import requests
+```
+
+```html
+CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
+```
+
 ### Attributes:
 
 Attribute | Type | Description
@@ -28,7 +43,41 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X http://localhost/api/v2/nodes
+$ curl -X GET "<manager-ip>/api/v2.1/nodes"
+```
+
+```python
+# Python Client-
+nodes = client.nodes.list()
+for node in nodes:
+    print node
+
+# Python Requests-
+url = "http://<manager-ip>/api/v2.1/nodes"
+headers = {'content-type': "application/json"}
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+```javascript
+var settings = {
+  "crossDomain": true,
+  "url": "http://<manager-ip>/api/v2.1/nodes",
+  "method": "GET",
+  "headers": {
+    "content-type": "application/json"}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+<script>
+    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
+    client.nodes.list('<deployment-id>', null, null)
+</script>
 ```
 
 > Response Example
@@ -38,15 +87,6 @@ $ curl -X http://localhost/api/v2/nodes
   "items": [
     {
       "operations": {
-        "cloudify.interfaces.lifecycle.delete": {
-          "inputs": {},
-          "has_intrinsic_functions": false,
-          "plugin": "",
-          "retry_interval": null,
-          "max_retries": null,
-          "executor": null,
-          "operation": ""
-        },
         "cloudify.interfaces.lifecycle.create": {
           "inputs": {},
           "has_intrinsic_functions": false,
@@ -56,38 +96,7 @@ $ curl -X http://localhost/api/v2/nodes
           "executor": null,
           "operation": ""
         },
-        "cloudify.interfaces.lifecycle.stop": {
-          "inputs": {
-            "script_path": "scripts/stop.sh"
-          },
-          "has_intrinsic_functions": false,
-          "plugin": "script",
-          "retry_interval": null,
-          "max_retries": null,
-          "executor": "host_agent",
-          "operation": "script_runner.tasks.run"
-        },
-        "cloudify.interfaces.lifecycle.start": {
-          "inputs": {
-            "script_path": "scripts/start.sh"
-          },
-          "has_intrinsic_functions": false,
-          "plugin": "script",
-          "retry_interval": null,
-          "max_retries": null,
-          "executor": "host_agent",
-          "operation": "script_runner.tasks.run"
-        },
-        "cloudify.interfaces.lifecycle.configure": {
-          "inputs": {
-            "script_path": "scripts/configure.sh"
-          },
-          "has_intrinsic_functions": false,
-          "plugin": "script",
-          "retry_interval": null,
-          "max_retries": null,
-          "executor": "host_agent",
-          "operation": "script_runner.tasks.run"
+        ...
         }
       },
       "deploy_number_of_instances": "1",
@@ -128,70 +137,7 @@ $ curl -X http://localhost/api/v2/nodes
               "executor": null,
               "operation": ""
             },
-            "cloudify.interfaces.relationship_lifecycle.preconfigure": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            "cloudify.interfaces.relationship_lifecycle.establish": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            "cloudify.interfaces.relationship_lifecycle.postconfigure": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            }
-          },
-          "target_operations": {
-            "cloudify.interfaces.relationship_lifecycle.unlink": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            "cloudify.interfaces.relationship_lifecycle.preconfigure": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            "cloudify.interfaces.relationship_lifecycle.establish": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            "cloudify.interfaces.relationship_lifecycle.postconfigure": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
+            ...
             }
           },
           "type_hierarchy": [
@@ -216,7 +162,7 @@ $ curl -X http://localhost/api/v2/nodes
 }
 ```
 
-`GET /api/v2/nodes`
+`GET "{manager-ip}/api/v2.1/nodes"`
 
 Lists all nodes.
 

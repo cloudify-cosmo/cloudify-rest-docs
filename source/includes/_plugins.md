@@ -156,6 +156,11 @@ Deletes a plugin from the Cloudify-Manager.
 ### URI Parameters
 * `plugin-id`: The id of the plugin.
 
+### Request Body
+Property | Default | Description
+---------|---------|-------------
+`force`  |  false  | Specifies whether to force plugin deletion even if there are deployments that currently use it.
+
 ### Response
 The deleted `Plugin` resource.
 

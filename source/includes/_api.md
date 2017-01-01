@@ -408,10 +408,14 @@ response.json()
 If the response includes too many items for the client to handle at once, use pagination to get only a subset of the
 results, defined by two parameters:
 
-* `_size` (default: 10000) the max size of the result subset to receive.
+* `_size` the max size of the result subset to receive.
 * `_offset` (default: 0) the number of resources to skip, i.e. `_offset=1` means you skip the first resource.
 
 \* both parameters are optional.
+
+\* in any case, with or without pagination, max size of the result will be less than max_results parameters, which is 1000 by default.
+max_results parameters is part of the manager_rest config.
+
 
 The response metadata returns the requested parameters, and a `total` field which indicates the size of the full set.
 

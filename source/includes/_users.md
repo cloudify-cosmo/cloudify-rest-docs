@@ -172,7 +172,7 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' -u admin:dbm4uXXPjCuL "http://172.20.0.2/api/v3/users"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' -u user:password "http://{manager-ip}/api/v3/users"
 ```
 
 ```python
@@ -248,7 +248,7 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/tenants/<user-name-to-delete>"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/users/<user-name-to-delete>"
 ```
 
 ```python
@@ -297,6 +297,156 @@ Delete a user.
 
 ### URI Parameters
 * `user-name-to-delete`: The name of the user to delete.
+
+### Response
+A `User` resource.
+
+
+
+
+## Set user password
+
+> Request Example
+
+```shell
+$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"password": <new-password>}' "http://<manager-ip>/api/v3/users/<user-name>"
+```
+
+```python
+# Python Client-
+client.users.set_password(<user-name>, <new-password>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "password": <new-password>,
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/users/<user-name>",
+  "method": "POST",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "username": "user",
+    "last_login_at": "2017-01-22T15:09:33.799Z",
+    "role": "user",
+    "groups": [],
+    "active": true,
+    "tenants": ["default_tenant"]
+}
+```
+
+`POST -d '{"password": <new-password>}' '"{manager-ip}/api/v3/users/{user-name}"`
+
+Specify a password.
+
+### URI Parameters
+* `user-name`: The name of the user whose password is to be changed.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`password` | string | The new user password.
+
+### Response
+A `User` resource.
+
+
+
+## Set user role
+
+> Request Example
+
+```shell
+$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"role": <user-role>}' "http://<manager-ip>/api/v3/users/<user-name>"
+```
+
+```python
+# Python Client-
+client.users.set_role(<user-name>, <new-role>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "role": <user-role>,
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/users/<user-name>",
+  "method": "DELETE",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "username": "user",
+    "last_login_at": "2017-01-22T15:09:33.799Z",
+    "role": "user",
+    "groups": [],
+    "active": true,
+    "tenants": ["default_tenant"]
+}
+```
+
+`POST -d '{"role": <role>}' '"{manager-ip}/api/v3/users/{user-name}"`
+
+Set a new role for the user (`user`, `administrator`, `suspended`).
+
+* `user` - The default user.
+
+* `administrator` - Can execute Cloudify management commands (handle users, tenants, etc)
+
+* `suspended` - Prevents user access to Cloudify, without deleting them.
+
+
+### URI Parameters
+* `user-name`: The name of the user whose role is to be set.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`role` | string | The user role. One of the following: `user`, `administrator`, `suspended`.
 
 ### Response
 A `User` resource.

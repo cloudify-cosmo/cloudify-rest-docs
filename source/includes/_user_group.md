@@ -143,7 +143,7 @@ obsolete
                 "name": "new_group",
                 "users": []
             }
-        ],
+        ]
 }
 ```
 
@@ -203,7 +203,7 @@ obsolete
 
 ```json
 {
-    "ldap_dn': "group_ldap_dn",
+    "ldap_dn": "group_ldap_dn",
     "name": "new_group",
     "tenants": [],
     "users": []
@@ -265,8 +265,9 @@ obsolete
 
 > Response Example
 
+```json
 {
-    "ldap_dn': "group_ldap_dn",
+    "ldap_dn": "group_ldap_dn",
     "name": "new_group",
     "tenants": [],
     "users": []
@@ -278,7 +279,147 @@ obsolete
 Deletes a user group.
 
 ### URI Parameters
-* `user-group-to-delete`: The name of the group to delete.
+* `user-group-to-delete`: The name of the user group to delete.
+
+### Response
+A `Group` resource.
+
+
+
+
+
+## Add User to Group
+
+> Request Example
+
+```shell
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3/user-groups/users"
+```
+
+```python
+# Python Client-
+client.user_groups.add_user(<user-name>, <group-name>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "username": <user-name>,
+    "group_name": <group-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/user-groups/users",
+  "method": "PUT",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "ldap_dn": "group_ldap_dn",
+    "name": "new_group",
+    "tenants": [],
+    "users": ["user_name"]
+}
+```
+
+`PUT "{manager-ip}/api/v3/user-groups/users"`
+
+Add a user to group.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`username` | string | The name of the user to add to the group.
+`group_name` | string | The name of the group to which to add the user.
+
+### Response
+A `Group` resource.
+
+
+
+
+
+## Remove User from Group
+
+> Request Example
+
+```shell
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3/user-groups/users"
+```
+
+```python
+# Python Client-
+client.user_groups.remove_user(<user-name>, <group-name>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "username": <user-name>,
+    "group_name": <group-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/user-groups/users",
+  "method": "DELETE",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "ldap_dn": "group_ldap_dn",
+    "name": "new_group",
+    "tenants": [],
+    "users": ["user_name"]
+}
+```
+
+`DELETE "{manager-ip}/api/v3/user-groups/users"`
+
+Delete a user from a group.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`username` | string | The name of the user to remove from the group.
+`group_name` | string | The name of the group from which to remove the user.
 
 ### Response
 A `Group` resource.

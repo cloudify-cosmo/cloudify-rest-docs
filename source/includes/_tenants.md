@@ -251,7 +251,6 @@ obsolete
 
 ```json
 {
-
     "name": "tenant-name",
     "groups": [],
     "users": []
@@ -264,6 +263,282 @@ Delete a tenant.
 
 ### URI Parameters
 * `tenant-name-to-delete`: The name of the tenant to delete.
+
+### Response
+A `Tenant` resource.
+
+
+
+
+
+## Add User to Tenant
+
+> Request Example
+
+```shell
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3/tenants/users"
+```
+
+```python
+# Python Client-
+client.tenants.add_user(<user-name>, <tenant-name>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "username": <user-name>,
+    "tenant_name": <tenant-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/tenants/users",
+  "method": "PUT",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "name": "tenant-name",
+    "groups": [],
+    "users": []
+}
+```
+
+`PUT "{manager-ip}/api/v3/tenants/users"`
+
+Add a user to a tenant.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`username` | string | The user name to add to the tenant.
+`tenants_name` | string | The name of the tenant to which to add the user.
+
+### Response
+A `Tenant` resource.
+
+
+
+
+
+## Remove User from Tenants
+
+> Request Example
+
+```shell
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3/tenants/users"
+```
+
+```python
+# Python Client-
+client.tenants.remove_user(<user-name>, <tenant-name>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "username": <user-name>,
+    "group_name": <group-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/tenants/users",
+  "method": "DELETE",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "name": "tenant-name",
+    "groups": [],
+    "users": []
+}
+```
+
+`DELETE "{manager-ip}/api/v3/tenants/users"`
+
+Delete a user from a tenant.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`username` | string | The user name to remove from the tenant.
+`tenant_name` | string | The tenant name to add the user into it.
+
+### Response
+A `Tenant` resource.
+
+
+
+
+
+## Add User-Group to Tenant
+
+> Request Example
+
+```shell
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3/tenants/user-groups"
+```
+
+```python
+# Python Client-
+client.tenants.add_group(<group-name>, <tenant-name>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "group_name": <group-name>,
+    "tenant_name": <tenant-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/tenants/user-groups",
+  "method": "PUT",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "name": "tenant-name",
+    "groups": ["new_group"],
+    "users": []
+}
+```
+
+`PUT "{manager-ip}/api/v3/tenants/user-groups"`
+
+Add a user group to a tenant.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`group_name` | string | The name of the user group to add to the tenant.
+`tenants_name` | string | The name of the tenant to which to add the user group.
+
+### Response
+A `Tenant` resource.
+
+
+
+
+
+## Remove User-Group from Tenants
+
+> Request Example
+
+```shell
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3/tenants/user-groups"
+```
+
+```python
+# Python Client-
+client.tenants.remove_user(<group-name>, <tenant-name>)
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+vat data = {
+    "username": <user-name>,
+    "group_name": <group-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/tenants/user-groups",
+  "method": "DELETE",
+  "headers": headers,
+  "data": data
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+```html
+obsolete
+```
+
+> Response Example
+
+```json
+{
+    "name": "tenant-name",
+    "groups": [],
+    "users": []
+}
+```
+
+`DELETE "{manager-ip}/api/v3/tenants/user-groups"`
+
+Delete a user group from a tenant.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`group_name` | string | The name of the user group to delete from the tenant.
+`tenant_name` | string | The name of the tenant from which to delete the user group.
 
 ### Response
 A `Tenant` resource.

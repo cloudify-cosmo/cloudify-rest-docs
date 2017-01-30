@@ -28,6 +28,7 @@ includes:
   - users
   - user_group
   - tenants
+  - cluster
 
 search: true
 ---

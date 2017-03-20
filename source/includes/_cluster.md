@@ -32,7 +32,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -u user:password "http://<manager-ip>/api/v3/cluster"
+$ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster"
 ```
 
 ```python
@@ -42,11 +42,12 @@ client.cluster.status()
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
 }
 
 var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/",
+  "url": "http://<manager-ip>/api/v3/cluster",
   "method": "GET",
   "headers": headers
 }
@@ -116,7 +117,8 @@ client.cluster.start(
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
 }
 
 var settings = {
@@ -137,7 +139,7 @@ $.ajax(settings).done(function (response) {
 ```
 
 ```shell
-$ curl -X PUT -u user:password -H "Content-Type: application/json" -d '{"host_ip": "172.20.0.2", "node_name": "manager", "encryption_key": "<REDACTED>"}' http://<manager-ip>/api/v3/cluster
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "encryption_key": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
 ```
 
 
@@ -177,6 +179,7 @@ A `ClusterState` resource.
 ## Patch Cluster State
 
 > Request Example
+
 ```python
 client.cluster.update(
     config_key='config_value'
@@ -186,7 +189,8 @@ client.cluster.update(
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
 }
 
 var settings = {
@@ -205,7 +209,7 @@ $.ajax(settings).done(function (response) {
 ```
 
 ```shell
-$ curl -X PATCH -u user:password -H "Content-Type: application/json" -d '{"config_key": "config_value"}' http://<manager-ip>/api/v3/cluster
+$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"config_key": "config_value"}' -u user:password "http://<manager-ip>/api/v3/cluster"
 ```
 
 ```html
@@ -213,6 +217,7 @@ obsolete
 ```
 
 > Response Example
+
 ```json
 {
     "initialized": true,
@@ -251,18 +256,20 @@ Attribute | Type | Description
 ## List Cluster Nodes
 
 > Request Example
+
 ```python
 client.cluster.nodes.list()
 ```
 
 ```shell
-curl -u user:password http://<manager-ip>/api/v3/cluster/nodes
+$ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes"
 ```
 
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
 }
 
 var settings = {
@@ -281,6 +288,7 @@ obsolete
 ```
 
 > Response Example
+
 ```json
 {
     "items":
@@ -310,18 +318,20 @@ Field | Type | Description
 ## Get Cluster Node
 
 > Request Example
+
 ```python
 client.cluster.nodes.get("<node-id>")
 ```
 
 ```shell
-curl -u user:password http://<manager-ip>/api/v3/cluster/nodes/<node-id>
+$ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
 ```
 
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
 }
 
 var settings = {
@@ -340,6 +350,7 @@ obsolete
 ```
 
 > Response Example
+
 ```json
 {
     "initialized": true,
@@ -371,13 +382,14 @@ client.cluster.nodes.delete("<node-id>")
 ```
 
 ```shell
-curl -X DELETE -u user:password http://<manager-ip>/api/v3/cluster/nodes/<node-id>
+$ curl -X DELETE --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
 ```
 
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
 }
 
 var settings = {
@@ -396,6 +408,7 @@ obsolete
 ```
 
 > Response Example
+
 ```json
 {
     "initialized": true,

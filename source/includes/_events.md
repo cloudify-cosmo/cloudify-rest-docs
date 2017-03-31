@@ -17,9 +17,9 @@ Attribute | Type | Description
 `reported_timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event occurred on the executing machine
 `message` | string | Message text
 `type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
-`event_type` | string | Event type name (only for `cloudify-event` items)
-`logger` | string | Logger id (only for `cloudify-log` items)
-`level` | string | Log level (only for `cloudify-log` items)
+`event_type` | string | Event type name (only for `cloudify_event` items)
+`logger` | string | Logger id (only for `cloudify_log` items)
+`level` | string | Log level (only for `cloudify_log` items)
 
 
 ## List events

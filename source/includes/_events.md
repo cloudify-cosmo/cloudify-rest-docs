@@ -62,71 +62,40 @@ $.ajax(settings).done(function (response) {
 {
   "items": [
     {
+      "node_instance_id": "vm_ke9e2d",
+      "operation": "cloudify.interfaces.cloudify_agent.create",
+      "blueprint_id": "linuxbp1",
+      "timestamp": "2017-03-22T11:41:59.169Z",
+      "message": "Successfully configured cfy-agent",
       "level": "info",
-      "timestamp": "2015-12-02 14:53:21.821+0000",
-      "@timestamp": "2015-12-02T14:53:21.823Z",
-      "tags": [
-        "event"
-      ],
-      "message_code": null,
-      "@version": "1",
-      "context": {
-        "task_id": "45f53924-af08-438c-88ac-34f5d76bb677",
-        "blueprint_id": "hello-world",
-        "plugin": "agent",
-        "task_target": "hello1",
-        "node_name": "vm",
-        "workflow_id": "install",
-        "node_id": "vm_6d480",
-        "task_name": "cloudify_agent.installer.operations.create",
-        "task_queue": "hello1",
-        "operation": "cloudify.interfaces.cloudify_agent.create",
-        "execution_id": "274d9cfb-42ae-4ba7-853d-bf0e990b5add",
-        "deployment_id": "hello1"
-      },
-      "logger": "45f53924-af08-438c-88ac-34f5d76bb677",
+      "node_name": "vm",
+      "workflow_id": "install",
+      "reported_timestamp": "2017-03-22T11:41:59.169Z",
+      "deployment_id": "linuxdp1",
       "type": "cloudify_log",
-      "message": {
-        "text": "Disabling requiretty directive in sudoers file"
-      }
+      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387",
+      "logger": "22e710c6-18b8-4e96-b8a3-2104b81c5bfc"
     },
     {
-      "event_type": "task_started",
-      "tags": [
-        "event"
-      ],
-      "timestamp": "2015-12-02 14:53:23.593+0000",
-      "@timestamp": "2015-12-02T14:53:23.664Z",
-      "message_code": null,
-      "@version": "1",
-      "context": {
-        "deployment_id": "hello1",
-        "task_current_retries": 0,
-        "task_id": "a0db8898-0fa1-4eae-ad1f-741f3253e6b2",
-        "blueprint_id": "hello-world",
-        "plugin": "agent",
-        "task_target": "hello1",
-        "node_name": "vm",
-        "workflow_id": "install",
-        "node_id": "vm_6d480",
-        "task_name": "cloudify_agent.installer.operations.configure",
-        "task_queue": "hello1",
-        "operation": "cloudify.interfaces.cloudify_agent.configure",
-        "task_total_retries": -1,
-        "execution_id": "274d9cfb-42ae-4ba7-853d-bf0e990b5add"
-      },
-      "message": {
-        "text": "Task started 'cloudify_agent.installer.operations.configure'",
-        "arguments": null
-      },
-      "type": "cloudify_event"
+      "node_instance_id": "vm_ke9e2d",
+      "event_type": "task_succeeded",
+      "operation": "cloudify.interfaces.cloudify_agent.create",
+      "blueprint_id": "linuxbp1",
+      "timestamp": "2017-03-22T11:42:00.083Z",
+      "message": "Task succeeded 'cloudify_agent.installer.operations.create'",
+      "node_name": "vm",
+      "workflow_id": "install",
+      "reported_timestamp": "2017-03-22T11:42:00.083Z",
+      "deployment_id": "linuxdp1",
+      "type": "cloudify_event",
+      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 2,
-      "size": 10000,
-      "offset": 0
+      "offset": 0,
+      "size": 10000
     }
   }
 }

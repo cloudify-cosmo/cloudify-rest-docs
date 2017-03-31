@@ -31,7 +31,13 @@ $ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manage
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager-ip>',
+    username='<manager-username>',
+    password='<manager-password>',
+    tenant='<manager-tenant>')
 events = client.events.list()
 for event in events:
     print event

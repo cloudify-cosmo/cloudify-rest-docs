@@ -29,13 +29,14 @@ Attribute | Type | Description
 `workflow_id` | string | Workflow id
 
 
+## List events
 
-## List Events
+### Lists all events
 
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/events"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager_ip>/api/v3/events"
 ```
 
 ```python
@@ -140,28 +141,50 @@ $.ajax(settings).done(function (response) {
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/events"`
+`GET "{manager-ip}/api/v3/events"`
 
-Lists all events.
+### List events within a time range
 
-`GET "{manager-ip}/api/v2.1/events?_range=@timestamp,[time_start],[time_end]"`
-
-Lists all events within a time range:
+`GET "{manager-ip}/api/v3/events?_range=timestamp,[time_start],[time_end]"`
 
 Parameter | Type | Description
 --------- | ------- | -------
 `time_start` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | optional value to begin range with.
 `time_end` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | optional value to end range with.
 
-time range: `/api/v2.1/events?_range=@timestamp,2015-12-01,2015-12-31T14:30:00Z`
+all events within a  time range:
 
-all events since: `/api/v2.1/events?_range=@timestamp,2015-12-01,`
+`GET "/api/v3/events?_range=timestamp,<time_start>,<time_end>"`
 
-all events until: `/api/v2.1/events?_range=@timestamp,,2015-12-31`
+all events since a given time:
+
+`GET "/api/v3/events?_range=timestamp,<time_start>,`
+
+all events until a given time:
+
+`GET "/api/v3/events?_range=timestamp,,<time_end>"`
 
 <aside class="notice">
 Always include the commas, even when the values are omitted
 </aside>
+
+### List events with filters
+
+`GET "{manager-ip}/api/v3/events?<filter>"`
+
+Allowed filters:
+
+- `blueprint_id`
+- `deployment_id`
+- `execution_id`
+- `event_type` (only returns `cloudify-event` items)
+- `level` (only returns `cloudify-log` items)
+- `message`([SQL's LIKE style pattern expected](https://www.postgresql.org/docs/9.5/static/functions-matching.html#FUNCTIONS-LIKE))
+
+Multiple filters can be passed in the same request:
+
+- Filters of the same type will be combined using a logical OR operator
+- Filters of differnt type will be combined using a logical AND operator.
 
 ### Response
 

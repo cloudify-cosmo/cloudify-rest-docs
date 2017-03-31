@@ -9,15 +9,17 @@ Attribute | Type | Description
 `blueprint_id` | string | Blueprint id
 `deployment_id` | string | Deployment id
 `execution_id` | string | Execution id
-`message` | string | Message text
-`event_type` | string | Event type name
-`node_instance_id` | string | Node instance id
+`workflow_id` | string | Workflow id
 `node_name` | string | Node name
+`node_instance_id` | string | Node instance id
 `operation` | string | Operation path (only available in operation events)
 `timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event was logged on the management machine
 `reported_timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event occurred on the executing machine
+`message` | string | Message text
 `type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
-`workflow_id` | string | Workflow id
+`event_type` | string | Event type name (only for `cloudify-event` items)
+`logger` | string | Logger id (only for `cloudify-log` items)
+`level` | string | Log level (only for `cloudify-log` items)
 
 
 ## List events

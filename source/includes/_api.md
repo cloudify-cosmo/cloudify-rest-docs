@@ -11,10 +11,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 Welcome to Cloudify's REST API Documentation!
 
 The base URI for the v2.1 REST API is: `/api/v2.1`.
@@ -60,13 +56,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.blueprints.delete('<blueprint-id>');
-</script>
 ```
 
 > Response Example
@@ -131,13 +120,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.blueprints.get(['my_blueprint1','my_blueprint2'],['id','created_at']);
-</script>
 ```
 
 > Response Example
@@ -415,13 +397,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.manager.get_status();
-</script>
 ```
 
 > Response Example #1

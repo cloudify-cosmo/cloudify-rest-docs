@@ -18,10 +18,6 @@ client = CloudifyClient(
         tenant='<manager-tenant>')
 ```
 
-```html
-
-```
-
 The Tenant resource is a logical component that represents a closed environment with its own resources.
 
 
@@ -62,10 +58,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -121,10 +113,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -184,10 +172,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -241,10 +225,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -306,10 +286,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -377,10 +353,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -446,10 +418,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -513,10 +481,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example

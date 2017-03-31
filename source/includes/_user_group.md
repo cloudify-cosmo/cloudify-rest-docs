@@ -18,10 +18,6 @@ client = CloudifyClient(
         tenant='<manager-tenant>')
 ```
 
-```html
-
-```
-
 The User Group is a group of users.
 
 
@@ -65,10 +61,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -125,10 +117,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -195,10 +183,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -257,10 +241,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -323,10 +303,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -393,10 +369,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example

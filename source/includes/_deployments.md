@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -64,13 +60,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.deployments.get('hello1');
-</script>
 ```
 
 > Response Example
@@ -188,15 +177,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.deployments.list(null, function(err, response, body){
-                var deployments = body.items;
-    });
-</script>
-```
-
 `GET "{manager-ip}/api/v2.1/deployments"`
 
 Lists all deployments.
@@ -247,14 +227,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.deployments.create('<blueprint-id>', '<deployment-id>',
-                              {'image':'<image-id>','flavor':'<flavor-id>','agent_user':'<user-name>'});
-</script>
-```
-
 `PUT -d '{"inputs":{...}, "blueprint_id":"<blueprint-id>"}' "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
 
 Creates a new deployment.
@@ -302,13 +274,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.deployments.delete('<deployment-id>');
-</script>
 ```
 
 `DELETE "{manager-ip}/api/v2.1/deployments/{deployment-id}"`

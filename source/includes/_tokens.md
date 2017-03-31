@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 Attribute | Type | Description

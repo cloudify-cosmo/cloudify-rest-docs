@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -60,13 +56,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.nodeInstances.get('vm_150f1', null);
-</script>
 ```
 
 > Response Example
@@ -133,13 +122,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.nodeInstances.list('<deployment-id>', null);
-</script>
 ```
 
 > Response Example
@@ -253,17 +235,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    var newState = 'starting';
-    var newProperties = {
-        'key': 'value'
-    };
-    client.nodeInstances.update('<node-instance-id>', newState, newProperties, 0)
-</script>
 ```
 
 > Response Example

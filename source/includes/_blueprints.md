@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -59,15 +55,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.blueprints.get('hello-world', null, function(err, response, body) {
-                var blueprint = body;
-    });
-</script>
 ```
 
 > Response Example
@@ -143,16 +130,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.blueprints.publish_archive('https://url/to/archive/master.zip',
-                                      '<blueprint-id>','<blueprint-id>.yaml')
-
-    });
-</script>
-```
-
 `PUT "{manager-ip}/api/v2.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&
 blueprint_archive_url=https://url/to/archive/master.zip"`
 
@@ -208,15 +185,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.blueprints.list('<blueprint-id>', function(err, response, body){
-                var blueprints = body.items;
-    });
-</script>
-```
-
 `GET "{manager-ip}/api/v2.1/blueprints"`
 
 Lists all blueprints.
@@ -258,13 +226,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.blueprints.delete('<blueprint-id>')
-</script>
 ```
 
 `DELETE "{manager-ip}/api/v2.1/blueprints/{blueprint-id}"`
@@ -310,13 +271,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.download('<blueprint-id>')
-</script>
 ```
 
 `GET "{manager-ip}/api/v2.1/blueprints/{blueprint-id}/archive"`

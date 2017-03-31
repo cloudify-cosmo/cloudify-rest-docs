@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -67,13 +63,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.plugins.get( { plugin_id_id : <plugin-id> } );
-</script>
 ```
 
 > Response Example
@@ -142,13 +131,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.plugins.delete( { plugin_id_id : <plugin-id> } );
-</script>
-```
-
 `DELETE "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
 
 Deletes a plugin from the Cloudify-Manager.
@@ -199,15 +181,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.plugins.list(function(err, response, body){
-                var plugins = body.items;
-    });
-</script>
-```
-
 `GET "{manager-ip}/api/v2.1/plugins"`
 
 Lists all plugins.
@@ -251,13 +224,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.plugins.upload('https://url/to/archive.zip');
-</script>
 ```
 
 `POST "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
@@ -305,13 +271,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.plugins.download('<plugin-id>');
-</script>
 ```
 
 `GET "{manager-ip}/api/v2.1/plugins/{plugin-id}/archive"`

@@ -15,41 +15,19 @@ import requests
 
 Attribute | Type | Description
 --------- | ------- | -------
-`event_type` | string | Event type name
-`type` | string | Indicates whether the resource is an event or a log (`cloudify_event` or `cloudify_log`)
-`tags` | list | List of tags
-`timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event occurred on the executing machine
-`@timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event was logged on the management machine
-`message_code` | string | Reserved, currently unused
-`context` | [Context](#the-context-object) | contains various identifiers related to the event
-`message` | [Message](#the-message-object) | contains the event message
-`level` | string | Log level (only available in log events)
-`logger` | string | Logger name
-`@version` | string | Internal log entry version (logstash)
-
-### The Context object:
-
-Attribute | Type | Description
---------- | ------- | -------
-`task_id` | string | Task id (only available in operation events)
-`task_name` | string | Task name (only available in operation events)
-`task_queue` | string | Task queue (only available in operation events)
-`task_target` | string | Task target (only available in operation events)
-`operation` | string | Operation path (only available in operation events)
-`task_total_retries` | integer | Number of max retries, -1 if infinite (only available in operation events)
-`task_current_retries` | integer | Number of attempted retries (only available in operation events)
-`plugin` | string | Plugin name
 `blueprint_id` | string | Blueprint id
-`node_name` | string | Node name
-`node_id` | string | Node instance id
-`workflow_id` | string | Workflow id
 `deployment_id` | string | Deployment id
 `execution_id` | string | Execution id
+`message` | string | Message text
+`event_type` | string | Event type name
+`node_instance_id` | string | Node instance id
+`node_name` | string | Node name
+`operation` | string | Operation path (only available in operation events)
+`timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event was logged on the management machine
+`reported_timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event occurred on the executing machine
+`type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
+`workflow_id` | string | Workflow id
 
-### The Message Object:
-Attribute | Type | Description
---------- | ------- | -------
-`text` | string | Message text
 
 
 ## List Events

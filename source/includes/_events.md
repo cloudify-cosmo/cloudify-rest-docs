@@ -2,8 +2,6 @@
 
 ## The Event Resource
 
-> `Note`
-
 ```python
 # include this code when using cloudify python client-
 from cloudify_rest_client import CloudifyClient

@@ -36,11 +36,14 @@ events = client.events.list()
 for event in events:
     print event
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/events"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3/events'
+headers = {'Tenant': 'default_tenant'}
+response = requests.get(url, auth=HTTPBasicAuth('user', 'password'), headers=headers)
+response.json()
 ```
 
 ```javascript

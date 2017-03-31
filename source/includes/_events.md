@@ -168,3 +168,4 @@ Always include the commas, even when the values are omitted
 Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `Event` resources.
+`metadata` | object | Pagination metadata

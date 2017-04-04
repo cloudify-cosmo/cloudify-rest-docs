@@ -12,10 +12,6 @@ client = CloudifyClient(
         tenant='<manager-tenant>')
 ```
 
-```html
-obsolete
-```
-
 Cloudify 4.0.0 introduced REST API V3.0.
 
 The base URI for the v3.0 REST API is: `/api/v3.0`.

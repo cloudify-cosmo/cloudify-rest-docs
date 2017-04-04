@@ -8,7 +8,6 @@ language_tabs:
   - shell: cURL
   - python: Python
   - javascript: JQuery AJAX
-  - html: JavaScript Client
 
 includes:
   - api

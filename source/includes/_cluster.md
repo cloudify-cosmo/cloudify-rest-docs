@@ -57,10 +57,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example (cluster not initialized)
 
 ```json
@@ -143,9 +139,6 @@ $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u 
 ```
 
 
-```html
-obsolete
-```
 > Response Example
 
 ```json
@@ -210,10 +203,6 @@ $.ajax(settings).done(function (response) {
 
 ```shell
 $ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"config_key": "config_value"}' -u user:password "http://<manager-ip>/api/v3/cluster"
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -283,10 +272,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -345,10 +330,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -401,10 +382,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example

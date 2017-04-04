@@ -14,10 +14,6 @@ client = CloudifyClient(
         tenant='<manager-tenant>')
 ```
 
-```html
-
-```
-
 A Secret resource is a key-value pair saved per tenant.
 A user can ensure all secrets (such as credentials to IaaS environments, passwords, etc) are kept in a secured manner,
 and adhere to isolation requirements between different tenants.
@@ -63,10 +59,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -126,10 +118,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -195,10 +183,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example
@@ -268,10 +252,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-obsolete
-```
-
 > Response Example
 
 ```json
@@ -334,10 +314,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-obsolete
 ```
 
 > Response Example

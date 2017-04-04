@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -66,15 +62,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.executions.get('execution-id', null, function(err, response, body) {
-                    var execution = body;
-    });
-</script>
 ```
 
 > Response Example
@@ -144,15 +131,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.executions.list({_include: 'id'}, function(err, response, body){
-                var executions = body.items;
-    });
-</script>
-```
-
 `GET "{manager-ip}/api/v2.1/executions?deployment_id={deployment-id}"`
 
 Lists all executions.
@@ -197,18 +175,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.deployments.get('<deployment-id>', null, function (err, response, body) {
-                var deployment = body;
-                var workflow = _.find(deployment.workflows, {'name': 'install'});
-
-                client.executions.start('<deployment-id>', workflow.name, workflow.parameters, false, false);
-    });
-</script>
 ```
 
 `POST -d '{"deployment_id":{deployments-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v2.1/executions"`
@@ -261,13 +227,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.executions.cancel(execution.id, true);
-</script>
 ```
 
 `POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v2.1/executions/{execution-id}"`

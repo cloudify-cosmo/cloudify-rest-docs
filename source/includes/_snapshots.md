@@ -13,10 +13,6 @@ client = CloudifyClient('<manager-ip>')
 import requests
 ```
 
-```html
-CloudifyJS, the JavaScript client, is available at https://github.com/cloudify-cosmo/cloudify-js
-```
-
 ### Attributes:
 
 
@@ -59,15 +55,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.snapshots.list(function(err, response, body){
-              var snapshots = body.items;
-  });
-</script>
 ```
 
 > Response Example
@@ -142,13 +129,6 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.snapshots.create('<snapshot-id>');
-</script>
-```
-
 `PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
 
 Creates a new snapshot.
@@ -196,13 +176,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-```
-
-```html
-<script>
-    var client = new window.CloudifyClient({'endpoint': 'http://<manager-ip>/api/v2.1'});
-    client.snapshots.delete('<snapshot-id>');
-</script>
 ```
 
 `DELETE "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`

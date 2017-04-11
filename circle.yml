@@ -10,7 +10,7 @@ dependencies:
   override:
     - bundle install:
         timeout: 3600
-    - rake build:
+    - bundle exec rake build:
         timeout: 3600
 
 test:

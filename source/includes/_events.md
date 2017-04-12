@@ -18,8 +18,17 @@ Attribute | Type | Description
 `message` | string | Message text
 `type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
 `event_type` | string | Event type name (only for `cloudify_event` items)
+`error_causes` | [[ErrorCause](#the-errorcause-object)] | List of errors that happened while executing a given task (only for `cloudify_event` items)
 `logger` | string | Logger id (only for `cloudify_log` items)
 `level` | string | Log level (only for `cloudify_log` items)
+
+## The ErrorCause object
+
+Attribute | Type | Description
+--------- | ---- | -----------
+`message` | string | Error message
+`traceback` | string | Stack trace at the point where the exception was raised
+`type` | string | Exception type
 
 
 ## List events

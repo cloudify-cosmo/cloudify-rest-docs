@@ -23,7 +23,7 @@ test:
 ## Customize deployment commands
 deployment:
   production:
-    branch: api-v2.1
+    branch: 2.1-build
     commands:
       - bundle exec s3_website push --verbose
       - sudo pip install boto

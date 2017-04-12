@@ -25,6 +25,6 @@ deployment:
   production:
     branch: master
     commands:
-      - bundle exec s3_website push --verbose --dry-run
+      - bundle exec s3_website push --verbose
       - sudo pip install boto
       - python make_public.py

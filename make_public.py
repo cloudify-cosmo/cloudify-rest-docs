@@ -17,7 +17,7 @@ def make_api_docs_public():
         os.environ['S3_SECRET_KEY'],
         calling_format=boto.s3.connection.OrdinaryCallingFormat())
     bucket = conn.get_bucket('docs.getcloudify.org')
-    api_keys = bucket.get_all_keys(prefix='api')
+    api_keys = bucket.list(prefix='api/v2')
     for key in api_keys:
         print('   Making "{0}" public..'.format(key.name))
         key.make_public()

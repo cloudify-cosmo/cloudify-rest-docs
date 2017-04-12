@@ -10,7 +10,7 @@ dependencies:
   override:
     - bundle install:
         timeout: 3600
-    - rake build:
+    - bundle exec rake build:
         timeout: 3600
 
 test:
@@ -23,9 +23,8 @@ test:
 ## Customize deployment commands
 deployment:
   production:
-    branch: master
+    branch: 2-build
     commands:
-      - mv build api; mkdir build; mv api build
-      - bundle exec s3_website push --verbose
+      - bundle exec s3_website push --verbose --dry-run
       - sudo pip install boto
       - python make_public.py

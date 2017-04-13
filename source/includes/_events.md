@@ -5,7 +5,7 @@
 ### Attributes:
 
 Attribute | Type | Description
---------- | ------- | -------
+--------- | ---- | -----------
 `blueprint_id` | string | Blueprint id
 `deployment_id` | string | Deployment id
 `execution_id` | string | Execution id
@@ -18,8 +18,17 @@ Attribute | Type | Description
 `message` | string | Message text
 `type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
 `event_type` | string | Event type name (only for `cloudify_event` items)
+`error_causes` | [[ErrorCause](#the-errorcause-object)] | List of errors that happened while executing a given task (only for `cloudify_event` items)
 `logger` | string | Logger id (only for `cloudify_log` items)
 `level` | string | Log level (only for `cloudify_log` items)
+
+## The ErrorCause object
+
+Attribute | Type | Description
+--------- | ---- | -----------
+`message` | string | Error message
+`traceback` | string | Stack trace at the point where the exception was raised
+`type` | string | Exception type
 
 
 ## List events
@@ -96,7 +105,31 @@ $.ajax(settings).done(function (response) {
       "message": "Task succeeded 'cloudify_agent.installer.operations.create'",
       "node_name": "vm",
       "workflow_id": "install",
+      "error_causes": null,
       "reported_timestamp": "2017-03-22T11:42:00.083Z",
+      "deployment_id": "linuxdp1",
+      "type": "cloudify_event",
+      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387"
+    },
+    {
+      "node_instance_id": "vm_ke9e2d",
+      "event_type": "task_failed",
+      "operation": "cloudify.interfaces.cloudify_agent.create",
+      "blueprint_id": "linuxbp1",
+      "timestamp": "2017-03-22T11:43:01.823Z",
+      "message": "Task failed 'cloudify_agent.installer.operations.create' -> ERROR_MESSAGE",
+      "node_name": "vm",
+      "workflow_id": "install",
+      "error_causes": [
+        {
+          "message": "ERROR_MESSAGE",
+          "traceback": "Traceback (most recent call last):\n  File \"/opt/mgmtworker/env/lib/python2.7/site-packages/cloudify/dispatch.py\", line 624, in main\n
+  File \"/opt/mgmtworker/env/lib/python2.7/site-packages/cloudify/dispatch.py\", line 389, in handle\n  File \"/opt/mgmtworker/env/lib/python2.7/site-packages/t
+estmockoperations/tasks.py\", line 476, in execution_logging\n    raise NonRecoverableError('ERROR_MESSAGE', causes=causes)\nNonRecoverableError: ERROR_MESSAGE\n",
+          "type": "NonRecoverableError"
+        }
+      ],
+      "reported_timestamp": "2017-03-22T11:43:01.823Z",
       "deployment_id": "linuxdp1",
       "type": "cloudify_event",
       "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387"
@@ -104,7 +137,7 @@ $.ajax(settings).done(function (response) {
   ],
   "metadata": {
     "pagination": {
-      "total": 2,
+      "total": 3,
       "offset": 0,
       "size": 10000
     }

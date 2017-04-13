@@ -31,7 +31,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster"
+$ curl -u user:password "http://<manager-ip>/api/v3/cluster"
 ```
 
 ```python
@@ -97,7 +97,7 @@ client.cluster.join(
 ```
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "credentials": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
+$ curl -X PUT -H "Content-Type: application/json" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "credentials": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
 ```
 
 
@@ -115,7 +115,7 @@ Starts the cluster mechanisms on the current Cloudify Manager. If the `join_addr
 parameter is provided, joins an existing cluster, otherwise bootstraps a new
 cluster.
 When joining a cluster, the "credentials" parameter is required. To generate
-credentials for a new node to use, use the "Add cluster node" endpoint first.
+credentials for use by a new node, use the "Add cluster node" endpoint first.
 Only admin users can execute this operation.
 
 ### Request Body
@@ -124,7 +124,7 @@ Property | Type | Description
 -------- | ---- | -----------
 host_ip | string | The externally accessible IP of this node.
 node_name | string | A unique name for this node to be used internally within the cluster.
-credentials | string | When joining a node, provide the credentials received from the cluster master.
+credentials | string | When joining a node, provide the credentials received from the cluster active node.
 join_addrs | list | IPs of the nodes to connect with. If not provided, a new cluster will be created.
 
 
@@ -144,7 +144,7 @@ client.cluster.update(
 ```
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"config_key": "config_value"}' -u user:password "http://<manager-ip>/api/v3/cluster"
+$ curl -X PATCH -H "Content-Type: application/json" -d '{"config_key": "config_value"}' -u user:password "http://<manager-ip>/api/v3/cluster"
 ```
 
 > Response Example
@@ -193,7 +193,7 @@ client.cluster.nodes.list()
 ```
 
 ```shell
-$ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes"
+$ curl --header -u user:password "http://<manager-ip>/api/v3/cluster/nodes"
 ```
 
 > Response Example
@@ -234,7 +234,7 @@ client.cluster.nodes.get("<node-id>")
 ```
 
 ```shell
-$ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
+$ curl --header -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
 ```
 
 > Response Example
@@ -270,14 +270,13 @@ client.cluster.nodes.add(host_ip='172.20.0.3', node_name='second-manager')
 ```
 
 ```shell
-$ curl --header "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.3", "node_name": "second-manager"}' "http://<manager-ip>/api/v3/cluster/nodes"
+$ curl -u user:password -d '{"host_ip": "172.20.0.3", "node_name": "second-manager"}' "http://<manager-ip>/api/v3/cluster/nodes"
 ```
 
 ```javascript
 var headers = {
    'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
 }
 
 var settings = {
@@ -312,9 +311,8 @@ $.ajax(settings).done(function (response) {
 `PUT "{manager-ip}/api/v3/cluster/nodes/{node-name}"`
 
 Adds a node to the cluster. This prepares the cluster for contacting the new node,
-runs validations and generates credentials for the new node to use. The received
-credentials should be passed in the "Join cluster" ("Put Cluster State") API
-call.
+runs validations and generates credentials for use by a new node. The received
+credentials are passed in the "Join cluster" ("Put Cluster State") API call.
 
 
 ## Delete Cluster Node
@@ -326,7 +324,7 @@ client.cluster.nodes.delete("<node-id>")
 ```
 
 ```shell
-$ curl -X DELETE --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
+$ curl -X DELETE -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
 ```
 
 > Response Example

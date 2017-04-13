@@ -83,15 +83,21 @@ A `ClusterState` resource.
 > Request Example
 
 ```python
+# starting a cluster
 client.cluster.start(
     host_ip='172.20.0.2',
     node_name='manager',
-    encryption_key='<REDACTED>'
+)
+# joining a cluster
+client.cluster.join(
+    host_ip='172.20.0.3',
+    node_name='another-manager',
+    credentials='<REDACTED>'
 )
 ```
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "encryption_key": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "credentials": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
 ```
 
 
@@ -108,6 +114,8 @@ $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u 
 Starts the cluster mechanisms on the current Cloudify Manager. If the `join_addrs`
 parameter is provided, joins an existing cluster, otherwise bootstraps a new
 cluster.
+When joining a cluster, the "credentials" parameter is required. To generate
+credentials for a new node to use, use the "Add cluster node" endpoint first.
 Only admin users can execute this operation.
 
 ### Request Body
@@ -116,7 +124,7 @@ Property | Type | Description
 -------- | ---- | -----------
 host_ip | string | The externally accessible IP of this node.
 node_name | string | A unique name for this node to be used internally within the cluster.
-encryption_key | string | A base64-encoded 16-byte encryption key, identical for all the nodes in the cluster.
+credentials | string | When joining a node, provide the credentials received from the cluster master.
 join_addrs | list | IPs of the nodes to connect with. If not provided, a new cluster will be created.
 
 
@@ -144,8 +152,7 @@ $ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -
 ```json
 {
     "initialized": true,
-    "error": null,
-    "encryption_key": "<REDACTED>"
+    "error": null
 }
 ```
 
@@ -174,6 +181,7 @@ Attribute | Type | Description
 `host_ip` | string | The externally accessible IP of this node.
 `online` | boolean | Whether this node is currently online.
 `initialized` | boolean | Whether the node has been successfully joined to the cluster.
+`credentials` | dict | Credentials used by this node to join the cluster.
 
 
 ## List Cluster Nodes
@@ -199,7 +207,8 @@ $ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/ap
             "online": true,
             "master": true,
             "host_ip": "172.20.0.2",
-            "name": "cloudify_manager_LMJZA2"
+            "name": "cloudify_manager_LMJZA2",
+            "credentials": "<REDACTED>"
         }
     ]
 }
@@ -236,7 +245,8 @@ $ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/ap
     "online": true,
     "master": true,
     "host_ip": "172.20.0.2",
-    "name": "cloudify_manager_LMJZA2"
+    "name": "cloudify_manager_LMJZA2",
+    "credentials": "<REDACTED>"
 }
 ```
 
@@ -250,6 +260,61 @@ Fetches the details of a node in the cluster.
 ### Response
 
 A `ClusterNode` resource.
+
+## Add Cluster Node
+
+> Request Example
+
+```python
+client.cluster.nodes.add(host_ip='172.20.0.3', node_name='second-manager')
+```
+
+```shell
+$ curl --header "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.3", "node_name": "second-manager"}' "http://<manager-ip>/api/v3/cluster/nodes"
+```
+
+```javascript
+var headers = {
+   'content-type': 'application/json',
+   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
+   'tenant': <tenant-name>
+}
+
+var settings = {
+  "url": "http://<manager-ip>/api/v3/cluster/nodes",
+  "method": "GET",
+  "headers": headers,
+  "contentType": "application/json"
+  "data": JSON.stringify({
+      "host_ip": "172.20.0.3",
+      "node_name": "second-manager"
+  })
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> Response Example
+
+```json
+{
+    "initialized": false,
+    "online": false,
+    "master": false,
+    "host_ip": "172.20.0.3",
+    "name": "second-manager",
+    "credentials": "<REDACTED>"
+}
+```
+
+`PUT "{manager-ip}/api/v3/cluster/nodes/{node-name}"`
+
+Adds a node to the cluster. This prepares the cluster for contacting the new node,
+runs validations and generates credentials for the new node to use. The received
+credentials should be passed in the "Join cluster" ("Put Cluster State") API
+call.
 
 
 ## Delete Cluster Node

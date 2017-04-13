@@ -22,7 +22,6 @@ The ClusterState resource represents the current state of a Cloudify Manager clu
 Attribute | Type | Description
 --------- | ---- | -----------
 `initialized` | boolean | Whether this node is part of a cluster.
-`encryption_key` | string | Encryption key used for inter-cluster communication (only visible by admin users).
 `consul` | dict | Detailed state of the consul cluster being part of the manager infrastructure.
 `error` | string | Description of a fatal error that occured during cluster configuration or operation, if any.
 `logs` | list | Logs of the cluster operations on the current node.
@@ -55,7 +54,6 @@ client.cluster.status()
     "consul": {
         "leader": "172.20.0.3:8300"
     },
-    "encryption_key": "<REDACTED>",
     "error": null,
     "logs": [
         {

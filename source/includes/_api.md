@@ -1,26 +1,59 @@
-# Cloudify REST API V2.1
+# Cloudify REST API V3
 
-> `Note`
+> Basic usage
+
+```shell
+$ curl -X GET --header "Tenant: <manager-tenant>" -u <manager-username>:<manager-pasword> "http://<manager-ip>/api/v3/<endpoint>"
+```
 
 ```python
-# include this code when using cloudify python client-
+# Using ClodifyClient
 from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
+client = CloudifyClient(
+    host='<manager-ip>',
+    username='<manager-username>',
+    password='<manager-password>',
+    tenant='<manager-tenant>')
 
-# include this code when using python requests-
+# Using requests
 import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3/<endpoint>'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(url, auth=HTTPBasicAuth('<manager-username>', '<manager-password>'), headers=headers)
+response.json()
 ```
 
 Welcome to Cloudify's REST API Documentation!
 
-The base URI for the v2.1 REST API is: `/api/v2.1`.
+The base URI for the v3 REST API is: `/api/v3`.
 
 <aside class="notice">
 This section describes various API features that apply to all resources
 </aside>
 
-### Variable ###
-* `<manager-ip>`: replace with your manager ip
+Starting from Cloudify 4.0.0, all communication to the server requires:
+
+ * Authentication using user credentials.
+ * Tenant name, representing the scope of the request.
+
+Every Cloudify Manager has a default tenant, called `default_tenant`.
+The `default_tenant` tenant is created during bootstrap.
+
+In addition to the `default_tenant`, every Cloudify Manager includes a bootstrap Admin.
+The bootstrap Admin is the Admin user that created during the bootstrap.
+
+In addition to the user credentials, every request must also specify a tenant in the header.
+
+In the case of using the Cloudify community edition or if you have not created any new tenant,
+you can use the `default_tenant` as the tenant for the request.
+
+### Parameters
+* `<manager-ip>`: Replace with the IP of your Cloudify Manager
+* `<manager-username>`: Replace with a username for the Cloudify Manager instance username
+* `<manager-password>`: Replace with the password for the user specified in <manager-username>
+* `<manager-tenant>`: Replace with the tenant on which to perform the request
 
 ## Response Fields Filtering (Projection)
 

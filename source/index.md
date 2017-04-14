@@ -29,7 +29,6 @@ includes:
   - manager
   - deployment_modification
   - errors
-  - api_v3
   - users
   - user_group
   - tenants

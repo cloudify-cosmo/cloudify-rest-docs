@@ -222,16 +222,35 @@ Filters also accept multiple values (OR) by using multiple parameters of the sam
 > Request Example #1 (sort deployments by `id` descending)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/deployments?_sort=-id&_include=blueprint_id,id"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager_ip>/api/v3/deployments?_include=id,blueprint_id&_sort=-id"
 ```
 
 ```python
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"_sort":"-id","_include":"blueprint_id,id"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using CloudifyClient
+deployments = client.deployments.list(
+    _include=['id', 'blueprint_id'],
+    _sort='-id',
+)
+for deployment in deployments:
+    print deployment
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_include': 'id,blueprint_id',
+    '_sort': '-id',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -258,26 +277,26 @@ $.ajax(settings).done(function (response) {
     },
     {
       "id": "dep4",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     },
     {
       "id": "dep3",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     },
     {
       "id": "dep2",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     },
     {
       "id": "dep1",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 5,
       "offset": 0,
-      "size": 10000
+      "size": 5
     }
   }
 }
@@ -286,16 +305,35 @@ $.ajax(settings).done(function (response) {
 > Request Example #2 (sort deployments by `blueprint_id` ascending and `id` descending)
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/deployments?_sort=blueprint_id&_sort=-id&_include=blueprint_id,id"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager_ip>/api/v3/deployments?_include=id,blueprint_id&_sort=blueprint_id&_sort=-id"
 ```
 
 ```python
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"_sort":"blueprint_id,-id","_include":"blueprint_id,id"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using CloudifyClient
+deployments = client.deployments.list(
+    _include=['id', 'blueprint_id'],
+    _sort=['blueprint_id', '-id'],
+)
+for deployment in deployments:
+    print deployment
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_include': 'id,blueprint_id',
+    '_sort': ['blueprint_id', '-id'],
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -322,26 +360,26 @@ $.ajax(settings).done(function (response) {
     },
     {
       "id": "dep3",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     },
     {
       "id": "dep1",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     },
     {
       "id": "dep4",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     },
     {
       "id": "dep2",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 5,
       "offset": 0,
-      "size": 10000
+      "size": 5
     }
   }
 }

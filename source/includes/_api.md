@@ -397,16 +397,35 @@ order of `_sort` parameters in the request (example #2).
 > Request Example (skip `1` resource, get `size` of `4`)
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/events?_size=4&_offset=1&_include=@timestamp"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/events?_size=4&_offset=1&_include=timestamp"
 ```
 
 ```python
-# Python Requests
-url = "http://<manager-ip>/api/v2.1/events"
-querystring = {"_size":"4","_offset":"1","_include":"@timestamp"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using CloudifyClient
+events = client.events.list(
+    _size=4,
+    _offset=1,
+    _include=['timestamp'],
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/events'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_size': '4',
+    '_offset': '1',
+    '_include':'timestamp',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -427,22 +446,22 @@ $.ajax(settings).done(function (response) {
 ```json
 {
   "items": [
-  {
-    "@timestamp": "2015-12-01T15:05:36.692Z"
-  },
-  {
-    "@timestamp": "2015-12-01T15:05:37.493Z"
-  },
-  {
-    "@timestamp": "2015-12-01T15:03:57.911Z"
-  },
-  {
-    "@timestamp": "2015-12-01T15:03:58.025Z"
-  }
+    {
+      "timestamp": "2017-04-17T13:53:22.570Z"
+    },
+    {
+      "timestamp": "2017-04-17T13:53:10.558Z"
+    },
+    {
+      "timestamp": "2017-04-17T13:53:09.799Z"
+    },
+    {
+      "timestamp": "2017-04-17T13:52:54.549Z"
+    }
   ],
   "metadata": {
     "pagination": {
-      "total": 171,
+      "total": 20,
       "offset": 1,
       "size": 4
     }

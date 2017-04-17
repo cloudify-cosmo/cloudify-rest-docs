@@ -3,7 +3,10 @@
 > Basic usage
 
 ```shell
-$ curl -X GET --header "Tenant: <manager-tenant>" -u <manager-username>:<manager-pasword> "http://<manager-ip>/api/v3/<endpoint>"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/<endpoint>"
 ```
 
 ```python
@@ -21,7 +24,10 @@ from requests.auth import HTTPBasicAuth
 
 url = 'http://<manager-ip>/api/v3/<endpoint>'
 headers = {'Tenant': '<manager-tenant>'}
-response = requests.get(url, auth=HTTPBasicAuth('<manager-username>', '<manager-password>'), headers=headers)
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers)
 response.json()
 ```
 

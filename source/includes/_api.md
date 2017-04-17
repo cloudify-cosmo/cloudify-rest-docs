@@ -60,6 +60,7 @@ you can use the `default_tenant` as the tenant for the request.
 * `<manager-username>`: Replace with a username for the Cloudify Manager instance username
 * `<manager-password>`: Replace with the password for the user specified in <manager-username>
 * `<manager-tenant>`: Replace with the tenant on which to perform the request
+* `<manager-token>`: Replace with a token obtained using the tokens endpoint (see the [athentication](#authentication) section)
 
 ## Response Fields Filtering (Projection)
 
@@ -86,7 +87,8 @@ response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
-    params=querystring)
+    params=querystring,
+)
 response.json()
 ```
 
@@ -489,18 +491,27 @@ Valid credentials do not affect the returned response, but invalid credentials r
 > Request Example #1 (Get the server’s status, authenticate with username and password)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/status"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/status?_include=status"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.manager.get_status()
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/status"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/status'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'status'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -520,62 +531,99 @@ $.ajax(settings).done(function (response) {
 
 ```json
 {
-   "status":"running",
-   "services":[
-      {
-         "display_name":"Celery Management",
-         "instances":[
-            {
-               "Id": "cloudify-mgmtworker.service",
-               "Description":"Cloudify Management Worker Service",
-               "LoadState":"loaded",
-               "state":"running"
-            },
-         ]
-      },
-      ...
-   ]
+  "status": "running"
 }
 ```
 
 > Request Example #2 (Get a token, authenticate with username and password)
 
 ```shell
-$ curl -u 'MY_USERNAME':'MY_PASSWORD' "<manager-ip>/api/v2.1/token"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "<manager-ip>/api/v3/tokens"
+```
+
+```python
+# Using CloudifyClient
+client.tokens.get()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/tokens'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
+
 ```
 
 > Response Example #2
 
 ```json
 {
-   "value":"eyJhbGciOiJIUzI1NiIsImV4cCI6MTQ1MDAzMjI0MiwiaWF0IjoxNDUwMDMxNjQyfQ.eyJ1c2VybmFtZSI6ImF"
+  "role": "admin",
+  "value": "WyIwIiwiMzE0OTNmNWFjOTE1MzdhM2IyZWM4NTFhYWY4NzU0NWEiXQ.C9Z82w.dlVgLkkyeWZgZP06xMxe8Omht90"
 }
 ```
 > Request Example #3 (Get all the blueprints, authenticate with a token)
 
 ```shell
-$ curl -H 'Authentication-Token:MY_TOKEN' "<manager-ip>/api/v2.1/blueprints"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    --header "Authentication-Token: <manager-token>" \
+    "http://<manager-ip>/api/v3/blueprints?_include=id"
+```
+
+```python
+# Using CloudifyClient
+client = CloudifyClient(
+    host='<manager-ip>',
+    tenant='<manager-tenant>',
+    token='<manager-token>',
+)
+blueprints = client.blueprints.list(_include=['id'])
+for blueprint in blueprints:
+    print blueprint
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints'
+headers = {
+    'Tenant': '<manager-tenant>',
+    'Autentication-Token': '<manage-token>',
+}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example #3
 
 ```json
 {
-   "items":[
-      {
-         "main_file_name":"openstack-blueprint.yaml",
-         "description":"This Blueprint installs a nodecellar application on an openstack environment",
-         "created_at":"2015-12-13 19:00:03.160167",
-         "updated_at":"2015-12-13 19:00:03.160167",
-         "plan":{
-            "relationships":{
-               "cloudify.openstack.server_connected_to_port":{
-                                 "name":"cloudify.openstack.server_connected_to_port",
-               ...
-               }
-            }
-         }
-      }
-   ]
+  "items": [
+    {
+      "id": "my-blueprint-1"
+    },
+    {
+      "id": "my-blueprint-2"
+    },
+    {
+      "id": "hello-world"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 3
+    }
+  }
 }
 ```

@@ -138,21 +138,35 @@ Note that specified field names must be part of the resource schema, otherwise a
 > Request Example (requesting only blueprints which `id` is _my_blueprint1_ or _my_blueprint2_)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/blueprints?id=my_blueprint1&id=my_blueprint2&_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/blueprints?_include=id,created_at&id=my-blueprint-1&id=my-blueprint-2"
 ```
 
 ```python
-# Python Client-
-blueprints = client.blueprints.list(_include=['id','created_at'],id=['my_blueprint1','my_blueprint2'])
+# Using ClodifyClient
+blueprints = client.blueprints.list(
+    _include=['id','created_at'],
+    id=['my-blueprint-1', 'my-blueprint-2'],
+)
 for blueprint in blueprints:
     print blueprint
 
-# Python Requests-
+# Using requests
 url = "http://<manager-ip>/api/v2.1/blueprints"
-querystring = {"_include":"id,created_at","id":{"my_blueprint1","my_blueprint2"}}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_include': 'id,created_at',
+    'id': ['my-blueprint-1', 'my-blueprint-2'],
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -174,19 +188,19 @@ $.ajax(settings).done(function (response) {
 {
   "items": [
     {
-      "created_at": "2015-12-02 11:27:48.527776",
-      "id": "my_blueprint2"
+      "created_at": "2017-04-17T12:34:52.911Z",
+      "id": "my-blueprint-1"
     },
     {
-      "created_at": "2015-12-02 11:23:01.939131",
-      "id": "my_blueprint1"
+      "created_at": "2017-04-17T12:34:57.256Z",
+      "id": "my-blueprint-2"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 2,
       "offset": 0,
-      "size": 10000
+      "size": 2
     }
   }
 }

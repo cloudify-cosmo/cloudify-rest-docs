@@ -66,21 +66,28 @@ you can use the `default_tenant` as the tenant for the request.
 > Request Example (receive only the `id` and `created_at` fields)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/blueprints?_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-api>/api/v3/blueprints?_include=id,created_at"
 ```
 
 ```python
-# Python Client-
+# Using ClodifyClient
 blueprints = client.blueprints.list(_include=['id','created_at'])
 for blueprint in blueprints:
   print blueprint
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints"
-querystring = {"_include":"id,created_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints'
+querystring = {'_include': 'id,created_at'}
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring)
+response.json()
 ```
 
 ```javascript
@@ -103,15 +110,15 @@ $.ajax(settings).done(function (response) {
 {
   "items": [
     {
-      "created_at": "2015-11-11 13:11:40.324698",
+      "created_at": "2017-04-17T12:12:36.626Z",
       "id": "hello-world"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 1,
-      "offset": null,
-      "size": 10000
+      "offset": 0,
+      "size": 1
     }
   }
 }

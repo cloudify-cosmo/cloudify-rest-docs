@@ -42,24 +42,6 @@ $ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manage
 client.tenants.get('default_tenant')
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': 'default_tenant'
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/{tenant-name}",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -95,24 +77,6 @@ $ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manage
 ```python
 # Python Client-
 client.tenants.list()
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': 'default_tenant'
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -154,24 +118,6 @@ $ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u
 client.tenants.create(<new-tenant-name>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/<new-tenant-name>",
-  "method": "POST",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -209,24 +155,6 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" 
 client.tenants.delete(<tenant-name>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/<tenant-name-to-delete>",
-  "method": "DELETE",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -262,30 +190,6 @@ $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u 
 ```python
 # Python Client-
 client.tenants.add_user(<user-name>, <tenant-name>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "username": <user-name>,
-    "tenant_name": <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/users",
-  "method": "PUT",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -329,30 +233,6 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" 
 client.tenants.remove_user(<user-name>, <tenant-name>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "username": <user-name>,
-    "group_name": <group-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/users",
-  "method": "DELETE",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -394,30 +274,6 @@ $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u 
 client.tenants.add_group(<group-name>, <tenant-name>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "group_name": <group-name>,
-    "tenant_name": <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/user-groups",
-  "method": "PUT",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -457,30 +313,6 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" 
 ```python
 # Python Client-
 client.tenants.remove_user(<group-name>, <tenant-name>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "username": <user-name>,
-    "group_name": <group-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/user-groups",
-  "method": "DELETE",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example

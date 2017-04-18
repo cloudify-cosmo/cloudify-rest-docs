@@ -92,20 +92,6 @@ response = requests.get(
 response.json()
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/blueprints",
-  "method": "GET",
-  "data": {_include='id,created_at'},
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -169,19 +155,6 @@ response = requests.get(
     params=querystring,
 )
 response.json()
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/blueprints?id=my_blueprint1&id=my_blueprint2&_include=id%2Ccreated_at",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -255,19 +228,6 @@ response = requests.get(
 response.json()
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/deployments?_sort=-id&_include=blueprint_id%2Cid",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example #1
 
 ```json
@@ -336,19 +296,6 @@ response = requests.get(
     params=querystring,
 )
 response.json()
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/deployments?_sort=blueprint_id&_sort=-id&_include=blueprint_id%2Cid",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example #2
@@ -430,19 +377,6 @@ response = requests.get(
 response.json()
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/events?_size=4&_offset=1&_include=%40timestamp",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -512,19 +446,6 @@ response = requests.get(
     params=querystring,
 )
 response.json()
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/status",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example #1

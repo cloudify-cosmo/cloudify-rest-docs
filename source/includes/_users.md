@@ -50,24 +50,6 @@ $ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manage
 client.users.get(<user-name>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/users/<user-name>",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -106,24 +88,6 @@ $ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manage
 ```python
 # Python Client-
 client.users.list()
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': 'default_tenant'
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/users",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -168,31 +132,6 @@ $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d 
 client.users.create(<new-user-name>,
                     <password>,
                     <role>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "username": <new-user-name>,
-    "password": <password>,
-    "role": <role>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/users",
-  "method": "PUT",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -240,24 +179,6 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" 
 client.users.delete(<user-name>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/tenants/<user-name>",
-  "method": "DELETE",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -295,29 +216,6 @@ $ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u
 ```python
 # Python Client-
 client.users.set_password(<user-name>, <new-password>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "password": <new-password>,
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/users/<user-name>",
-  "method": "POST",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -362,29 +260,6 @@ $ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u
 ```python
 # Python Client-
 client.users.set_role(<user-name>, <new-role>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = {
-    "role": <user-role>,
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/users/<user-name>",
-  "method": "DELETE",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example

@@ -43,24 +43,6 @@ $ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager
 client.secrets.get(<secret-key>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/secrets/<secret-key>",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -100,24 +82,6 @@ $ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager
 ```python
 # Python Client-
 client.secrets.list()
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/secrets",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -162,27 +126,6 @@ $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d 
 ```python
 # Python Client-
 client.secrets.create(<new-secret-key>, <new-secret-value>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = { "value": <new-secret-value> }
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/secrets/<new-secret-value>",
-  "method": "PUT",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -231,27 +174,6 @@ $ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -
 client.secrets.update(<secret-key>, <new-value>)
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-vat data = { "value": <new-value> }
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/secrets/<new-value>",
-  "method": "PATCH",
-  "headers": headers,
-  "data": data
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -296,24 +218,6 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" 
 ```python
 # Python Client-
 client.secrets.delete(<secret-key>)
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/secrets/<secret-key>",
-  "method": "DELETE",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example

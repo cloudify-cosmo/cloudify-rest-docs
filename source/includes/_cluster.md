@@ -39,24 +39,6 @@ $ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/ap
 client.cluster.status()
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example (cluster not initialized)
 
 ```json
@@ -110,30 +92,6 @@ client.cluster.start(
 )
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/",
-  "method": "PUT",
-  "headers": headers,
-  "contentType": "application/json"
-  "data": JSON.stringify({
-      "host_ip": "172.20.0.2",
-      "node_name": "manager",
-      "encryption_key": "<REDACTED>"
-  })
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 ```shell
 $ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "encryption_key": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
 ```
@@ -177,28 +135,6 @@ A `ClusterState` resource.
 client.cluster.update(
     config_key='config_value'
 )
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/",
-  "method": "PATCH",
-  "headers": headers,
-  "contentType": "application/json"
-  "data": JSON.stringify({
-      "config_key": "config_value"
-  })
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 ```shell
@@ -254,24 +190,6 @@ client.cluster.nodes.list()
 $ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes"
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/nodes",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -312,24 +230,6 @@ client.cluster.nodes.get("<node-id>")
 $ curl --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
 ```
 
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/nodes/<node-id>",
-  "method": "GET",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -364,24 +264,6 @@ client.cluster.nodes.delete("<node-id>")
 
 ```shell
 $ curl -X DELETE --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
-```
-
-```javascript
-var headers = {
-   'content-type': 'application/json',
-   'authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64'),
-   'tenant': <tenant-name>
-}
-
-var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/nodes/<node-id>",
-  "method": "DELETE",
-  "headers": headers
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example

@@ -44,19 +44,6 @@ response = requests.request("GET", url, headers=headers, params=querystring)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/blueprints?id=hello-world",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -116,20 +103,6 @@ response = requests.request("PUT", url, headers=headers, params=querystring)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&
-  blueprint_archive_url=https://url/to/archive/master.zip",
-  "method": "PUT",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `PUT "{manager-ip}/api/v2.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&
 blueprint_archive_url=https://url/to/archive/master.zip"`
 
@@ -172,19 +145,6 @@ response = requests.request("GET", url, headers=headers, params=querystring)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/blueprints?_include=id%2Ccreated_at",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `GET "{manager-ip}/api/v2.1/blueprints"`
 
 Lists all blueprints.
@@ -213,19 +173,6 @@ url = "http://<manager-ip>/blueprints/<blueprint-id>"
 headers = {'content-type': "application/json"}
 response = requests.request("DELETE", url, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http:<manager-ip>/blueprints/<blueprint-id>",
-  "method": "DELETE",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `DELETE "{manager-ip}/api/v2.1/blueprints/{blueprint-id}"`
@@ -258,19 +205,6 @@ url = "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>/archive"
 headers = {'content-type': "application/json"}
 response = requests.request("GET", url, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>/archive",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `GET "{manager-ip}/api/v2.1/blueprints/{blueprint-id}/archive"`

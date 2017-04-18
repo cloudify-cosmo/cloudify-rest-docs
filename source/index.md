@@ -13,7 +13,6 @@ toc_footers:
 language_tabs:
   - shell: cURL
   - python: Python
-  - javascript: JQuery AJAX
 
 includes:
   - api

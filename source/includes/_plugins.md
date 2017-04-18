@@ -51,20 +51,6 @@ response = requests.request("GET", url, headers=headers)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366",
-  "method": "GET",
-  "headers": {
-    "content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -118,19 +104,6 @@ response = requests.request("DELETE", url, headers=headers)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/plugins/<plugin-id>",
-  "method": "DELETE",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `DELETE "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
 
 Deletes a plugin from the Cloudify-Manager.
@@ -168,19 +141,6 @@ response = requests.request("GET", url, headers=headers)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/plugins",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `GET "{manager-ip}/api/v2.1/plugins"`
 
 Lists all plugins.
@@ -210,20 +170,6 @@ querystring = {"plugin_archive_url":"https://url/to/archive.zip"}
 headers = {'content-type': "application/json"}
 response = requests.request("PUT", url, headers=headers, params=querystring)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/plugins/<plugin-id>?plugin_archive_url=
-         https%3A%2F%2Furl%2Fto%2Farchive.zip",
-  "method": "PUT",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `POST "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
@@ -257,20 +203,6 @@ url = "http://<manager-ip>/api/v2.1/plugins/<plugin-id>/archive"
 headers = {'content-type': "application/json"}
 response = requests.request("GET", url, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/plugins/<plugin-id>/archive",
-  "method": "GET",
-  "headers": {
-    "content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `GET "{manager-ip}/api/v2.1/plugins/{plugin-id}/archive"`

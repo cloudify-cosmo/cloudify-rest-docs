@@ -50,20 +50,6 @@ response = requests.request("GET", url, data=payload, headers=headers, params=qu
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d?
-         deployment_id=hello1&_include=id%2Cstatus%2Ccreated_at",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -117,20 +103,6 @@ response = requests.request("GET", url, data=payload, headers=headers, params=qu
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/executions?deployment_id=<deployment-id>&
-         _include=id%2Ccreated_at%2Cworkflow_id",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `GET "{manager-ip}/api/v2.1/executions?deployment_id={deployment-id}"`
 
 Lists all executions.
@@ -161,20 +133,6 @@ payload = "{\"deployment_id\":\"<deployment-id>\",\"workflow_id\":\"install\"}"
 headers = {'content-type': "application/json"}
 response = requests.request("POST", url, data=payload, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/executions",
-  "method": "POST",
-  "headers": {"content-type": "application/json"},
-  "data": "{\"deployment_id\":\"<deployment-id>\",\"workflow_id\":\"install\"}"
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `POST -d '{"deployment_id":{deployments-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v2.1/executions"`
@@ -213,20 +171,6 @@ payload = "{\"deployment_id\":\"<deployment-id>\",\"action\":\"cancel\"}"
 headers = {'content-type': "application/json"}
 response = requests.request("POST", url, data=payload, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/executions/<execution-id>",
-  "method": "POST",
-  "headers": {"content-type": "application/json"},
-  "data": "{\"deployment_id\":\"<deployment-id>\",\"action\":\"cancel\"}"
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v2.1/executions/{execution-id}"`

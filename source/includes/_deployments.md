@@ -49,19 +49,6 @@ response = requests.request("GET", url, headers=headers, params=querystring)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/deployments?id=hello1",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -164,19 +151,6 @@ response = requests.request("GET", url, headers=headers, params=querystring)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/deployments?blueprint_id=<blueprint-id>&_include=id%2Ccreated_at",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `GET "{manager-ip}/api/v2.1/deployments"`
 
 Lists all deployments.
@@ -210,21 +184,6 @@ payload = "{\"inputs\":{\"image\":\"<image-id>\",\"flavor\":\"<flavor-id>\",\"ag
 headers = {'content-type': "application/json"}
 response = requests.request("PUT", url, data=payload, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/deployments/<deployment-id>",
-  "method": "PUT",
-  "headers": {"content-type": "application/json"},
-  "data": "{\"inputs\":{\"image\":\"<image-id>\",\"flavor\":\"<flavor-id>\",\"agent_user\":\"<user-name>\"},
-            \"blueprint_id\":\"<blueprint-id>\"}"
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `PUT -d '{"inputs":{...}, "blueprint_id":"<blueprint-id>"}' "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
@@ -261,19 +220,6 @@ url = "http://<manager-ip>/deployments/<deployment-id>"
 headers = {'content-type': "application/json"}
 response = requests.request("DELETE", url, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http:<manager-ip>/deployments/<deployment-id>",
-  "method": "DELETE",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `DELETE "{manager-ip}/api/v2.1/deployments/{deployment-id}"`

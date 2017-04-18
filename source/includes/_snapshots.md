@@ -44,19 +44,6 @@ response = requests.request("GET", url, headers=headers)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/snapshots",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -116,19 +103,6 @@ response = requests.request("PUT", url, headers=headers)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>",
-  "method": "PUT",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 `PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
 
 Creates a new snapshot.
@@ -163,19 +137,6 @@ url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
 headers = {'content-type': "application/json"}
 response = requests.request("DELETE", url, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>",
-  "method": "DELETE",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 `DELETE "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`

@@ -45,19 +45,6 @@ response = requests.request("GET", url, headers=headers)
 print(response.text)
 ```
 
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/node-instances/vm_150f1",
-  "method": "GET",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
 > Response Example
 
 ```json
@@ -109,19 +96,6 @@ url = "http://<manager-ip>/api/v2.1/node-instances"
 headers = {'content-type': "application/json"}
 response = requests.request("GET", url, headers=headers)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/node-instances",
-  "method": "GET",
-  "headers": {"content-type": "application/json"},
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example
@@ -222,19 +196,6 @@ querystring = {"id":"<node-instance-id>"}
 headers = {'content-type': "application/json"}
 response = requests.request("PATCH", url, headers=headers, params=querystring)
 print(response.text)
-```
-
-```javascript
-var settings = {
-  "crossDomain": true,
-  "url": "http://<manager-ip>/api/v2.1/node-instances?id=nodejs_host_7f66d",
-  "method": "PATCH",
-  "headers": {"content-type": "application/json"}
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
 ```
 
 > Response Example

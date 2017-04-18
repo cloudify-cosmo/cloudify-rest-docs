@@ -3,7 +3,10 @@
 > Basic usage
 
 ```shell
-$ curl -X GET --header "Tenant: <manager-tenant>" -u <manager-username>:<manager-pasword> "http://<manager-ip>/api/v3/<endpoint>"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/<endpoint>"
 ```
 
 ```python
@@ -21,7 +24,10 @@ from requests.auth import HTTPBasicAuth
 
 url = 'http://<manager-ip>/api/v3/<endpoint>'
 headers = {'Tenant': '<manager-tenant>'}
-response = requests.get(url, auth=HTTPBasicAuth('<manager-username>', '<manager-password>'), headers=headers)
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers)
 response.json()
 ```
 
@@ -54,27 +60,36 @@ you can use the `default_tenant` as the tenant for the request.
 * `<manager-username>`: Replace with a username for the Cloudify Manager instance username
 * `<manager-password>`: Replace with the password for the user specified in <manager-username>
 * `<manager-tenant>`: Replace with the tenant on which to perform the request
+* `<manager-token>`: Replace with a token obtained using the tokens endpoint (see the [athentication](#authentication) section)
 
 ## Response Fields Filtering (Projection)
 
 > Request Example (receive only the `id` and `created_at` fields)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/blueprints?_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-api>/api/v3/blueprints?_include=id,created_at"
 ```
 
 ```python
-# Python Client-
+# Using ClodifyClient
 blueprints = client.blueprints.list(_include=['id','created_at'])
 for blueprint in blueprints:
   print blueprint
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints"
-querystring = {"_include":"id,created_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints'
+querystring = {'_include': 'id,created_at'}
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -97,15 +112,15 @@ $.ajax(settings).done(function (response) {
 {
   "items": [
     {
-      "created_at": "2015-11-11 13:11:40.324698",
+      "created_at": "2017-04-17T12:12:36.626Z",
       "id": "hello-world"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 1,
-      "offset": null,
-      "size": 10000
+      "offset": 0,
+      "size": 1
     }
   }
 }
@@ -125,21 +140,35 @@ Note that specified field names must be part of the resource schema, otherwise a
 > Request Example (requesting only blueprints which `id` is _my_blueprint1_ or _my_blueprint2_)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/blueprints?id=my_blueprint1&id=my_blueprint2&_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/blueprints?_include=id,created_at&id=my-blueprint-1&id=my-blueprint-2"
 ```
 
 ```python
-# Python Client-
-blueprints = client.blueprints.list(_include=['id','created_at'],id=['my_blueprint1','my_blueprint2'])
+# Using ClodifyClient
+blueprints = client.blueprints.list(
+    _include=['id','created_at'],
+    id=['my-blueprint-1', 'my-blueprint-2'],
+)
 for blueprint in blueprints:
     print blueprint
 
-# Python Requests-
+# Using requests
 url = "http://<manager-ip>/api/v2.1/blueprints"
-querystring = {"_include":"id,created_at","id":{"my_blueprint1","my_blueprint2"}}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_include': 'id,created_at',
+    'id': ['my-blueprint-1', 'my-blueprint-2'],
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -161,19 +190,19 @@ $.ajax(settings).done(function (response) {
 {
   "items": [
     {
-      "created_at": "2015-12-02 11:27:48.527776",
-      "id": "my_blueprint2"
+      "created_at": "2017-04-17T12:34:52.911Z",
+      "id": "my-blueprint-1"
     },
     {
-      "created_at": "2015-12-02 11:23:01.939131",
-      "id": "my_blueprint1"
+      "created_at": "2017-04-17T12:34:57.256Z",
+      "id": "my-blueprint-2"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 2,
       "offset": 0,
-      "size": 10000
+      "size": 2
     }
   }
 }
@@ -195,16 +224,35 @@ Filters also accept multiple values (OR) by using multiple parameters of the sam
 > Request Example #1 (sort deployments by `id` descending)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/deployments?_sort=-id&_include=blueprint_id,id"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager_ip>/api/v3/deployments?_include=id,blueprint_id&_sort=-id"
 ```
 
 ```python
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"_sort":"-id","_include":"blueprint_id,id"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using CloudifyClient
+deployments = client.deployments.list(
+    _include=['id', 'blueprint_id'],
+    _sort='-id',
+)
+for deployment in deployments:
+    print deployment
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_include': 'id,blueprint_id',
+    '_sort': '-id',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -231,26 +279,26 @@ $.ajax(settings).done(function (response) {
     },
     {
       "id": "dep4",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     },
     {
       "id": "dep3",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     },
     {
       "id": "dep2",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     },
     {
       "id": "dep1",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 5,
       "offset": 0,
-      "size": 10000
+      "size": 5
     }
   }
 }
@@ -259,16 +307,35 @@ $.ajax(settings).done(function (response) {
 > Request Example #2 (sort deployments by `blueprint_id` ascending and `id` descending)
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/deployments?_sort=blueprint_id&_sort=-id&_include=blueprint_id,id"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager_ip>/api/v3/deployments?_include=id,blueprint_id&_sort=blueprint_id&_sort=-id"
 ```
 
 ```python
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"_sort":"blueprint_id,-id","_include":"blueprint_id,id"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using CloudifyClient
+deployments = client.deployments.list(
+    _include=['id', 'blueprint_id'],
+    _sort=['blueprint_id', '-id'],
+)
+for deployment in deployments:
+    print deployment
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_include': 'id,blueprint_id',
+    '_sort': ['blueprint_id', '-id'],
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -295,26 +362,26 @@ $.ajax(settings).done(function (response) {
     },
     {
       "id": "dep3",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     },
     {
       "id": "dep1",
-      "blueprint_id": "my_blueprint1"
+      "blueprint_id": "my-blueprint-1"
     },
     {
       "id": "dep4",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     },
     {
       "id": "dep2",
-      "blueprint_id": "my_blueprint2"
+      "blueprint_id": "my-blueprint-2"
     }
   ],
   "metadata": {
     "pagination": {
       "total": 5,
       "offset": 0,
-      "size": 10000
+      "size": 5
     }
   }
 }
@@ -332,16 +399,35 @@ order of `_sort` parameters in the request (example #2).
 > Request Example (skip `1` resource, get `size` of `4`)
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/events?_size=4&_offset=1&_include=@timestamp"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/events?_size=4&_offset=1&_include=timestamp"
 ```
 
 ```python
-# Python Requests
-url = "http://<manager-ip>/api/v2.1/events"
-querystring = {"_size":"4","_offset":"1","_include":"@timestamp"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using CloudifyClient
+events = client.events.list(
+    _size=4,
+    _offset=1,
+    _include=['timestamp'],
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/events'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    '_size': '4',
+    '_offset': '1',
+    '_include':'timestamp',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -362,22 +448,22 @@ $.ajax(settings).done(function (response) {
 ```json
 {
   "items": [
-  {
-    "@timestamp": "2015-12-01T15:05:36.692Z"
-  },
-  {
-    "@timestamp": "2015-12-01T15:05:37.493Z"
-  },
-  {
-    "@timestamp": "2015-12-01T15:03:57.911Z"
-  },
-  {
-    "@timestamp": "2015-12-01T15:03:58.025Z"
-  }
+    {
+      "timestamp": "2017-04-17T13:53:22.570Z"
+    },
+    {
+      "timestamp": "2017-04-17T13:53:10.558Z"
+    },
+    {
+      "timestamp": "2017-04-17T13:53:09.799Z"
+    },
+    {
+      "timestamp": "2017-04-17T13:52:54.549Z"
+    }
   ],
   "metadata": {
     "pagination": {
-      "total": 171,
+      "total": 20,
       "offset": 1,
       "size": 4
     }
@@ -405,18 +491,27 @@ Valid credentials do not affect the returned response, but invalid credentials r
 > Request Example #1 (Get the server’s status, authenticate with username and password)
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/status"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/status?_include=status"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.manager.get_status()
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/status"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/status'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'status'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 ```javascript
@@ -436,62 +531,99 @@ $.ajax(settings).done(function (response) {
 
 ```json
 {
-   "status":"running",
-   "services":[
-      {
-         "display_name":"Celery Management",
-         "instances":[
-            {
-               "Id": "cloudify-mgmtworker.service",
-               "Description":"Cloudify Management Worker Service",
-               "LoadState":"loaded",
-               "state":"running"
-            },
-         ]
-      },
-      ...
-   ]
+  "status": "running"
 }
 ```
 
 > Request Example #2 (Get a token, authenticate with username and password)
 
 ```shell
-$ curl -u 'MY_USERNAME':'MY_PASSWORD' "<manager-ip>/api/v2.1/token"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "<manager-ip>/api/v3/tokens"
+```
+
+```python
+# Using CloudifyClient
+client.tokens.get()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/tokens'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
+
 ```
 
 > Response Example #2
 
 ```json
 {
-   "value":"eyJhbGciOiJIUzI1NiIsImV4cCI6MTQ1MDAzMjI0MiwiaWF0IjoxNDUwMDMxNjQyfQ.eyJ1c2VybmFtZSI6ImF"
+  "role": "admin",
+  "value": "WyIwIiwiMzE0OTNmNWFjOTE1MzdhM2IyZWM4NTFhYWY4NzU0NWEiXQ.C9Z82w.dlVgLkkyeWZgZP06xMxe8Omht90"
 }
 ```
 > Request Example #3 (Get all the blueprints, authenticate with a token)
 
 ```shell
-$ curl -H 'Authentication-Token:MY_TOKEN' "<manager-ip>/api/v2.1/blueprints"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    --header "Authentication-Token: <manager-token>" \
+    "http://<manager-ip>/api/v3/blueprints?_include=id"
+```
+
+```python
+# Using CloudifyClient
+client = CloudifyClient(
+    host='<manager-ip>',
+    tenant='<manager-tenant>',
+    token='<manager-token>',
+)
+blueprints = client.blueprints.list(_include=['id'])
+for blueprint in blueprints:
+    print blueprint
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints'
+headers = {
+    'Tenant': '<manager-tenant>',
+    'Autentication-Token': '<manage-token>',
+}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example #3
 
 ```json
 {
-   "items":[
-      {
-         "main_file_name":"openstack-blueprint.yaml",
-         "description":"This Blueprint installs a nodecellar application on an openstack environment",
-         "created_at":"2015-12-13 19:00:03.160167",
-         "updated_at":"2015-12-13 19:00:03.160167",
-         "plan":{
-            "relationships":{
-               "cloudify.openstack.server_connected_to_port":{
-                                 "name":"cloudify.openstack.server_connected_to_port",
-               ...
-               }
-            }
-         }
-      }
-   ]
+  "items": [
+    {
+      "id": "my-blueprint-1"
+    },
+    {
+      "id": "my-blueprint-2"
+    },
+    {
+      "id": "hello-world"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 3
+    }
+  }
 }
 ```

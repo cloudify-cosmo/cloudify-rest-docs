@@ -152,31 +152,64 @@ A `Blueprint` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/blueprints?_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "<manager-ip>/api/v3/blueprints?_include=id"
 ```
 
 ```python
-# Python Client-
-blueprints = client.blueprints.list(_include=['id','created_at'])
+# Using CloudifyClient
+blueprints = client.blueprints.list(_include=['id'])
 for blueprint in blueprints:
-  print blueprint
+    print blueprint
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints"
-querystring = {"_include":"id,created_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = "http://<manager-ip>/api/v3/blueprints"
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`GET "{manager-ip}/api/v2.1/blueprints"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "hello-world"
+    },
+    {
+      "id": "hello-world-2"
+    },
+    {
+      "id": "hello-world-3"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 3
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/blueprints"`
 
 Lists all blueprints.
 
 ### Response
 
 Field | Type | Description
---------- | ------- | -------
+----- | ---- | -----------
 `items` | list | A list of `Blueprint` resources.
 
 

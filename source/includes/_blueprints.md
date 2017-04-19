@@ -273,21 +273,29 @@ Downloads a specific blueprint as an archive.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>/archive"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive" > <blueprint-archive-filename>.tar.gz
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.blueprints.download(blueprint_id='<blueprint-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>/archive"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive'
+headers = {'Tenant': 'default_tenant'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+with open('<blueprint-archive-filename>.tar.gz', 'wb') as blueprint_archive:
+    blueprint_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v2.1/blueprints/{blueprint-id}/archive"`
+`GET "{manager-ip}/api/v3/blueprints/{blueprint-id}/archive"`
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to download.

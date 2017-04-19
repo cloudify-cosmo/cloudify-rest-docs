@@ -80,26 +80,55 @@ A `Blueprint` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&
-blueprint_archive_url=https://url/to/archive/master.zip"
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "http://<manager-ip>/api/v3/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip"
 ```
 
 ```python
-# Python Client-
-client.blueprints._upload(archive_location='https://url/to/archive/master.zip',
-                          blueprint_id='<blueprint-id>',application_file_name='<blueprint-id>.yaml')
+# Using CloudifyClient
+client.blueprints._upload(
+    blueprint_id='<blueprint-id>',
+    archive_location='https://url/to/archive/master.zip',
+    application_file_name='<blueprint-id>.yaml',
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>"
-querystring = {"application_file_name":"<blueprint-id>.yaml",
-               "blueprint_archive_url":"https://url/to/archive/master.zip"}
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>'
+headers = {'Tenant': 'default_tenant'}
+querystring = {
+    'application_file_name': '<blueprint-id>.yaml',
+    'blueprint_archive_url': 'https://url/to/archive/master.zip',
+}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`PUT "{manager-ip}/api/v2.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&
-blueprint_archive_url=https://url/to/archive/master.zip"`
+> Response Example
+
+```json
+{
+  "main_file_name": "singlehost-blueprint.yaml",
+  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-04-19T10:56:06.267Z",
+  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "plan": {
+    ...
+  },
+  "id": "hello-world-2"
+}
+```
+
+`PUT "{manager-ip}/api/v3/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip"`
 
 Uploads a blueprint to Cloudify's manager.
 The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
@@ -111,7 +140,7 @@ It is possible to upload a blueprint from a URL by specifying the URL in the `bl
 
 ### Request Body
 Property | Type | Description
---------- | ------- | -----------
+-------- | ---- | -----------
 `application_file_name` | string | The main blueprint file name in the blueprint's archive.
 `blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
 

@@ -21,7 +21,7 @@ Attribute | Type | Description
 ```shell
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-pasword> \
+    -u <manager-username>:<manager-password> \
     "http://172.20.0.2/api/v3/blueprints?id=hello-world&_include=id"
 ```
 
@@ -82,7 +82,7 @@ A `Blueprint` resource.
 ```shell
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-pasword> \
+    -u <manager-username>:<manager-password> \
     "http://<manager-ip>/api/v3/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip"
 ```
 
@@ -154,7 +154,7 @@ A `Blueprint` resource.
 ```shell
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-pasword> \
+    -u <manager-username>:<manager-password> \
     "<manager-ip>/api/v3/blueprints?_include=id"
 ```
 
@@ -220,7 +220,7 @@ Field | Type | Description
 ```shell
 $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-pasword> \
+    -u <manager-username>:<manager-password> \
     "<manager-ip>/blueprints/<blueprint-id>"
 ```
 

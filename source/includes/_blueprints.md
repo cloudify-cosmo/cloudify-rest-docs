@@ -218,21 +218,44 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X DELETE "<manager-ip>/blueprints/<blueprint-id>"
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-pasword> \
+    "<manager-ip>/blueprints/<blueprint-id>"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.blueprints.delete(blueprint_id='<blueprint-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/blueprints/<blueprint-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/ap/v3/blueprints/<blueprint-id>'
+headers = {'Tenant': 'default_tenant'}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/blueprints/{blueprint-id}"`
+> Response Example
+
+```json
+{
+  "tenant_name": "default_tenant",
+  "created_at": "2017-04-19T13:35:13.971Z",
+  "updated_at": "2017-04-19T13:35:13.971Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "plan": {
+    ...
+  },
+  "id": "hello-world"
+}
+```
+
+`DELETE "{manager-ip}/api/v3/blueprints/{blueprint-id}"`
 
 Deletes a specific blueprint.
 

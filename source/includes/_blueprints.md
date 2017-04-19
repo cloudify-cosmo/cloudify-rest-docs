@@ -2,17 +2,6 @@
 
 ## The Blueprint Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# include this code when using python requests-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -30,46 +19,52 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/blueprints?id=hello-world"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/blueprints?id=<blueprint-id>&_include=id"
 ```
 
 ```python
-# Python Client-
-client.blueprints.get(blueprint_id='hello-world')
+# Using CloudifyClient
+client.blueprints.get(blueprint_id='<blueprint-id>')
 
-# Python Requests-
-querystring = {"id":"hello-world"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    'id': '<blueprint-id>',
+    '_include': 'id',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "updated_at": "2015-11-08 11:11:36.039194",
-  "created_at": "2015-11-08 11:11:36.039194",
-  "main_file_name": "singlehost-blueprint.yaml",
-  "description": "Deploys a simple Python HTTP server on an existing machine.",
-  "id": "hello-world",
-  "plan": {
-    "relationships": {},
-    "inputs": {},
-    "deployment_plugins_to_install": [],
-    "policy_types": {},
-    "outputs": {},
-    "version": {},
-    "workflow_plugins_to_install": {},
-    "groups": {},
-    "workflows": {},
-    "nodes": [],
-    "policy_triggers": {}
+  "items": [
+    {
+      "id": "hello-world"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 1
+    }
   }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/blueprints?id={blueprint-id}"`
+`GET "{manager-ip}/api/v3/blueprints?id={blueprint-id}"`
 
 Gets a specific blueprint.
 
@@ -85,26 +80,55 @@ A `Blueprint` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&
-blueprint_archive_url=https://url/to/archive/master.zip"
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip"
 ```
 
 ```python
-# Python Client-
-client.blueprints._upload(archive_location='https://url/to/archive/master.zip',
-                          blueprint_id='<blueprint-id>',application_file_name='<blueprint-id>.yaml')
+# Using CloudifyClient
+client.blueprints._upload(
+    blueprint_id='<blueprint-id>',
+    archive_location='https://url/to/archive/master.zip',
+    application_file_name='<blueprint-id>.yaml',
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>"
-querystring = {"application_file_name":"<blueprint-id>.yaml",
-               "blueprint_archive_url":"https://url/to/archive/master.zip"}
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    'application_file_name': '<blueprint-id>.yaml',
+    'blueprint_archive_url': 'https://url/to/archive/master.zip',
+}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`PUT "{manager-ip}/api/v2.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&
-blueprint_archive_url=https://url/to/archive/master.zip"`
+> Response Example
+
+```json
+{
+  "main_file_name": "singlehost-blueprint.yaml",
+  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-04-19T10:56:06.267Z",
+  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "plan": {
+    ...
+  },
+  "id": "hello-world"
+}
+```
+
+`PUT "{manager-ip}/api/v3/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip"`
 
 Uploads a blueprint to Cloudify's manager.
 The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
@@ -116,7 +140,7 @@ It is possible to upload a blueprint from a URL by specifying the URL in the `bl
 
 ### Request Body
 Property | Type | Description
---------- | ------- | -----------
+-------- | ---- | -----------
 `application_file_name` | string | The main blueprint file name in the blueprint's archive.
 `blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
 
@@ -128,31 +152,64 @@ A `Blueprint` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/blueprints?_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3/blueprints?_include=id"
 ```
 
 ```python
-# Python Client-
-blueprints = client.blueprints.list(_include=['id','created_at'])
+# Using CloudifyClient
+blueprints = client.blueprints.list(_include=['id'])
 for blueprint in blueprints:
-  print blueprint
+    print blueprint
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints"
-querystring = {"_include":"id,created_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = "http://<manager-ip>/api/v3/blueprints"
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`GET "{manager-ip}/api/v2.1/blueprints"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "hello-world"
+    },
+    {
+      "id": "hello-world-2"
+    },
+    {
+      "id": "hello-world-3"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 3
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/blueprints"`
 
 Lists all blueprints.
 
 ### Response
 
 Field | Type | Description
---------- | ------- | -------
+----- | ---- | -----------
 `items` | list | A list of `Blueprint` resources.
 
 
@@ -161,21 +218,44 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X DELETE "<manager-ip>/blueprints/<blueprint-id>"
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/blueprints/<blueprint-id>"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.blueprints.delete(blueprint_id='<blueprint-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/blueprints/<blueprint-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/ap/v3/blueprints/<blueprint-id>'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/blueprints/{blueprint-id}"`
+> Response Example
+
+```json
+{
+  "tenant_name": "default_tenant",
+  "created_at": "2017-04-19T13:35:13.971Z",
+  "updated_at": "2017-04-19T13:35:13.971Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "plan": {
+    ...
+  },
+  "id": "hello-world"
+}
+```
+
+`DELETE "{manager-ip}/api/v3/blueprints/{blueprint-id}"`
 
 Deletes a specific blueprint.
 
@@ -193,21 +273,29 @@ Downloads a specific blueprint as an archive.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>/archive"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive" > <blueprint-archive-filename>.tar.gz
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.blueprints.download(blueprint_id='<blueprint-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/blueprints/<blueprint-id>/archive"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+with open('<blueprint-archive-filename>.tar.gz', 'wb') as blueprint_archive:
+    blueprint_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v2.1/blueprints/{blueprint-id}/archive"`
+`GET "{manager-ip}/api/v3/blueprints/{blueprint-id}/archive"`
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to download.

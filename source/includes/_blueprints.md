@@ -22,18 +22,18 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://172.20.0.2/api/v3/blueprints?id=hello-world&_include=id"
+    "http://<manager-ip>/api/v3/blueprints?id=<blueprint-id>&_include=id"
 ```
 
 ```python
 # Using CloudifyClient
-client.blueprints.get(blueprint_id='hello-world')
+client.blueprints.get(blueprint_id='<blueprint-id>')
 
 # Using requests
-url = 'http://172.20.0.2/api/v3/blueprints'
-headers = {'Tenant': 'default_tenant'}
+url = 'http://<manager-ip>/api/v3/blueprints'
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {
-    'id': 'hello-world',
+    'id': '<blueprint-id>',
     '_include': 'id',
 }
 response = requests.get(
@@ -96,7 +96,7 @@ client.blueprints._upload(
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'application_file_name': '<blueprint-id>.yaml',
     'blueprint_archive_url': 'https://url/to/archive/master.zip',
@@ -124,7 +124,7 @@ response.json()
   "plan": {
     ...
   },
-  "id": "hello-world-2"
+  "id": "hello-world"
 }
 ```
 
@@ -166,7 +166,7 @@ for blueprint in blueprints:
 
 # Using requests
 url = "http://<manager-ip>/api/v3/blueprints"
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
@@ -230,7 +230,7 @@ client.blueprints.delete(blueprint_id='<blueprint-id>')
 
 # Using requests
 url = 'http://<manager-ip>/ap/v3/blueprints/<blueprint-id>'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 response = requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
@@ -285,7 +285,7 @@ client.blueprints.download(blueprint_id='<blueprint-id>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),

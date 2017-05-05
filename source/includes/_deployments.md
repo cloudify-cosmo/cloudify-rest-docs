@@ -26,90 +26,53 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/deployments?id=hello1"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/deployments?id=<deployment-id>&_include=id"
 ```
 
 ```python
-# Python Client-
-print client.deployments.get(deployment_id='hello1')
+# Using CloudifyClient
+client.deployments.get(deployment_id='<deployment-id>', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"id":"hello1"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    'id': '<deployment-id>',
+    '_include': 'id',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "inputs": {
-    "webserver_port": 8080,
-    "agent_user": "centos",
-    "server_ip": "localhost",
-    "agent_private_key_path": "/root/.ssh/key.pem"
-  },
-  "policy_triggers": {
-    "cloudify.policies.triggers.execute_workflow": {
-      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/
-                master/resources/rest-service/cloudify/triggers/execute_workflow.clj",
-      "parameters": {
-        "workflow_parameters": {
-          "default": {},
-          "description": "Workflow paramters"
-        }
-        ...
-      }
-    }
-  },
-  "groups": {},
-  "blueprint_id": "hello-world",
-  "policy_types": {
-    "cloudify.policies.types.threshold": {
-      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/
-                master/resources/rest-service/cloudify/policies/threshold.clj",
-      "properties": {
-        "is_node_started_before_workflow": {
-          "default": true,
-          "description": "Before triggering workflow, check if the node state is started"
-        }
-        ...
-      }
-    }
-  },
-  "outputs": {
-    "http_endpoint": {
-      "description": "Web server external endpoint",
-      "value": "http://localhost:8080"
-    }
-  },
-  "created_at": "2015-11-08 06:53:45.845046",
-  "workflows": [
+  "items": [
     {
-      "created_at": null,
-      "name": "execute_operation",
-      "parameters": {
-        "operation_kwargs": {
-          "default": {}
-        }
-        ...
-      }
-    },
-    {
-      "created_at": null,
-      "name": "install",
-      "parameters": {}
+      "id": "hello1"
     }
   ],
-  "id": "hello1",
-  "updated_at": "2015-11-08 06:53:45.845046"
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
 
-`GET "{manager-ip}/api/v2.1/deployments?id={deployment-id}"`
+`GET "{manager-ip}/api/v3/deployments?id={deployment-id}"`
 
 Gets a deployment.
 

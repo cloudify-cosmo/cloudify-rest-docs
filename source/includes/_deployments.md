@@ -89,24 +89,57 @@ A `Deployment` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/deployments?blueprint_id=<blueprint-id>&_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3/deployments?_include=id"
 ```
 
 ```python
-# Python Client-
-deployments = client.deployments.list(blueprint_id='<blueprint-id>',_include=['id','created_at'])
+# Using CloudifyClient
+deployments = client.deployments.list(_include=['id'])
 for deployment in deployments:
   print deployment
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"blueprint_id":"<blueprint-id>","_include":"id,created_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`GET "{manager-ip}/api/v2.1/deployments"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "hello1"
+    },
+    {
+      "id": "hello2"
+    },
+    {
+      "id": "hello3"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/deployments"`
 
 Lists all deployments.
 

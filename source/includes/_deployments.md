@@ -156,25 +156,52 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -d '{"inputs":{"image":"<image-id>","flavor":"<flavor-id>",
-"agent_user":"<user-name>"}, "blueprint_id":"<blueprint-id>"}' "<manager-ip>/api/v2.1/deployments/<deployment-id>"
+$ curl -X PUT \
+    --header "Tenant: default_tenant" \
+    --header "Content-Type: application/json" \
+    -u admin:password \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' \
+    "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```
 
 ```python
-# Python Client-
-client.deployments.create(blueprint_id='<blueprint-id>', deployment_id='<deployment-id>', inputs={
-                          'image':'<image-id>','flavor':'<flavor-id>','agent_user':'<user-name>'})
+# Using CloudifyClient
+client.deployments.create(
+    blueprint_id='<blueprint-id>',
+    deployment_id='<deployment-id>',
+    inputs={...},
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments/<deployment-id>"
-payload = "{\"inputs\":{\"image\":\"<image-id>\",\"flavor\":\"<flavor-id>\",\"agent_user\":\"<user-name>\"},
-            \"blueprint_id\":\"<blueprint-id>\"}"
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, data=payload, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload ={
+    'blueprint_id': '<blueprint-id>',
+    'inputs': {...},
+}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
-`PUT -d '{"inputs":{...}, "blueprint_id":"<blueprint-id>"}' "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
+> Response Example
+
+```json
+{
+  "id": "hello4"
+}
+```
+
+`PUT -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' "{manager-ip}/api/v3/deployments/{deployment-id}"`
 
 Creates a new deployment.
 

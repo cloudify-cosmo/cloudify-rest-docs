@@ -223,21 +223,37 @@ A `Deployment` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE "<manager-ip>/deployments/<deployments-id>"
+$ curl -X DELETE \
+    --header "Tenant: default_tenant" \
+    -u admin:password \
+    "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.deployments.delete(deployment_id='<deployments-id>')
 
-# Python Requests-
+# Using requests
 url = "http://<manager-ip>/deployments/<deployment-id>"
 headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
+> Response Example
+
+```json
+{
+  "id": "hello4"
+}
+```
+
+`DELETE "{manager-ip}/api/v3/deployments/{deployment-id}"`
 
 Deletes a deployment.
 

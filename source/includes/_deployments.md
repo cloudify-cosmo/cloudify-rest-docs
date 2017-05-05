@@ -10,6 +10,9 @@ Attribute | Type | Description
 `blueprint_id` | string | The id of the blueprint the deployment is based on.
 `created_at` | datetime | The time when the deployment was created.
 `updated_at` | datetime | The time the deployment was last updated at.
+`created_by` | string | The name of the user that created the deployment.
+`tenant_name` | string | The name of the tenant that owns the deployment.
+`description` | string | Deployment description.
 `workflows` | list | A list of workflows that can be executed on a deployment.
 `inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `policy_types` | object | A dictionary containing policies of a deployment.

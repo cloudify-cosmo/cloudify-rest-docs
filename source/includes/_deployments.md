@@ -2,17 +2,6 @@
 
 ## The Deployment Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# include this code when using python requests-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -21,6 +10,9 @@ Attribute | Type | Description
 `blueprint_id` | string | The id of the blueprint the deployment is based on.
 `created_at` | datetime | The time when the deployment was created.
 `updated_at` | datetime | The time the deployment was last updated at.
+`created_by` | string | The name of the user that created the deployment.
+`tenant_name` | string | The name of the tenant that owns the deployment.
+`description` | string | Deployment description.
 `workflows` | list | A list of workflows that can be executed on a deployment.
 `inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `policy_types` | object | A dictionary containing policies of a deployment.
@@ -34,90 +26,53 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/deployments?id=hello1"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/deployments?id=<deployment-id>&_include=id"
 ```
 
 ```python
-# Python Client-
-print client.deployments.get(deployment_id='hello1')
+# Using CloudifyClient
+client.deployments.get(deployment_id='<deployment-id>', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"id":"hello1"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    'id': '<deployment-id>',
+    '_include': 'id',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "inputs": {
-    "webserver_port": 8080,
-    "agent_user": "centos",
-    "server_ip": "localhost",
-    "agent_private_key_path": "/root/.ssh/key.pem"
-  },
-  "policy_triggers": {
-    "cloudify.policies.triggers.execute_workflow": {
-      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/
-                master/resources/rest-service/cloudify/triggers/execute_workflow.clj",
-      "parameters": {
-        "workflow_parameters": {
-          "default": {},
-          "description": "Workflow paramters"
-        }
-        ...
-      }
-    }
-  },
-  "groups": {},
-  "blueprint_id": "hello-world",
-  "policy_types": {
-    "cloudify.policies.types.threshold": {
-      "source": "https://raw.githubusercontent.com/cloudify-cosmo/cloudify-manager/
-                master/resources/rest-service/cloudify/policies/threshold.clj",
-      "properties": {
-        "is_node_started_before_workflow": {
-          "default": true,
-          "description": "Before triggering workflow, check if the node state is started"
-        }
-        ...
-      }
-    }
-  },
-  "outputs": {
-    "http_endpoint": {
-      "description": "Web server external endpoint",
-      "value": "http://localhost:8080"
-    }
-  },
-  "created_at": "2015-11-08 06:53:45.845046",
-  "workflows": [
+  "items": [
     {
-      "created_at": null,
-      "name": "execute_operation",
-      "parameters": {
-        "operation_kwargs": {
-          "default": {}
-        }
-        ...
-      }
-    },
-    {
-      "created_at": null,
-      "name": "install",
-      "parameters": {}
+      "id": "hello1"
     }
   ],
-  "id": "hello1",
-  "updated_at": "2015-11-08 06:53:45.845046"
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
 
-`GET "{manager-ip}/api/v2.1/deployments?id={deployment-id}"`
+`GET "{manager-ip}/api/v3/deployments?id={deployment-id}"`
 
 Gets a deployment.
 
@@ -134,24 +89,57 @@ A `Deployment` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/deployments?blueprint_id=<blueprint-id>&_include=id,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3/deployments?_include=id"
 ```
 
 ```python
-# Python Client-
-deployments = client.deployments.list(blueprint_id='<blueprint-id>',_include=['id','created_at'])
+# Using CloudifyClient
+deployments = client.deployments.list(_include=['id'])
 for deployment in deployments:
   print deployment
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments"
-querystring = {"blueprint_id":"<blueprint-id>","_include":"id,created_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`GET "{manager-ip}/api/v2.1/deployments"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "hello1"
+    },
+    {
+      "id": "hello2"
+    },
+    {
+      "id": "hello3"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/deployments"`
 
 Lists all deployments.
 
@@ -168,25 +156,52 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -d '{"inputs":{"image":"<image-id>","flavor":"<flavor-id>",
-"agent_user":"<user-name>"}, "blueprint_id":"<blueprint-id>"}' "<manager-ip>/api/v2.1/deployments/<deployment-id>"
+$ curl -X PUT \
+    --header "Tenant: default_tenant" \
+    --header "Content-Type: application/json" \
+    -u admin:password \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' \
+    "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```
 
 ```python
-# Python Client-
-client.deployments.create(blueprint_id='<blueprint-id>', deployment_id='<deployment-id>', inputs={
-                          'image':'<image-id>','flavor':'<flavor-id>','agent_user':'<user-name>'})
+# Using CloudifyClient
+client.deployments.create(
+    blueprint_id='<blueprint-id>',
+    deployment_id='<deployment-id>',
+    inputs={...},
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/deployments/<deployment-id>"
-payload = "{\"inputs\":{\"image\":\"<image-id>\",\"flavor\":\"<flavor-id>\",\"agent_user\":\"<user-name>\"},
-            \"blueprint_id\":\"<blueprint-id>\"}"
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, data=payload, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload ={
+    'blueprint_id': '<blueprint-id>',
+    'inputs': {...},
+}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
-`PUT -d '{"inputs":{...}, "blueprint_id":"<blueprint-id>"}' "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
+> Response Example
+
+```json
+{
+  "id": "hello4"
+}
+```
+
+`PUT -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' "{manager-ip}/api/v3/deployments/{deployment-id}"`
 
 Creates a new deployment.
 
@@ -208,21 +223,37 @@ A `Deployment` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE "<manager-ip>/deployments/<deployments-id>"
+$ curl -X DELETE \
+    --header "Tenant: default_tenant" \
+    -u admin:password \
+    "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.deployments.delete(deployment_id='<deployments-id>')
 
-# Python Requests-
+# Using requests
 url = "http://<manager-ip>/deployments/<deployment-id>"
 headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/deployments/{deployment-id}"`
+> Response Example
+
+```json
+{
+  "id": "hello4"
+}
+```
+
+`DELETE "{manager-ip}/api/v3/deployments/{deployment-id}"`
 
 Deletes a deployment.
 

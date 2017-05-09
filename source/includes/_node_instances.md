@@ -130,46 +130,52 @@ Field | Type | Description
 > Requests Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -d 'version=0&state=starting&
-runtime_properties={key: value}' "http://<manager-ip>/api/v2.1/node-instances?id=nodejs_host_7f66d"
+$ curl -X PATCH \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"version": 0, "runtime_properties": {"key": "value"}}' \
+    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>?_include=id,runtime_properties"
 ```
 
 ```python
-# Python Client-
-client.node_instances.update(node_instance_id='nodejs_host_7f66d', state='starting',
-                             runtime_properties={'key': 'value'}, version=0)
+# Using CloudifyClient
+client.node_instances.update(
+    node_instance_id='<node-instance-id>',
+    version=0,
+    runtime_properties={'key': 'value'},
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/node-instances"
-querystring = {"id":"<node-instance-id>"}
-headers = {'content-type': "application/json"}
-response = requests.request("PATCH", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id,runtime_properties'}
+payload = {'version': 0, 'runtime_properties': {'key': 'value'}}
+response = requests.patch(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "relationships": [
-      {
-      "target_name": "nodecellar_security_group",
-      "type": "cloudify.openstack.server_connected_to_security_group",
-      "target_id": "nodecellar_security_group_deb08"
-      }
-    ],
-    "runtime_properties": {"key": "value"},
-    "state": "starting",
-    "version": 3,
-    "host_id": "nodejs_host_7f66d",
-    "deployment_id": "d1",
-    "scaling_groups": [],
-    "id": "nodejs_host_7f66d",
-    "node_id": "nodejs_host"
+  "runtime_properties": {
+    "key": "value"
+  },
+  "id": "http_web_server_tfq3nt"
 }
 ```
 
-`PATCH "{manager-ip}/api/v2.1/node-instances?id={node-instance-id}"`
+`PATCH "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
 
 Updates a node instance.
 

@@ -67,20 +67,29 @@ A `NodeInstance` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/node-instances"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/node-instances&_include=id"
 ```
 
 ```python
-# Python Client-
-instances = client.node_instances.list()
+# Using CloudifyClient
+instances = client.node_instances.list(_include=['id'])
 for instance in instances:
     print instance
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/node-instances"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
@@ -89,68 +98,23 @@ print(response.text)
 {
   "items": [
     {
-      "relationships": [
-        {
-          "target_name": "nodejs_host",
-          "target_id": "nodejs_host_7f66d",
-          "type": "cloudify.relationships.contained_in"
-        }
-      ],
-      "version": null,
-      "runtime_properties": {},
-      "state": "uninitialized",
-      "node_id": "nodejs",
-      "host_id": "nodejs_host_7f66d",
-      "deployment_id": "d1",
-      "scaling_groups": [],
-      "id": "nodejs_d5a3e"
+      "id": "http_web_server_tfq3nt"
     },
     {
-      "relationships": [
-        {
-          "target_name": "nodejs_host",
-          "target_id": "nodejs_host_83396",
-          "type": "cloudify.relationships.contained_in"
-        }
-      ],
-      "version": null,
-      "runtime_properties": {},
-      "state": "uninitialized",
-      "node_id": "nodejs",
-      "host_id": "nodejs_host_83396",
-      "deployment_id": "d1",
-      "scaling_groups": [],
-      "id": "nodejs_836e3"
-    },
-    {
-      "relationships": [
-        {
-          "target_name": "mongod_host",
-          "target_id": "mongod_host_fa1d1",
-          "type": "cloudify.relationships.contained_in"
-        }
-      ],
-      "version": null,
-      "runtime_properties": {},
-      "state": "uninitialized",
-      "node_id": "mongod",
-      "host_id": "mongod_host_fa1d1",
-      "deployment_id": "d1",
-      "scaling_groups": [],
-      "id": "mongod_9961b"
+      "id": "vm_m7nmd7"
     }
   ],
   "metadata": {
     "pagination": {
-      "total": 28,
+      "total": 2,
       "offset": 0,
-      "size": 10000
+      "size": 0
     }
   }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/node-instances"`
+`GET "{manager-ip}/api/v3/node-instances"`
 
 Lists all node instances.
 

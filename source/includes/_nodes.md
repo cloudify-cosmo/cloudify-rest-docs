@@ -2,17 +2,6 @@
 
 ## The Node Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# include this code when using python requests-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -20,11 +9,14 @@ Attribute | Type | Description
 `id` | string | The name of the node.
 `deployment_id` | string | The id of the deployment the node belongs to.
 `blueprint_id` | string | The id of the blueprint the node belongs to.
+`tenant_name` | string | The name of the tenant that owns the node.
 `type` | string | The type of the node.
 `type_hierarchy` | list | The type hierarchy of the node (ancestors).
 `number_of_instances` | integer | The number of node instances the node has.
 `planned_number_of_instances` | integer | -
-`deploy_number_of_instances` | integer | -
+`deploy_number_of_instances` | integer | Default number of instances on deploy.
+`max_number_of_instances` | integer | Maximum number of instances.
+`min_number_of_instances` | integer | Minimum number of instances.
 `host_id` | string | The Compute node name the node is contained within.
 `properties` | object | The properties of the node.
 `operations` | object | The operations the node exposes.
@@ -39,20 +31,29 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/nodes"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/nodes?_include=id"
 ```
 
 ```python
-# Python Client-
-nodes = client.nodes.list()
+# Using CloudifyClient
+nodes = client.nodes.list(_include=['id'])
 for node in nodes:
     print node
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/nodes"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using request
+url = 'http://<manager-ip>/api/v3/nodes'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
@@ -61,83 +62,23 @@ print(response.text)
 {
   "items": [
     {
-      "operations": {
-        "cloudify.interfaces.lifecycle.create": {
-          "inputs": {},
-          "has_intrinsic_functions": false,
-          "plugin": "",
-          "retry_interval": null,
-          "max_retries": null,
-          "executor": null,
-          "operation": ""
-        },
-        ...
-        }
-      },
-      "deploy_number_of_instances": "1",
-      "type_hierarchy": [
-        "cloudify.nodes.Root",
-        "cloudify.nodes.SoftwareComponent",
-        "cloudify.nodes.WebServer"
-      ],
-      "blueprint_id": "hello-world",
-      "plugins": [
-        {
-          "distribution_release": null,
-          "install_arguments": null,
-          "name": "script",
-          "package_name": "cloudify-script-plugin",
-          "distribution_version": null,
-          "package_version": "1.3",
-          "supported_platform": null,
-          "source": null,
-          "install": false,
-          "executor": "host_agent",
-          "distribution": null
-        }
-      ],
-      "host_id": "vm",
-      "properties": {
-        "port": 8080
-      },
-      "relationships": [
-        {
-          "source_operations": {
-            "cloudify.interfaces.relationship_lifecycle.unlink": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            ...
-            }
-          },
-          "type_hierarchy": [
-            "cloudify.relationships.depends_on",
-            "cloudify.relationships.contained_in"
-          ],
-          "target_id": "vm",
-          "type": "cloudify.relationships.contained_in",
-          "properties": {
-            "connection_type": "all_to_all"
-          }
-        }
-      ],
-      "plugins_to_install": null,
-      "type": "cloudify.nodes.WebServer",
-      "id": "http_web_server",
-      "number_of_instances": "1",
-      "deployment_id": "hello1",
-      "planned_number_of_instances": "1"
+      "id": "http_web_server"
+    },
+    {
+      "id": "vm"
     }
-  ]
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/nodes"`
+`GET "{manager-ip}/api/v3/nodes"`
 
 Lists all nodes.
 

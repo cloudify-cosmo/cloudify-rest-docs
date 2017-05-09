@@ -20,42 +20,38 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/node-instances/vm_150f1"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
 ```
 
 ```python
-# Python Client-
-print client.node_instances.get(node_instance_id='vm_150f1')
+# Using CloudifyClient
+client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/node-instances/vm_150f1"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "relationships": [
-    {
-      "target_name": "vm",
-      "type": "cloudify.relationships.contained_in",
-      "target_id": "vm_150f1"
-    }
-  ],
-  "runtime_properties": {},
-  "node_id": "http_web_server",
-  "version": 1,
-  "state": "uninitialized",
-  "host_id": "vm_150f1",
-  "deployment_id": "hello1",
-  "id": "http_web_server_7e234"
+  "id": "http_web_server_tfq3nt"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/node-instances/{node-instance-id}"`
+`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
 
 Gets a node instance.
 

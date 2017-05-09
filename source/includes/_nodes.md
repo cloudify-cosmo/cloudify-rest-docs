@@ -28,20 +28,29 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/nodes"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/nodes?_include=id"
 ```
 
 ```python
-# Python Client-
-nodes = client.nodes.list()
+# Using CloudifyClient
+nodes = client.nodes.list(_include=['id'])
 for node in nodes:
     print node
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/nodes"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using request
+url = 'http://<manager-ip>/api/v3/nodes'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
@@ -50,83 +59,23 @@ print(response.text)
 {
   "items": [
     {
-      "operations": {
-        "cloudify.interfaces.lifecycle.create": {
-          "inputs": {},
-          "has_intrinsic_functions": false,
-          "plugin": "",
-          "retry_interval": null,
-          "max_retries": null,
-          "executor": null,
-          "operation": ""
-        },
-        ...
-        }
-      },
-      "deploy_number_of_instances": "1",
-      "type_hierarchy": [
-        "cloudify.nodes.Root",
-        "cloudify.nodes.SoftwareComponent",
-        "cloudify.nodes.WebServer"
-      ],
-      "blueprint_id": "hello-world",
-      "plugins": [
-        {
-          "distribution_release": null,
-          "install_arguments": null,
-          "name": "script",
-          "package_name": "cloudify-script-plugin",
-          "distribution_version": null,
-          "package_version": "1.3",
-          "supported_platform": null,
-          "source": null,
-          "install": false,
-          "executor": "host_agent",
-          "distribution": null
-        }
-      ],
-      "host_id": "vm",
-      "properties": {
-        "port": 8080
-      },
-      "relationships": [
-        {
-          "source_operations": {
-            "cloudify.interfaces.relationship_lifecycle.unlink": {
-              "inputs": {},
-              "has_intrinsic_functions": false,
-              "plugin": "",
-              "retry_interval": null,
-              "max_retries": null,
-              "executor": null,
-              "operation": ""
-            },
-            ...
-            }
-          },
-          "type_hierarchy": [
-            "cloudify.relationships.depends_on",
-            "cloudify.relationships.contained_in"
-          ],
-          "target_id": "vm",
-          "type": "cloudify.relationships.contained_in",
-          "properties": {
-            "connection_type": "all_to_all"
-          }
-        }
-      ],
-      "plugins_to_install": null,
-      "type": "cloudify.nodes.WebServer",
-      "id": "http_web_server",
-      "number_of_instances": "1",
-      "deployment_id": "hello1",
-      "planned_number_of_instances": "1"
+      "id": "http_web_server"
+    },
+    {
+      "id": "vm"
     }
-  ]
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/nodes"`
+`GET "{manager-ip}/api/v3/nodes"`
 
 Lists all nodes.
 

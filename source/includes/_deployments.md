@@ -234,8 +234,8 @@ $ curl -X DELETE \
 client.deployments.delete(deployment_id='<deployments-id>')
 
 # Using requests
-url = "http://<manager-ip>/deployments/<deployment-id>"
-headers = {'content-type': "application/json"}
+url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
+headers = {'content-type': 'application/json'}
 response = requests.delete(
     url,
     auth=HTTPBasicAuth('admin', 'password'),

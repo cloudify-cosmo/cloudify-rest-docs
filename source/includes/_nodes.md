@@ -9,11 +9,14 @@ Attribute | Type | Description
 `id` | string | The name of the node.
 `deployment_id` | string | The id of the deployment the node belongs to.
 `blueprint_id` | string | The id of the blueprint the node belongs to.
+`tenant_name` | string | The name of the tenant that owns the node.
 `type` | string | The type of the node.
 `type_hierarchy` | list | The type hierarchy of the node (ancestors).
 `number_of_instances` | integer | The number of node instances the node has.
 `planned_number_of_instances` | integer | -
-`deploy_number_of_instances` | integer | -
+`deploy_number_of_instances` | integer | Default number of instances on deploy.
+`max_number_of_instances` | integer | Maximum number of instances.
+`min_number_of_instances` | integer | Minimum number of instances.
 `host_id` | string | The Compute node name the node is contained within.
 `properties` | object | The properties of the node.
 `operations` | object | The operations the node exposes.

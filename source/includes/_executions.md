@@ -193,23 +193,44 @@ An `Execution` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -d '{"deployment_id":"<deployment-id>",
-"action":"cancel"}' "<manager-ip>/api/v2.1/executions/<execution-id>"
+curl -X POST \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"deployment_id": "dep", "action": "cancel"}'
+    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.executions.cancel(execution_id='<execution-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/executions/<execution-id>"
-payload = "{\"deployment_id\":\"<deployment-id>\",\"action\":\"cancel\"}"
-headers = {'content-type': "application/json"}
-response = requests.request("POST", url, data=payload, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload ={'deployment_id': 'dep', 'action': 'cancel'}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
+```
+> Example Response
+
+```json
+{
+  "id": "e7821510-c536-47f3-8fe7-691a91dc91ff"
+}
 ```
 
-`POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v2.1/executions/{execution-id}"`
+`POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v3/executions/{execution-id}"`
 
 Cancels an execution.
 

@@ -2,23 +2,14 @@
 
 ## The NodeInstance Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# include this code when using python requests-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description
 --------- | ------- | -------
 `id` | string | The id of the node instance.
 `deployment_id` | string | The id of the deployment the node instance belongs to.
+`created_by` | string | The name of the user that created the deployment.
+`tenant_name` | string | The name of the tenant that owns the deployment.
 `host_id` | string | The Compute node instance id the node is contained within.
 `runtime_properties` | object | The runtime properties of the node instance.
 `relationships` | list | The relationships the node has with other nodes.
@@ -31,42 +22,38 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/node-instances/vm_150f1"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
 ```
 
 ```python
-# Python Client-
-print client.node_instances.get(node_instance_id='vm_150f1')
+# Using CloudifyClient
+client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/node-instances/vm_150f1"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "relationships": [
-    {
-      "target_name": "vm",
-      "type": "cloudify.relationships.contained_in",
-      "target_id": "vm_150f1"
-    }
-  ],
-  "runtime_properties": {},
-  "node_id": "http_web_server",
-  "version": 1,
-  "state": "uninitialized",
-  "host_id": "vm_150f1",
-  "deployment_id": "hello1",
-  "id": "http_web_server_7e234"
+  "id": "http_web_server_tfq3nt"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/node-instances/{node-instance-id}"`
+`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
 
 Gets a node instance.
 
@@ -82,20 +69,29 @@ A `NodeInstance` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/node-instances"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/node-instances&_include=id"
 ```
 
 ```python
-# Python Client-
-instances = client.node_instances.list()
+# Using CloudifyClient
+instances = client.node_instances.list(_include=['id'])
 for instance in instances:
     print instance
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/node-instances"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
@@ -104,68 +100,23 @@ print(response.text)
 {
   "items": [
     {
-      "relationships": [
-        {
-          "target_name": "nodejs_host",
-          "target_id": "nodejs_host_7f66d",
-          "type": "cloudify.relationships.contained_in"
-        }
-      ],
-      "version": null,
-      "runtime_properties": {},
-      "state": "uninitialized",
-      "node_id": "nodejs",
-      "host_id": "nodejs_host_7f66d",
-      "deployment_id": "d1",
-      "scaling_groups": [],
-      "id": "nodejs_d5a3e"
+      "id": "http_web_server_tfq3nt"
     },
     {
-      "relationships": [
-        {
-          "target_name": "nodejs_host",
-          "target_id": "nodejs_host_83396",
-          "type": "cloudify.relationships.contained_in"
-        }
-      ],
-      "version": null,
-      "runtime_properties": {},
-      "state": "uninitialized",
-      "node_id": "nodejs",
-      "host_id": "nodejs_host_83396",
-      "deployment_id": "d1",
-      "scaling_groups": [],
-      "id": "nodejs_836e3"
-    },
-    {
-      "relationships": [
-        {
-          "target_name": "mongod_host",
-          "target_id": "mongod_host_fa1d1",
-          "type": "cloudify.relationships.contained_in"
-        }
-      ],
-      "version": null,
-      "runtime_properties": {},
-      "state": "uninitialized",
-      "node_id": "mongod",
-      "host_id": "mongod_host_fa1d1",
-      "deployment_id": "d1",
-      "scaling_groups": [],
-      "id": "mongod_9961b"
+      "id": "vm_m7nmd7"
     }
   ],
   "metadata": {
     "pagination": {
-      "total": 28,
+      "total": 2,
       "offset": 0,
-      "size": 10000
+      "size": 0
     }
   }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/node-instances"`
+`GET "{manager-ip}/api/v3/node-instances"`
 
 Lists all node instances.
 
@@ -181,46 +132,52 @@ Field | Type | Description
 > Requests Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -d 'version=0&state=starting&
-runtime_properties={key: value}' "http://<manager-ip>/api/v2.1/node-instances?id=nodejs_host_7f66d"
+$ curl -X PATCH \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"version": 0, "runtime_properties": {"key": "value"}}' \
+    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>?_include=id,runtime_properties"
 ```
 
 ```python
-# Python Client-
-client.node_instances.update(node_instance_id='nodejs_host_7f66d', state='starting',
-                             runtime_properties={'key': 'value'}, version=0)
+# Using CloudifyClient
+client.node_instances.update(
+    node_instance_id='<node-instance-id>',
+    version=0,
+    runtime_properties={'key': 'value'},
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/node-instances"
-querystring = {"id":"<node-instance-id>"}
-headers = {'content-type': "application/json"}
-response = requests.request("PATCH", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id,runtime_properties'}
+payload = {'version': 0, 'runtime_properties': {'key': 'value'}}
+response = requests.patch(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "relationships": [
-      {
-      "target_name": "nodecellar_security_group",
-      "type": "cloudify.openstack.server_connected_to_security_group",
-      "target_id": "nodecellar_security_group_deb08"
-      }
-    ],
-    "runtime_properties": {"key": "value"},
-    "state": "starting",
-    "version": 3,
-    "host_id": "nodejs_host_7f66d",
-    "deployment_id": "d1",
-    "scaling_groups": [],
-    "id": "nodejs_host_7f66d",
-    "node_id": "nodejs_host"
+  "runtime_properties": {
+    "key": "value"
+  },
+  "id": "http_web_server_tfq3nt"
 }
 ```
 
-`PATCH "{manager-ip}/api/v2.1/node-instances?id={node-instance-id}"`
+`PATCH "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
 
 Updates a node instance.
 

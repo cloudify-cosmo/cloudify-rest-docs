@@ -130,23 +130,48 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -d '{"deployment_id":"sample-dep",
-"workflow_id":"install"}' "<manager-ip>/api/v2.1/executions"
+$ curl -X POST \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"deployment_id": "<deployment-id>", "workflow_id": "install"}' \
+    "http://<manager_ip>/api/v3/executions?_include=id"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.executions.start(deployment_id='<deployment-id>', workflow_id='install')
 
-#Python Requests-
-url = "http://<manager-ip>/api/v2.1/executions"
-payload = "{\"deployment_id\":\"<deployment-id>\",\"workflow_id\":\"install\"}"
-headers = {'content-type': "application/json"}
-response = requests.request("POST", url, data=payload, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload ={
+    'deployment_id': '<deployment-id>',
+    'workflow_id': 'install',
+}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
-`POST -d '{"deployment_id":{deployments-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v2.1/executions"`
+> Response example
+
+```json
+{
+  "id": "33dd51d4-5e24-4034-8ed6-2150cdbd98f7"
+}
+```
+
+`POST -d '{"deployment_id":{deployment-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v3/executions"`
 
 Starts an execution.
 

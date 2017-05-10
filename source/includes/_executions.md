@@ -13,6 +13,8 @@ Attribute | Type | Description
 `status` | string | The executions status.
 `error` | string | The execution's error message on execution failure.
 `created_at` | datetime | The time the execution was queued at.
+`created_by` | string | The name of the user that created the execution.
+`tenant_name` | string | The name of the tenant that owns the execution.
 `parameters` | object | A dict of the workflow parameters passed when starting the execution.
 `is_system_workflow` | boolean | true if the execution is of a system workflow.
 

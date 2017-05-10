@@ -250,7 +250,49 @@ An `Execution` resource.
 
 
 ## Update Execution
-`PATCH "{manager-ip}/api/v2.1/executions/{execution-id}"`
+
+> Request Example
+
+```shell
+curl -X PATCH \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"status": "cancelled"}' \
+    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
+```
+
+```python
+# Using CloudifyClient
+client.executions.update(execution_id='<execution_id>', status='cancelled')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload ={'status': 'cancelled'}
+response = requests.patch(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
+```
+
+> Example Response
+
+```json
+{
+  "id": "21236984-9d1f-445e-8bca-f923175441f1"
+}
+```
+
+`PATCH "{manager-ip}/api/v3/executions/{execution-id}"`
 
 Updates an execution.
 

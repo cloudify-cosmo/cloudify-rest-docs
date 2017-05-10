@@ -22,41 +22,39 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d?
-deployment_id=hello1&_include=id,status,created_at"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
 ```
 
 ```python
-# Python Client-
-print client.executions.get(execution_id='2b422fb2-38b4-4b02-95ac-e9b91390599d',
-                            _include=['id','created_at','status'])
+# Using CloudifyClient
+client.executions.get(execution_id='<execution_id>', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/executions/2b422fb2-38b4-4b02-95ac-e9b91390599d"
-querystring = {"deployment_id":"hello1","_include":"id,status,create_at"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "status": "terminated",
-  "created_at": "2015-11-18 06:54:14.238731",
-  "workflow_id": "install",
-  "is_system_workflow": false,
-  "parameters": {},
-  "blueprint_id": "hello-world",
-  "deployment_id": "hello1",
-  "error": "",
-  "id": "2b422fb2-38b4-4b02-95ac-e9b91390599d"
+  "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
 }
 ```
 
 
-`GET "{manager-ip}/api/v2.1/executions/{execution-id}?deployment_id={deployment_id}"`
+`GET "{manager-ip}/api/v3/executions/{execution-id}"`
 
 Gets an execution.
 

@@ -71,26 +71,50 @@ An `Execution` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v2.1/executions?deployment_id=<deployment-id>&_include=id,status,
-workflow_id,created_at"
+$ curl -X GET "<manager-ip>/api/v3/executions?_include=id
 ```
 
 ```python
-# Python Client-
-executions = client.executions.list(deployment_id='<deployment-id>',_include=['id','status',
-                                    'workflow_id','created_at'])
+# Using CloudifyClient
+executions = client.executions.list(_include=['id'])
 for execution in executions:
   print execution
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/executions"
-querystring = {"deployment_id":"<deployments-id>","_include":"id,created_at,workflow_id,status"}
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('admin', 'password'),
+    headers=headers,
+    params=querystring,
+)
 ```
 
-`GET "{manager-ip}/api/v2.1/executions?deployment_id={deployment-id}"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "dab3d7ac-fef0-4b8b-912f-5611cc8f20b5"
+    },
+    {
+      "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/executions"`
 
 Lists all executions.
 

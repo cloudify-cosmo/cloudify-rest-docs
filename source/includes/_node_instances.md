@@ -8,8 +8,8 @@ Attribute | Type | Description
 --------- | ------- | -------
 `id` | string | The id of the node instance.
 `deployment_id` | string | The id of the deployment the node instance belongs to.
-`created_by` | string | The name of the user that created the deployment.
-`tenant_name` | string | The name of the tenant that owns the deployment.
+`created_by` | string | The name of the user that created the node instance.
+`tenant_name` | string | The name of the tenant that owns the node instance.
 `host_id` | string | The Compute node instance id the node is contained within.
 `runtime_properties` | object | The runtime properties of the node instance.
 `relationships` | list | The relationships the node has with other nodes.

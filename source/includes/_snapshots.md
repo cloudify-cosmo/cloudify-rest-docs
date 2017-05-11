@@ -327,7 +327,53 @@ Downloads an existing snapshot.
 A streamed response (content type `application/octet-stream`), which is a zip archive containing the snapshot data.
 
 ## Upload Snapshot
-`PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/archive"`
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots/archive?snapshot_archive_url=http://url/to/archive.zip"
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.upload(
+    snapshot_id='<snapshot-id>',
+    snapshot_path='http://url/to/archive.zip',
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/archive'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'snapshot_archive_url': 'http://url/to/archive.zip'}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+
+```
+
+> Response Example
+
+```json
+{
+  "status": "uploaded",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T18:13:25.912Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "error": "",
+  "id": "snapshot5"
+}
+```
+
+
+`PUT "{manager-ip}/api/v3/snapshots/{snapshot-id}/archive"`
 
 Uploads a snapshot to the Cloudify Manager.
 The call expects a `application/octet-stream` content type where the content is a zip archive.

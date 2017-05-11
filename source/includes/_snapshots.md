@@ -31,7 +31,7 @@ for snapshot in snapshots:
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/snapshots'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
@@ -103,7 +103,7 @@ client.snapshots.create(
 url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 payload = {}
 response = requests.put(

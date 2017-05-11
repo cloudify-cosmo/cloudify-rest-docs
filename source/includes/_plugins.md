@@ -39,7 +39,7 @@ client.plugins.get(plugin_id='<plugin-id'>', _include=['id'])
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
@@ -90,7 +90,7 @@ client.plugins.delete(plugin_id='<plugin-id>')
 url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload = {'force': False}
@@ -139,7 +139,7 @@ for plugin in plugins:
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/plugins'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
@@ -200,7 +200,7 @@ client.plugins.upload(plugin_path='http://url/to/archive.wgn')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/plugins'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'plugin_archive_url': 'http://url/to/archive.wgn',
     '_include': 'id',
@@ -256,7 +256,7 @@ client.plugins.download(
 
 # Using Requests
 url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>/archive'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),

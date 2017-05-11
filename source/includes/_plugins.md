@@ -240,21 +240,32 @@ The new uploaded `Plugin` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/plugins/<plugin-id>/archive"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins/<plugin-id>/archive" > <plugin-archive-filename>.wgn
 ```
 
 ```python
-# Python Client-
-client.plugins.download(plugin_id='<plugin-id>')
+# Using CloudifyClient
+client.plugins.download(
+   plugin_id='<plugin-id>',
+   output_file='<plugin-archive-filename>',
+)
 
-# Pyhton Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/<plugin-id>/archive"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using Requests
+url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>/archive'
+headers = {'Tenant': 'default_tenant'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+with open('<plugin-archive-filename>.wgn', 'wb') as plugin_archive:
+    plugin_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v2.1/plugins/{plugin-id}/archive"`
+`GET "{manager-ip}/api/v3/plugins/{plugin-id}/archive"`
 
 Downloads a plugin.
 

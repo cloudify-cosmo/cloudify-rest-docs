@@ -73,21 +73,37 @@ A `Plugin` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366"
+$ curl -X DELETE \
+    --header "Content-Type: application/json" \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"force": false}' \
+    "http://<manager-ip>/api/v3/plugins/<plugin-id>?_include=id"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.plugins.delete(plugin_id='<plugin-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/<plugin-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload = {'force': False}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
+`DELETE "{manager-ip}/api/v3/plugins/{plugin-id}"`
 
 Deletes a plugin from the Cloudify-Manager.
 

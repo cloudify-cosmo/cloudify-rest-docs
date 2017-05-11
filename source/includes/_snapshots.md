@@ -84,21 +84,74 @@ Attribute | Type | Description
 > Requests Example
 
 ```shell
-$ curl -X PUT "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>"
 ```
 
 ```python
-# Python Client-
-client.snapshots.create(snapshot_id='<snapshot-id>')
+# Using CloudifyClient
+client.snapshots.create(
+    snapshot_id='<snapshot-id>',
+    include_metrics=False,
+    include_credentials=False,
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, headers=headers)
-print(response.text)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+payload = {}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
-`PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
+> Response Example
+
+```json
+{
+  "status": "pending",
+  "parameters": {
+    "include_metrics": false,
+    "config": {
+      "postgresql_db_name": "cloudify_db",
+      "default_tenant_name": "default_tenant",
+      "postgresql_bin_path": "/usr/pgsql-9.5/bin/",
+      "failed_status": "failed",
+      "postgresql_username": "cloudify",
+      "db_port": 9200,
+      "postgresql_password": "cloudify",
+      "created_status": "created",
+      "db_address": "localhost",
+      "file_server_root": "/opt/manager/resources",
+      "postgresql_host": "localhost"
+    },
+    "include_credentials": true,
+    "snapshot_id": "snapshot4"
+  },
+  "is_system_workflow": true,
+  "blueprint_id": null,
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T16:16:45.948Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "workflow_id": "create_snapshot",
+  "error": "",
+  "deployment_id": null,
+  "id": "bb9cd6df-7acd-4649-9fc1-fe062759cde8"
+}
+```
+
+`PUT "{manager-ip}/api/v3/snapshots/{snapshot-id}"`
 
 Creates a new snapshot.
 

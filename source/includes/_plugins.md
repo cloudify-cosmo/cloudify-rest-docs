@@ -2,17 +2,6 @@
 
 ## The Plugin Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify REST client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# import the requests module when using Requests in python-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description
@@ -30,6 +19,7 @@ Attribute | Type | Description
 `excluded_wheels` | list | a list of wheels that were excluded from the plugin package.
 `supported_py_versions` | list | a list of python platforms supported by the plugin.
 `uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
+`tenant_name` | string | The name of the tenant that owns the plugin.
 
 
 ## Get Plugin
@@ -37,44 +27,38 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins/<plugin-id>?_include=id"
 ```
 
 ```python
-# Python Client-
-print client.plugins.get(plugin_id='0e56d421-ddf9-4fc3-ade5-95ba1de96366')
+# Using CloudifyClient
+client.plugins.get(plugin_id='<plugin-id'>', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-	"archive_name":"cloudify_script_plugin-1.2-py27-none-any-none-none.wgn",
-	"package_name":"cloudify-script-plugin",
-	"package_version":"1.2",
-	"supported_platform":"any",
-	"package_source":"cloudify-script-plugin==1.2",
-	"distribution":null,
-	"distribution_version":null,
-	"distribution_release":null,
-	"supported_py_versions":["py27"],
-	"uploaded_at":"2015-12-06 11:32:46.799188",
-	"id":"0e56d421-ddf9-4fc3-ade5-95ba1de96366",
-	"wheels":["bottle-0.12.7-py2-none-any.whl",
-			  "requests-2.7.0-py2.py3-none-any.whl",
-			  "proxy_tools-0.1.0-py2-none-any.whl",
-			  "cloudify_plugins_common-3.2.1-py2-none-any.whl"],
-    "excluded_wheels":[]
+  "id": "ecea687a-b7dc-4d02-909d-0400aa23df27"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
+`GET "{manager-ip}/api/v3/plugins/{plugin-id}"`
 
 Gets a plugin.
 
@@ -90,21 +74,37 @@ A `Plugin` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366"
+$ curl -X DELETE \
+    --header "Content-Type: application/json" \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"force": false}' \
+    "http://<manager-ip>/api/v3/plugins/<plugin-id>?_include=id"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.plugins.delete(plugin_id='<plugin-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/<plugin-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': 'default_tenant',
+}
+querystring = {'_include': 'id'}
+payload = {'force': False}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+    json=payload,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
+`DELETE "{manager-ip}/api/v3/plugins/{plugin-id}"`
 
 Deletes a plugin from the Cloudify-Manager.
 
@@ -125,23 +125,54 @@ The deleted `Plugin` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/plugins"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins?_include=id"
 ```
 
 ```python
-# Python Client-
-plugins = client.plugins.list()
+# Using CloudifyClient
+plugins = client.plugins.list(_include=['id'])
 for plugin in plugins:
     print plugin
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`GET "{manager-ip}/api/v2.1/plugins"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "ecea687a-b7dc-4d02-909d-0400aa23df27"
+    },
+    {
+      "id": "f10a4970-6cfa-4b24-9cab-f85db93204e0"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/plugins"`
 
 Lists all plugins.
 
@@ -157,22 +188,41 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT "http://<manager-ip>/api/v2.1/plugins/<plugin-id>?plugin_archive_url=https://url/to/archive.zip"
+$ curl -X POST \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id"
 ```
 
 ```python
-# Python Client-
-client.plugins.upload(plugin_path='https://url/to/archive.zip')
+# Using CloudifyClient
+client.plugins.upload(plugin_path='http://url/to/archive.wgn')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/<plugin-ip>"
-querystring = {"plugin_archive_url":"https://url/to/archive.zip"}
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins'
+headers = {'Tenant': 'default_tenant'}
+querystring = {
+    'plugin_archive_url': 'http://url/to/archive.wgn',
+    '_include': 'id',
+}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`POST "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
+> Example Response
+
+```json
+{
+  "id": "d80542f4-ec0c-4438-8a29-54cb9a904114"
+}
+```
+
+`POST "{manager-ip}/api/v3/plugins"`
 
 Upload a plugins
 
@@ -191,21 +241,32 @@ The new uploaded `Plugin` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/plugins/<plugin-id>/archive"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins/<plugin-id>/archive" > <plugin-archive-filename>.wgn
 ```
 
 ```python
-# Python Client-
-client.plugins.download(plugin_id='<plugin-id>')
+# Using CloudifyClient
+client.plugins.download(
+   plugin_id='<plugin-id>',
+   output_file='<plugin-archive-filename>',
+)
 
-# Pyhton Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/<plugin-id>/archive"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using Requests
+url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>/archive'
+headers = {'Tenant': 'default_tenant'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+with open('<plugin-archive-filename>.wgn', 'wb') as plugin_archive:
+    plugin_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v2.1/plugins/{plugin-id}/archive"`
+`GET "{manager-ip}/api/v3/plugins/{plugin-id}/archive"`
 
 Downloads a plugin.
 

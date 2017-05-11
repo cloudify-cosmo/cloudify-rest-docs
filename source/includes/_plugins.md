@@ -2,17 +2,6 @@
 
 ## The Plugin Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify REST client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# import the requests module when using Requests in python-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description

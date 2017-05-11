@@ -173,21 +173,42 @@ An [Execution](#the-execution-resource) resource representing the create snapsho
 > Requests Example
 
 ```shell
-$ curl -X DELETE "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.snapshots.delete(snapshot_id='<snapshot-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
+> Example Response
+
+```json
+{
+  "status": "uploaded",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T17:04:22.989Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "error": "",
+  "id": "snapshot4"
+}
+```
+
+`DELETE "{manager-ip}/api/v3/snapshots/{snapshot-id}"`
 
 Deletes an existing snapshot.
 

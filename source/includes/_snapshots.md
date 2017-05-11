@@ -287,7 +287,36 @@ An [Execution](#the-execution-resource) resource representing the restore snapsh
 
 
 ## Download Snapshot
-`GET "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/archive"`
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshot/<snapshot-id>/archive" > <snapshot-archive-filename>.zip
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.download(
+    snapshot_id='<snapshot-id>',
+    output_file='<snapshot-archive-filename>.zip',
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshot/<snapshot-id>/archive'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+with open('<snapshot-archive-filename>.wgn', 'wb') as snapshot_archive:
+    snapshot_archive.write(response.content)
+```
+
+`GET "{manager-ip}/api/v3/snapshots/{snapshot-id}/archive"`
 
 Downloads an existing snapshot.
 

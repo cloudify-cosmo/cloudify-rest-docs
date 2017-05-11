@@ -26,44 +26,38 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins/<plugin-id>?_include=id"
 ```
 
 ```python
-# Python Client-
-print client.plugins.get(plugin_id='0e56d421-ddf9-4fc3-ade5-95ba1de96366')
+# Using CloudifyClient
+client.plugins.get(plugin_id='<plugin-id'>', _include=['id'])
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/0e56d421-ddf9-4fc3-ade5-95ba1de96366"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-	"archive_name":"cloudify_script_plugin-1.2-py27-none-any-none-none.wgn",
-	"package_name":"cloudify-script-plugin",
-	"package_version":"1.2",
-	"supported_platform":"any",
-	"package_source":"cloudify-script-plugin==1.2",
-	"distribution":null,
-	"distribution_version":null,
-	"distribution_release":null,
-	"supported_py_versions":["py27"],
-	"uploaded_at":"2015-12-06 11:32:46.799188",
-	"id":"0e56d421-ddf9-4fc3-ade5-95ba1de96366",
-	"wheels":["bottle-0.12.7-py2-none-any.whl",
-			  "requests-2.7.0-py2.py3-none-any.whl",
-			  "proxy_tools-0.1.0-py2-none-any.whl",
-			  "cloudify_plugins_common-3.2.1-py2-none-any.whl"],
-    "excluded_wheels":[]
+  "id": "ecea687a-b7dc-4d02-909d-0400aa23df27"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
+`GET "{manager-ip}/api/v3/plugins/{plugin-id}"`
 
 Gets a plugin.
 

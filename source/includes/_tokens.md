@@ -2,17 +2,6 @@
 
 ## The Tokens Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# include this code when using python requests-
-import requests
-```
-
 ### Attributes:
 
 Attribute | Type | Description

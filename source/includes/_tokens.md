@@ -14,29 +14,37 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/tokens"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/tokens"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.tokens.get()
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/tokens"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/tokens'
+headers = {'Tenant': 'default_tenant'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-	"value":"reltkwe5lk645jp0jdvsr345gkllsre"
+  "role": "admin",
+  "value": "WyIwIiwiZjRmNTUzMWRmYmFmZGZmNTlkNTkyZGY2MjMxYzkyNTEiXQ.C_YU9Q.IhQMlnXZIaCtWUUHH_CzHP4-Bg4"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/tokens"`
+`GET "{manager-ip}/api/v3/tokens"`
 
 Gets a token.
 

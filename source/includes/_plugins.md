@@ -19,6 +19,7 @@ Attribute | Type | Description
 `excluded_wheels` | list | a list of wheels that were excluded from the plugin package.
 `supported_py_versions` | list | a list of python platforms supported by the plugin.
 `uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
+`tenant_name` | string | The name of the tenant that owns the plugin.
 
 
 ## Get Plugin

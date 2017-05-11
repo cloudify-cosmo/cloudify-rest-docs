@@ -17,51 +17,57 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/snapshots"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots?_include=id"
 ```
 
 ```python
-# Python Client-
-snapshots = client.snapshots.list()
+# Using CloudifyClient
+snapshots = client.snapshots.list(_include=['id'])
 for snapshot in snapshots:
     print snapshot
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/snapshots"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "items": [
-        {
-            "created_at": "2015-12-04 13:34:45.080009",
-            "error": "",
-            "id": "snapshot1",
-            "status": "created"
-        },
-        {
-            "created_at": "2015-12-04 13:35:04.972249",
-            "error": "",
-            "id": "snapshot2",
-            "status": "created"
-        }
-    ],
-    "metadata": {
-        "pagination": {
-            "offset": 0,
-            "size": 10000,
-            "total": 2
-        }
+  "items": [
+    {
+      "id": "snapshot1"
+    },
+    {
+      "id": "snapshot2"
+    },
+    {
+      "id": "snapshot3"
     }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/snapshots"`
+`GET "{manager-ip}/api/v3/snapshots"`
 
 Lists all snapshots.
 

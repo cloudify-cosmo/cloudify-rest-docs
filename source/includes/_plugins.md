@@ -114,23 +114,54 @@ The deleted `Plugin` resource.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/plugins"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins?_include=id"
 ```
 
 ```python
-# Python Client-
-plugins = client.plugins.list()
+# Using CloudifyClient
+plugins = client.plugins.list(_include=['id'])
 for plugin in plugins:
     print plugin
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins'
+headers = {'Tenant': 'default_tenant'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`GET "{manager-ip}/api/v2.1/plugins"`
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "ecea687a-b7dc-4d02-909d-0400aa23df27"
+    },
+    {
+      "id": "f10a4970-6cfa-4b24-9cab-f85db93204e0"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/plugins"`
 
 Lists all plugins.
 

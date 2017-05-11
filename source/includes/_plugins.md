@@ -187,22 +187,41 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT "http://<manager-ip>/api/v2.1/plugins/<plugin-id>?plugin_archive_url=https://url/to/archive.zip"
+$ curl -X POST \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id"
 ```
 
 ```python
-# Python Client-
-client.plugins.upload(plugin_path='https://url/to/archive.zip')
+# Using CloudifyClient
+client.plugins.upload(plugin_path='http://url/to/archive.wgn')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/plugins/<plugin-ip>"
-querystring = {"plugin_archive_url":"https://url/to/archive.zip"}
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, headers=headers, params=querystring)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins'
+headers = {'Tenant': 'default_tenant'}
+querystring = {
+    'plugin_archive_url': 'http://url/to/archive.wgn',
+    '_include': 'id',
+}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
-`POST "{manager-ip}/api/v2.1/plugins/{plugin-id}"`
+> Example Response
+
+```json
+{
+  "id": "d80542f4-ec0c-4438-8a29-54cb9a904114"
+}
+```
+
+`POST "{manager-ip}/api/v3/plugins"`
 
 Upload a plugins
 

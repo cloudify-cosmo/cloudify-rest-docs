@@ -219,7 +219,57 @@ Deletes an existing snapshot.
 An empty [Snapshot](#the-snapshot-resource) resource, with one non-empty field (its id).
 
 ## Restore Snapshot
-`POST "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/restore"`
+
+> Requests Example
+
+```shell
+curl -s -X POST \
+    --header "Content-Type: application/json" \
+    --header "Tenant: <manager-tenant>" \
+    -u admin:password \
+    -d '{"tenant_name": "<manager-tenant>", "recreate_deployments_envs": true, "force": false}' \
+    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore"
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.restore(snapshot_id='<snapshot-id>', tenant_name='<manager-tenant>')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload = {
+    'tenant_name': '<manager_tenant>',
+    'recreate_deployments_envs': True,
+    'force': False,
+}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Example Response
+
+```json
+{
+  "status": "pending",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T17:23:30.779Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "error": "",
+  "id": "1cadbb76-4532-4eae-a139-80bff328944d"
+}
+```
+
+`POST "{manager-ip}/api/v3/snapshots/{snapshot-id}/restore"`
 
 Restores the specified snapshot on the manager.
 

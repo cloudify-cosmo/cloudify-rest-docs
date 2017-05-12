@@ -2,17 +2,6 @@
 
 ## The Snapshot Resource
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient('<manager-ip>')
-
-# include this code when using python requests-
-import requests
-```
-
 ### Attributes:
 
 
@@ -28,51 +17,57 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/snapshots"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots?_include=id"
 ```
 
 ```python
-# Python Client-
-snapshots = client.snapshots.list()
+# Using CloudifyClient
+snapshots = client.snapshots.list(_include=['id'])
 for snapshot in snapshots:
     print snapshot
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/snapshots"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "items": [
-        {
-            "created_at": "2015-12-04 13:34:45.080009",
-            "error": "",
-            "id": "snapshot1",
-            "status": "created"
-        },
-        {
-            "created_at": "2015-12-04 13:35:04.972249",
-            "error": "",
-            "id": "snapshot2",
-            "status": "created"
-        }
-    ],
-    "metadata": {
-        "pagination": {
-            "offset": 0,
-            "size": 10000,
-            "total": 2
-        }
+  "items": [
+    {
+      "id": "snapshot1"
+    },
+    {
+      "id": "snapshot2"
+    },
+    {
+      "id": "snapshot3"
     }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/snapshots"`
+`GET "{manager-ip}/api/v3/snapshots"`
 
 Lists all snapshots.
 
@@ -89,21 +84,74 @@ Attribute | Type | Description
 > Requests Example
 
 ```shell
-$ curl -X PUT "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>"
 ```
 
 ```python
-# Python Client-
-client.snapshots.create(snapshot_id='<snapshot-id>')
+# Using CloudifyClient
+client.snapshots.create(
+    snapshot_id='<snapshot-id>',
+    include_metrics=False,
+    include_credentials=False,
+)
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("PUT", url, headers=headers)
-print(response.text)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload = {}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
-`PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
+> Response Example
+
+```json
+{
+  "status": "pending",
+  "parameters": {
+    "include_metrics": false,
+    "config": {
+      "postgresql_db_name": "cloudify_db",
+      "default_tenant_name": "default_tenant",
+      "postgresql_bin_path": "/usr/pgsql-9.5/bin/",
+      "failed_status": "failed",
+      "postgresql_username": "cloudify",
+      "db_port": 9200,
+      "postgresql_password": "cloudify",
+      "created_status": "created",
+      "db_address": "localhost",
+      "file_server_root": "/opt/manager/resources",
+      "postgresql_host": "localhost"
+    },
+    "include_credentials": true,
+    "snapshot_id": "snapshot4"
+  },
+  "is_system_workflow": true,
+  "blueprint_id": null,
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T16:16:45.948Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "workflow_id": "create_snapshot",
+  "error": "",
+  "deployment_id": null,
+  "id": "bb9cd6df-7acd-4649-9fc1-fe062759cde8"
+}
+```
+
+`PUT "{manager-ip}/api/v3/snapshots/{snapshot-id}"`
 
 Creates a new snapshot.
 
@@ -125,21 +173,42 @@ An [Execution](#the-execution-resource) resource representing the create snapsho
 > Requests Example
 
 ```shell
-$ curl -X DELETE "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.snapshots.delete(snapshot_id='<snapshot-id>')
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/snapshots/<snapshot-id>"
-headers = {'content-type': "application/json"}
-response = requests.request("DELETE", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
 ```
 
-`DELETE "{manager-ip}/api/v2.1/snapshots/{snapshot-id}"`
+> Example Response
+
+```json
+{
+  "status": "uploaded",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T17:04:22.989Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "error": "",
+  "id": "snapshot4"
+}
+```
+
+`DELETE "{manager-ip}/api/v3/snapshots/{snapshot-id}"`
 
 Deletes an existing snapshot.
 
@@ -150,7 +219,57 @@ Deletes an existing snapshot.
 An empty [Snapshot](#the-snapshot-resource) resource, with one non-empty field (its id).
 
 ## Restore Snapshot
-`POST "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/restore"`
+
+> Requests Example
+
+```shell
+curl -s -X POST \
+    --header "Content-Type: application/json" \
+    --header "Tenant: <manager-tenant>" \
+    -u admin:password \
+    -d '{"tenant_name": "<manager-tenant>", "recreate_deployments_envs": true, "force": false}' \
+    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore"
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.restore(snapshot_id='<snapshot-id>', tenant_name='<manager-tenant>')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload = {
+    'tenant_name': '<manager_tenant>',
+    'recreate_deployments_envs': True,
+    'force': False,
+}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Example Response
+
+```json
+{
+  "status": "pending",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T17:23:30.779Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "error": "",
+  "id": "1cadbb76-4532-4eae-a139-80bff328944d"
+}
+```
+
+`POST "{manager-ip}/api/v3/snapshots/{snapshot-id}/restore"`
 
 Restores the specified snapshot on the manager.
 
@@ -168,7 +287,36 @@ An [Execution](#the-execution-resource) resource representing the restore snapsh
 
 
 ## Download Snapshot
-`GET "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/archive"`
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshot/<snapshot-id>/archive" > <snapshot-archive-filename>.zip
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.download(
+    snapshot_id='<snapshot-id>',
+    output_file='<snapshot-archive-filename>.zip',
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshot/<snapshot-id>/archive'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+with open('<snapshot-archive-filename>.wgn', 'wb') as snapshot_archive:
+    snapshot_archive.write(response.content)
+```
+
+`GET "{manager-ip}/api/v3/snapshots/{snapshot-id}/archive"`
 
 Downloads an existing snapshot.
 
@@ -179,7 +327,53 @@ Downloads an existing snapshot.
 A streamed response (content type `application/octet-stream`), which is a zip archive containing the snapshot data.
 
 ## Upload Snapshot
-`PUT "{manager-ip}/api/v2.1/snapshots/{snapshot-id}/archive"`
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/snapshots/archive?snapshot_archive_url=http://url/to/archive.zip"
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.upload(
+    snapshot_id='<snapshot-id>',
+    snapshot_path='http://url/to/archive.zip',
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/snapshots/archive'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'snapshot_archive_url': 'http://url/to/archive.zip'}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+
+```
+
+> Response Example
+
+```json
+{
+  "status": "uploaded",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-05-11T18:13:25.912Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "error": "",
+  "id": "snapshot5"
+}
+```
+
+
+`PUT "{manager-ip}/api/v3/snapshots/{snapshot-id}/archive"`
 
 Uploads a snapshot to the Cloudify Manager.
 The call expects a `application/octet-stream` content type where the content is a zip archive.

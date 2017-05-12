@@ -76,32 +76,38 @@ Information about the instance fields can be found in the [DBus reference](http:
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/version"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/version?_include=version"
 ```
 
 ```python
-# Python Client-
+# Using CloudifyClient
 client.manager.get_version()
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/version"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/version'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'version'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "date": "",
-  "commit": "",
-  "version": "3.4.0-m5",
-  "build": "85"
+  "version": "4.0.1"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/version"`
+`GET "{manager-ip}/api/v3/version"`
 
 Gets Cloudify manager version information.
 
@@ -113,3 +119,4 @@ Attribute | Type | Description
 `commit`| string | Git commit hash of the REST service code base used by the manager.
 `version` | string | The version of Cloudify manager.
 `build` | string | Build number.
+`edition` | string | Software edition (either `community` or `premium`)

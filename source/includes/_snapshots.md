@@ -7,10 +7,10 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | A unique identifier of the snapshot.
 `created_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time the snapshot was uploaded to or created on the manager.
-`status` | string | Status of the snapshot. One of created/failed/uploading/uploaded.
 `error` | string | Message of an error if snapshot creation failed.
+`id` | string | A unique identifier of the snapshot.
+`status` | string | Status of the snapshot. One of created/failed/uploading/uploaded.
 
 ## List Snapshots
 
@@ -226,7 +226,7 @@ An empty [Snapshot](#the-snapshot-resource) resource, with one non-empty field (
 curl -s -X POST \
     --header "Content-Type: application/json" \
     --header "Tenant: <manager-tenant>" \
-    -u admin:password \
+    -u <manager-username>:<manager-password> \
     -d '{"tenant_name": "<manager-tenant>", "recreate_deployments_envs": true, "force": false}' \
     "http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore"
 ```

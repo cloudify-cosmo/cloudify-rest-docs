@@ -6,66 +6,17 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | A unique identifier for the execution.
-`workflow_id` | string | The id/name of the workflow the execution is of.
 `blueprint_id` | string | The id of the blueprint the execution is in the context of.
-`deployment_id` | string | The id of the deployment the execution is in the context of.
-`status` | string | The executions status.
-`error` | string | The execution's error message on execution failure.
 `created_at` | datetime | The time the execution was queued at.
 `created_by` | string | The name of the user that created the execution.
-`tenant_name` | string | The name of the tenant that owns the execution.
-`parameters` | object | A dict of the workflow parameters passed when starting the execution.
+`deployment_id` | string | The id of the deployment the execution is in the context of.
+`error` | string | The execution's error message on execution failure.
+`id` | string | A unique identifier for the execution.
 `is_system_workflow` | boolean | true if the execution is of a system workflow.
-
-
-## Get Execution
-
-> Request Example
-
-```shell
-$ curl -X GET \
-    --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
-```
-
-```python
-# Using CloudifyClient
-client.executions.get(execution_id='<execution_id>', _include=['id'])
-
-# Using requests
-url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
-headers = {'Tenant': 'default_tenant'}
-querystring = {'_include': 'id'}
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth('admin', 'password'),
-    headers=headers,
-    params=querystring,
-)
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
-}
-```
-
-
-`GET "{manager-ip}/api/v3/executions/{execution-id}"`
-
-Gets an execution.
-
-### URI Parameters
-* `execution-id`: The id of the execution.
-
-### Response
-An `Execution` resource.
-
+`parameters` | object | A dict of the workflow parameters passed when starting the execution.
+`status` | string | The executions status.
+`tenant_name` | string | The name of the tenant that owns the execution.
+`workflow_id` | string | The id/name of the workflow the execution is of.
 
 
 ## List Executions
@@ -84,11 +35,11 @@ for execution in executions:
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/executions'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
-    auth=HTTPBasicAuth('admin', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
 )
@@ -127,6 +78,54 @@ Field | Type | Description
 `items` | list | A list of `Execution` resources.
 
 
+## Get Execution
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
+```
+
+```python
+# Using CloudifyClient
+client.executions.get(execution_id='<execution_id>', _include=['id'])
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
+}
+```
+
+
+`GET "{manager-ip}/api/v3/executions/{execution-id}"`
+
+Gets an execution.
+
+### URI Parameters
+* `execution-id`: The id of the execution.
+
+### Response
+An `Execution` resource.
+
+
 ## Start Execution
 
 > Request Example
@@ -148,7 +147,7 @@ client.executions.start(deployment_id='<deployment-id>', workflow_id='install')
 url = 'http://<manager-ip>/api/v3/executions'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={
@@ -157,7 +156,7 @@ payload ={
 }
 response = requests.post(
     url,
-    auth=HTTPBasicAuth('admin', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,
@@ -211,13 +210,13 @@ client.executions.cancel(execution_id='<execution-id>')
 url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={'deployment_id': 'dep', 'action': 'cancel'}
 response = requests.post(
     url,
-    auth=HTTPBasicAuth('admin', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,
@@ -272,13 +271,13 @@ client.executions.update(execution_id='<execution_id>', status='cancelled')
 url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={'status': 'cancelled'}
 response = requests.patch(
     url,
-    auth=HTTPBasicAuth('admin', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,

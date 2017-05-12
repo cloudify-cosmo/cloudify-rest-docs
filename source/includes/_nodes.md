@@ -6,23 +6,23 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | The name of the node.
-`deployment_id` | string | The id of the deployment the node belongs to.
 `blueprint_id` | string | The id of the blueprint the node belongs to.
-`tenant_name` | string | The name of the tenant that owns the node.
-`type` | string | The type of the node.
-`type_hierarchy` | list | The type hierarchy of the node (ancestors).
-`number_of_instances` | integer | The number of node instances the node has.
-`planned_number_of_instances` | integer | -
 `deploy_number_of_instances` | integer | Default number of instances on deploy.
+`deployment_id` | string | The id of the deployment the node belongs to.
+`host_id` | string | The Compute node name the node is contained within.
+`id` | string | The name of the node.
 `max_number_of_instances` | integer | Maximum number of instances.
 `min_number_of_instances` | integer | Minimum number of instances.
-`host_id` | string | The Compute node name the node is contained within.
-`properties` | object | The properties of the node.
+`number_of_instances` | integer | The number of node instances the node has.
 `operations` | object | The operations the node exposes.
-`plugins` | list | A list of plugins the node is using for executing its operations.
+`planned_number_of_instances` | integer | -
 `plugins_to_install` | list | A list of required plugins to install in order to execute the node's operations.
+`plugins` | list | A list of plugins the node is using for executing its operations.
+`properties` | object | The properties of the node.
 `relationships` | list | The relationships the node has with other nodes.
+`tenant_name` | string | The name of the tenant that owns the node.
+`type_hierarchy` | list | The type hierarchy of the node (ancestors).
+`type` | string | The type of the node.
 
 * `id` and `deployment_id` are combined together for uniquely identifying a node.
 

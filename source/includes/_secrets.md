@@ -24,51 +24,10 @@ and adhere to isolation requirements between different tenants.
 
 Attribute | Type | Description
 --------- | ------- | -------
-`key` | string | The secret's key, unique per tenant.
-`value` | string | The secret's value.
 `created_at` | datetime | The time when the secret was created.
+`key` | string | The secret's key, unique per tenant.
 `updated_at` | datetime | The time the secret was last updated at.
-
-
-## Get Secret
-
-> Request Example
-
-```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/secrets/<secret-key>"
-```
-
-```python
-# Python Client-
-client.secrets.get(<secret-key>)
-```
-
-> Response Example
-
-```json
-{
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:43:19.468Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
-    "created_by": "admin"
-}
-```
-
-`GET "{manager-ip}/api/v3/secrets/{secret-key}"`
-
-Retrieves a specific secret.
-
-### URI Parameters
-* `secret-key`: The key of the secret to retrieve.
-
-### Response
-A `Secret` resource.
-
-
-
+`value` | string | The secret's value.
 
 
 ## List Secrets
@@ -112,7 +71,42 @@ Field | Type | Description
 `items` | list | A list of `Secret` resources without the secret's value.
 
 
+## Get Secret
 
+> Request Example
+
+```shell
+$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/secrets/<secret-key>"
+```
+
+```python
+# Python Client-
+client.secrets.get(<secret-key>)
+```
+
+> Response Example
+
+```json
+{
+    "key": "key1",
+    "value": "value1",
+    "created_at": "2017-03-20T08:23:31.276Z",
+    "updated_at": "2017-03-20T08:43:19.468Z",
+    "permission": "creator",
+    "tenant_name": "default_tenant",
+    "created_by": "admin"
+}
+```
+
+`GET "{manager-ip}/api/v3/secrets/{secret-key}"`
+
+Retrieves a specific secret.
+
+### URI Parameters
+* `secret-key`: The key of the secret to retrieve.
+
+### Response
+A `Secret` resource.
 
 
 ## Create Secret

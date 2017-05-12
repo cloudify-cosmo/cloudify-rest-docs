@@ -6,63 +6,15 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | The id of the node instance.
-`deployment_id` | string | The id of the deployment the node instance belongs to.
 `created_by` | string | The name of the user that created the node instance.
-`tenant_name` | string | The name of the tenant that owns the node instance.
+`deployment_id` | string | The id of the deployment the node instance belongs to.
 `host_id` | string | The Compute node instance id the node is contained within.
-`runtime_properties` | object | The runtime properties of the node instance.
+`id` | string | The id of the node instance.
 `relationships` | list | The relationships the node has with other nodes.
+`runtime_properties` | object | The runtime properties of the node instance.
 `state` | string | The node instance state.
+`tenant_name` | string | The name of the tenant that owns the node instance.
 `version` | integer | A version attribute used for optimistic locking when updating the node instance.
-
-
-## Get Node Instance
-
-> Request Example
-
-```shell
-$ curl -X GET \
-    --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
-```
-
-```python
-# Using CloudifyClient
-client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
-
-# Using requests
-url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
-headers = {'Tenant': '<manager-tenant>'}
-querystring = {'_include': 'id'}
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
-    headers=headers,
-    params=querystring,
-)
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "id": "http_web_server_tfq3nt"
-}
-```
-
-`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
-
-Gets a node instance.
-
-### URI Parameters
-* `node-instance-id`: The id of the node instance.
-
-### Response
-A `NodeInstance` resource.
-
 
 ## List Node Instances
 
@@ -127,6 +79,53 @@ Field | Type | Description
 `items` | list | A list of `NodeInstance` resources.
 
 
+## Get Node Instance
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
+```
+
+```python
+# Using CloudifyClient
+client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "id": "http_web_server_tfq3nt"
+}
+```
+
+`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
+
+Gets a node instance.
+
+### URI Parameters
+* `node-instance-id`: The id of the node instance.
+
+### Response
+A `NodeInstance` resource.
+
+
 ## Update Node Instance
 
 > Requests Example
@@ -152,7 +151,7 @@ client.node_instances.update(
 url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager_tenant>',
 }
 querystring = {'_include': 'id,runtime_properties'}
 payload = {'version': 0, 'runtime_properties': {'key': 'value'}}

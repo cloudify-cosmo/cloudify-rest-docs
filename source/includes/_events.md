@@ -8,19 +8,19 @@ Attribute | Type | Description
 --------- | ---- | -----------
 `blueprint_id` | string | Blueprint id
 `deployment_id` | string | Deployment id
-`execution_id` | string | Execution id
-`workflow_id` | string | Workflow id
-`node_name` | string | Node name
-`node_instance_id` | string | Node instance id
-`operation` | string | Operation path (only available in operation events)
-`timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event was logged on the management machine
-`reported_timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event occurred on the executing machine
-`message` | string | Message text
-`type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
-`event_type` | string | Event type name (only for `cloudify_event` items)
 `error_causes` | [[ErrorCause](#the-errorcause-object)] | List of errors that happened while executing a given task (only for `cloudify_event` items)
-`logger` | string | Logger id (only for `cloudify_log` items)
+`event_type` | string | Event type name (only for `cloudify_event` items)
+`execution_id` | string | Execution id
 `level` | string | Log level (only for `cloudify_log` items)
+`logger` | string | Logger id (only for `cloudify_log` items)
+`message` | string | Message text
+`node_instance_id` | string | Node instance id
+`node_name` | string | Node name
+`operation` | string | Operation path (only available in operation events)
+`reported_timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event occurred on the executing machine
+`timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event was logged on the management machine
+`type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
+`workflow_id` | string | Workflow id
 
 ## The ErrorCause object
 
@@ -38,7 +38,10 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager_ip>/api/v3/events"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u user:<manager-password> \
+    "http://<manager_ip>/api/v3/events"
 ```
 
 ```python
@@ -58,8 +61,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 url = 'http://<manager-ip>/api/v3/events'
-headers = {'Tenant': 'default_tenant'}
-response = requests.get(url, auth=HTTPBasicAuth('user', 'password'), headers=headers)
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(url, auth=HTTPBasicAuth('user', '<manager-password>'), headers=headers)
 response.json()
 ```
 

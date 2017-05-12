@@ -21,9 +21,9 @@ The ClusterState resource represents the current state of a Cloudify Manager clu
 
 Attribute | Type | Description
 --------- | ---- | -----------
-`initialized` | boolean | Whether this node is part of a cluster.
 `consul` | dict | Detailed state of the consul cluster being part of the manager infrastructure.
 `error` | string | Description of a fatal error that occured during cluster configuration or operation, if any.
+`initialized` | boolean | Whether this node is part of a cluster.
 `logs` | list | Logs of the cluster operations on the current node.
 
 ## Get Cluster State

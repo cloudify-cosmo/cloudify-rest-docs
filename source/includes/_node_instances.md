@@ -17,53 +17,6 @@ Attribute | Type | Description
 `version` | integer | A version attribute used for optimistic locking when updating the node instance.
 
 
-## Get Node Instance
-
-> Request Example
-
-```shell
-$ curl -X GET \
-    --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
-```
-
-```python
-# Using CloudifyClient
-client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
-
-# Using requests
-url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
-headers = {'Tenant': '<manager-tenant>'}
-querystring = {'_include': 'id'}
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
-    headers=headers,
-    params=querystring,
-)
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "id": "http_web_server_tfq3nt"
-}
-```
-
-`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
-
-Gets a node instance.
-
-### URI Parameters
-* `node-instance-id`: The id of the node instance.
-
-### Response
-A `NodeInstance` resource.
-
-
 ## List Node Instances
 
 > Request Example
@@ -125,6 +78,53 @@ Lists all node instances.
 Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `NodeInstance` resources.
+
+
+## Get Node Instance
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
+```
+
+```python
+# Using CloudifyClient
+client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "id": "http_web_server_tfq3nt"
+}
+```
+
+`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
+
+Gets a node instance.
+
+### URI Parameters
+* `node-instance-id`: The id of the node instance.
+
+### Response
+A `NodeInstance` resource.
 
 
 ## Update Node Instance

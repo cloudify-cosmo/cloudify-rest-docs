@@ -29,6 +29,44 @@ Attribute | Type | Description
 `name` | string | The tenant's name.
 
 
+## List Tenants
+
+> Request Example
+
+```shell
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/tenants"
+```
+
+```python
+# Python Client-
+client.tenants.list()
+```
+
+> Response Example
+
+```json
+{
+ "items":
+    [
+        {
+            "name": "default_tenant",
+            "groups": [],
+            "users": ["admin"]
+        }
+    ]
+}
+```
+
+`GET "{manager-ip}/api/v3/tenants"`
+
+List all tenants.
+
+
+### Response
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of `Tenant` resources.
+
 ## Get Tenant
 
 > Request Example
@@ -62,46 +100,6 @@ Retrieves a specific tenant.
 ### Response
 A `Tenant` resource.
 
-
-
-
-
-## List Tenants
-
-> Request Example
-
-```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/tenants"
-```
-
-```python
-# Python Client-
-client.tenants.list()
-```
-
-> Response Example
-
-```json
-{
- "items":
-    [
-        {
-            "name": "default_tenant",
-            "groups": [],
-            "users": ["admin"]
-        }
-    ]
-}
-```
-
-`GET "{manager-ip}/api/v3/tenants"`
-
-List all tenants.
-
-### Response
-Field | Type | Description
---------- | ------- | -------
-`items` | list | A list of `Tenant` resources.
 
 
 

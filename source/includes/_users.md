@@ -35,48 +35,6 @@ Attribute | Type | Description
 `last_login_at` | UTCDateTime | Date of last request performed by the user.
 
 
-
-
-## Get User
-
-> Request Example
-
-```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/users/<user-name>"
-```
-
-```python
-# Python Client-
-client.users.get(<user-name>)
-```
-
-> Response Example
-
-```json
-{
-    "username": "admin",
-    "last_login_at": "2017-01-22T15:09:33.799Z",
-    "role": "administrator",
-    "groups": [],
-    "active": true,
-    "tenants": ["default_tenant"]
-}
-```
-
-`GET "{manager-ip}/api/v3/users/{user-name}"`
-
-Retrieves a specific user.
-
-### URI Parameters
-* `user-name`: The name of the user to retrieve.
-
-### Response
-A `User` resource.
-
-
-
-
-
 ## List Users
 
 > Request Example
@@ -117,6 +75,45 @@ Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `User` resources.
 
+
+
+
+
+## Get User
+
+> Request Example
+
+```shell
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/users/<user-name>"
+```
+
+```python
+# Python Client-
+client.users.get(<user-name>)
+```
+
+> Response Example
+
+```json
+{
+    "username": "admin",
+    "last_login_at": "2017-01-22T15:09:33.799Z",
+    "role": "administrator",
+    "groups": [],
+    "active": true,
+    "tenants": ["default_tenant"]
+}
+```
+
+`GET "{manager-ip}/api/v3/users/{user-name}"`
+
+Retrieves a specific user.
+
+### URI Parameters
+* `user-name`: The name of the user to retrieve.
+
+### Response
+A `User` resource.
 
 
 ## Create User

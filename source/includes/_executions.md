@@ -19,55 +19,6 @@ Attribute | Type | Description
 `is_system_workflow` | boolean | true if the execution is of a system workflow.
 
 
-## Get Execution
-
-> Request Example
-
-```shell
-$ curl -X GET \
-    --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
-```
-
-```python
-# Using CloudifyClient
-client.executions.get(execution_id='<execution_id>', _include=['id'])
-
-# Using requests
-url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
-headers = {'Tenant': '<manager-tenant>'}
-querystring = {'_include': 'id'}
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
-    headers=headers,
-    params=querystring,
-)
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
-}
-```
-
-
-`GET "{manager-ip}/api/v3/executions/{execution-id}"`
-
-Gets an execution.
-
-### URI Parameters
-* `execution-id`: The id of the execution.
-
-### Response
-An `Execution` resource.
-
-
-
 ## List Executions
 
 > Request Example
@@ -125,6 +76,54 @@ Lists all executions.
 Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `Execution` resources.
+
+
+## Get Execution
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
+```
+
+```python
+# Using CloudifyClient
+client.executions.get(execution_id='<execution_id>', _include=['id'])
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
+}
+```
+
+
+`GET "{manager-ip}/api/v3/executions/{execution-id}"`
+
+Gets an execution.
+
+### URI Parameters
+* `execution-id`: The id of the execution.
+
+### Response
+An `Execution` resource.
 
 
 ## Start Execution

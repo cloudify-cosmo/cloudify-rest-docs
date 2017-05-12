@@ -22,6 +22,69 @@ Attribute | Type | Description
 `tenant_name` | string | The name of the tenant that owns the plugin.
 
 
+## List Plugins
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/plugins?_include=id"
+```
+
+```python
+# Using CloudifyClient
+plugins = client.plugins.list(_include=['id'])
+for plugin in plugins:
+    print plugin
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/plugins'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "ecea687a-b7dc-4d02-909d-0400aa23df27"
+    },
+    {
+      "id": "f10a4970-6cfa-4b24-9cab-f85db93204e0"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3/plugins"`
+
+Lists all plugins.
+
+### Response
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of `Plugin` resources.
+`metadata` | dict | Metadata relevant to the list response.
+
+
 ## Get Plugin
 
 > Request Example
@@ -118,69 +181,6 @@ Property | Default | Description
 
 ### Response
 The deleted `Plugin` resource.
-
-
-## List Plugins
-
-> Request Example
-
-```shell
-$ curl -X GET \
-    --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/plugins?_include=id"
-```
-
-```python
-# Using CloudifyClient
-plugins = client.plugins.list(_include=['id'])
-for plugin in plugins:
-    print plugin
-
-# Using requests
-url = 'http://<manager-ip>/api/v3/plugins'
-headers = {'Tenant': '<manager-tenant>'}
-querystring = {'_include': 'id'}
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
-    headers=headers,
-    params=querystring,
-)
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "items": [
-    {
-      "id": "ecea687a-b7dc-4d02-909d-0400aa23df27"
-    },
-    {
-      "id": "f10a4970-6cfa-4b24-9cab-f85db93204e0"
-    }
-  ],
-  "metadata": {
-    "pagination": {
-      "total": 2,
-      "offset": 0,
-      "size": 0
-    }
-  }
-}
-```
-
-`GET "{manager-ip}/api/v3/plugins"`
-
-Lists all plugins.
-
-### Response
-Field | Type | Description
---------- | ------- | -------
-`items` | list | A list of `Plugin` resources.
-`metadata` | dict | Metadata relevant to the list response.
 
 
 ## Upload Plugin

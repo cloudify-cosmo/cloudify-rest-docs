@@ -21,69 +21,6 @@ Attribute | Type | Description
 `outputs` | object | A dictionary containing an outputs definition of a deployment.
 
 
-## Get Deployment
-
-> Request Example
-
-```shell
-$ curl -X GET \
-    --header "Tenant: <manager-tenant>" \
-    -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/deployments?id=<deployment-id>&_include=id"
-```
-
-```python
-# Using CloudifyClient
-client.deployments.get(deployment_id='<deployment-id>', _include=['id'])
-
-# Using requests
-url = 'http://<manager-ip>/api/v3/deployments'
-headers = {'Tenant': '<manager-tenant>'}
-querystring = {
-    'id': '<deployment-id>',
-    '_include': 'id',
-}
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
-    headers=headers,
-    params=querystring,
-)
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "items": [
-    {
-      "id": "hello1"
-    }
-  ],
-  "metadata": {
-    "pagination": {
-      "total": 1,
-      "offset": 0,
-      "size": 0
-    }
-  }
-}
-```
-
-
-`GET "{manager-ip}/api/v3/deployments?id={deployment-id}"`
-
-Gets a deployment.
-
-### URI Parameters
-* `deployment-id`: The id of the deployment.
-
-### Response
-A `Deployment` resource.
-
-
-
 ## List Deployments
 
 > Request Example
@@ -150,6 +87,66 @@ Field | Type | Description
 `items` | list | A list of `Deployment` resources.
 
 
+## Get Deployment
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/deployments?id=<deployment-id>&_include=id"
+```
+
+```python
+# Using CloudifyClient
+client.deployments.get(deployment_id='<deployment-id>', _include=['id'])
+
+# Using requests
+url = 'http://<manager-ip>/api/v3/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    'id': '<deployment-id>',
+    '_include': 'id',
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "hello1"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+
+`GET "{manager-ip}/api/v3/deployments?id={deployment-id}"`
+
+Gets a deployment.
+
+### URI Parameters
+* `deployment-id`: The id of the deployment.
+
+### Response
+A `Deployment` resource.
 
 ## Create Deployment
 

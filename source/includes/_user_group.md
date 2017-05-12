@@ -30,46 +30,6 @@ Attribute | Type | Description
 `ldap_dn` | string | The distinguish name of corresponding LDAP group (if using LDAP).
 
 
-
-
-## Get User Group
-
-> Request Example
-
-```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/user-groups/<group-name>"
-```
-
-```python
-# Python Client-
-client.user_groups.get(<group-name>)
-```
-
-> Response Example
-
-```json
-{
-    "ldap_dn": null,
-    "name": "new_group",
-    "tenants": [],
-    "users": []
-}
-```
-
-`GET "{manager-ip}/api/v3/user-groups/{group-name}"`
-
-Retrieves a specific group.
-
-### URI Parameters
-* `group-name`: The name of the group to retrieve.
-
-### Response
-A `Group` resource.
-
-
-
-
-
 ## List User Groups
 
 > Request Example
@@ -108,6 +68,40 @@ Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `Group` resources.
 
+
+## Get User Group
+
+> Request Example
+
+```shell
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/user-groups/<group-name>"
+```
+
+```python
+# Python Client-
+client.user_groups.get(<group-name>)
+```
+
+> Response Example
+
+```json
+{
+    "ldap_dn": null,
+    "name": "new_group",
+    "tenants": [],
+    "users": []
+}
+```
+
+`GET "{manager-ip}/api/v3/user-groups/{group-name}"`
+
+Retrieves a specific group.
+
+### URI Parameters
+* `group-name`: The name of the group to retrieve.
+
+### Response
+A `Group` resource.
 
 
 ## Create User Groups

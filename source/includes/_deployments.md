@@ -159,7 +159,7 @@ Field | Type | Description
 $ curl -X PUT \
     --header "Tenant: default_tenant" \
     --header "Content-Type: application/json" \
-    -u <manager-username>:password \
+    -u <manager-username>:<manager-password> \
     -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' \
     "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```
@@ -185,7 +185,7 @@ payload ={
 }
 response = requests.put(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,
@@ -225,7 +225,7 @@ A `Deployment` resource.
 ```shell
 $ curl -X DELETE \
     --header "Tenant: default_tenant" \
-    -u <manager-username>:password \
+    -u <manager-username>:<manager-password> \
     "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```
 
@@ -238,7 +238,7 @@ url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
 headers = {'content-type': 'application/json'}
 response = requests.delete(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
 )

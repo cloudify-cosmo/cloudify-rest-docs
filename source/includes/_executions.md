@@ -40,7 +40,7 @@ headers = {'Tenant': 'default_tenant'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
 )
@@ -88,7 +88,7 @@ headers = {'Tenant': 'default_tenant'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
 )
@@ -157,7 +157,7 @@ payload ={
 }
 response = requests.post(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,
@@ -217,7 +217,7 @@ querystring = {'_include': 'id'}
 payload ={'deployment_id': 'dep', 'action': 'cancel'}
 response = requests.post(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,
@@ -278,7 +278,7 @@ querystring = {'_include': 'id'}
 payload ={'status': 'cancelled'}
 response = requests.patch(
     url,
-    auth=HTTPBasicAuth('<manager-username>', 'password'),
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,

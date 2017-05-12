@@ -38,7 +38,10 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <manager-tenant>" -u user:<manager-password> "http://<manager_ip>/api/v3/events"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u user:<manager-password> \
+    "http://<manager_ip>/api/v3/events"
 ```
 
 ```python

@@ -17,21 +17,21 @@ language_tabs:
 includes:
   - api
   - blueprints
-  - deployments
-  - nodes
-  - node_instances
-  - executions
-  - events
-  - plugins
-  - tokens
-  - snapshots
-  - manager
-  - deployment_modification
-  - users
-  - user_group
-  - tenants
   - cluster
+  - deployment_modification
+  - deployments
+  - events
+  - executions
+  - manager
+  - node_instances
+  - nodes
+  - plugins
   - secrets
+  - snapshots
+  - tenants
+  - tokens
+  - user_group
+  - users
 
 search: true
 ---

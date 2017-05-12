@@ -6,19 +6,19 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | A unique identifier for the deployment.
 `blueprint_id` | string | The id of the blueprint the deployment is based on.
 `created_at` | datetime | The time when the deployment was created.
-`updated_at` | datetime | The time the deployment was last updated at.
 `created_by` | string | The name of the user that created the deployment.
-`tenant_name` | string | The name of the tenant that owns the deployment.
 `description` | string | Deployment description.
-`workflows` | list | A list of workflows that can be executed on a deployment.
-`inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
-`policy_types` | object | A dictionary containing policies of a deployment.
-`policy_triggers` | object | A dictionary containing policy triggers of a deployment.
 `groups` | object | A dictionary containing the groups definition of deployment.
+`id` | string | A unique identifier for the deployment.
+`inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `outputs` | object | A dictionary containing an outputs definition of a deployment.
+`policy_triggers` | object | A dictionary containing policy triggers of a deployment.
+`policy_types` | object | A dictionary containing policies of a deployment.
+`tenant_name` | string | The name of the tenant that owns the deployment.
+`updated_at` | datetime | The time the deployment was last updated at.
+`workflows` | list | A list of workflows that can be executed on a deployment.
 
 
 ## List Deployments

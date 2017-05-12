@@ -6,16 +6,15 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | The id of the node instance.
-`deployment_id` | string | The id of the deployment the node instance belongs to.
 `created_by` | string | The name of the user that created the node instance.
-`tenant_name` | string | The name of the tenant that owns the node instance.
+`deployment_id` | string | The id of the deployment the node instance belongs to.
 `host_id` | string | The Compute node instance id the node is contained within.
-`runtime_properties` | object | The runtime properties of the node instance.
+`id` | string | The id of the node instance.
 `relationships` | list | The relationships the node has with other nodes.
+`runtime_properties` | object | The runtime properties of the node instance.
 `state` | string | The node instance state.
+`tenant_name` | string | The name of the tenant that owns the node instance.
 `version` | integer | A version attribute used for optimistic locking when updating the node instance.
-
 
 ## List Node Instances
 

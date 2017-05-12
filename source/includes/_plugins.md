@@ -6,20 +6,20 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
+`archive_name` | string | The plugin archive file name.
+`distribution_release` | string | The OS distribution release name the plugin was compiled on. 'None' in-case the plugin is cross platform.
+`distribution_version` | string | The OS distribution version the plugin was compiled on. 'None' in-case the plugin is cross platform.
+`distribution` | string | The OS distribution the plugin was compiled on. 'None' in-case the plugin is cross platform.
+`excluded_wheels` | list | a list of wheels that were excluded from the plugin package.
 `id` | string | The ID assigned to the plugin upon upload.
 `package_name` | string | The python package name.
-`archive_name` | string | The plugin archive file name.
 `package_source` | string | The python package source, i.e git, pip etc.
 `package_version` | string | The python package version.
 `supported_platform` | string | The supported platform for the plugin package, 'any' if the plugin is compatible with all platforms.
-`distribution` | string | The OS distribution the plugin was compiled on. 'None' in-case the plugin is cross platform.
-`distribution_version` | string | The OS distribution version the plugin was compiled on. 'None' in-case the plugin is cross platform.
-`distribution_release` | string | The OS distribution release name the plugin was compiled on. 'None' in-case the plugin is cross platform.
-`wheels` | list | A list of wheels contained in the plugin package.
-`excluded_wheels` | list | a list of wheels that were excluded from the plugin package.
 `supported_py_versions` | list | a list of python platforms supported by the plugin.
-`uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
 `tenant_name` | string | The name of the tenant that owns the plugin.
+`uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
+`wheels` | list | A list of wheels contained in the plugin package.
 
 
 ## List Plugins

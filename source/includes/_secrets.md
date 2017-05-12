@@ -24,10 +24,10 @@ and adhere to isolation requirements between different tenants.
 
 Attribute | Type | Description
 --------- | ------- | -------
-`key` | string | The secret's key, unique per tenant.
-`value` | string | The secret's value.
 `created_at` | datetime | The time when the secret was created.
+`key` | string | The secret's key, unique per tenant.
 `updated_at` | datetime | The time the secret was last updated at.
+`value` | string | The secret's value.
 
 
 ## List Secrets

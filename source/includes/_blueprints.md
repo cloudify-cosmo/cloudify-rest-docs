@@ -6,11 +6,11 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | string | A unique identifier for the blueprint.
+`created_at` | datetime | The time the blueprint was uploaded to the manager.
 `description` | string | The blueprint's description.
+`id` | string | A unique identifier for the blueprint.
 `main_file_name` | string | The blueprint's main file name.
 `plan` | dict | The parsed result of the blueprint.
-`created_at` | datetime | The time the blueprint was uploaded to the manager.
 `updated_at` | datetime | The last time the blueprint was updated.
 
 

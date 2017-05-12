@@ -6,8 +6,8 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`value` | string | The value of the token
 `role` | string | The role associated with the token (`admin` or `user`)
+`value` | string | The value of the token
 
 
 ## Get Token

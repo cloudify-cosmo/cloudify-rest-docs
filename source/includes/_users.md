@@ -25,14 +25,14 @@ Since Cloudify 4.0, Cloudify user management has been added
 
 Attribute | Type | Description
 --------- | ------- | -------
-`id` | integer | Auto increment, unique identifier for the tenant.
-`username` | string | The username.
-`password` | string | The user hashed password.
-`first_name` | string | The user's first name..
-`last_name` | string | The user's last name.
 `active` | boolean | Whether the user's status is active or suspended.
 `created_at` | UTCDateTime | Date on which the user was created.
+`first_name` | string | The user's first name..
+`id` | integer | Auto increment, unique identifier for the tenant.
 `last_login_at` | UTCDateTime | Date of last request performed by the user.
+`last_name` | string | The user's last name.
+`password` | string | The user hashed password.
+`username` | string | The username.
 
 
 ## List Users

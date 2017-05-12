@@ -38,7 +38,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:<manager-password> "http://<manager_ip>/api/v3/events"
+$ curl -X GET --header "tenant: <manager-tenant>" -u user:<manager-password> "http://<manager_ip>/api/v3/events"
 ```
 
 ```python
@@ -58,7 +58,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 url = 'http://<manager-ip>/api/v3/events'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(url, auth=HTTPBasicAuth('user', '<manager-password>'), headers=headers)
 response.json()
 ```

@@ -157,7 +157,7 @@ Field | Type | Description
 
 ```shell
 $ curl -X PUT \
-    --header "Tenant: default_tenant" \
+    --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' \
@@ -176,7 +176,7 @@ client.deployments.create(
 url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={
@@ -224,7 +224,7 @@ A `Deployment` resource.
 
 ```shell
 $ curl -X DELETE \
-    --header "Tenant: default_tenant" \
+    --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
     "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
 ```

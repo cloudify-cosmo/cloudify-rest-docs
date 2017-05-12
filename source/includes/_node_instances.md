@@ -152,7 +152,7 @@ client.node_instances.update(
 url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager_tenant>',
 }
 querystring = {'_include': 'id,runtime_properties'}
 payload = {'version': 0, 'runtime_properties': {'key': 'value'}}

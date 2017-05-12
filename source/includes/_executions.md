@@ -36,7 +36,7 @@ client.executions.get(execution_id='<execution_id>', _include=['id'])
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
@@ -84,7 +84,7 @@ for execution in executions:
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/executions'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
     url,
@@ -148,7 +148,7 @@ client.executions.start(deployment_id='<deployment-id>', workflow_id='install')
 url = 'http://<manager-ip>/api/v3/executions'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={
@@ -211,7 +211,7 @@ client.executions.cancel(execution_id='<execution-id>')
 url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={'deployment_id': 'dep', 'action': 'cancel'}
@@ -272,7 +272,7 @@ client.executions.update(execution_id='<execution_id>', status='cancelled')
 url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
 headers = {
     'Content-Type': 'application/json',
-    'Tenant': 'default_tenant',
+    'Tenant': '<manager-tenant>',
 }
 querystring = {'_include': 'id'}
 payload ={'status': 'cancelled'}

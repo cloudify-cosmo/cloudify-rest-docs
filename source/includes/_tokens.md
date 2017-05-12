@@ -27,7 +27,7 @@ client.tokens.get()
 
 # Using requests
 url = 'http://<manager-ip>/api/v3/tokens'
-headers = {'Tenant': 'default_tenant'}
+headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),

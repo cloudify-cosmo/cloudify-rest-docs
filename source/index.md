@@ -27,7 +27,6 @@ includes:
   - snapshots
   - manager
   - deployment_modification
-  - errors
   - users
   - user_group
   - tenants

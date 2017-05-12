@@ -226,7 +226,7 @@ An empty [Snapshot](#the-snapshot-resource) resource, with one non-empty field (
 curl -s -X POST \
     --header "Content-Type: application/json" \
     --header "Tenant: <manager-tenant>" \
-    -u admin:password \
+    -u <manager-username>:password \
     -d '{"tenant_name": "<manager-tenant>", "recreate_deployments_envs": true, "force": false}' \
     "http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore"
 ```

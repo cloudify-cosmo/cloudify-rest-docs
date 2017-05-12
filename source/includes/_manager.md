@@ -7,60 +7,38 @@ The following REST API calls provide information about Cloudify's manager.
 > Request Example
 
 ```shell
-$ curl -X GET "http://<manager-ip>/api/v2.1/status"
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3/status"
 ```
 
 ```python
-# Python Client-
+# Using ClodifyManager
 client.manager.get_status()
 
-# Python Requests-
-url = "http://<manager-ip>/api/v2.1/status"
-headers = {'content-type': "application/json"}
-response = requests.request("GET", url, headers=headers)
-print(response.text)
+# Using requests
+url = 'http://<manager-ip>/api/v3/status'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'status'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-  "status": "running",
-  "services": [
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "InfluxDB Service",
-          "state": "running",
-          "MainPID": 3609,
-          "Id": "cloudify-influxdb.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "InfluxDB"
-    },
-    {
-      "instances": [
-        {
-          "LoadState": "loaded",
-          "Description": "Cloudify Management Worker Service",
-          "state": "running",
-          "MainPID": 6565,
-          "Id": "cloudify-mgmtworker.service",
-          "ActiveState": "active",
-          "SubState": "running"
-        }
-      ],
-      "display_name": "Celery Management"
-    }
-    ...
-  ]
+  "status": "running"
 }
 ```
 
-`GET "{manager-ip}/api/v2.1/events"`
+`GET "{manager-ip}/api/v3/status"`
 
 Gets Cloudify manager status.
 

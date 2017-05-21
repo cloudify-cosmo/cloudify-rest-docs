@@ -283,9 +283,9 @@ Property | Default | Description
 ---------|---------|-------------
 `force`  |  false  | Specifies whether to force restoring the snapshot on a manager that already contains blueprints/deployments.
 `recreate_deployments_envs` | true | Specifies whether deployment environments should be created for restored deployments.
-`tenant_name` | true | In the case of a snapshot that was created from a version prior 4.0.0, specifies the name of a new tenant that the snapshot will be restored into. Otherwise - not relevant.
-`restore_certificates` | true | Specifies whether to try and restore the certificates from the snapshot and use them to override the current Manager certificates, in the event that snapshot's certificates metadata does not match the current Manager's certificates metadata. Useful when there are live agents from the Manager from which the snapshot was created that you want to control with the current Manager. After execution the Manager will automatically reboot - unless the `no_reboot` property is `True`.
-`no_reboot` | true | Only relevant when the `restore_certificates` property is `True`. Specifies whether to the automatic reboot at the end of the snapshot restore execution. It is not recommended to use this option since the Manager will not function well after certificates restore without a reboot. In that case, you must manually reboot the machine.
+`tenant_name` |  | In the case of a snapshot that was created from a version prior 4.0.0, specifies the name of a new tenant that the snapshot will be restored into. Otherwise - not relevant.
+`restore_certificates` | false | Specifies whether to try and restore the certificates from the snapshot and use them to override the current Manager certificates, in the event that snapshot's certificates metadata does not match the current Manager's certificates metadata. Useful when there are live agents from the Manager from which the snapshot was created that you want to control with the current Manager. After execution the Manager will automatically reboot - unless the `no_reboot` property is `True`.
+`no_reboot` | false | Only relevant when the `restore_certificates` property is `True`. Specifies whether to the automatic reboot at the end of the snapshot restore execution. It is not recommended to use this option since the Manager will not function well after certificates restore without a reboot. In that case, you must manually reboot the machine.
 
 ### Response
 An [Execution](#the-execution-resource) resource representing the restore snapshot workflow execution.

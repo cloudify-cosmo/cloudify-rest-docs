@@ -29,7 +29,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "<manager-ip>/api/v3/deployments?_include=id"
+    "<manager-ip>/api/v3.1/deployments?_include=id"
 ```
 
 ```python
@@ -39,7 +39,7 @@ for deployment in deployments:
   print deployment
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/deployments'
+url = 'http://<manager-ip>/api/v3.1/deployments'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -76,7 +76,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/deployments"`
+`GET "{manager-ip}/api/v3.1/deployments"`
 
 Lists all deployments.
 
@@ -95,7 +95,7 @@ Field | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/deployments?id=<deployment-id>&_include=id"
+    "http://<manager-ip>/api/v3.1/deployments?id=<deployment-id>&_include=id"
 ```
 
 ```python
@@ -103,7 +103,7 @@ $ curl -X GET \
 client.deployments.get(deployment_id='<deployment-id>', _include=['id'])
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/deployments'
+url = 'http://<manager-ip>/api/v3.1/deployments'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'id': '<deployment-id>',
@@ -138,7 +138,7 @@ response.json()
 ```
 
 
-`GET "{manager-ip}/api/v3/deployments?id={deployment-id}"`
+`GET "{manager-ip}/api/v3.1/deployments?id={deployment-id}"`
 
 Gets a deployment.
 
@@ -158,7 +158,7 @@ $ curl -X PUT \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' \
-    "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 
 ```python
@@ -170,7 +170,7 @@ client.deployments.create(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
+url = 'http://<manager-ip>/api/v3.1/deployments/<deployment-id>'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -198,7 +198,7 @@ response.json()
 }
 ```
 
-`PUT -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' "{manager-ip}/api/v3/deployments/{deployment-id}"`
+`PUT -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' "{manager-ip}/api/v3.1/deployments/{deployment-id}"`
 
 Creates a new deployment.
 
@@ -223,7 +223,7 @@ A `Deployment` resource.
 $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/deployments/<deployment-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 
 ```python
@@ -231,7 +231,7 @@ $ curl -X DELETE \
 client.deployments.delete(deployment_id='<deployments-id>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/deployments/<deployment-id>'
+url = 'http://<manager-ip>/api/v3.1/deployments/<deployment-id>'
 headers = {'content-type': 'application/json'}
 response = requests.delete(
     url,
@@ -250,7 +250,7 @@ response.json()
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/deployments/{deployment-id}"`
+`DELETE "{manager-ip}/api/v3.1/deployments/{deployment-id}"`
 
 Deletes a deployment.
 

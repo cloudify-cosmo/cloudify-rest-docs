@@ -41,7 +41,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u user:<manager-password> \
-    "http://<manager_ip>/api/v3/events"
+    "http://<manager_ip>/api/v3.1/events"
 ```
 
 ```python
@@ -60,7 +60,7 @@ for event in events:
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3/events'
+url = 'http://<manager-ip>/api/v3.1/events'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(url, auth=HTTPBasicAuth('user', '<manager-password>'), headers=headers)
 response.json()
@@ -135,11 +135,11 @@ estmockoperations/tasks.py\", line 476, in execution_logging\n    raise NonRecov
 }
 ```
 
-`GET "{manager-ip}/api/v3/events"`
+`GET "{manager-ip}/api/v3.1/events"`
 
 ### List events within a time range
 
-`GET "{manager-ip}/api/v3/events?_range=timestamp,[time_start],[time_end]"`
+`GET "{manager-ip}/api/v3.1/events?_range=timestamp,[time_start],[time_end]"`
 
 Parameter | Type | Description
 --------- | ------- | -------
@@ -148,15 +148,15 @@ Parameter | Type | Description
 
 all events within a  time range:
 
-`GET "/api/v3/events?_range=timestamp,<time_start>,<time_end>"`
+`GET "/api/v3.1/events?_range=timestamp,<time_start>,<time_end>"`
 
 all events since a given time:
 
-`GET "/api/v3/events?_range=timestamp,<time_start>,`
+`GET "/api/v3.1/events?_range=timestamp,<time_start>,`
 
 all events until a given time:
 
-`GET "/api/v3/events?_range=timestamp,,<time_end>"`
+`GET "/api/v3.1/events?_range=timestamp,,<time_end>"`
 
 <aside class="notice">
 Always include the commas, even when the values are omitted
@@ -164,7 +164,7 @@ Always include the commas, even when the values are omitted
 
 ### List events with filters
 
-`GET "{manager-ip}/api/v3/events?<filter>"`
+`GET "{manager-ip}/api/v3.1/events?<filter>"`
 
 Allowed filters:
 

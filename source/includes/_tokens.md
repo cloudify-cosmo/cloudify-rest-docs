@@ -18,7 +18,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/tokens"
+    "http://<manager-ip>/api/v3.1/tokens"
 ```
 
 ```python
@@ -26,7 +26,7 @@ $ curl -X GET \
 client.tokens.get()
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/tokens'
+url = 'http://<manager-ip>/api/v3.1/tokens'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -45,7 +45,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/tokens"`
+`GET "{manager-ip}/api/v3.1/tokens"`
 
 Gets a token.
 

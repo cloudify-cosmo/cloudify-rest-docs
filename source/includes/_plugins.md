@@ -30,7 +30,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/plugins?_include=id"
+    "http://<manager-ip>/api/v3.1/plugins?_include=id"
 ```
 
 ```python
@@ -40,7 +40,7 @@ for plugin in plugins:
     print plugin
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/plugins'
+url = 'http://<manager-ip>/api/v3.1/plugins'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -74,7 +74,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/plugins"`
+`GET "{manager-ip}/api/v3.1/plugins"`
 
 Lists all plugins.
 
@@ -93,7 +93,7 @@ Field | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/plugins/<plugin-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/plugins/<plugin-id>?_include=id"
 ```
 
 ```python
@@ -101,7 +101,7 @@ $ curl -X GET \
 client.plugins.get(plugin_id='<plugin-id'>', _include=['id'])
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
+url = 'http://<manager-ip>/api/v3.1/plugins/<plugin-id>'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -121,7 +121,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/plugins/{plugin-id}"`
+`GET "{manager-ip}/api/v3.1/plugins/{plugin-id}"`
 
 Gets a plugin.
 
@@ -142,7 +142,7 @@ $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
     -d '{"force": false}' \
-    "http://<manager-ip>/api/v3/plugins/<plugin-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/plugins/<plugin-id>?_include=id"
 ```
 
 ```python
@@ -150,7 +150,7 @@ $ curl -X DELETE \
 client.plugins.delete(plugin_id='<plugin-id>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>'
+url = 'http://<manager-ip>/api/v3.1/plugins/<plugin-id>'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -167,7 +167,7 @@ response = requests.delete(
 response.json()
 ```
 
-`DELETE "{manager-ip}/api/v3/plugins/{plugin-id}"`
+`DELETE "{manager-ip}/api/v3.1/plugins/{plugin-id}"`
 
 Deletes a plugin from the Cloudify-Manager.
 
@@ -191,7 +191,7 @@ The deleted `Plugin` resource.
 $ curl -X POST \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id"
+    "http://<manager-ip>/api/v3.1/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id"
 ```
 
 ```python
@@ -199,7 +199,7 @@ $ curl -X POST \
 client.plugins.upload(plugin_path='http://url/to/archive.wgn')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/plugins'
+url = 'http://<manager-ip>/api/v3.1/plugins'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'plugin_archive_url': 'http://url/to/archive.wgn',
@@ -222,7 +222,7 @@ response.json()
 }
 ```
 
-`POST "{manager-ip}/api/v3/plugins"`
+`POST "{manager-ip}/api/v3.1/plugins"`
 
 Upload a plugins
 
@@ -244,7 +244,7 @@ The new uploaded `Plugin` resource.
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/plugins/<plugin-id>/archive" > <plugin-archive-filename>.wgn
+    "http://<manager-ip>/api/v3.1/plugins/<plugin-id>/archive" > <plugin-archive-filename>.wgn
 ```
 
 ```python
@@ -255,7 +255,7 @@ client.plugins.download(
 )
 
 # Using Requests
-url = 'http://<manager-ip>/api/v3/plugins/<plugin-id>/archive'
+url = 'http://<manager-ip>/api/v3.1/plugins/<plugin-id>/archive'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -266,7 +266,7 @@ with open('<plugin-archive-filename>.wgn', 'wb') as plugin_archive:
     plugin_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v3/plugins/{plugin-id}/archive"`
+`GET "{manager-ip}/api/v3.1/plugins/{plugin-id}/archive"`
 
 Downloads a plugin.
 

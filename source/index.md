@@ -5,6 +5,7 @@ toc_footers:
   - <a href='http://docs.getcloudify.org'>Cloudify Documentation</a>
   - <label for="apiVersion">API version:</label>
     <select name="apiVersion" onChange="window.location.href=this.value">
+        <option value="/api/v3.1/">v3.1</option>
         <option value="/api/v3/">v3</option>
         <option value="/api/v2.1/" selected="selected">v2.1</option>
         <option value="/api/v2/">v2</option>

@@ -142,7 +142,7 @@ for blueprint in blueprints:
     print blueprint
 
 # Using requests
-url = "http://<manager-ip>/api/v2.1/blueprints"
+url = "http://<manager-ip>/api/v3.1/blueprints"
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     '_include': 'id,created_at',

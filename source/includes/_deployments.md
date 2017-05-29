@@ -210,6 +210,8 @@ Property | Type | Description
 --------- | ------- | -----------
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
+`private_resource` | boolean | (Optional). If set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).'
+`skip_plugins_validation` | boolean | (Optional). Determines whether to validate if the required deployment plugins exist on the manager (default: False).
 
 ### Response
 A `Deployment` resource.

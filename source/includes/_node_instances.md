@@ -24,7 +24,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/node-instances&_include=id"
+    "http://<manager-ip>/api/v3.1/node-instances&_include=id"
 ```
 
 ```python
@@ -34,7 +34,7 @@ for instance in instances:
     print instance
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/node-instances'
+url = 'http://<manager-ip>/api/v3.1/node-instances'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -68,7 +68,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/node-instances"`
+`GET "{manager-ip}/api/v3.1/node-instances"`
 
 Lists all node instances.
 
@@ -87,7 +87,7 @@ Field | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>&_include=id"
+    "http://<manager-ip>/api/v3.1/node-instances/<node-instance-id>&_include=id"
 ```
 
 ```python
@@ -95,7 +95,7 @@ $ curl -X GET \
 client.node_instances.get('http_web_server_tfq3nt', _include=['id'])
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+url = 'http://<manager-ip>/api/v3.1/node-instances/<node-instance-id>'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -115,7 +115,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
+`GET "{manager-ip}/api/v3.1/node-instances/{node-instance-id}"`
 
 Gets a node instance.
 
@@ -136,7 +136,7 @@ $ curl -X PATCH \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"version": 0, "runtime_properties": {"key": "value"}}' \
-    "http://<manager-ip>/api/v3/node-instances/<node-instance-id>?_include=id,runtime_properties"
+    "http://<manager-ip>/api/v3.1/node-instances/<node-instance-id>?_include=id,runtime_properties"
 ```
 
 ```python
@@ -148,7 +148,7 @@ client.node_instances.update(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/node-instances/<node-instance-id>'
+url = 'http://<manager-ip>/api/v3.1/node-instances/<node-instance-id>'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager_tenant>',
@@ -176,7 +176,7 @@ response.json()
 }
 ```
 
-`PATCH "{manager-ip}/api/v3/node-instances/{node-instance-id}"`
+`PATCH "{manager-ip}/api/v3.1/node-instances/{node-instance-id}"`
 
 Updates a node instance.
 

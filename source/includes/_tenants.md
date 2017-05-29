@@ -34,7 +34,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/tenants"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/tenants"
 ```
 
 ```python
@@ -57,7 +57,7 @@ client.tenants.list()
 }
 ```
 
-`GET "{manager-ip}/api/v3/tenants"`
+`GET "{manager-ip}/api/v3.1/tenants"`
 
 List all tenants.
 
@@ -72,7 +72,7 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/tenants/{tenant-name}"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/tenants/{tenant-name}"
 ```
 
 ```python
@@ -90,7 +90,7 @@ client.tenants.get('default_tenant')
 }
 ```
 
-`GET "{manager-ip}/api/v3/tenants?name={tenant-name}"`
+`GET "{manager-ip}/api/v3.1/tenants?name={tenant-name}"`
 
 Retrieves a specific tenant.
 
@@ -108,7 +108,7 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/tenants/<new-tenant-name>"
+$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>"
 ```
 
 ```python
@@ -126,7 +126,7 @@ client.tenants.create(<new-tenant-name>)
 }
 ```
 
-`POST "{manager-ip}/api/v3/tenants/{new-tenant-name}"`
+`POST "{manager-ip}/api/v3.1/tenants/{new-tenant-name}"`
 
 Creates a tenant.
 
@@ -145,7 +145,7 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/tenants/<tenant-name-to-delete>"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>"
 ```
 
 ```python
@@ -163,7 +163,7 @@ client.tenants.delete(<tenant-name>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/tenants/{tenant-name-to-delete}"`
+`DELETE "{manager-ip}/api/v3.1/tenants/{tenant-name-to-delete}"`
 
 Delete a tenant.
 
@@ -182,7 +182,7 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3/tenants/users"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
@@ -200,7 +200,7 @@ client.tenants.add_user(<user-name>, <tenant-name>)
 }
 ```
 
-`PUT "{manager-ip}/api/v3/tenants/users"`
+`PUT "{manager-ip}/api/v3.1/tenants/users"`
 
 Add a user to a tenant.
 
@@ -223,7 +223,7 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3/tenants/users"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
@@ -241,7 +241,7 @@ client.tenants.remove_user(<user-name>, <tenant-name>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/tenants/users"`
+`DELETE "{manager-ip}/api/v3.1/tenants/users"`
 
 Delete a user from a tenant.
 
@@ -264,7 +264,7 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3/tenants/user-groups"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
@@ -282,7 +282,7 @@ client.tenants.add_group(<group-name>, <tenant-name>)
 }
 ```
 
-`PUT "{manager-ip}/api/v3/tenants/user-groups"`
+`PUT "{manager-ip}/api/v3.1/tenants/user-groups"`
 
 Add a user group to a tenant.
 
@@ -305,7 +305,7 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3/tenants/user-groups"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
@@ -323,7 +323,7 @@ client.tenants.remove_user(<group-name>, <tenant-name>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/tenants/user-groups"`
+`DELETE "{manager-ip}/api/v3.1/tenants/user-groups"`
 
 Delete a user group from a tenant.
 

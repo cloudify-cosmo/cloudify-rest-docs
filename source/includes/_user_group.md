@@ -35,7 +35,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/user-groups"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/user-groups"
 ```
 
 ```python
@@ -59,7 +59,7 @@ client.user_groups.list()
 }
 ```
 
-`GET "{manager-ip}/api/v3/user-groups"`
+`GET "{manager-ip}/api/v3.1/user-groups"`
 
 List all user groups.
 
@@ -74,7 +74,7 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/user-groups/<group-name>"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/user-groups/<group-name>"
 ```
 
 ```python
@@ -93,7 +93,7 @@ client.user_groups.get(<group-name>)
 }
 ```
 
-`GET "{manager-ip}/api/v3/user-groups/{group-name}"`
+`GET "{manager-ip}/api/v3.1/user-groups/{group-name}"`
 
 Retrieves a specific group.
 
@@ -109,7 +109,7 @@ A `Group` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: default_tenant" -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' -u user:password "http://<manager-ip>/api/v3/user-groups"
+$ curl -X POST -H "Content-Type: application/json" -H "tenant: default_tenant" -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' -u user:password "http://<manager-ip>/api/v3.1/user-groups"
 ```
 
 ```python
@@ -128,7 +128,7 @@ client.user_groups.create(group_name=<group-name>, ldap_group_dn=<optional-ldap-
 }
 ```
 
-`POST -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' "{manager-ip}/api/v3/user-groups"`
+`POST -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' "{manager-ip}/api/v3.1/user-groups"`
 
 Creates a new user group.
 
@@ -151,7 +151,7 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/user-groups/<user-group-name-to-delete>"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/user-groups/<user-group-name-to-delete>"
 ```
 
 ```python
@@ -170,7 +170,7 @@ client.user_groups.delete(<group-name>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/user-groups/{user-group-to-delete}"`
+`DELETE "{manager-ip}/api/v3.1/user-groups/{user-group-to-delete}"`
 
 Deletes a user group.
 
@@ -189,7 +189,7 @@ A `Group` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3/user-groups/users"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
@@ -208,7 +208,7 @@ client.user_groups.add_user(<user-name>, <group-name>)
 }
 ```
 
-`PUT "{manager-ip}/api/v3/user-groups/users"`
+`PUT "{manager-ip}/api/v3.1/user-groups/users"`
 
 Add a user to group.
 
@@ -231,7 +231,7 @@ A `Group` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3/user-groups/users"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
@@ -250,7 +250,7 @@ client.user_groups.remove_user(<user-name>, <group-name>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/user-groups/users"`
+`DELETE "{manager-ip}/api/v3.1/user-groups/users"`
 
 Delete a user from a group.
 

@@ -10,7 +10,7 @@ The following REST API calls provide information about Cloudify's manager.
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/status"
+    "http://<manager-ip>/api/v3.1/status"
 ```
 
 ```python
@@ -18,7 +18,7 @@ $ curl -X GET \
 client.manager.get_status()
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/status'
+url = 'http://<manager-ip>/api/v3.1/status'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'status'}
 response = requests.get(
@@ -38,7 +38,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/status"`
+`GET "{manager-ip}/api/v3.1/status"`
 
 Gets Cloudify manager status.
 
@@ -79,7 +79,7 @@ Information about the instance fields can be found in the [DBus reference](http:
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/version?_include=version"
+    "http://<manager-ip>/api/v3.1/version?_include=version"
 ```
 
 ```python
@@ -87,7 +87,7 @@ $ curl -X GET \
 client.manager.get_version()
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/version'
+url = 'http://<manager-ip>/api/v3.1/version'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'version'}
 response = requests.get(
@@ -107,7 +107,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/version"`
+`GET "{manager-ip}/api/v3.1/version"`
 
 Gets Cloudify manager version information.
 

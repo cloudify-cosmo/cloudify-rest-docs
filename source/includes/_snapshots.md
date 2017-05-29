@@ -20,7 +20,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/snapshots?_include=id"
+    "http://<manager-ip>/api/v3.1/snapshots?_include=id"
 ```
 
 ```python
@@ -30,7 +30,7 @@ for snapshot in snapshots:
     print snapshot
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/snapshots'
+url = 'http://<manager-ip>/api/v3.1/snapshots'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -67,7 +67,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/snapshots"`
+`GET "{manager-ip}/api/v3.1/snapshots"`
 
 Lists all snapshots.
 
@@ -87,7 +87,7 @@ Attribute | Type | Description
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>"
+    "http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>"
 ```
 
 ```python
@@ -100,7 +100,7 @@ client.snapshots.create(
 
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
+url = 'http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -151,7 +151,7 @@ response.json()
 }
 ```
 
-`PUT "{manager-ip}/api/v3/snapshots/{snapshot-id}"`
+`PUT "{manager-ip}/api/v3.1/snapshots/{snapshot-id}"`
 
 Creates a new snapshot.
 
@@ -176,7 +176,7 @@ An [Execution](#the-execution-resource) resource representing the create snapsho
 $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>"
+    "http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>"
 ```
 
 ```python
@@ -184,7 +184,7 @@ $ curl -X DELETE \
 client.snapshots.delete(snapshot_id='<snapshot-id>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>'
+url = 'http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -208,7 +208,7 @@ response.json()
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/snapshots/{snapshot-id}"`
+`DELETE "{manager-ip}/api/v3.1/snapshots/{snapshot-id}"`
 
 Deletes an existing snapshot.
 
@@ -228,7 +228,7 @@ curl -s -X POST \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
     -d '{"tenant_name": "<manager-tenant>", "recreate_deployments_envs": true, "force": false, "restore_certificates": false, "no_reboot": false}' \
-    "http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore"
+    "http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>/restore"
 ```
 
 ```python
@@ -236,7 +236,7 @@ curl -s -X POST \
 client.snapshots.restore(snapshot_id='<snapshot-id>', tenant_name='<manager-tenant>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/snapshots/<snapshot-id>/restore'
+url = 'http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>/restore'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -271,7 +271,7 @@ response.json()
 }
 ```
 
-`POST "{manager-ip}/api/v3/snapshots/{snapshot-id}/restore"`
+`POST "{manager-ip}/api/v3.1/snapshots/{snapshot-id}/restore"`
 
 Restores the specified snapshot on the manager.
 
@@ -299,7 +299,7 @@ An [Execution](#the-execution-resource) resource representing the restore snapsh
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/snapshot/<snapshot-id>/archive" > <snapshot-archive-filename>.zip
+    "http://<manager-ip>/api/v3.1/snapshot/<snapshot-id>/archive" > <snapshot-archive-filename>.zip
 ```
 
 ```python
@@ -310,7 +310,7 @@ client.snapshots.download(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/snapshot/<snapshot-id>/archive'
+url = 'http://<manager-ip>/api/v3.1/snapshot/<snapshot-id>/archive'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -321,7 +321,7 @@ with open('<snapshot-archive-filename>.wgn', 'wb') as snapshot_archive:
     snapshot_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v3/snapshots/{snapshot-id}/archive"`
+`GET "{manager-ip}/api/v3.1/snapshots/{snapshot-id}/archive"`
 
 Downloads an existing snapshot.
 
@@ -339,7 +339,7 @@ A streamed response (content type `application/octet-stream`), which is a zip ar
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/snapshots/archive?snapshot_archive_url=http://url/to/archive.zip"
+    "http://<manager-ip>/api/v3.1/snapshots/archive?snapshot_archive_url=http://url/to/archive.zip"
 ```
 
 ```python
@@ -350,7 +350,7 @@ client.snapshots.upload(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/snapshots/archive'
+url = 'http://<manager-ip>/api/v3.1/snapshots/archive'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'snapshot_archive_url': 'http://url/to/archive.zip'}
 response = requests.post(
@@ -378,7 +378,7 @@ response.json()
 ```
 
 
-`PUT "{manager-ip}/api/v3/snapshots/{snapshot-id}/archive"`
+`PUT "{manager-ip}/api/v3.1/snapshots/{snapshot-id}/archive"`
 
 Uploads a snapshot to the Cloudify Manager.
 The call expects a `application/octet-stream` content type where the content is a zip archive.

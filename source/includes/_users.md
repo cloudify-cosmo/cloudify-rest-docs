@@ -40,7 +40,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/users"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/users"
 ```
 
 ```python
@@ -66,7 +66,7 @@ client.users.list()
 }
 ```
 
-`GET "{manager-ip}/api/v3/users"`
+`GET "{manager-ip}/api/v3.1/users"`
 
 List all users.
 
@@ -84,7 +84,7 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3/users/<user-name>"
+$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/users/<user-name>"
 ```
 
 ```python
@@ -105,7 +105,7 @@ client.users.get(<user-name>)
 }
 ```
 
-`GET "{manager-ip}/api/v3/users/{user-name}"`
+`GET "{manager-ip}/api/v3.1/users/{user-name}"`
 
 Retrieves a specific user.
 
@@ -121,7 +121,7 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' -u user:password "http://{manager-ip}/api/v3/users"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' -u user:password "http://{manager-ip}/api/v3.1/users"
 ```
 
 ```python
@@ -144,7 +144,7 @@ client.users.create(<new-user-name>,
 }
 ```
 
-`PUT -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' "{manager-ip}/api/v3/users"`
+`PUT -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' "{manager-ip}/api/v3.1/users"`
 
 Creates a new user.
 
@@ -168,7 +168,7 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/users/<user-name-to-delete>"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/users/<user-name-to-delete>"
 ```
 
 ```python
@@ -189,7 +189,7 @@ client.users.delete(<user-name>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/tenants/{user-name-to-delete}"`
+`DELETE "{manager-ip}/api/v3.1/tenants/{user-name-to-delete}"`
 
 Delete a user.
 
@@ -207,7 +207,7 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"password": <new-password>}' "http://<manager-ip>/api/v3/users/<user-name>"
+$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"password": <new-password>}' "http://<manager-ip>/api/v3.1/users/<user-name>"
 ```
 
 ```python
@@ -228,7 +228,7 @@ client.users.set_password(<user-name>, <new-password>)
 }
 ```
 
-`POST -d '{"password": <new-password>}' '"{manager-ip}/api/v3/users/{user-name}"`
+`POST -d '{"password": <new-password>}' '"{manager-ip}/api/v3.1/users/{user-name}"`
 
 Specify a password.
 
@@ -251,7 +251,7 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"role": <user-role>}' "http://<manager-ip>/api/v3/users/<user-name>"
+$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"role": <user-role>}' "http://<manager-ip>/api/v3.1/users/<user-name>"
 ```
 
 ```python
@@ -272,7 +272,7 @@ client.users.set_role(<user-name>, <new-role>)
 }
 ```
 
-`POST -d '{"role": <role>}' '"{manager-ip}/api/v3/users/{user-name}"`
+`POST -d '{"role": <role>}' '"{manager-ip}/api/v3.1/users/{user-name}"`
 
 Set a new role for the user (`user`, `administrator`, `suspended`).
 

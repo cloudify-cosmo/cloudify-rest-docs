@@ -31,7 +31,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -u user:password "http://<manager-ip>/api/v3/cluster"
+$ curl -u user:password "http://<manager-ip>/api/v3.1/cluster"
 ```
 
 ```python
@@ -65,7 +65,7 @@ client.cluster.status()
 }
 ```
 
-`GET "{manager-ip}/api/v3/cluster"`
+`GET "{manager-ip}/api/v3.1/cluster"`
 
 Retrieves the current cluster state. The `logs` and `error` fields are hidden by
 default, but can be added to the response if specified using the `_include`
@@ -97,7 +97,7 @@ client.cluster.join(
 ```
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "credentials": "<REDACTED>"}' "http://<manager-ip>/api/v3/cluster"
+$ curl -X PUT -H "Content-Type: application/json" -u user:password -d '{"host_ip": "172.20.0.2", "node_name": "manager", "credentials": "<REDACTED>"}' "http://<manager-ip>/api/v3.1/cluster"
 ```
 
 
@@ -109,7 +109,7 @@ $ curl -X PUT -H "Content-Type: application/json" -u user:password -d '{"host_ip
 }
 ```
 
-`PUT "{manager-ip}/api/v3/cluster"`
+`PUT "{manager-ip}/api/v3.1/cluster"`
 
 Starts the cluster mechanisms on the current Cloudify Manager. If the `join_addrs`
 parameter is provided, joins an existing cluster, otherwise bootstraps a new
@@ -144,7 +144,7 @@ client.cluster.update(
 ```
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -d '{"config_key": "config_value"}' -u user:password "http://<manager-ip>/api/v3/cluster"
+$ curl -X PATCH -H "Content-Type: application/json" -d '{"config_key": "config_value"}' -u user:password "http://<manager-ip>/api/v3.1/cluster"
 ```
 
 > Response Example
@@ -156,7 +156,7 @@ $ curl -X PATCH -H "Content-Type: application/json" -d '{"config_key": "config_v
 }
 ```
 
-`PATCH "{manager-ip}/api/v3/cluster"`
+`PATCH "{manager-ip}/api/v3.1/cluster"`
 
 Updates the cluster configuration. The request body is a mapping containing
 arbitrary settings, which can be used by either the core cluster mechanisms,
@@ -193,7 +193,7 @@ client.cluster.nodes.list()
 ```
 
 ```shell
-$ curl --header -u user:password "http://<manager-ip>/api/v3/cluster/nodes"
+$ curl --header -u user:password "http://<manager-ip>/api/v3.1/cluster/nodes"
 ```
 
 > Response Example
@@ -214,7 +214,7 @@ $ curl --header -u user:password "http://<manager-ip>/api/v3/cluster/nodes"
 }
 ```
 
-`GET "{manager-ip}/api/v3/cluster/nodes"`
+`GET "{manager-ip}/api/v3.1/cluster/nodes"`
 
 Lists all nodes in the cluster.
 
@@ -234,7 +234,7 @@ client.cluster.nodes.get("<node-id>")
 ```
 
 ```shell
-$ curl --header -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
+$ curl --header -u user:password "http://<manager-ip>/api/v3.1/cluster/nodes/<node-id>"
 ```
 
 > Response Example
@@ -250,7 +250,7 @@ $ curl --header -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node
 }
 ```
 
-`GET "{manager-ip}/api/v3/cluster/nodes/{node-id}"`
+`GET "{manager-ip}/api/v3.1/cluster/nodes/{node-id}"`
 
 Fetches the details of a node in the cluster.
 
@@ -270,7 +270,7 @@ client.cluster.nodes.add(host_ip='172.20.0.3', node_name='second-manager')
 ```
 
 ```shell
-$ curl -u user:password -d '{"host_ip": "172.20.0.3", "node_name": "second-manager"}' "http://<manager-ip>/api/v3/cluster/nodes"
+$ curl -u user:password -d '{"host_ip": "172.20.0.3", "node_name": "second-manager"}' "http://<manager-ip>/api/v3.1/cluster/nodes"
 ```
 
 ```javascript
@@ -280,7 +280,7 @@ var headers = {
 }
 
 var settings = {
-  "url": "http://<manager-ip>/api/v3/cluster/nodes",
+  "url": "http://<manager-ip>/api/v3.1/cluster/nodes",
   "method": "GET",
   "headers": headers,
   "contentType": "application/json"
@@ -308,7 +308,7 @@ $.ajax(settings).done(function (response) {
 }
 ```
 
-`PUT "{manager-ip}/api/v3/cluster/nodes/{node-name}"`
+`PUT "{manager-ip}/api/v3.1/cluster/nodes/{node-name}"`
 
 Adds a node to the cluster. This prepares the cluster for contacting the new node,
 runs validations and generates credentials for use by a new node. The received
@@ -324,7 +324,7 @@ client.cluster.nodes.delete("<node-id>")
 ```
 
 ```shell
-$ curl -X DELETE -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<node-id>"
+$ curl -X DELETE -u user:password "http://<manager-ip>/api/v3.1/cluster/nodes/<node-id>"
 ```
 
 > Response Example
@@ -339,7 +339,7 @@ $ curl -X DELETE -u user:password "http://<manager-ip>/api/v3/cluster/nodes/<nod
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/cluster/nodes/{node-id}"`
+`DELETE "{manager-ip}/api/v3.1/cluster/nodes/{node-id}"`
 
 Removes a node from the cluster. The node disconnects from the cluster and
 disables all cluster mechanisms. You cannot rejoin it to the cluster.

@@ -35,7 +35,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/secrets"
+$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets"
 ```
 
 ```python
@@ -61,7 +61,7 @@ client.secrets.list()
 }
 ```
 
-`GET "{manager-ip}/api/v3/secrets"`
+`GET "{manager-ip}/api/v3.1/secrets"`
 
 List all secrets.
 
@@ -76,7 +76,7 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/secrets/<secret-key>"
+$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
 ```
 
 ```python
@@ -98,7 +98,7 @@ client.secrets.get(<secret-key>)
 }
 ```
 
-`GET "{manager-ip}/api/v3/secrets/{secret-key}"`
+`GET "{manager-ip}/api/v3.1/secrets/{secret-key}"`
 
 Retrieves a specific secret.
 
@@ -114,7 +114,7 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-secret-value>}' -u user:password "http://<manager-ip>/api/v3/secrets/<new-secret-key>"
+$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-secret-value>}' -u user:password "http://<manager-ip>/api/v3.1/secrets/<new-secret-key>"
 ```
 
 ```python
@@ -136,7 +136,7 @@ client.secrets.create(<new-secret-key>, <new-secret-value>)
 }
 ```
 
-`PUT -d '{"value": <new-secret-value>}' "{manager-ip}/api/v3/secrets/{new-secret-key}"`
+`PUT -d '{"value": <new-secret-value>}' "{manager-ip}/api/v3.1/secrets/{new-secret-key}"`
 
 Creates a secret.
 
@@ -160,7 +160,7 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-value>}' -u user:password "http://<manager-ip>/api/v3/secrets/<secret-key>"
+$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-value>}' -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
 ```
 
 ```python
@@ -182,7 +182,7 @@ client.secrets.update(<secret-key>, <new-value>)
 }
 ```
 
-`PATCH -d '{"value": <new-value>}' "{manager-ip}/api/v3/secrets/{secret-key}"`
+`PATCH -d '{"value": <new-value>}' "{manager-ip}/api/v3.1/secrets/{secret-key}"`
 
 Updates a secret.
 
@@ -206,7 +206,7 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3/secrets/<secret-key>"
+$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
 ```
 
 ```python
@@ -228,7 +228,7 @@ client.secrets.delete(<secret-key>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/secrets/{secret-key}"`
+`DELETE "{manager-ip}/api/v3.1/secrets/{secret-key}"`
 
 Deletes a secret.
 

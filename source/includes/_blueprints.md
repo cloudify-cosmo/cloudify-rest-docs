@@ -22,7 +22,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/blueprints?id=<blueprint-id>&_include=id"
+    "http://<manager-ip>/api/v3.1/blueprints?id=<blueprint-id>&_include=id"
 ```
 
 ```python
@@ -30,7 +30,7 @@ $ curl -X GET \
 client.blueprints.get(blueprint_id='<blueprint-id>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/blueprints'
+url = 'http://<manager-ip>/api/v3.1/blueprints'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'id': '<blueprint-id>',
@@ -64,7 +64,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/blueprints?id={blueprint-id}"`
+`GET "{manager-ip}/api/v3.1/blueprints?id={blueprint-id}"`
 
 Gets a specific blueprint.
 
@@ -83,7 +83,7 @@ A `Blueprint` resource.
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip"
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip"
 ```
 
 ```python
@@ -95,7 +95,7 @@ client.blueprints._upload(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>'
+url = 'http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'application_file_name': '<blueprint-id>.yaml',
@@ -128,7 +128,7 @@ response.json()
 }
 ```
 
-`PUT "{manager-ip}/api/v3/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip"`
+`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip"`
 
 Uploads a blueprint to Cloudify's manager.
 The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
@@ -155,7 +155,7 @@ A `Blueprint` resource.
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "<manager-ip>/api/v3/blueprints?_include=id"
+    "<manager-ip>/api/v3.1/blueprints?_include=id"
 ```
 
 ```python
@@ -165,7 +165,7 @@ for blueprint in blueprints:
     print blueprint
 
 # Using requests
-url = "http://<manager-ip>/api/v3/blueprints"
+url = "http://<manager-ip>/api/v3.1/blueprints"
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -202,7 +202,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/blueprints"`
+`GET "{manager-ip}/api/v3.1/blueprints"`
 
 Lists all blueprints.
 
@@ -229,7 +229,7 @@ $ curl -X DELETE \
 client.blueprints.delete(blueprint_id='<blueprint-id>')
 
 # Using requests
-url = 'http://<manager-ip>/ap/v3/blueprints/<blueprint-id>'
+url = 'http://<manager-ip>/ap/v3.1/blueprints/<blueprint-id>'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.delete(
     url,
@@ -255,7 +255,7 @@ response.json()
 }
 ```
 
-`DELETE "{manager-ip}/api/v3/blueprints/{blueprint-id}"`
+`DELETE "{manager-ip}/api/v3.1/blueprints/{blueprint-id}"`
 
 Deletes a specific blueprint.
 
@@ -276,7 +276,7 @@ Downloads a specific blueprint as an archive.
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive" > <blueprint-archive-filename>.tar.gz
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/archive" > <blueprint-archive-filename>.tar.gz
 ```
 
 ```python
@@ -284,7 +284,7 @@ $ curl -X GET \
 client.blueprints.download(blueprint_id='<blueprint-id>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/blueprints/<blueprint-id>/archive'
+url = 'http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/archive'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -295,7 +295,7 @@ with open('<blueprint-archive-filename>.tar.gz', 'wb') as blueprint_archive:
     blueprint_archive.write(response.content)
 ```
 
-`GET "{manager-ip}/api/v3/blueprints/{blueprint-id}/archive"`
+`GET "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/archive"`
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to download.

@@ -34,7 +34,7 @@ Attribute | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/nodes?_include=id"
+    "http://<manager-ip>/api/v3.1/nodes?_include=id"
 ```
 
 ```python
@@ -44,7 +44,7 @@ for node in nodes:
     print node
 
 # Using request
-url = 'http://<manager-ip>/api/v3/nodes'
+url = 'http://<manager-ip>/api/v3.1/nodes'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -78,7 +78,7 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3/nodes"`
+`GET "{manager-ip}/api/v3.1/nodes"`
 
 Lists all nodes.
 

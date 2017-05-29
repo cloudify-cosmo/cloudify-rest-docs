@@ -1,4 +1,4 @@
-# Cloudify REST API V3
+# Cloudify REST API V3.1
 
 > Basic usage
 
@@ -6,7 +6,7 @@
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-pasword> \
-    "http://<manager-ip>/api/v3/<endpoint>"
+    "http://<manager-ip>/api/v3.1/<endpoint>"
 ```
 
 ```python
@@ -22,7 +22,7 @@ client = CloudifyClient(
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3/<endpoint>'
+url = 'http://<manager-ip>/api/v3.1/<endpoint>'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -33,7 +33,7 @@ response.json()
 
 Welcome to Cloudify's REST API Documentation!
 
-The base URI for the v3 REST API is: `/api/v3`.
+The base URI for the v3.1 REST API is: `/api/v3.1`.
 
 <aside class="notice">
 This section describes various API features that apply to all resources
@@ -70,7 +70,7 @@ you can use the `default_tenant` as the tenant for the request.
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-api>/api/v3/blueprints?_include=id,created_at"
+    "http://<manager-api>/api/v3.1/blueprints?_include=id,created_at"
 ```
 
 ```python
@@ -80,7 +80,7 @@ for blueprint in blueprints:
   print blueprint
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/blueprints'
+url = 'http://<manager-ip>/api/v3.1/blueprints'
 querystring = {'_include': 'id,created_at'}
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
@@ -129,7 +129,7 @@ Note that specified field names must be part of the resource schema, otherwise a
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-pasword> \
-    "http://<manager-ip>/api/v3/blueprints?_include=id,created_at&id=my-blueprint-1&id=my-blueprint-2"
+    "http://<manager-ip>/api/v3.1/blueprints?_include=id,created_at&id=my-blueprint-1&id=my-blueprint-2"
 ```
 
 ```python
@@ -142,7 +142,7 @@ for blueprint in blueprints:
     print blueprint
 
 # Using requests
-url = "http://<manager-ip>/api/v2.1/blueprints"
+url = "http://<manager-ip>/api/v3.1/blueprints"
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     '_include': 'id,created_at',
@@ -200,7 +200,7 @@ Filters also accept multiple values (OR) by using multiple parameters of the sam
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager_ip>/api/v3/deployments?_include=id,blueprint_id&_sort=-id"
+    "http://<manager_ip>/api/v3.1/deployments?_include=id,blueprint_id&_sort=-id"
 ```
 
 ```python
@@ -213,7 +213,7 @@ for deployment in deployments:
     print deployment
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/deployments'
+url = 'http://<manager-ip>/api/v3.1/deployments'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     '_include': 'id,blueprint_id',
@@ -270,7 +270,7 @@ response.json()
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager_ip>/api/v3/deployments?_include=id,blueprint_id&_sort=blueprint_id&_sort=-id"
+    "http://<manager_ip>/api/v3.1/deployments?_include=id,blueprint_id&_sort=blueprint_id&_sort=-id"
 ```
 
 ```python
@@ -283,7 +283,7 @@ for deployment in deployments:
     print deployment
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/deployments'
+url = 'http://<manager-ip>/api/v3.1/deployments'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     '_include': 'id,blueprint_id',
@@ -349,7 +349,7 @@ order of `_sort` parameters in the request (example #2).
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/events?_size=4&_offset=1&_include=timestamp"
+    "http://<manager-ip>/api/v3.1/events?_size=4&_offset=1&_include=timestamp"
 ```
 
 ```python
@@ -361,7 +361,7 @@ events = client.events.list(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/events'
+url = 'http://<manager-ip>/api/v3.1/events'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     '_size': '4',
@@ -428,7 +428,7 @@ Valid credentials do not affect the returned response, but invalid credentials r
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-pasword> \
-    "http://<manager-ip>/api/v3/status?_include=status"
+    "http://<manager-ip>/api/v3.1/status?_include=status"
 ```
 
 ```python
@@ -436,7 +436,7 @@ $ curl -X GET \
 client.manager.get_status()
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/status'
+url = 'http://<manager-ip>/api/v3.1/status'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'status'}
 response = requests.get(
@@ -462,7 +462,7 @@ response.json()
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-pasword> \
-    "<manager-ip>/api/v3/tokens"
+    "<manager-ip>/api/v3.1/tokens"
 ```
 
 ```python
@@ -470,7 +470,7 @@ $ curl -X GET \
 client.tokens.get()
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/tokens'
+url = 'http://<manager-ip>/api/v3.1/tokens'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
@@ -495,7 +495,7 @@ response.json()
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     --header "Authentication-Token: <manager-token>" \
-    "http://<manager-ip>/api/v3/blueprints?_include=id"
+    "http://<manager-ip>/api/v3.1/blueprints?_include=id"
 ```
 
 ```python
@@ -510,7 +510,7 @@ for blueprint in blueprints:
     print blueprint
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/blueprints'
+url = 'http://<manager-ip>/api/v3.1/blueprints'
 headers = {
     'Tenant': '<manager-tenant>',
     'Autentication-Token': '<manage-token>',

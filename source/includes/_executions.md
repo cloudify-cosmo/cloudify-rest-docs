@@ -24,7 +24,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET "<manager-ip>/api/v3/executions?_include=id
+$ curl -X GET "<manager-ip>/api/v3.1/executions?_include=id
 ```
 
 ```python
@@ -34,7 +34,7 @@ for execution in executions:
   print execution
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/executions'
+url = 'http://<manager-ip>/api/v3.1/executions'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -67,7 +67,7 @@ response = requests.get(
 }
 ```
 
-`GET "{manager-ip}/api/v3/executions"`
+`GET "{manager-ip}/api/v3.1/executions"`
 
 Lists all executions.
 
@@ -86,7 +86,7 @@ Field | Type | Description
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/executions/<execution-id>?_include=id"
 ```
 
 ```python
@@ -94,7 +94,7 @@ $ curl -X GET \
 client.executions.get(execution_id='<execution_id>', _include=['id'])
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/executions/<execution_id>'
+url = 'http://<manager-ip>/api/v3.1/executions/<execution_id>'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 response = requests.get(
@@ -115,7 +115,7 @@ response.json()
 ```
 
 
-`GET "{manager-ip}/api/v3/executions/{execution-id}"`
+`GET "{manager-ip}/api/v3.1/executions/{execution-id}"`
 
 Gets an execution.
 
@@ -136,7 +136,7 @@ $ curl -X POST \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"deployment_id": "<deployment-id>", "workflow_id": "install"}' \
-    "http://<manager_ip>/api/v3/executions?_include=id"
+    "http://<manager_ip>/api/v3.1/executions?_include=id"
 ```
 
 ```python
@@ -144,7 +144,7 @@ $ curl -X POST \
 client.executions.start(deployment_id='<deployment-id>', workflow_id='install')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/executions'
+url = 'http://<manager-ip>/api/v3.1/executions'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -172,7 +172,7 @@ response.json()
 }
 ```
 
-`POST -d '{"deployment_id":{deployment-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v3/executions"`
+`POST -d '{"deployment_id":{deployment-id}, "workflow_id":"<workflow-id>"}' "{manager-ip}/api/v3.1/executions"`
 
 Starts an execution.
 
@@ -199,7 +199,7 @@ curl -X POST \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"deployment_id": "dep", "action": "cancel"}'
-    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/executions/<execution-id>?_include=id"
 ```
 
 ```python
@@ -207,7 +207,7 @@ curl -X POST \
 client.executions.cancel(execution_id='<execution-id>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
+url = 'http://<manager-ip>/api/v3.1/executions/<execution-id>'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -231,7 +231,7 @@ response.json()
 }
 ```
 
-`POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v3/executions/{execution-id}"`
+`POST -d '{"deployment_id":{deployment-id}, "action":"<action-method>"}' "{manager-ip}/api/v3.1/executions/{execution-id}"`
 
 Cancels an execution.
 
@@ -260,7 +260,7 @@ curl -X PATCH \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"status": "cancelled"}' \
-    "http://<manager-ip>/api/v3/executions/<execution-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/executions/<execution-id>?_include=id"
 ```
 
 ```python
@@ -268,7 +268,7 @@ curl -X PATCH \
 client.executions.update(execution_id='<execution_id>', status='cancelled')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3/executions/<execution-id>'
+url = 'http://<manager-ip>/api/v3.1/executions/<execution-id>'
 headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
@@ -293,7 +293,7 @@ response.json()
 }
 ```
 
-`PATCH "{manager-ip}/api/v3/executions/{execution-id}"`
+`PATCH "{manager-ip}/api/v3.1/executions/{execution-id}"`
 
 Updates an execution.
 

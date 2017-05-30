@@ -318,9 +318,27 @@ $.ajax(settings).done(function (response) {
 
 `PUT "{manager-ip}/api/v3.1/cluster/nodes/{node-name}"`
 
-Adds a node to the cluster. This prepares the cluster for contacting the new node,
-runs validations and generates credentials for use by a new node. The received
-credentials are passed in the "Join cluster" ("Put Cluster State") API call.
+Adds a new node to the cluster. This API call must be made to the cluster
+leader prior to joining a new node to the cluster.
+
+This prepares the cluster for contacting the new node, runs validations
+and generates credentials for use by a new node.
+
+The received credentials must then be passed in the "Join cluster"
+("Put Cluster State") API call of the Manager that is joining the cluster.
+
+
+### Request Body
+
+Property | Type | Description
+-------- | ---- | -----------
+host_ip | string | The externally accessible IP of the node to be added.
+node_name | string | A unique name for the node to be added.
+
+
+### Response
+A `ClusterNode` resource representing the node that can now be joined to the
+cluster, with a `credentials` attribute.
 
 
 ## Delete Cluster Node

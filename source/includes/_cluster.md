@@ -114,9 +114,17 @@ $ curl -X PUT -H "Content-Type: application/json" -u user:password -d '{"host_ip
 Starts the cluster mechanisms on the current Cloudify Manager. If the `join_addrs`
 parameter is provided, joins an existing cluster, otherwise bootstraps a new
 cluster.
-When joining a cluster, the "credentials" parameter is required. To generate
-credentials for use by a new node, use the "Add cluster node" endpoint first.
+
+When starting a new cluster, the current Cloudify Manager will become the
+cluster leader.
+
+When joining a cluster, the current Cloudify Manager will join the cluster
+and become a replica.
+When joining, the "credentials" parameter is required. To generate
+it, first execute the "Add cluster node" API call with the current cluster
+leader.
 Only admin users can execute this operation.
+
 
 ### Request Body
 

@@ -19,7 +19,6 @@ includes:
   - api
   - blueprints
   - cluster
-  - deployment_modification
   - deployments
   - events
   - executions

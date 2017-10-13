@@ -182,7 +182,12 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3.1/tenants/users"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python

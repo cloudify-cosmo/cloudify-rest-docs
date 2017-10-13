@@ -154,7 +154,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `username` | string | The username.
 `password` | string | The user password.
-`role` | string | The user role. One of the following: `user`, `administrator`, `suspended`.
+`role` | string | The user role. One of the following: `sys_admin`, `manager`, `user`, `viewer`, `default`.
 
 ### Response
 A `User` resource.
@@ -274,13 +274,17 @@ client.users.set_role(<user-name>, <new-role>)
 
 `POST -d '{"role": <role>}' '"{manager-ip}/api/v3.1/users/{user-name}"`
 
-Set a new role for the user (`user`, `administrator`, `suspended`).
+Set a new role for the user (`sys_admin`, `manager`, `user`, `viewer`, `default`).
 
-* `user` - The default user.
+* `sys_admin` - User that can manage Cloudify
 
-* `administrator` - Can execute Cloudify management commands (handle users, tenants, etc)
+* `manager` - User that can manage tenants
 
-* `suspended` - Prevents user access to Cloudify, without deleting them.
+* `user` - Regular user, can perform actions on tenants resources
+
+* `viewer` - User that can only view tenant resources
+
+* `default` - User exists, but have no special permissions
 
 
 ### URI Parameters
@@ -290,7 +294,7 @@ Set a new role for the user (`user`, `administrator`, `suspended`).
 
 Property | Type | Description
 --------- | ------- | -----------
-`role` | string | The user role. One of the following: `user`, `administrator`, `suspended`.
+`role` | string | The user role. One of the following: `sys_admin`, `manager`, `user`, `viewer`, `default`.
 
 ### Response
 A `User` resource.

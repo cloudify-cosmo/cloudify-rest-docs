@@ -186,7 +186,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "tenant: <tenant-name>" \
     -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
     "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 

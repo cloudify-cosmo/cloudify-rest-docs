@@ -199,9 +199,9 @@ client.tenants.add_user(<user-name>, <tenant-name>)
 
 ```json
 {
-    "name": "tenant-name",
-    "groups": [],
-    "users": []
+    "name": "<tenant-name>",
+    "groups": 0,
+    "users": 1
 }
 ```
 

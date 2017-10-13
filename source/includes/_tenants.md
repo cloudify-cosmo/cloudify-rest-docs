@@ -210,6 +210,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `username` | string | The user name to add to the tenant.
 `tenants_name` | string | The name of the tenant to which to add the user.
+`role` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.

@@ -182,7 +182,12 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3.1/tenants/users"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
@@ -194,9 +199,9 @@ client.tenants.add_user(<user-name>, <tenant-name>)
 
 ```json
 {
-    "name": "tenant-name",
-    "groups": [],
-    "users": []
+    "name": "<tenant-name>",
+    "groups": 0,
+    "users": 1
 }
 ```
 
@@ -210,6 +215,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `username` | string | The user name to add to the tenant.
 `tenants_name` | string | The name of the tenant to which to add the user.
+`role` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.

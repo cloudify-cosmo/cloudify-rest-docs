@@ -302,7 +302,8 @@ Add a user group to a tenant.
 Property | Type | Description
 --------- | ------- | -----------
 `group_name` | string | The name of the user group to add to the tenant.
-`tenants_name` | string | The name of the tenant to which to add the user group.
+`tenant_name` | string | The name of the tenant to which to add the user group.
+`role` | string | (Optional) The name of the role assigned to the users members of the group. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.

@@ -270,7 +270,12 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' `"http://<manager-ip>/api/v3.1/tenants/user-groups"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "tenant: <tenant-name>" \
+    -u user:password \
+    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>, "role": <role-name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
@@ -283,8 +288,8 @@ client.tenants.add_group(<group-name>, <tenant-name>)
 ```json
 {
     "name": "tenant-name",
-    "groups": ["new_group"],
-    "users": []
+    "groups": 1,
+    "users": 0
 }
 ```
 
@@ -297,7 +302,8 @@ Add a user group to a tenant.
 Property | Type | Description
 --------- | ------- | -----------
 `group_name` | string | The name of the user group to add to the tenant.
-`tenants_name` | string | The name of the tenant to which to add the user group.
+`tenant_name` | string | The name of the tenant to which to add the user group.
+`role` | string | (Optional) The name of the role assigned to the users members of the group. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.

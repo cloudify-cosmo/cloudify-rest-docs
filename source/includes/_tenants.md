@@ -288,8 +288,8 @@ client.tenants.add_group(<group-name>, <tenant-name>)
 ```json
 {
     "name": "tenant-name",
-    "groups": ["new_group"],
-    "users": []
+    "groups": 1,
+    "users": 0
 }
 ```
 

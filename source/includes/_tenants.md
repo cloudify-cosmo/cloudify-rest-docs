@@ -34,7 +34,10 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/tenants"
+$ curl -X GET \
+    -H "Tenant: default_tenant" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants"
 ```
 
 ```python
@@ -72,7 +75,10 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/tenants/{tenant-name}"
+$ curl -X GET \
+    -H "Tenant: default_tenant" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/{tenant-name}"
 ```
 
 ```python
@@ -108,7 +114,11 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>"
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>"
 ```
 
 ```python
@@ -145,7 +155,11 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>"
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>"
 ```
 
 ```python
@@ -184,7 +198,7 @@ A `Tenant` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "tenant: <tenant-name>" \
+    -H "Tenant: <tenant-name>" \
     -u <user>:<password> \
     -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
     "http://<manager-ip>/api/v3.1/tenants/users"
@@ -229,7 +243,12 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3.1/tenants/users"
+$ curl -X DELETE \
+    -H "Content-Type: application/json"
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
+     "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
@@ -272,8 +291,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "tenant: <tenant-name>" \
-    -u user:password \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
     -d '{"group_name": <group-name>, "tenant_name": <tenant-name>, "role": <role-name>}' \
     "http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
@@ -317,7 +336,12 @@ A `Tenant` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"group_name": <group-name>, "tenants_name": <tenants-name>}' `"http://<manager-ip>/api/v3.1/tenants/user-groups"
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python

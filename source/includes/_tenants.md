@@ -53,8 +53,8 @@ client.tenants.list()
     [
         {
             "name": "default_tenant",
-            "groups": [],
-            "users": ["admin"]
+            "groups": 0,
+            "users": 1
         }
     ]
 }
@@ -91,8 +91,8 @@ client.tenants.get('default_tenant')
 ```json
 {
     "name": "default_tenant",
-    "groups": [],
-    "users": ["admin"]
+    "groups": 0,
+    "users": 1
 }
 ```
 
@@ -131,8 +131,8 @@ client.tenants.create(<new-tenant-name>)
 ```json
 {
     "name": "new_tenant",
-    "groups": [],
-    "users": []
+    "groups": 0,
+    "users": 0
 }
 ```
 
@@ -172,8 +172,8 @@ client.tenants.delete(<tenant-name>)
 ```json
 {
     "name": "tenant-name",
-    "groups": [],
-    "users": []
+    "groups": 0,
+    "users": 0
 }
 ```
 
@@ -261,8 +261,8 @@ client.tenants.remove_user(<user-name>, <tenant-name>)
 ```json
 {
     "name": "tenant-name",
-    "groups": [],
-    "users": []
+    "groups": 0,
+    "users": 0
 }
 ```
 
@@ -354,8 +354,8 @@ client.tenants.remove_user(<group-name>, <tenant-name>)
 ```json
 {
     "name": "tenant-name",
-    "groups": [],
-    "users": []
+    "groups": 0,
+    "users": 0
 }
 ```
 

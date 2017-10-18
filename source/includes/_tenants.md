@@ -206,7 +206,7 @@ $ curl -X PUT \
 
 ```python
 # Python Client-
-client.tenants.add_user(<user-name>, <tenant-name>)
+client.tenants.add_user(<user-name>, <tenant-name>, <role>)
 ```
 
 > Response Example
@@ -299,7 +299,7 @@ $ curl -X PUT \
 
 ```python
 # Python Client-
-client.tenants.add_group(<group-name>, <tenant-name>)
+client.tenants.add_group(<group-name>, <tenant-name>, <role>)
 ```
 
 > Response Example

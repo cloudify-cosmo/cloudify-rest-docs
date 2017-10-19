@@ -275,3 +275,61 @@ Downloads a plugin.
 
 ### Response
 The requested plugin archive.
+
+
+## Set Global Plugin
+
+> Request Example
+
+```shell
+$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
+    -u user:password "http://<manager-ip>/api/v3.1/plugins/<plugin-id>/set-global"
+```
+
+```python
+# Python Client
+client.plugins.set_global(<plugin-id>)
+```
+
+> Response Example
+
+```json
+{
+  "distribution_release": "core",
+  "supported_py_versions": [
+    "py27"
+  ],
+  "uploaded_at": "2017-10-19T14:19:39.727Z",
+  "archive_name": "cloudify_openstack_plugin-2.0.1-py27-none-linux_x86_64-centos-Core.wgn",
+  "package_name": "cloudify-openstack-plugin",
+  "distribution_version": "7.0.1406",
+  "tenant_name": "default_tenant",
+  "excluded_wheels": [
+
+  ],
+  "created_by": "admin",
+  "distribution": "centos",
+  "package_source": "https://github.com/cloudify-cosmo/cloudify-openstack-plugin/archive/master.tar.gz",
+  "private_resource": false,
+  "resource_availability": "global",
+  "supported_platform": "linux_x86_64",
+  "package_version": "2.0.1",
+  "wheels": [
+    "keystoneauth1-2.19.0-py2.py3-none-any.whl",
+    "python_novaclient-7.0.0-py2.py3-none-any.whl",
+     ...
+  ],
+  "id": "c7f6757e-b48d-4c26-ab91-cfc8c1e4851c"
+}
+```
+
+`PATCH "{manager-ip}/api/v3.1/plugins/{plugin-id}/set-global"`
+
+Set the plugin's availability to global.
+
+### URI Parameters
+* `plugin-id`: The id of the plugin to update.
+
+
+### Response
+A `Plugin` resource.

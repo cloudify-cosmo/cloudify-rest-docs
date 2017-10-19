@@ -2,10 +2,9 @@
 
 ## The Secret Resource
 
-> `Note`
 
 ```python
-# include this code when using cloudify python client-
+# include this code when using cloudify python client
 from cloudify_rest_client import CloudifyClient
 client = CloudifyClient(
         host='<manager-ip>',
@@ -28,7 +27,8 @@ Attribute | Type | Description
 `key` | string | The secret's key, unique per tenant.
 `updated_at` | datetime | The time the secret was last updated at.
 `value` | string | The secret's value.
-
+`resource_availability` | string | The availability of the resource.
+                                   Can be private, tenant or global.
 
 ## List Secrets
 
@@ -55,7 +55,8 @@ client.secrets.list()
             "updated_at": "2017-03-20T08:43:19.468Z",
             "permission": "creator",
             "tenant_name": "default_tenant",
-            "created_by": "admin"
+            "created_by": "admin",
+            "resource_availability": "tenant"
         }
     ]
 }
@@ -69,6 +70,7 @@ List all secrets.
 Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `Secret` resources without the secret's value.
+
 
 
 ## Get Secret
@@ -94,7 +96,8 @@ client.secrets.get(<secret-key>)
     "updated_at": "2017-03-20T08:43:19.468Z",
     "permission": "creator",
     "tenant_name": "default_tenant",
-    "created_by": "admin"
+    "created_by": "admin",
+    "resource_availability": "tenant"
 }
 ```
 
@@ -107,6 +110,7 @@ Retrieves a specific secret.
 
 ### Response
 A `Secret` resource.
+
 
 
 ## Create Secret
@@ -132,7 +136,8 @@ client.secrets.create(<new-secret-key>, <new-secret-value>)
     "updated_at": "2017-03-20T08:23:31.276Z",
     "permission": "creator",
     "tenant_name": "default_tenant",
-    "created_by": "admin"
+    "created_by": "admin",
+    "resource_availability": "tenant"
 }
 ```
 
@@ -150,8 +155,6 @@ Property | Type | Description
 
 ### Response
 A `Secret` resource.
-
-
 
 
 
@@ -178,7 +181,8 @@ client.secrets.update(<secret-key>, <new-value>)
     "updated_at": "2017-03-20T08:43:19.468Z",
     "permission": "creator",
     "tenant_name": "default_tenant",
-    "created_by": "admin"
+    "created_by": "admin",
+    "resource_availability": "tenant"
 }
 ```
 
@@ -196,8 +200,6 @@ Property | Type | Description
 
 ### Response
 A `Secret` resource.
-
-
 
 
 
@@ -224,7 +226,8 @@ client.secrets.delete(<secret-key>)
     "updated_at": "2017-03-20T08:43:19.468Z",
     "permission": "creator",
     "tenant_name": "default_tenant",
-    "created_by": "admin"
+    "created_by": "admin",
+    "resource_availability": "tenant"
 }
 ```
 
@@ -234,6 +237,48 @@ Deletes a secret.
 
 ### URI Parameters
 * `secret-key`: The key of the secret to delete.
+
+### Response
+A `Secret` resource.
+
+
+
+## Set Global Secret
+
+> Request Example
+
+```shell
+$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
+    -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>/set-global"
+```
+
+```python
+# Python Client
+client.secrets.set_global(<secret-key>)
+```
+
+> Response Example
+
+```json
+{
+    "key": "key1",
+    "value": "value1",
+    "created_at": "2017-03-20T08:23:31.276Z",
+    "updated_at": "2017-03-20T08:43:19.468Z",
+    "permission": "creator",
+    "tenant_name": "default_tenant",
+    "created_by": "admin",
+    "resource_availability": "global"
+}
+```
+
+`PATCH "{manager-ip}/api/v3.1/secrets/{secret-key}/set-global"`
+
+Set the secret's availability to global.
+
+### URI Parameters
+* `secret-key`: The key of the secret to update.
+
 
 ### Response
 A `Secret` resource.

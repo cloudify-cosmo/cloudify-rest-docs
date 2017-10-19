@@ -121,6 +121,7 @@ response.json()
   "updated_at": "2017-04-19T10:56:06.267Z",
   "created_by": "admin",
   "private_resource": false,
+  "resource_availability": "tenant",
   "plan": {
     ...
   },
@@ -248,6 +249,7 @@ response.json()
   "updated_at": "2017-04-19T13:35:13.971Z",
   "created_by": "admin",
   "private_resource": false,
+  "resource_availability": "tenant",
   "plan": {
     ...
   },
@@ -302,3 +304,48 @@ with open('<blueprint-archive-filename>.tar.gz', 'wb') as blueprint_archive:
 
 ### Response
 The blueprint as an archive using an `application/octet-stream` content type.
+
+
+## Set Global Blueprint
+
+> Request Example
+
+```shell
+$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
+    -u user:password "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/set-global"
+```
+
+```python
+# Python Client
+client.blueprints.set_global(<blueprint-id>)
+```
+
+> Response Example
+
+```json
+{
+  "main_file_name": "singlehost-blueprint.yaml",
+  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-04-19T10:56:06.267Z",
+  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "resource_availability": "global",
+  "plan": {
+    ...
+  },
+  "id": "hello-world"
+}
+```
+
+`PATCH "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/set-global"`
+
+Set the blueprint's availability to global.
+
+### URI Parameters
+* `blueprint-id`: The id of the blueprint to update.
+
+
+### Response
+A `Blueprint` resource.

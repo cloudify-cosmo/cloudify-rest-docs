@@ -97,8 +97,17 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
 client.tenants.get('default_tenant')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>'
+headers = {'Tenant': '<tenant-name>'}
+response = requests.get(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response.json()
 ```
 
 > Response Example

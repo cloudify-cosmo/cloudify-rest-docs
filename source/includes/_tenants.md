@@ -246,8 +246,27 @@ $ curl -X PUT \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
 client.tenants.add_user(<user-name>, <tenant-name>, <role>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/users'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'username': <user>,
+    'role': <role_name>,
+}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth(<user>, <password>),
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example

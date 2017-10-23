@@ -115,22 +115,30 @@ A `Tenant` resource.
 
 ```shell
 $ curl -X POST \
-    -H "Content-Type: application/json" \
     -H "Tenant: <tenant-name>" \
     -u <user>:<password> \
     "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>"
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
 client.tenants.create(<new-tenant-name>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>'
+headers = {'Tenant': '<tenant-name>'}
+response = requests.post(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "name": "new_tenant",
+    "name": "<new-tenant-name>",
     "groups": 0,
     "users": 0
 }

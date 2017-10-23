@@ -164,22 +164,31 @@ A `Tenant` resource.
 
 ```shell
 $ curl -X DELETE \
-    -H "Content-Type: application/json" \
     -H "Tenant: <tenant-name>" \
     -u <user>:<password> \
     "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>"
 ```
 
 ```python
-# Python Client-
-client.tenants.delete(<tenant-name>)
+# Using Cloudify client
+client.tenants.delete(<tenant-name-to-delete>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>'
+headers = {'Tenant': '<tenant-name>'}
+response = requests.delete(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response.json()
+
 ```
 
 > Response Example
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant-name-to-delete",
     "groups": 0,
     "users": 0
 }

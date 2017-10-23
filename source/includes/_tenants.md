@@ -41,22 +41,37 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
 client.tenants.list()
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants'
+headers = {'Tenant': '<tenant-name>'}
+response = requests.get(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
- "items":
-    [
-        {
-            "name": "default_tenant",
-            "groups": 0,
-            "users": 1
-        }
-    ]
+  "items": [
+    {
+      "name": "default_tenant",
+      "groups": 0,
+      "users": 1
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 

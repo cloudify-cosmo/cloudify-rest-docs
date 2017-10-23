@@ -289,13 +289,74 @@ Property | Type | Description
 --------- | ------- | -----------
 `username` | string | The user name to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user.
-`role` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+`role_name` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.
 
 
+## Update User in Tenant
 
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json"
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+     "http://<manager-ip>/api/v3.1/tenants/users"
+```
+
+```python
+# Using Cloudify client
+client.tenants.update_user(<user-name>, <tenant-name>, <role_name>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/users'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'username': <user>,
+    'role': <role_name>,
+}
+response = requests.patch(
+    url,
+    auth=HTTPBasicAuth(<user>, <password>),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+    "name": "tenant-name",
+    "groups": 0,
+    "users": 1
+}
+```
+
+`PATCH "{manager-ip}/api/v3.1/tenants/users"`
+
+Update a user in a tenant.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`username` | string | The user name to remove from the tenant.
+`tenant_name` | string | The tenant name to add the user into it.
+`role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+
+### Response
+A `Tenant` resource.
 
 
 ## Remove User from Tenant

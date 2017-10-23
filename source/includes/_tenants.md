@@ -298,7 +298,7 @@ A `Tenant` resource.
 
 
 
-## Remove User from Tenants
+## Remove User from Tenant
 
 > Request Example
 
@@ -312,8 +312,26 @@ $ curl -X DELETE \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
 client.tenants.remove_user(<user-name>, <tenant-name>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/users'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'username': <user>,
+}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth(<user>, <password>),
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example

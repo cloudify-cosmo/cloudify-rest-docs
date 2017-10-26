@@ -437,8 +437,27 @@ $ curl -X PUT \
 ```
 
 ```python
-# Python Client-
-client.tenants.add_group(<group-name>, <tenant-name>, <role>)
+# Using Cloudify client
+client.tenants.add_user_group(<group-name>, <tenant-name>, <role>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'group_name': <user>,
+    'role': <role_name>,
+}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth(<user>, <password>),
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example

@@ -486,7 +486,68 @@ Property | Type | Description
 A `Tenant` resource.
 
 
+## Update User-Group in Tenant
 
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json"
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "group_name": <group-name>, "role": <role-name>}' \
+     "http://<manager-ip>/api/v3.1/tenants/user-groups"
+```
+
+```python
+# Using Cloudify client
+client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'group_name': <group-name>,
+    'role': <role-name>,
+}
+response = requests.patch(
+    url,
+    auth=HTTPBasicAuth(<user>, <password>),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+    "name": "tenant-name",
+    "groups": 0,
+    "users": 1
+}
+```
+
+`PATCH "{manager-ip}/api/v3.1/tenants/user-groups"`
+
+Update a user group in a tenant.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`group_name` | string | The group name to update in the tenant.
+`tenant_name` | string | The tenant name to which the user group is assigned.
+`role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+
+### Response
+A `Tenant` resource.
 
 
 ## Remove User-Group from Tenant

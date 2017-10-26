@@ -489,7 +489,7 @@ A `Tenant` resource.
 
 
 
-## Remove User-Group from Tenants
+## Remove User-Group from Tenant
 
 > Request Example
 
@@ -503,8 +503,26 @@ $ curl -X DELETE \
 ```
 
 ```python
-# Python Client-
-client.tenants.remove_user(<group-name>, <tenant-name>)
+# Using Cloudify client
+client.tenants.remove_user_group(<group-name>, <tenant-name>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'group_name': <user>,
+}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth(<user>, <password>),
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example

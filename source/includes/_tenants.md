@@ -744,7 +744,7 @@ A `Tenant` resource.
 ## Update User-Group in Tenant
 
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PATCH \
@@ -761,7 +761,6 @@ client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant-name>'}
 payload = {
     'tenant_name': <tenant-name>,
     'group_name': <group-name>,
@@ -771,13 +770,51 @@ response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
     "name": "tenant-name",
-    "groups": 0,
-    "users": 1
+    "groups": 1,
+    "users": 0
+}
+```
+
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json"
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "group_name": <group-name>, "role": <role-name>}' \
+     "http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true'
+payload = {
+    'tenant_name': <tenant-name>,
+    'group_name': <group-name>,
+    'role': <role-name>,
+}
+response = requests.patch(url, auth=auth, headers=headers, json=payload)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant-name>",
+  "groups": {
+    "<group-name>": "<role>"
+  },
+  "users": {}
 }
 ```
 

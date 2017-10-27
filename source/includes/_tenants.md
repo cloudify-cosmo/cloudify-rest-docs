@@ -21,8 +21,8 @@ client = CloudifyClient(
 import requests
 from requests.auth import HTTPBasicAuth
 
-headers = {'Tenant': '<tenant-name>'}
-auth = HTTPBasicAuth(<user>, <password>)
+headers = {'Tenant': '<tenant_name>'}
+auth = HTTPBasicAuth('<username>', '<password>')
 ```
 
 The Tenant resource is a logical component that represents a closed environment with its own resources.
@@ -43,7 +43,7 @@ Attribute | Type | Description
 ```shell
 $ curl -X GET \
     -H "Tenant: default_tenant" \
-    -u <user>:<password> \
+    -u <username>:<password> \
     "http://<manager-ip>/api/v3.1/tenants"
 ```
 
@@ -83,7 +83,7 @@ response.json()
 ```shell
 $ curl -X GET \
     -H "Tenant: default_tenant" \
-    -u <user>:<password> \
+    -u <username>:<password> \
     "http://<manager-ip>/api/v3.1/tenants?_get_data=true"
 ```
 
@@ -142,8 +142,8 @@ Field | Type | Description
 ```shell
 $ curl -X GET \
     -H "Tenant: default_tenant" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/{tenant-name}"
+    -u <username>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/{tenant_name}"
 ```
 
 ```python
@@ -151,7 +151,7 @@ $ curl -X GET \
 client.tenants.get('default_tenant')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>'
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant_name>'
 response = requests.get(url, auth=auth, headers=headers)
 response.json()
 ```
@@ -171,8 +171,8 @@ response.json()
 ```shell
 $ curl -X GET \
     -H "Tenant: default_tenant" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/{tenant-name}?_get_data=true"
+    -u <username>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/{tenant_name}?_get_data=true"
 ```
 
 ```python
@@ -180,7 +180,7 @@ $ curl -X GET \
 client.tenants.get('default_tenant', _get_data=True)
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>?_get_data=true'
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant_name>?_get_data=true'
 response = requests.get(url, auth=auth, headers=headers)
 response.json()
 ```
@@ -202,12 +202,12 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/tenants?name={tenant-name}"`
+`GET "{manager-ip}/api/v3.1/tenants?name={tenant_name}"`
 
 Retrieves a specific tenant.
 
 ### URI Parameters
-* `tenant-name`: The name of the tenant to retrieve.
+* `tenant_name`: The name of the tenant to retrieve.
 
 ### Response
 A `Tenant` resource.
@@ -221,17 +221,17 @@ A `Tenant` resource.
 
 ```shell
 $ curl -X POST \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>"
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<new_tenant_name>"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.create(<new-tenant-name>)
+client.tenants.create('<new_tenant_name>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>'
+url = 'http://<manager-ip>/api/v3.1/tenants/<new_tenant_name>'
 response = requests.post(url, auth=auth, headers=headers)
 response.json()
 ```
@@ -240,7 +240,7 @@ response.json()
 
 ```json
 {
-    "name": "<new-tenant-name>",
+    "name": "<new_tenant_name>",
     "groups": 0,
     "users": 0
 }
@@ -251,17 +251,17 @@ response.json()
 
 ```shell
 $ curl -X POST \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>?_get_data=true"
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<new_tenant_name>?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.create(<new-tenant-name>, _get_data=True)
+client.tenants.create('<new_tenant_name>', _get_data=True)
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>?_get_data=true'
+url = 'http://<manager-ip>/api/v3.1/tenants/<new_tenant_name>?_get_data=true'
 response = requests.post(url, auth=auth, headers=headers)
 response.json()
 ```
@@ -270,17 +270,17 @@ response.json()
 
 ```json
 {
-    "name": "<new-tenant-name>",
+    "name": "<new_tenant_name>",
     "groups": {},
     "users": {}
 }
 ```
-`POST "{manager-ip}/api/v3.1/tenants/{new-tenant-name}"`
+`POST "{manager-ip}/api/v3.1/tenants/{new_tenant_name}"`
 
 Creates a tenant.
 
 ### URI Parameters
-* `new-tenant-name`: The name of the tenant to create.
+* `new_tenant_name`: The name of the tenant to create.
 
 ### Response
 A `Tenant` resource.
@@ -295,17 +295,17 @@ A `Tenant` resource.
 
 ```shell
 $ curl -X DELETE \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>"
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<tenant_name_to_delete>"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.delete(<tenant-name-to-delete>)
+client.tenants.delete('<tenant_name_to_delete>')
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>'
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant_name-to-delete>'
 response = requests.delete(url, auth=auth, headers=headers)
 response.json()
 
@@ -315,7 +315,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name-to-delete",
+    "name": "tenant_name_to_delete",
     "groups": 0,
     "users": 0
 }
@@ -325,17 +325,17 @@ response.json()
 
 ```shell
 $ curl -X DELETE \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>?_get_data=true"
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<tenant_name_to_delete>?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.delete(<tenant-name-to-delete>, _get_data=True)
+client.tenants.delete('<tenant_name_to_delete>', _get_data=True)
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>?_get_data=true'
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant_name_to_delete>?_get_data=true'
 response = requests.delete(url, auth=auth, headers=headers)
 response.json()
 
@@ -345,17 +345,17 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name-to-delete",
+    "name": "tenant_name_to_delete",
     "groups": {},
     "users": {}
 }
 ```
-`DELETE "{manager-ip}/api/v3.1/tenants/{tenant-name-to-delete}"`
+`DELETE "{manager-ip}/api/v3.1/tenants/{tenant_name_to_delete}"`
 
 Delete a tenant.
 
 ### URI Parameters
-* `tenant-name-to-delete`: The name of the tenant to delete.
+* `tenant_name_to_delete`: The name of the tenant to delete.
 
 ### Response
 A `Tenant` resource.
@@ -371,22 +371,22 @@ A `Tenant` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": "<username>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.add_user(<user-name>, <tenant-name>, <role>)
+client.tenants.add_user('<username>', '<tenant_name>', '<role_name>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/users'
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username>',
+    'role': '<role_name>',
 }
 response = requests.get(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -396,7 +396,7 @@ response.json()
 
 ```json
 {
-    "name": "<tenant-name>",
+    "name": "<tenant_name>",
     "groups": 0,
     "users": 1
 }
@@ -407,22 +407,22 @@ response.json()
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": <username>, "tenant_name": <tenant_name>, "role": <role_name>}' \
     "http://<manager-ip>/api/v3.1/tenants/users?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.add_user(<user-name>, <tenant-name>, <role>)
+client.tenants.add_user('<username>', '<tenant_name>', '<role_name>', _get_data=True)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/users?_get_data=true'
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username>',
+    'role': '<role_name>',
 }
 response = requests.get(url, auth=auth, headers=headers, json=payload, _get_data=True)
 response.json()
@@ -432,13 +432,13 @@ response.json()
 
 ```json
 {
-  "name": "<tenant-name>",
+  "name": "<tenant_name>",
   "groups": {},
   "users": {
-    "<user>": {
-      "tenant-role": "<role>",
+    "<username>": {
+      "tenant-role": "<role_name>",
       "roles": [
-        "<role>"
+        "<role_name>"
       ]
     }
   }
@@ -469,22 +469,22 @@ A `Tenant` resource.
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": "<username>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
      "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.update_user(<user-name>, <tenant-name>, <role_name>)
+client.tenants.update_user('<username>', '<tenant_name>', '<role_name>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/users'
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username>',
+    'role': '<role_name>',
 }
 response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -494,7 +494,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 0,
     "users": 1
 }
@@ -505,22 +505,22 @@ response.json()
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": <username>, "tenant_name": <tenant_name>, "role": <role_name>}' \
      "http://<manager-ip>/api/v3.1/tenants/users?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.update_user(<user-name>, <tenant-name>, <role_name>, _get_data=True)
+client.tenants.update_user(<username>, <tenant_name>, <role_name>, _get_data=True)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/users?_get_data=true'
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username>',
+    'role': '<role_name>',
 }
 response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -530,13 +530,13 @@ response.json()
 
 ```json
 {
-  "name": "<tenant-name>",
+  "name": "<tenant_name>",
   "groups": {},
   "users": {
     "my-user": {
-      "tenant-role": "<role>",
+      "tenant-role": "<role_name>",
       "roles": [
-        "<role>"
+        "<role_name>"
       ]
     }
   }
@@ -565,21 +565,21 @@ A `Tenant` resource.
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": "<username>", "tenant_name": "<tenant_name>"}' \
      "http://<manager-ip>/api/v3.1/tenants/users"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.remove_user(<user-name>, <tenant-name>)
+client.tenants.remove_user('<username>', '<tenant_name>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/users'
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username>',
 }
 response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -589,7 +589,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 0,
     "users": 0
 }
@@ -600,21 +600,21 @@ response.json()
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": "<username>", "tenant_name": "<tenant_name>"}' \
      "http://<manager-ip>/api/v3.1/tenants/users?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.remove_user(<user-name>, <tenant-name>, _get_data=True)
+client.tenants.remove_user(<username>, <tenant_name>, _get_data=True)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/users?_get_data=true'
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username>',
 }
 response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -624,7 +624,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": {},
     "users": {}
 }
@@ -654,23 +654,23 @@ A `Tenant` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>, "role": <role-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.add_user_group(<group-name>, <tenant-name>, <role>)
+client.tenants.add_user_group('<group_name>', '<tenant_name>', '<role_name>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant-name>'}
+headers = {'Tenant': '<tenant_name>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
 }
 response = requests.put(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -680,7 +680,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 1,
     "users": 0
 }
@@ -691,23 +691,23 @@ response.json()
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>, "role": <role-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.add_user_group(<group-name>, <tenant-name>, <role>, _get_data=True)
+client.tenants.add_user_group('<group_name>', '<tenant_name>', '<role_name>', _get_data=True)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true'
-headers = {'Tenant': '<tenant-name>'}
+headers = {'Tenant': '<tenant_name>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <group-name>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
 }
 response = requests.put(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -717,9 +717,9 @@ response.json()
 
 ```json
 {
-  "name": "<tenant-name>",
+  "name": "<tenant_name>",
   "groups": {
-    "<group-name>": "<role>"
+    "<group_name>": "<role_name>"
   },
   "users": {}
 }
@@ -749,22 +749,22 @@ A `Tenant` resource.
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "group_name": <group-name>, "role": <role-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": "<username>", "group_name": "<group_name>", "role": "<role_name>"}' \
      "http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>)
+client.tenants.update_user_group('<group_name>', '<tenant_name>', '<role_name>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <group-name>,
-    'role': <role-name>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
 }
 response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -774,7 +774,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 1,
     "users": 0
 }
@@ -785,22 +785,22 @@ response.json()
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "group_name": <group-name>, "role": <role-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"username": "<username>", "group_name": "<group_name>", "role": "<role_name>"}' \
      "http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>, _get_data=True)
+client.tenants.update_user_group('<group_name>', '<tenant_name>', '<role_name>', _get_data=True)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true'
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <group-name>,
-    'role': <role-name>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
 }
 response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -810,9 +810,9 @@ response.json()
 
 ```json
 {
-  "name": "<tenant-name>",
+  "name": "<tenant_name>",
   "groups": {
-    "<group-name>": "<role>"
+    "<group_name>": "<role_name>"
   },
   "users": {}
 }
@@ -841,21 +841,21 @@ A `Tenant` resource.
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>"}' \
     "http://<manager-ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.remove_user_group(<group-name>, <tenant-name>)
+client.tenants.remove_user_group('<group_name>', '<tenant_name>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <user>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
 }
 response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -865,7 +865,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 0,
     "users": 0
 }
@@ -876,22 +876,22 @@ response.json()
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' \
+    -H "Tenant: <tenant_name>" \
+    -u <username>:<password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>"}' \
     "http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.remove_user_group(<group-name>, <tenant-name>, _get_data=True)
+client.tenants.remove_user_group('<group_name>', '<tenant_name>', _get_data=True)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true'
-headers = {'Tenant': '<tenant-name>'}
+headers = {'Tenant': '<tenant_name>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <user>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
 }
 response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
@@ -901,7 +901,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": {},
     "users": {}
 }

@@ -295,7 +295,7 @@ A `Tenant` resource.
 
 ## Delete Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X DELETE \
@@ -309,17 +309,13 @@ $ curl -X DELETE \
 client.tenants.delete(<tenant-name-to-delete>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.delete(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response = requests.delete(url, auth=auth, headers=headers)
 response.json()
 
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -329,6 +325,35 @@ response.json()
 }
 ```
 
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X DELETE \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.delete(<tenant-name-to-delete>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>?_get_data=true'
+response = requests.delete(url, auth=auth, headers=headers)
+response.json()
+
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "tenant-name-to-delete",
+    "groups": {},
+    "users": {}
+}
+```
 `DELETE "{manager-ip}/api/v3.1/tenants/{tenant-name-to-delete}"`
 
 Delete a tenant.

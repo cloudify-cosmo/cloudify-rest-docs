@@ -221,7 +221,7 @@ A `Tenant` resource.
 
 ## Create Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X POST \
@@ -235,16 +235,12 @@ $ curl -X POST \
 client.tenants.create(<new-tenant-name>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.post(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response = requests.post(url, auth=auth, headers=headers)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -254,6 +250,35 @@ response.json()
 }
 ```
 
+> Request Example - Get user and user group details
+
+
+```shell
+$ curl -X POST \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.create(<new-tenant-name>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>?_get_data=true'
+response = requests.post(url, auth=auth, headers=headers)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "<new-tenant-name>",
+    "groups": {},
+    "users": {}
+}
+```
 `POST "{manager-ip}/api/v3.1/tenants/{new-tenant-name}"`
 
 Creates a tenant.

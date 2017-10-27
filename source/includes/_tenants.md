@@ -151,9 +151,6 @@ $ curl -X GET \
 client.tenants.get('default_tenant')
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>'
 response = requests.get(url, auth=auth, headers=headers)
 response.json()
@@ -563,7 +560,7 @@ A `Tenant` resource.
 
 ## Remove User from Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X DELETE \
@@ -579,25 +576,16 @@ $ curl -X DELETE \
 client.tenants.remove_user(<user-name>, <tenant-name>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/users'
-headers = {'Tenant': '<tenant-name>'}
 payload = {
     'tenant_name': <tenant-name>,
     'username': <user>,
 }
-response = requests.delete(
-    url,
-    auth=HTTPBasicAuth(<user>, <password>),
-    headers=headers,
-    json=payload,
-)
+response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -607,6 +595,40 @@ response.json()
 }
 ```
 
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X DELETE \
+    -H "Content-Type: application/json"
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
+     "http://<manager-ip>/api/v3.1/tenants/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.remove_user(<user-name>, <tenant-name>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/users?_get_data=true'
+payload = {
+    'tenant_name': <tenant-name>,
+    'username': <user>,
+}
+response = requests.delete(url, auth=auth, headers=headers, json=payload)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "tenant-name",
+    "groups": {},
+    "users": {}
+}
+```
 `DELETE "{manager-ip}/api/v3.1/tenants/users"`
 
 Delete a user from a tenant.
@@ -643,9 +665,6 @@ $ curl -X PUT \
 client.tenants.add_user_group(<group-name>, <tenant-name>, <role>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
 headers = {'Tenant': '<tenant-name>'}
 payload = {
@@ -653,12 +672,7 @@ payload = {
     'group_name': <user>,
     'role': <role_name>,
 }
-response = requests.put(
-    url,
-    auth=HTTPBasicAuth(<user>, <password>),
-    headers=headers,
-    json=payload,
-)
+response = requests.put(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
@@ -707,9 +721,6 @@ $ curl -X PATCH \
 client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
 headers = {'Tenant': '<tenant-name>'}
 payload = {
@@ -717,12 +728,7 @@ payload = {
     'group_name': <group-name>,
     'role': <role-name>,
 }
-response = requests.patch(
-    url,
-    auth=HTTPBasicAuth(<user>, <password>),
-    headers=headers,
-    json=payload,
-)
+response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
@@ -770,21 +776,13 @@ $ curl -X DELETE \
 client.tenants.remove_user_group(<group-name>, <tenant-name>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
 headers = {'Tenant': '<tenant-name>'}
 payload = {
     'tenant_name': <tenant-name>,
     'group_name': <user>,
 }
-response = requests.delete(
-    url,
-    auth=HTTPBasicAuth(<user>, <password>),
-    headers=headers,
-    json=payload,
-)
+response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 

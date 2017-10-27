@@ -836,7 +836,7 @@ A `Tenant` resource.
 
 ## Remove User-Group from Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X DELETE \
@@ -853,7 +853,6 @@ client.tenants.remove_user_group(<group-name>, <tenant-name>)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant-name>'}
 payload = {
     'tenant_name': <tenant-name>,
     'group_name': <user>,
@@ -862,7 +861,7 @@ response = requests.delete(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -872,6 +871,41 @@ response.json()
 }
 ```
 
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.remove_user_group(<group-name>, <tenant-name>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'group_name': <user>,
+}
+response = requests.delete(url, auth=auth, headers=headers, json=payload)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "tenant-name",
+    "groups": {},
+    "users": {}
+}
+```
 `DELETE "{manager-ip}/api/v3.1/tenants/user-groups"`
 
 Delete a user group from a tenant.

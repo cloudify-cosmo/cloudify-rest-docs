@@ -435,7 +435,7 @@ response.json()
   "name": "<tenant-name>",
   "groups": {},
   "users": {
-    "my-user": {
+    "<user>": {
       "tenant-role": "<role>",
       "roles": [
         "<role>"
@@ -649,7 +649,7 @@ A `Tenant` resource.
 
 ## Add User-Group to Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PUT \
@@ -676,13 +676,52 @@ response = requests.put(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
     "name": "tenant-name",
     "groups": 1,
     "users": 0
+}
+```
+
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>, "role": <role-name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.add_user_group(<group-name>, <tenant-name>, <role>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/user-groups?_get_data=true'
+headers = {'Tenant': '<tenant-name>'}
+payload = {
+    'tenant_name': <tenant-name>,
+    'group_name': <group-name>,
+    'role': <role_name>,
+}
+response = requests.put(url, auth=auth, headers=headers, json=payload)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant-name>",
+  "groups": {
+    "<group-name>": "<role>"
+  },
+  "users": {}
 }
 ```
 

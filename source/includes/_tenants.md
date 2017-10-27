@@ -138,7 +138,7 @@ Field | Type | Description
 
 ## Get Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X GET \
@@ -156,18 +156,53 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.get(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response = requests.get(url, auth=auth, headers=headers)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
     "name": "default_tenant",
     "groups": 0,
     "users": 1
+}
+```
+
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: default_tenant" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants/{tenant-name}?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.get('default_tenant', _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>?_get_data=true'
+response = requests.get(url, auth=auth, headers=headers)
+response.json()
+```
+
+> Response Example - Get user and user group counts
+
+```json
+{
+  "name": "default_tenant",
+  "groups": {},
+  "users": {
+    "admin": {
+      "tenant-role": "user",
+      "roles": [
+        "user"
+      ]
+    }
+  }
 }
 ```
 

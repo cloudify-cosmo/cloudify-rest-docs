@@ -81,7 +81,6 @@ response.json()
 > Request Example - Get user and user group details
 
 ```shell
-# Get user and user group details
 $ curl -X GET \
     -H "Tenant: default_tenant" \
     -u <user>:<password> \
@@ -468,7 +467,7 @@ A `Tenant` resource.
 ## Update User in Tenant
 
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PATCH \
@@ -484,26 +483,17 @@ $ curl -X PATCH \
 client.tenants.update_user(<user-name>, <tenant-name>, <role_name>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/users'
-headers = {'Tenant': '<tenant-name>'}
 payload = {
     'tenant_name': <tenant-name>,
     'username': <user>,
     'role': <role_name>,
 }
-response = requests.patch(
-    url,
-    auth=HTTPBasicAuth(<user>, <password>),
-    headers=headers,
-    json=payload,
-)
+response = requests.patch(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -513,6 +503,48 @@ response.json()
 }
 ```
 
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json"
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+     "http://<manager-ip>/api/v3.1/tenants/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.update_user(<user-name>, <tenant-name>, <role_name>, _get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/users?_get_data=true'
+payload = {
+    'tenant_name': <tenant-name>,
+    'username': <user>,
+    'role': <role_name>,
+}
+response = requests.patch(url, auth=auth, headers=headers, json=payload)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant-name>",
+  "groups": {},
+  "users": {
+    "my-user": {
+      "tenant-role": "<role>",
+      "roles": [
+        "<role>"
+      ]
+    }
+  }
+}
+```
 `PATCH "{manager-ip}/api/v3.1/tenants/users"`
 
 Update a user in a tenant.

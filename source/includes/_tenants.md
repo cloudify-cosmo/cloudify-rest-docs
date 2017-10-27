@@ -370,7 +370,7 @@ A `Tenant` resource.
 
 ## Add User to Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PUT \
@@ -386,32 +386,66 @@ $ curl -X PUT \
 client.tenants.add_user(<user-name>, <tenant-name>, <role>)
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants/users'
-headers = {'Tenant': '<tenant-name>'}
 payload = {
     'tenant_name': <tenant-name>,
     'username': <user>,
     'role': <role_name>,
 }
-response = requests.get(
-    url,
-    auth=HTTPBasicAuth(<user>, <password>),
-    headers=headers,
-    json=payload,
-)
+response = requests.get(url, auth=auth, headers=headers, json=payload)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
     "name": "<tenant-name>",
     "groups": 0,
     "users": 1
+}
+```
+
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <tenant-name>" \
+    -u <user>:<password> \
+    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
+    "http://<manager-ip>/api/v3.1/tenants/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.add_user(<user-name>, <tenant-name>, <role>)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants/users?_get_data=true'
+payload = {
+    'tenant_name': <tenant-name>,
+    'username': <user>,
+    'role': <role_name>,
+}
+response = requests.get(url, auth=auth, headers=headers, json=payload, _get_data=True)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant-name>",
+  "groups": {},
+  "users": {
+    "my-user": {
+      "tenant-role": "<role>",
+      "roles": [
+        "<role>"
+      ]
+    }
+  }
 }
 ```
 

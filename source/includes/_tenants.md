@@ -9,13 +9,20 @@ This section describes API features that are part of the Cloudify premium editio
 > `Note`
 
 ```python
-# include this code when using cloudify python client-
+# Include this code when using the Cloudify client
 from cloudify_rest_client import CloudifyClient
 client = CloudifyClient(
         host='<manager-ip>',
         username='<manager-username>',
         password='<manager-password>',
         tenant='<manager-tenant>')
+
+# Include this code when using python requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+headers = {'Tenant': '<tenant-name>'}
+auth = HTTPBasicAuth(<user>, <password>)
 ```
 
 The Tenant resource is a logical component that represents a closed environment with its own resources.
@@ -31,7 +38,7 @@ Attribute | Type | Description
 
 ## List Tenants
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X GET \
@@ -45,16 +52,12 @@ $ curl -X GET \
 client.tenants.list()
 
 # Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
 url = 'http://<manager-ip>/api/v3.1/tenants'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.get(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+response = requests.get(url, auth=auth, headers=headers)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -63,6 +66,54 @@ response.json()
       "name": "default_tenant",
       "groups": 0,
       "users": 1
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+> Request Example - Get user and user group details
+
+```shell
+# Get user and user group details
+$ curl -X GET \
+    -H "Tenant: default_tenant" \
+    -u <user>:<password> \
+    "http://<manager-ip>/api/v3.1/tenants?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+client.tenants.list(_get_data=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/tenants?_get_data=true'
+response = requests.get(url, auth=auth, headers=headers)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "items": [
+    {
+      "name": "default_tenant",
+      "groups": {},
+      "users": {
+        "admin": {
+          "tenant-role": "user",
+          "roles": [
+            "user"
+          ]
+        }
+      }
     }
   ],
   "metadata": {

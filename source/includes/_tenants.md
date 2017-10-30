@@ -168,7 +168,7 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.tenants.get('default_tenant')
+client.tenants.get('<tenant_name>')
 
 # Using requests
 import requests
@@ -189,7 +189,7 @@ response.json()
 
 ```json
 {
-    "name": "default_tenant",
+    "name": "<tenant_name>",
     "groups": 0,
     "users": 1
 }
@@ -213,7 +213,7 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.tenants.get('default_tenant', _get_data=True)
+client.tenants.get('<tenant_name>', _get_data=True)
 
 # Using requests
 import requests
@@ -234,7 +234,7 @@ response.json()
 
 ```json
 {
-  "name": "default_tenant",
+  "name": "<tenant_name>",
   "groups": {},
   "users": {
     "admin": {

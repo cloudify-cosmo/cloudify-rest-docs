@@ -104,7 +104,7 @@ Field | Type | Description
 $ curl -X GET \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    "http://<manager_ip>/api/v3.1/users/<user-name>"
+    "http://<manager_ip>/api/v3.1/users/<username>"
 ```
 
 ```python
@@ -116,28 +116,41 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.users.get(<user-name>)
+client.users.get(<username>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users/<username>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
 > Response Example
 
 ```json
 {
-    "username": "admin",
-    "last_login_at": "2017-01-22T15:09:33.799Z",
-    "role": "administrator",
-    "groups": [],
-    "active": true,
-    "tenants": ["default_tenant"]
+  "username": "admin",
+  "last_login_at": "2017-10-30T15:53:04.951Z",
+  "role": "sys_admin",
+  "groups": 0,
+  "active": true,
+  "tenants": 1
 }
 ```
 
-`GET "{manager_ip}/api/v3.1/users/{user-name}"`
+`GET "{manager_ip}/api/v3.1/users/{username}"`
 
 Retrieves a specific user.
 
 ### URI Parameters
-* `user-name`: The name of the user to retrieve.
+* `username`: The name of the user to retrieve.
 
 ### Response
 A `User` resource.

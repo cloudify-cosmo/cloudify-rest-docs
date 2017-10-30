@@ -6,18 +6,6 @@
 This section describes API features that are part of the Cloudify premium edition
 </aside>
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-        host='<manager-ip>',
-        username='<manager-username>',
-        password='<manager-password>',
-        tenant='<manager-tenant>')
-```
-
 The Tenant resource is a logical component that represents a closed environment with its own resources.
 
 
@@ -31,30 +19,42 @@ Attribute | Type | Description
 
 ## List Tenants
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X GET \
-    -H "Tenant: default_tenant" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants"
 ```
 
 ```python
 # Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.tenants.list()
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.get(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+url = 'http://<manager_ip>/api/v3.1/tenants'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
@@ -75,7 +75,70 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/tenants"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.list(_get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "items": [
+    {
+      "name": "default_tenant",
+      "groups": {},
+      "users": {
+        "admin": {
+          "tenant-role": "user",
+          "roles": [
+            "user"
+          ]
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager_ip}/api/v3.1/tenants"`
 
 List all tenants.
 
@@ -87,45 +150,109 @@ Field | Type | Description
 
 ## Get Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X GET \
-    -H "Tenant: default_tenant" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/{tenant-name}"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants/{tenant_name}"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.get('default_tenant')
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.get('<tenant_name>')
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name>'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.get(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "default_tenant",
+    "name": "<tenant_name>",
     "groups": 0,
     "users": 1
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/tenants?name={tenant-name}"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants/{tenant_name}?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.get('<tenant_name>', _get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name>?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example - Get user and user group counts
+
+```json
+{
+  "name": "<tenant_name>",
+  "groups": {},
+  "users": {
+    "admin": {
+      "tenant-role": "user",
+      "roles": [
+        "user"
+      ]
+    }
+  }
+}
+```
+
+`GET "{manager_ip}/api/v3.1/tenants?name={tenant_name}"`
 
 Retrieves a specific tenant.
 
 ### URI Parameters
-* `tenant-name`: The name of the tenant to retrieve.
+* `tenant_name`: The name of the tenant to retrieve.
 
 ### Response
 A `Tenant` resource.
@@ -135,45 +262,102 @@ A `Tenant` resource.
 
 ## Create Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X POST \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.create(<new-tenant-name>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.create('<new_tenant_name>')
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/<new-tenant-name>'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.post(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+url = 'http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "<new-tenant-name>",
+    "name": "<new_tenant_name>",
     "groups": 0,
     "users": 0
 }
 ```
 
-`POST "{manager-ip}/api/v3.1/tenants/{new-tenant-name}"`
+> Request Example - Get user and user group details
+
+
+```shell
+$ curl -X POST \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.create('<new_tenant_name>', _get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "<new_tenant_name>",
+    "groups": {},
+    "users": {}
+}
+```
+`POST "{manager_ip}/api/v3.1/tenants/{new_tenant_name}"`
 
 Creates a tenant.
 
 ### URI Parameters
-* `new-tenant-name`: The name of the tenant to create.
+* `new_tenant_name`: The name of the tenant to create.
 
 ### Response
 A `Tenant` resource.
@@ -184,46 +368,103 @@ A `Tenant` resource.
 
 ## Delete Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X DELETE \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    "http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants/<tenant_name_to_delete>"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.delete(<tenant-name-to-delete>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.delete('<tenant_name_to_delete>')
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/<tenant-name-to-delete>'
-headers = {'Tenant': '<tenant-name>'}
-response = requests.delete(url, auth=HTTPBasicAuth(<user>, <password>), headers=headers)
+url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name-to-delete>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "tenant-name-to-delete",
+    "name": "tenant_name_to_delete",
     "groups": 0,
     "users": 0
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/tenants/{tenant-name-to-delete}"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X DELETE \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/tenants/<tenant_name_to_delete>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.delete('<tenant_name_to_delete>', _get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name_to_delete>?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
+
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "tenant_name_to_delete",
+    "groups": {},
+    "users": {}
+}
+```
+`DELETE "{manager_ip}/api/v3.1/tenants/{tenant_name_to_delete}"`
 
 Delete a tenant.
 
 ### URI Parameters
-* `tenant-name-to-delete`: The name of the tenant to delete.
+* `tenant_name_to_delete`: The name of the tenant to delete.
 
 ### Response
 A `Tenant` resource.
@@ -234,52 +475,130 @@ A `Tenant` resource.
 
 ## Add User to Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
-    "http://<manager-ip>/api/v3.1/tenants/users"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": "<username_to_add>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
+    "http://<manager_ip>/api/v3.1/tenants/users"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.add_user(<user-name>, <tenant-name>, <role>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.add_user(
+    '<username_to_add>',
+    '<tenant_name>',
+    '<role_name>',
+)
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/users'
-headers = {'Tenant': '<tenant-name>'}
+url = 'http://<manager_ip>/api/v3.1/tenants/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username_to_add>',
+    'role': '<role_name>',
 }
 response = requests.get(
     url,
-    auth=HTTPBasicAuth(<user>, <password>),
+    auth=auth,
     headers=headers,
     json=payload,
 )
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "<tenant-name>",
+    "name": "<tenant_name>",
     "groups": 0,
     "users": 1
 }
 ```
 
-`PUT "{manager-ip}/api/v3.1/tenants/users"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_add>, "tenant_name": <tenant_name>, "role": <role_name>}' \
+    "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.add_user(
+    '<username_to_add>',
+    '<tenant_name>',
+    '<role_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'tenant_name': '<tenant_name>',
+    'username': '<username_to_add>',
+    'role': '<role_name>',
+}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+    _get_data=True,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant_name>",
+  "groups": {},
+  "users": {
+    "<username_to_add>": {
+      "tenant-role": "<role_name>",
+      "roles": [
+        "<role_name>"
+      ]
+    }
+  }
+}
+```
+
+`PUT "{manager_ip}/api/v3.1/tenants/users"`
 
 Add a user to a tenant.
 
@@ -287,7 +606,7 @@ Add a user to a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The user name to add to the tenant.
+`username_to_add` | string | The user name to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user.
 `role_name` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
@@ -298,52 +617,128 @@ A `Tenant` resource.
 ## Update User in Tenant
 
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>, "role": <role_name>}' \
-     "http://<manager-ip>/api/v3.1/tenants/users"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": "<username_to_update>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
+     "http://<manager_ip>/api/v3.1/tenants/users"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.update_user(<user-name>, <tenant-name>, <role_name>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.update_user(
+    '<username_to_update>',
+    '<tenant_name>',
+    '<role_name>',
+)
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/users'
-headers = {'Tenant': '<tenant-name>'}
+url = 'http://<manager_ip>/api/v3.1/tenants/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username_to_update>',
+    'role': '<role_name>',
 }
 response = requests.patch(
     url,
-    auth=HTTPBasicAuth(<user>, <password>),
+    auth=auth,
     headers=headers,
     json=payload,
 )
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 0,
     "users": 1
 }
 ```
 
-`PATCH "{manager-ip}/api/v3.1/tenants/users"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_update>, "tenant_name": <tenant_name>, "role": <role_name>}' \
+     "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.update_user(
+    '<username_to_update>',
+    '<tenant_name>',
+    '<role_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'tenant_name': '<tenant_name>',
+    'username': '<username_to_update>',
+    'role': '<role_name>',
+}
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant_name>",
+  "groups": {},
+  "users": {
+    "my-user": {
+      "tenant-role": "<role_name>",
+      "roles": [
+        "<role_name>"
+      ]
+    }
+  }
+}
+```
+`PATCH "{manager_ip}/api/v3.1/tenants/users"`
 
 Update a user in a tenant.
 
@@ -351,7 +746,7 @@ Update a user in a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The user name to remove from the tenant.
+`username_to_update` | string | The user name to remove from the tenant.
 `tenant_name` | string | The tenant name to add the user into it.
 `role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
@@ -361,51 +756,114 @@ A `Tenant` resource.
 
 ## Remove User from Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "tenant_name": <tenant-name>}' \
-     "http://<manager-ip>/api/v3.1/tenants/users"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": "<username_to_remove>", "tenant_name": "<tenant_name>"}' \
+     "http://<manager_ip>/api/v3.1/tenants/users"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.remove_user(<user-name>, <tenant-name>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.remove_user('<username_to_remove>', '<tenant_name>')
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/users'
-headers = {'Tenant': '<tenant-name>'}
+url = 'http://<manager_ip>/api/v3.1/tenants/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'username': <user>,
+    'tenant_name': '<tenant_name>',
+    'username': '<username_to_remove>',
 }
 response = requests.delete(
     url,
-    auth=HTTPBasicAuth(<user>, <password>),
+    auth=auth,
     headers=headers,
     json=payload,
 )
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 0,
     "users": 0
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/tenants/users"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X DELETE \
+    -H "Content-Type: application/json"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": "<username_to_remove>", "tenant_name": "<tenant_name>"}' \
+     "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.remove_user(
+    '<username_to_remove>',
+    '<tenant_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'tenant_name': '<tenant_name>',
+    'username': '<username_to_remove>',
+}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "<tenant_name>",
+    "groups": {},
+    "users": {}
+}
+```
+`DELETE "{manager_ip}/api/v3.1/tenants/users"`
 
 Delete a user from a tenant.
 
@@ -413,7 +871,7 @@ Delete a user from a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The user name to remove from the tenant.
+`username_to_remove` | string | The user name to remove from the tenant.
 `tenant_name` | string | The tenant name to add the user into it.
 
 ### Response
@@ -425,52 +883,124 @@ A `Tenant` resource.
 
 ## Add User-Group to Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>, "role": <role-name>}' \
-    "http://<manager-ip>/api/v3.1/tenants/user-groups"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
+    "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.add_user_group(<group-name>, <tenant-name>, <role>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.add_user_group(
+    '<group_name>',
+    '<tenant_name>',
+    '<role_name>',
+)
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant-name>'}
+url = 'http://<manager_ip>/api/v3.1/tenants/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <user>,
-    'role': <role_name>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
 }
 response = requests.put(
     url,
-    auth=HTTPBasicAuth(<user>, <password>),
+    auth=auth,
     headers=headers,
     json=payload,
 )
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 1,
     "users": 0
 }
 ```
 
-`PUT "{manager-ip}/api/v3.1/tenants/user-groups"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
+    "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.add_user_group(
+    '<group_name>',
+    '<tenant_name>',
+    '<role_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
+}
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant_name>",
+  "groups": {
+    "<group_name>": "<role_name>"
+  },
+  "users": {}
+}
+```
+
+`PUT "{manager_ip}/api/v3.1/tenants/user-groups"`
 
 Add a user group to a tenant.
 
@@ -489,52 +1019,124 @@ A `Tenant` resource.
 ## Update User-Group in Tenant
 
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"username": <user-name>, "group_name": <group-name>, "role": <role-name>}' \
-     "http://<manager-ip>/api/v3.1/tenants/user-groups"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"tenant_name": "<tenant_name>", "group_name": "<group_name>", "role": "<role_name>"}' \
+     "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.update_user_group(<group-name>, <tenant-name>, <role-name>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.update_user_group(
+    '<group_name>',
+    '<tenant_name>',
+    '<role_name>',
+)
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant-name>'}
+url = 'http://<manager_ip>/api/v3.1/tenants/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <group-name>,
-    'role': <role-name>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
 }
 response = requests.patch(
     url,
-    auth=HTTPBasicAuth(<user>, <password>),
+    auth=auth,
     headers=headers,
     json=payload,
 )
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "tenant-name",
-    "groups": 0,
-    "users": 1
+    "name": "tenant_name",
+    "groups": 1,
+    "users": 0
 }
 ```
 
-`PATCH "{manager-ip}/api/v3.1/tenants/user-groups"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"tenant_name": "<tenant_name>", "group_name": "<group_name>", "role": "<role_name>"}' \
+     "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.update_user_group(
+    '<group_name>',
+    '<tenant_name>',
+    '<role_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+    'role': '<role_name>',
+}
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+  "name": "<tenant_name>",
+  "groups": {
+    "<group_name>": "<role_name>"
+  },
+  "users": {}
+}
+```
+
+`PATCH "{manager_ip}/api/v3.1/tenants/user-groups"`
 
 Update a user group in a tenant.
 
@@ -552,51 +1154,114 @@ A `Tenant` resource.
 
 ## Remove User-Group from Tenant
 
-> Request Example
+> Request Example - Get user and user group counts
 
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant-name>" \
-    -u <user>:<password> \
-    -d '{"group_name": <group-name>, "tenant_name": <tenant-name>}' \
-    "http://<manager-ip>/api/v3.1/tenants/user-groups"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>"}' \
+    "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
 
 ```python
 # Using Cloudify client
-client.tenants.remove_user_group(<group-name>, <tenant-name>)
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.remove_user_group('<group_name>', '<tenant_name>')
 
 # Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
-url = 'http://<manager-ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant-name>'}
+url = 'http://<manager_ip>/api/v3.1/tenants/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'tenant_name': <tenant-name>,
-    'group_name': <user>,
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
 }
 response = requests.delete(
     url,
-    auth=HTTPBasicAuth(<user>, <password>),
+    auth=auth,
     headers=headers,
     json=payload,
 )
 response.json()
 ```
 
-> Response Example
+> Response Example - Get user and user group counts
 
 ```json
 {
-    "name": "tenant-name",
+    "name": "tenant_name",
     "groups": 0,
     "users": 0
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/tenants/user-groups"`
+> Request Example - Get user and user group details
+
+```shell
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>"}' \
+    "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.tenants.remove_user_group(
+    '<group_name>',
+    '<tenant_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'tenant_name': '<tenant_name>',
+    'group_name': '<group_name>',
+}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example - Get user and user group details
+
+```json
+{
+    "name": "tenant_name",
+    "groups": {},
+    "users": {}
+}
+```
+`DELETE "{manager_ip}/api/v3.1/tenants/user-groups"`
 
 Delete a user group from a tenant.
 

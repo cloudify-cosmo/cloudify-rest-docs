@@ -6,17 +6,6 @@
 This section describes API features that are part of the Cloudify premium edition
 </aside>
 
-> `Note`
-
-```python
-# Include this code when using python requests
-import requests
-from requests.auth import HTTPBasicAuth
-
-headers = {'Tenant': '<tenant_name>'}
-auth = HTTPBasicAuth('<username>', '<password>')
-```
-
 The Tenant resource is a logical component that represents a closed environment with its own resources.
 
 
@@ -51,8 +40,17 @@ client = CloudifyClient(
 client.tenants.list()
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants'
-response = requests.get(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
@@ -98,8 +96,17 @@ client = CloudifyClient(
 client.tenants.list(_get_data=True)
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants?_get_data=true'
-response = requests.get(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
@@ -164,8 +171,17 @@ client = CloudifyClient(
 client.tenants.get('default_tenant')
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name>'
-response = requests.get(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
@@ -200,8 +216,17 @@ client = CloudifyClient(
 client.tenants.get('default_tenant', _get_data=True)
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name>?_get_data=true'
-response = requests.get(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
@@ -258,8 +283,17 @@ client = CloudifyClient(
 client.tenants.create('<new_tenant_name>')
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>'
-response = requests.post(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
@@ -295,8 +329,17 @@ client = CloudifyClient(
 client.tenants.create('<new_tenant_name>', _get_data=True)
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>?_get_data=true'
-response = requests.post(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 ```
 
@@ -346,8 +389,17 @@ client = CloudifyClient(
 client.tenants.delete('<tenant_name_to_delete>')
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name-to-delete>'
-response = requests.delete(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 
 ```
@@ -383,8 +435,17 @@ client = CloudifyClient(
 client.tenants.delete('<tenant_name_to_delete>', _get_data=True)
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/<tenant_name_to_delete>?_get_data=true'
-response = requests.delete(url, auth=auth, headers=headers)
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
 response.json()
 
 ```
@@ -441,13 +502,23 @@ client.tenants.add_user(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'username': '<username>',
     'role': '<role_name>',
 }
-response = requests.get(url, auth=auth, headers=headers, json=payload)
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -489,13 +560,24 @@ client.tenants.add_user(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'username': '<username>',
     'role': '<role_name>',
 }
-response = requests.get(url, auth=auth, headers=headers, json=payload, _get_data=True)
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+    _get_data=True,
+)
 response.json()
 ```
 
@@ -562,13 +644,23 @@ client.tenants.update_user(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'username': '<username>',
     'role': '<role_name>',
 }
-response = requests.patch(url, auth=auth, headers=headers, json=payload)
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -610,13 +702,23 @@ client.tenants.update_user(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'username': '<username>',
     'role': '<role_name>',
 }
-response = requests.patch(url, auth=auth, headers=headers, json=payload)
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -677,12 +779,22 @@ client = CloudifyClient(
 client.tenants.remove_user('<username>', '<tenant_name>')
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'username': '<username>',
 }
-response = requests.delete(url, auth=auth, headers=headers, json=payload)
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -723,12 +835,22 @@ client.tenants.remove_user(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'username': '<username>',
 }
-response = requests.delete(url, auth=auth, headers=headers, json=payload)
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -788,14 +910,23 @@ client.tenants.add_user_group(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/user-groups'
-headers = {'Tenant': '<tenant_name>'}
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'group_name': '<group_name>',
     'role': '<role_name>',
 }
-response = requests.put(url, auth=auth, headers=headers, json=payload)
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -837,14 +968,23 @@ client.tenants.add_user_group(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true'
-headers = {'Tenant': '<tenant_name>'}
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'group_name': '<group_name>',
     'role': '<role_name>',
 }
-response = requests.put(url, auth=auth, headers=headers, json=payload)
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -906,13 +1046,23 @@ client.tenants.update_user_group(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'group_name': '<group_name>',
     'role': '<role_name>',
 }
-response = requests.patch(url, auth=auth, headers=headers, json=payload)
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -954,13 +1104,23 @@ client.tenants.update_user_group(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'group_name': '<group_name>',
     'role': '<role_name>',
 }
-response = requests.patch(url, auth=auth, headers=headers, json=payload)
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -1017,12 +1177,22 @@ client = CloudifyClient(
 client.tenants.remove_user_group('<group_name>', '<tenant_name>')
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'group_name': '<group_name>',
 }
-response = requests.delete(url, auth=auth, headers=headers, json=payload)
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 
@@ -1063,13 +1233,22 @@ client.tenants.remove_user_group(
 )
 
 # Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 url = 'http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true'
-headers = {'Tenant': '<tenant_name>'}
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
     'group_name': '<group_name>',
 }
-response = requests.delete(url, auth=auth, headers=headers, json=payload)
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 response.json()
 ```
 

@@ -6,18 +6,6 @@
 This section describes API features that are part of the Cloudify premium edition
 </aside>
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-        host='<manager-ip>',
-        username='<manager-username>',
-        password='<manager-password>',
-        tenant='<manager-tenant>')
-```
-
 Since Cloudify 4.0, Cloudify user management has been added
 
 
@@ -47,7 +35,14 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.users.list()
 ```
 
@@ -94,7 +89,14 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.users.get(<user-name>)
 ```
 
@@ -136,10 +138,19 @@ $ curl -X PUT \
 ```
 
 ```python
-# Python Client-
-client.users.create(<new-user-name>,
-                    <password>,
-                    <role>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.users.create(
+    <new-user-name>,
+    <password>,
+    <role>,
+)
 ```
 
 > Response Example
@@ -186,7 +197,14 @@ $ curl -X DELETE \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.users.delete(<user-name>)
 ```
 
@@ -230,7 +248,14 @@ $ curl -X POST \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.users.set_password(<user-name>, <new-password>)
 ```
 
@@ -279,7 +304,14 @@ $ curl -X POST \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.users.set_role(<user-name>, <new-role>)
 ```
 

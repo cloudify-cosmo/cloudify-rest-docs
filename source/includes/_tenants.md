@@ -23,8 +23,8 @@ Attribute | Type | Description
 
 ```shell
 $ curl -X GET \
-    -H "Tenant: default_tenant" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants"
 ```
 
@@ -79,8 +79,8 @@ response.json()
 
 ```shell
 $ curl -X GET \
-    -H "Tenant: default_tenant" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants?_get_data=true"
 ```
 
@@ -154,8 +154,8 @@ Field | Type | Description
 
 ```shell
 $ curl -X GET \
-    -H "Tenant: default_tenant" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants/{tenant_name}"
 ```
 
@@ -199,8 +199,8 @@ response.json()
 
 ```shell
 $ curl -X GET \
-    -H "Tenant: default_tenant" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants/{tenant_name}?_get_data=true"
 ```
 
@@ -266,8 +266,8 @@ A `Tenant` resource.
 
 ```shell
 $ curl -X POST \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>"
 ```
 
@@ -312,8 +312,8 @@ response.json()
 
 ```shell
 $ curl -X POST \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants/<new_tenant_name>?_get_data=true"
 ```
 
@@ -372,8 +372,8 @@ A `Tenant` resource.
 
 ```shell
 $ curl -X DELETE \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants/<tenant_name_to_delete>"
 ```
 
@@ -418,8 +418,8 @@ response.json()
 
 ```shell
 $ curl -X DELETE \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/tenants/<tenant_name_to_delete>?_get_data=true"
 ```
 
@@ -480,8 +480,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": "<username>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager_ip>/api/v3.1/tenants/users"
 ```
@@ -537,8 +537,8 @@ response.json()
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": <username>, "tenant_name": <tenant_name>, "role": <role_name>}' \
     "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
 ```
@@ -622,8 +622,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": "<username>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/users"
 ```
@@ -679,8 +679,8 @@ response.json()
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": <username>, "tenant_name": <tenant_name>, "role": <role_name>}' \
      "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
 ```
@@ -761,8 +761,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": "<username>", "tenant_name": "<tenant_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/users"
 ```
@@ -813,8 +813,8 @@ response.json()
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": "<username>", "tenant_name": "<tenant_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
 ```
@@ -888,8 +888,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
@@ -945,8 +945,8 @@ response.json()
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```
@@ -1024,8 +1024,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": "<username>", "group_name": "<group_name>", "role": "<role_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
@@ -1081,8 +1081,8 @@ response.json()
 ```shell
 $ curl -X PATCH \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"username": "<username>", "group_name": "<group_name>", "role": "<role_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```
@@ -1159,8 +1159,8 @@ A `Tenant` resource.
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>"}' \
     "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
@@ -1211,8 +1211,8 @@ response.json()
 ```shell
 $ curl -X DELETE \
     -H "Content-Type: application/json" \
-    -H "Tenant: <tenant_name>" \
-    -u <username>:<password> \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
     -d '{"group_name": "<group_name>", "tenant_name": "<tenant_name>"}' \
     "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```

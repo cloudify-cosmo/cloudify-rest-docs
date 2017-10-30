@@ -44,23 +44,42 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.users.list()
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
 > Response Example
 
 ```json
 {
- "items":
-    [
-        {
-            "username": "admin",
-            "last_login_at": "2017-01-22T15:09:33.799Z",
-            "role": "administrator",
-            "groups": [],
-            "active": true,
-            "tenants": ["default_tenant"]
-        }
-    ]
+  "items": [
+    {
+      "username": "admin",
+      "last_login_at": "2017-10-30T15:45:25.703Z",
+      "role": "sys_admin",
+      "groups": 0,
+      "active": true,
+      "tenants": 1
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 

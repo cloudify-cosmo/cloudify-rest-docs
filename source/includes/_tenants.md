@@ -482,7 +482,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": "<username>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
+    -d '{"username": "<username_to_add>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
     "http://<manager_ip>/api/v3.1/tenants/users"
 ```
 
@@ -496,7 +496,7 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.tenants.add_user(
-    '<username>',
+    '<username_to_add>',
     '<tenant_name>',
     '<role_name>',
 )
@@ -510,7 +510,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
-    'username': '<username>',
+    'username': '<username_to_add>',
     'role': '<role_name>',
 }
 response = requests.get(
@@ -539,7 +539,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": <username>, "tenant_name": <tenant_name>, "role": <role_name>}' \
+    -d '{"username": <username_to_add>, "tenant_name": <tenant_name>, "role": <role_name>}' \
     "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
 ```
 
@@ -553,7 +553,7 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.tenants.add_user(
-    '<username>',
+    '<username_to_add>',
     '<tenant_name>',
     '<role_name>',
     _get_data=True,
@@ -568,7 +568,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
-    'username': '<username>',
+    'username': '<username_to_add>',
     'role': '<role_name>',
 }
 response = requests.get(
@@ -588,7 +588,7 @@ response.json()
   "name": "<tenant_name>",
   "groups": {},
   "users": {
-    "<username>": {
+    "<username_to_add>": {
       "tenant-role": "<role_name>",
       "roles": [
         "<role_name>"
@@ -606,7 +606,7 @@ Add a user to a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The user name to add to the tenant.
+`username_to_add` | string | The user name to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user.
 `role_name` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
@@ -624,7 +624,7 @@ $ curl -X PATCH \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": "<username>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
+    -d '{"username": "<username_to_update>", "tenant_name": "<tenant_name>", "role": "<role_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/users"
 ```
 
@@ -638,7 +638,7 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.tenants.update_user(
-    '<username>',
+    '<username_to_update>',
     '<tenant_name>',
     '<role_name>',
 )
@@ -652,7 +652,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
-    'username': '<username>',
+    'username': '<username_to_update>',
     'role': '<role_name>',
 }
 response = requests.patch(
@@ -681,7 +681,7 @@ $ curl -X PATCH \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": <username>, "tenant_name": <tenant_name>, "role": <role_name>}' \
+    -d '{"username": <username_to_update>, "tenant_name": <tenant_name>, "role": <role_name>}' \
      "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
 ```
 
@@ -695,7 +695,7 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.tenants.update_user(
-    '<username>',
+    '<username_to_update>',
     '<tenant_name>',
     '<role_name>',
     _get_data=True,
@@ -710,7 +710,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
-    'username': '<username>',
+    'username': '<username_to_update>',
     'role': '<role_name>',
 }
 response = requests.patch(
@@ -746,7 +746,7 @@ Update a user in a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The user name to remove from the tenant.
+`username_to_update` | string | The user name to remove from the tenant.
 `tenant_name` | string | The tenant name to add the user into it.
 `role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
@@ -763,7 +763,7 @@ $ curl -X DELETE \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": "<username>", "tenant_name": "<tenant_name>"}' \
+    -d '{"username": "<username_to_remove>", "tenant_name": "<tenant_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/users"
 ```
 
@@ -776,7 +776,7 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.tenants.remove_user('<username>', '<tenant_name>')
+client.tenants.remove_user('<username_to_remove>', '<tenant_name>')
 
 # Using requests
 import requests
@@ -787,7 +787,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
-    'username': '<username>',
+    'username': '<username_to_remove>',
 }
 response = requests.delete(
     url,
@@ -815,7 +815,7 @@ $ curl -X DELETE \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": "<username>", "tenant_name": "<tenant_name>"}' \
+    -d '{"username": "<username_to_remove>", "tenant_name": "<tenant_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/users?_get_data=true"
 ```
 
@@ -829,7 +829,7 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.tenants.remove_user(
-    '<username>',
+    '<username_to_remove>',
     '<tenant_name>',
     _get_data=True,
 )
@@ -843,7 +843,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'tenant_name': '<tenant_name>',
-    'username': '<username>',
+    'username': '<username_to_remove>',
 }
 response = requests.delete(
     url,
@@ -858,7 +858,7 @@ response.json()
 
 ```json
 {
-    "name": "tenant_name",
+    "name": "<tenant_name>",
     "groups": {},
     "users": {}
 }
@@ -871,7 +871,7 @@ Delete a user from a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The user name to remove from the tenant.
+`username_to_remove` | string | The user name to remove from the tenant.
 `tenant_name` | string | The tenant name to add the user into it.
 
 ### Response
@@ -1026,7 +1026,7 @@ $ curl -X PATCH \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": "<username>", "group_name": "<group_name>", "role": "<role_name>"}' \
+    -d '{"tenant_name": "<tenant_name>", "group_name": "<group_name>", "role": "<role_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/user-groups"
 ```
 
@@ -1083,7 +1083,7 @@ $ curl -X PATCH \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": "<username>", "group_name": "<group_name>", "role": "<role_name>"}' \
+    -d '{"tenant_name": "<tenant_name>", "group_name": "<group_name>", "role": "<role_name>"}' \
      "http://<manager_ip>/api/v3.1/tenants/user-groups?_get_data=true"
 ```
 

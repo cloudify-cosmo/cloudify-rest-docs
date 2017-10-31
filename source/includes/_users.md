@@ -277,7 +277,7 @@ A `User` resource.
 
 ## Create User
 
-> Request Example
+> Request Example - Get tenants and user groups count
 
 ```shell
 $ curl -X PUT \
@@ -323,7 +323,7 @@ response = requests.put(
 )
 ```
 
-> Response Example
+> Response Example - Get tenants and user groups count
 
 ```json
 {
@@ -336,6 +336,65 @@ response = requests.put(
 }
 ```
 
+> Request Example - Get tenants and user groups details
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json"
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <new_username>, "password": <password>, "role": <role_name>}'
+    "http://{manager_ip}/api/v3.1/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.users.create(
+    '<new_username>',
+    '<password>',
+    '<role_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<new_username>',
+    'password': '<password>',
+    'role': '<role_name>',
+}
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Get tenants and user groups details
+
+```json
+{
+  "username": "<new_username>",
+  "last_login_at": null,
+  "role": "<role_name>",
+  "groups": [],
+  "active": true,
+  "tenants": {}
+}
+```
 `PUT -d '{"username": <new_username>, "password": <password>, "role": <role_name>}' "{manager_ip}/api/v3.1/users"`
 
 Creates a new user.

@@ -187,27 +187,34 @@ $ curl -X DELETE \
 ```
 
 ```python
-# Python Client-
-client.user_groups.delete(<group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.delete('<user_group_name_to_delete>')
 ```
 
 > Response Example
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": []
+    "ldap_dn": "ldap_group_dn",
+    "name": "<user_group_name_to_delete>",
+    "tenants": 0,
+    "users": 0
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/user-groups/{user-group-to-delete}"`
+`DELETE "{manager_ip}/api/v3.1/user-groups/{user_group_name_to_delete}"`
 
 Deletes a user group.
 
 ### URI Parameters
-* `user-group-to-delete`: The name of the user group to delete.
+* `user_group_name_to_delete`: The name of the user group to delete.
 
 ### Response
 A `Group` resource.

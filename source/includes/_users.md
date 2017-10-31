@@ -196,7 +196,7 @@ payload = {
     'password': '<password>',
     'role': '<role_name>',
 }
-response = requests.get(
+response = requests.put(
     url,
     auth=auth,
     headers=headers,
@@ -307,8 +307,8 @@ $ curl -X POST \
     -H "Content-Type: application/json"
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"password": <new-password>}' \
-    "http://<manager_ip>/api/v3.1/users/<user-name>"
+    -d '{"password": <new_password>}' \
+    "http://<manager_ip>/api/v3.1/users/<username>"
 ```
 
 ```python
@@ -320,34 +320,49 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.users.set_password(<user-name>, <new-password>)
+client.users.set_password('<username>', '<new_password>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users/<username>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {'password': '<new_password>'}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
 > Response Example
 
 ```json
 {
-    "username": "user",
-    "last_login_at": "2017-01-22T15:09:33.799Z",
-    "role": "user",
-    "groups": [],
-    "active": true,
-    "tenants": ["default_tenant"]
+  "username": "<username>",
+  "last_login_at": null,
+  "role": "default",
+  "groups": 0,
+  "active": true,
+  "tenants": 0
 }
 ```
 
-`POST -d '{"password": <new-password>}' '"{manager_ip}/api/v3.1/users/{user-name}"`
+`POST -d '{"password": <new_password>}' '"{manager_ip}/api/v3.1/users/{username}"`
 
 Specify a password.
 
 ### URI Parameters
-* `user-name`: The name of the user whose password is to be changed.
+* `username`: The name of the user whose password is to be changed.
 
 ### Request Body
 
 Property | Type | Description
 --------- | ------- | -----------
-`password` | string | The new user password.
+`new_password` | string | The new user password.
 
 ### Response
 A `User` resource.

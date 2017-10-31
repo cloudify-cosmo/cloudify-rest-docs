@@ -35,7 +35,10 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/user-groups"
+$ curl -X GET \
+    --header "tenant: default_tenant" \
+    -u user:password \
+    "http://<manager-ip>/api/v3.1/user-groups"
 ```
 
 ```python
@@ -74,7 +77,10 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/user-groups/<group-name>"
+$ curl -X GET \
+    --header "tenant: default_tenant" \
+    -u user:password \
+    "http://<manager-ip>/api/v3.1/user-groups/<group-name>"
 ```
 
 ```python
@@ -109,7 +115,12 @@ A `Group` resource.
 > Request Example
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: default_tenant" -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' -u user:password "http://<manager-ip>/api/v3.1/user-groups"
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "tenant: default_tenant" \
+    -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' \
+    -u user:password \
+    "http://<manager-ip>/api/v3.1/user-groups"
 ```
 
 ```python
@@ -151,7 +162,11 @@ A `User` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/user-groups/<user-group-name-to-delete>"
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "tenant: <tenant-name>" \
+    -u user:password \
+    "http://<manager-ip>/api/v3.1/user-groups/<user-group-name-to-delete>"
 ```
 
 ```python
@@ -189,7 +204,12 @@ A `Group` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3.1/user-groups/users"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "tenant: <tenant-name>" \
+    -u user:password \
+    -d '{"username": <user-name>, "group_name": <group-name>}' \
+    "http://<manager-ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
@@ -231,7 +251,12 @@ A `Group` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3.1/user-groups/users"
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "tenant: <tenant-name>" \
+    -u user:password \
+    -d '{"username": <user-name>, "group_name": <group-name>}' \
+    "http://<manager-ip>/api/v3.1/user-groups/users"
 ```
 
 ```python

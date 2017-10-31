@@ -25,7 +25,7 @@ Attribute | Type | Description
 
 ## List Users
 
-> Request Example
+> Request Example - Get tenants and user groups count
 
 ```shell
 $ curl -X GET \
@@ -59,7 +59,7 @@ response = requests.get(
 )
 ```
 
-> Response Example
+> Response Example - Get tenants and user groups count
 
 ```json
 {
@@ -71,6 +71,71 @@ response = requests.get(
       "groups": 0,
       "active": true,
       "tenants": 1
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+> Request Example - Get tenants and user groups details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.users.list(_get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+```
+
+> Response Example - Get tenants and user groups details
+
+```json
+{
+  "items": [
+    {
+      "username": "admin",
+      "last_login_at": "2017-10-31T10:38:53.227Z",
+      "role": "sys_admin",
+      "groups": [],
+      "active": true,
+      "tenants": {
+        "default_tenant": {
+          "tenant-role": "user",
+          "roles": [
+            "user"
+          ]
+        }
+      }
     }
   ],
   "metadata": {

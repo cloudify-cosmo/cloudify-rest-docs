@@ -210,7 +210,7 @@ response = requests.get(
 {
   "username": "<new_username>",
   "last_login_at": null,
-  "role": "default",
+  "role": "<role_name>",
   "groups": 0,
   "active": true,
   "tenants": 0
@@ -244,7 +244,7 @@ A `User` resource.
 $ curl -X DELETE \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    "http://<manager_ip>/api/v3.1/users/<user-name-to-delete>"
+    "http://<manager_ip>/api/v3.1/users/<username_to_delete>"
 ```
 
 ```python
@@ -256,28 +256,41 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.users.delete(<user-name>)
+client.users.delete('<username_to_delete>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users/<username_to_delete>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
 > Response Example
 
 ```json
 {
-    "username": "user",
-    "last_login_at": "2017-01-22T15:09:33.799Z",
-    "role": "user",
-    "groups": [],
-    "active": true,
-    "tenants": ["default_tenant"]
+  "username": "<username_to_delete>",
+  "last_login_at": null,
+  "role": "default",
+  "groups": 0,
+  "active": true,
+  "tenants": 0
 }
 ```
 
-`DELETE "{manager_ip}/api/v3.1/tenants/{user-name-to-delete}"`
+`DELETE "{manager_ip}/api/v3.1/tenants/{username_to_delete}"`
 
 Delete a user.
 
 ### URI Parameters
-* `user-name-to-delete`: The name of the user to delete.
+* `username_to_delete`: The name of the user to delete.
 
 ### Response
 A `User` resource.

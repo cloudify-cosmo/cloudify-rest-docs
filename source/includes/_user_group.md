@@ -157,7 +157,7 @@ client.user_groups.create(
 }
 ```
 
-`POST -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' "{manager-ip}/api/v3.1/user-groups"`
+`POST -d '{"group_name": <group-name>, "ldap_group_dn": <ldap_group_dn>}' "{manager-ip}/api/v3.1/user-groups"`
 
 Creates a new user group.
 
@@ -232,27 +232,34 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": <username>, "group_name": <group_name>}' \
+    -d '{"username": <username_to_add>, "group_name": <group_name>}' \
     "http://<manager_ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
-# Python Client-
-client.user_groups.add_user(<user-name>, <group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.add_user('<username_to_add>', '<group_name>')
 ```
 
 > Response Example
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": ["user_name"]
+  "ldap_dn": "ldap_group_dn",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 1
 }
 ```
 
-`PUT "{manager-ip}/api/v3.1/user-groups/users"`
+`PUT "{manager_ip}/api/v3.1/user-groups/users"`
 
 Add a user to group.
 
@@ -260,7 +267,7 @@ Add a user to group.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The name of the user to add to the group.
+`username_to_add` | string | The name of the user to add to the group.
 `group_name` | string | The name of the group to which to add the user.
 
 ### Response

@@ -163,9 +163,9 @@ A `User` resource.
 ```shell
 $ curl -X PUT \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
+    -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": <new-user-name>, "password": <password>, "role": <role>}'
+    -d '{"username": <new_username>, "password": <password>, "role": <role_name>}'
     "http://{manager_ip}/api/v3.1/users"
 ```
 
@@ -179,9 +179,28 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.users.create(
-    <new-user-name>,
-    <password>,
-    <role>,
+    '<new_username>',
+    '<password>',
+    '<role_name>',
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<new_username>',
+    'password': '<password>',
+    'role': '<role_name>',
+}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
 )
 ```
 
@@ -189,16 +208,16 @@ client.users.create(
 
 ```json
 {
-    "username": "admin",
-    "last_login_at": "2017-01-22T15:09:33.799Z",
-    "role": "administrator",
-    "groups": [],
-    "active": true,
-    "tenants": ["default_tenant"]
+  "username": "<new_username>",
+  "last_login_at": null,
+  "role": "default",
+  "groups": 0,
+  "active": true,
+  "tenants": 0
 }
 ```
 
-`PUT -d '{"username": <new-user-name>, "password": <password>, "role": <role>}' "{manager_ip}/api/v3.1/users"`
+`PUT -d '{"username": <new_username>, "password": <password>, "role": <role_name>}' "{manager_ip}/api/v3.1/users"`
 
 Creates a new user.
 
@@ -206,9 +225,9 @@ Creates a new user.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The username.
+`new_username` | string | The username.
 `password` | string | The user password.
-`role` | string | The user role. One of the following: `sys_admin`, `manager`, `user`, `viewer`, `default`.
+`role_name` | string | The user role. One of the following: `sys_admin`, `manager`, `user`, `viewer`, `default`.
 
 ### Response
 A `User` resource.
@@ -223,7 +242,7 @@ A `User` resource.
 
 ```shell
 $ curl -X DELETE \
-    -H "Tenant: <tenant-name>" \
+    -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
     "http://<manager_ip>/api/v3.1/users/<user-name-to-delete>"
 ```
@@ -273,7 +292,7 @@ A `User` resource.
 ```shell
 $ curl -X POST \
     -H "Content-Type: application/json"
-    -H "Tenant: <tenant-name>" \
+    -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
     -d '{"password": <new-password>}' \
     "http://<manager_ip>/api/v3.1/users/<user-name>"

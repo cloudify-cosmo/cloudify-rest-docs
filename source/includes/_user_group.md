@@ -26,7 +26,7 @@ The User Group is a group of users.
 Attribute | Type | Description
 --------- | ------- | -------
 `id` | integer | Auto increment, unique identifier for the tenant.
-`ldap_dn` | string | The distinguish name of corresponding LDAP group (if using LDAP).
+`ldap_dn` | string | The distinguished name of corresponding LDAP group (if using LDAP).
 `name` | string | The name of the user group.
 
 

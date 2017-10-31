@@ -6,18 +6,6 @@
 This section describes API features that are part of the Cloudify premium edition
 </aside>
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-        host='<manager-ip>',
-        username='<manager-username>',
-        password='<manager-password>',
-        tenant='<manager-tenant>')
-```
-
 The User Group is a group of users.
 
 
@@ -110,7 +98,7 @@ Retrieves a specific group.
 A `Group` resource.
 
 
-## Create User Groups
+## Create User Group
 
 > Request Example
 
@@ -119,23 +107,33 @@ $ curl -X POST \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"group_name": <group_name>, "ldap_group_dn": <optional_ldap_dn>}' \
+    -d '{"group_name": <group_name>, "ldap_group_dn": <ldap_group_dn>}' \
     "http://<manager_ip>/api/v3.1/user-groups"
 ```
 
 ```python
-# Python Client-
-client.user_groups.create(group_name=<group-name>, ldap_group_dn=<optional-ldap-dn>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.create(
+    group_name='<group_name>',
+    ldap_group_dn='<ldap_group_dn>',
+)
 ```
 
 > Response Example
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": []
+  "ldap_dn": "<ldap_group_dn>",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 0
 }
 ```
 

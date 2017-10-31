@@ -221,12 +221,6 @@ response = requests.put(
 
 Creates a new user.
 
-Valid system roles are:
-
-* `sys_admin` - User that can manage Cloudify
-
-* `default` - User exists, but has no special permissions
-
 ### Request Body
 
 Property | Type | Description
@@ -234,6 +228,13 @@ Property | Type | Description
 `new_username` | string | The username.
 `password` | string | The user password.
 `role_name` | string | The user role. One of the following: `sys_admin`, `default`.
+
+Valid system roles are:
+
+* `sys_admin` - User that can manage Cloudify
+
+* `default` - User exists, but has no special permissions
+
 
 ### Response
 A `User` resource.
@@ -432,12 +433,6 @@ response = requests.post(
 
 Set a new system role for the user.
 
-Valid system roles are:
-
-* `sys_admin` - User that can manage Cloudify
-
-* `default` - User exists, but has no special permissions
-
 
 ### URI Parameters
 * `username`: The name of the user whose role is to be set.
@@ -447,6 +442,13 @@ Valid system roles are:
 Property | Type | Description
 --------- | ------- | -----------
 `new_role_name` | string | The user role. One of the following: `sys_admin`, `default`.
+
+Valid system roles are:
+
+* `sys_admin` - User that can manage Cloudify
+
+* `default` - User exists, but has no special permissions
+
 
 ### Response
 A `User` resource.

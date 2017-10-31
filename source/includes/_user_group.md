@@ -30,7 +30,14 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.user_groups.list()
 ```
 
@@ -38,19 +45,25 @@ client.user_groups.list()
 
 ```json
 {
-    "items":
-        [
-            {
-                "ldap_dn": null,
-                "tenants": [],
-                "name": "new_group",
-                "users": []
-            }
-        ]
+  "items": [
+    {
+      "ldap_dn": "ldap_group_dn",
+      "tenants": 0,
+      "name": "group_name",
+      "users": 0
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/user-groups"`
+`GET "{manager_ip}/api/v3.1/user-groups"`
 
 List all user groups.
 

@@ -85,27 +85,34 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
-client.user_groups.get(<group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.get('<group_name>')
 ```
 
 > Response Example
 
 ```json
 {
-    "ldap_dn": null,
-    "name": "new_group",
-    "tenants": [],
-    "users": []
+  "ldap_dn": "ldap_group_dn",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 0
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/user-groups/{group-name}"`
+`GET "{manager_ip}/api/v3.1/user-groups/{group_name}"`
 
 Retrieves a specific group.
 
 ### URI Parameters
-* `group-name`: The name of the group to retrieve.
+* `group_name`: The name of the group to retrieve.
 
 ### Response
 A `Group` resource.

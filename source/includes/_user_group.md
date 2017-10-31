@@ -286,23 +286,23 @@ $ curl -X DELETE \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"username": <username>, "group_name": <group_name>}' \
+    -d '{"username": <username_to_remove>, "group_name": <group_name>}' \
     "http://<manager_ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
 # Python Client-
-client.user_groups.remove_user(<user-name>, <group-name>)
+client.user_groups.remove_user(<username_to_remove>, <group_name>)
 ```
 
 > Response Example
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": ["user_name"]
+  "ldap_dn": "ldap_group_dn",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 0
 }
 ```
 
@@ -314,7 +314,7 @@ Delete a user from a group.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The name of the user to remove from the group.
+`username_to_remove` | string | The name of the user to remove from the group.
 `group_name` | string | The name of the group from which to remove the user.
 
 ### Response

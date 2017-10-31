@@ -221,13 +221,19 @@ response = requests.put(
 
 Creates a new user.
 
+Valid system roles are:
+
+* `sys_admin` - User that can manage Cloudify
+
+* `default` - User exists, but has no special permissions
+
 ### Request Body
 
 Property | Type | Description
 --------- | ------- | -----------
 `new_username` | string | The username.
 `password` | string | The user password.
-`role_name` | string | The user role. One of the following: `sys_admin`, `manager`, `user`, `viewer`, `default`.
+`role_name` | string | The user role. One of the following: `sys_admin`, `default`.
 
 ### Response
 A `User` resource.
@@ -376,10 +382,10 @@ A `User` resource.
 ```shell
 $ curl -X POST \
     -H "Content-Type: application/json" \
-    -H "tenant: <tenant-name>" \
+    -H "tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"role": <user-role>}' \
-    "http://<manager_ip>/api/v3.1/users/<user-name>"
+    -d '{"role": <user_role>}' \
+    "http://<manager_ip>/api/v3.1/users/<username>"
 ```
 
 ```python
@@ -391,45 +397,56 @@ client = CloudifyClient(
     password='<manager_password>',
     tenant='<manager_tenant>',
 )
-client.users.set_role(<user-name>, <new-role>)
+client.users.set_role('<username>', '<new_role_name>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users/<username>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {'role': '<new_role_name>'}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
 > Response Example
 
 ```json
 {
-    "username": "user",
-    "last_login_at": "2017-01-22T15:09:33.799Z",
-    "role": "user",
-    "groups": [],
-    "active": true,
-    "tenants": ["default_tenant"]
+  "username": "<username>",
+  "last_login_at": null,
+  "role": "default",
+  "groups": 0,
+  "active": true,
+  "tenants": 0
 }
 ```
 
-`POST -d '{"role": <role>}' '"{manager_ip}/api/v3.1/users/{user-name}"`
+`POST -d '{"role": <new_role_name>}' '"{manager_ip}/api/v3.1/users/{username}"`
 
-Set a new role for the user (`sys_admin`, `manager`, `user`, `viewer`, `default`).
+Set a new system role for the user.
+
+Valid system roles are:
 
 * `sys_admin` - User that can manage Cloudify
 
-* `manager` - User that can manage tenants
-
-* `user` - Regular user, can perform actions on tenants resources
-
-* `viewer` - User that can only view tenant resources
-
-* `default` - User exists, but have no special permissions
+* `default` - User exists, but has no special permissions
 
 
 ### URI Parameters
-* `user-name`: The name of the user whose role is to be set.
+* `username`: The name of the user whose role is to be set.
 
 ### Request Body
 
 Property | Type | Description
 --------- | ------- | -----------
-`role` | string | The user role. One of the following: `sys_admin`, `manager`, `user`, `viewer`, `default`.
+`new_role_name` | string | The user role. One of the following: `sys_admin`, `default`.
 
 ### Response
 A `User` resource.

@@ -312,7 +312,7 @@ url = 'http://<manager_ip>/api/v3.1/user-groups/users'
 auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
-    'username': '<username_to_add'
+    'username': '<username_to_add>'
     'group_name': '<group_name>',
 }
 response = requests.put(
@@ -366,8 +366,33 @@ $ curl -X DELETE \
 ```
 
 ```python
-# Python Client-
-client.user_groups.remove_user(<username_to_remove>, <group_name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.remove_user('<username_to_remove>', '<group_name>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_remove>'
+    'group_name': '<group_name>',
+}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
 > Response Example

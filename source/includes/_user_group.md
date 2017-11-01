@@ -240,6 +240,19 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.user_groups.delete('<user_group_name_to_delete>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
 > Response Example

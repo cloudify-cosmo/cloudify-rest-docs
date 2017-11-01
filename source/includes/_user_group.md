@@ -482,9 +482,9 @@ A `Group` resource.
 
 
 
-## Add User to Group
+## Add User to User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
 $ curl -X PUT \
@@ -525,7 +525,7 @@ response = requests.put(
 )
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
@@ -536,9 +536,66 @@ response = requests.put(
 }
 ```
 
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_add>, "group_name": <group_name>}' \
+    "http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.add_user(
+    '<username_to_add>',
+    '<group_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_add>'
+    'group_name': '<group_name>',
+}
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "ldap_dn": "ldap_group_dn",
+  "tenants": {},
+  "name": "<group_name>",
+  "users": [
+    "<username_to_add>"
+  ]
+}
+```
 `PUT "{manager_ip}/api/v3.1/user-groups/users"`
 
-Add a user to group.
+Add a user to user group.
 
 ### Request Body
 

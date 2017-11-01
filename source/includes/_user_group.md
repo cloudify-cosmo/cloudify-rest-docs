@@ -378,7 +378,7 @@ A `User` resource.
 
 ## Delete User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
 $ curl -X DELETE \
@@ -412,7 +412,7 @@ response = requests.delete(
 )
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
@@ -420,6 +420,51 @@ response = requests.delete(
     "name": "<user_group_name_to_delete>",
     "tenants": 0,
     "users": 0
+}
+```
+
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X DELETE \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.delete('<user_group_name_to_delete>', _get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+    "ldap_dn": "ldap_group_dn",
+    "name": "<user_group_name_to_delete>",
+    "tenants": {},
+    "users": []
 }
 ```
 

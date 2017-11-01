@@ -170,6 +170,24 @@ client.user_groups.create(
     group_name='<group_name>',
     ldap_group_dn='<ldap_group_dn>',
 )
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'group_name': '<group_name>',
+    'ldap_group_dn': '<ldap_group_dn>',
+}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
 > Response Example

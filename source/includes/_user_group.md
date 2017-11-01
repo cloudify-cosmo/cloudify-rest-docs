@@ -20,7 +20,7 @@ Attribute | Type | Description
 
 ## List User Groups
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
 $ curl -X GET \
@@ -54,7 +54,7 @@ response = requests.get(
 )
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
@@ -64,6 +64,62 @@ response = requests.get(
       "tenants": 0,
       "name": "group_name",
       "users": 0
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<password> \
+    "http://<manager_ip>/api/v3.1/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.list(_get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "items": [
+    {
+      "ldap_dn": "ldap_group_dn",
+      "tenants": {},
+      "name": "group_name",
+      "users": []
     }
   ],
   "metadata": {

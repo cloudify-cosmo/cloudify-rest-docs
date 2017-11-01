@@ -303,6 +303,24 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.user_groups.add_user('<username_to_add>', '<group_name>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_add'
+    'group_name': '<group_name>',
+}
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
 > Response Example

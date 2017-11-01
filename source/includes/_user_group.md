@@ -39,6 +39,19 @@ client = CloudifyClient(
     tenant='<manager_tenant>',
 )
 client.user_groups.list()
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
 > Response Example

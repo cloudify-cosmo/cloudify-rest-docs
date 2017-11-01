@@ -247,7 +247,7 @@ A `Group` resource.
 
 ## Create User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
 $ curl -X POST \
@@ -291,7 +291,7 @@ response = requests.post(
 )
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
@@ -299,6 +299,62 @@ response = requests.post(
   "tenants": 0,
   "name": "<group_name>",
   "users": 0
+}
+```
+
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": <group_name>, "ldap_group_dn": <ldap_group_dn>}' \
+    "http://<manager_ip>/api/v3.1/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.create(
+    group_name='<group_name>',
+    ldap_group_dn='<ldap_group_dn>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'group_name': '<group_name>',
+    'ldap_group_dn': '<ldap_group_dn>',
+}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "ldap_dn": "<ldap_group_dn>",
+  "tenants": {},
+  "name": "<group_name>",
+  "users": []
 }
 ```
 

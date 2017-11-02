@@ -403,9 +403,9 @@ Creates a new user.
 
 Property | Type | Description
 --------- | ------- | -----------
-`new_username` | string | The username.
+`username` | string | The username.
 `password` | string | The user password.
-`role_name` | string | The user role. One of the following: `sys_admin`, `default`.
+`role` | string | The user role. One of the following: `sys_admin`, `default`.
 
 Valid system roles are:
 
@@ -649,7 +649,7 @@ Specify a password.
 
 Property | Type | Description
 --------- | ------- | -----------
-`new_password` | string | The new user password.
+`password` | string | The new user password.
 
 ### Response
 A `User` resource.
@@ -776,7 +776,7 @@ Set a new system role for the user.
 
 Property | Type | Description
 --------- | ------- | -----------
-`new_role_name` | string | The user role. One of the following: `sys_admin`, `default`.
+`role` | string | The user role. One of the following: `sys_admin`, `default`.
 
 Valid system roles are:
 

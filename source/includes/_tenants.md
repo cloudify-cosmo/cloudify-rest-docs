@@ -615,6 +615,8 @@ Valid tenant roles are:
 
 * `manager` - User that can manage tenants
 
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
+
 * `user` - Regular user, can perform actions on tenants resources
 
 * `viewer` - User that can only view tenant resources
@@ -764,6 +766,8 @@ Property | Type | Description
 Valid tenant roles are:
 
 * `manager` - User that can manage tenants
+
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
 
 * `user` - Regular user, can perform actions on tenants resources
 
@@ -1036,6 +1040,8 @@ Valid tenant roles are:
 
 * `manager` - User that can manage tenants
 
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
+
 * `user` - Regular user, can perform actions on tenants resources
 
 * `viewer` - User that can only view tenant resources
@@ -1179,6 +1185,8 @@ Property | Type | Description
 Valid tenant roles are:
 
 * `manager` - User that can manage tenants
+
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
 
 * `user` - Regular user, can perform actions on tenants resources
 

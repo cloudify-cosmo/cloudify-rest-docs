@@ -608,7 +608,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `username_to_add` | string | The user name to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user.
-`role_name` | string | (Optional) The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+`role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.
@@ -1010,7 +1010,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `group_name` | string | The name of the user group to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user group.
-`role` | string | (Optional) The name of the role assigned to the users members of the group. If not passed the default tenant role will be used.
+`role_name` | string | The name of the role assigned to the users members of the group. If not passed the default tenant role will be used.
 
 ### Response
 A `Tenant` resource.

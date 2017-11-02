@@ -607,13 +607,15 @@ Add a user to a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username_to_add` | string | The user name to add to the tenant.
+`username` | string | The user name to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user.
-`role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+`role` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 Valid tenant roles are:
 
 * `manager` - User that can manage tenants
+
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
 
 * `user` - Regular user, can perform actions on tenants resources
 
@@ -757,13 +759,15 @@ Update a user in a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username_to_update` | string | The user name to remove from the tenant.
+`username` | string | The user name to remove from the tenant.
 `tenant_name` | string | The tenant name to add the user into it.
-`role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+`role` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 Valid tenant roles are:
 
 * `manager` - User that can manage tenants
+
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
 
 * `user` - Regular user, can perform actions on tenants resources
 
@@ -891,7 +895,7 @@ Delete a user from a tenant.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username_to_remove` | string | The user name to remove from the tenant.
+`username` | string | The user name to remove from the tenant.
 `tenant_name` | string | The tenant name to add the user into it.
 
 ### Response
@@ -1030,11 +1034,13 @@ Property | Type | Description
 --------- | ------- | -----------
 `group_name` | string | The name of the user group to add to the tenant.
 `tenant_name` | string | The name of the tenant to which to add the user group.
-`role_name` | string | The name of the role assigned to the users members of the group. If not passed the default tenant role will be used.
+`role` | string | The name of the role assigned to the users members of the group. If not passed the default tenant role will be used.
 
 Valid tenant roles are:
 
 * `manager` - User that can manage tenants
+
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
 
 * `user` - Regular user, can perform actions on tenants resources
 
@@ -1174,11 +1180,13 @@ Property | Type | Description
 --------- | ------- | -----------
 `group_name` | string | The group name to update in the tenant.
 `tenant_name` | string | The tenant name to which the user group is assigned.
-`role_name` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
+`role` | string | The name of the role assigned to the user in the tenant. If not passed the default tenant role will be used.
 
 Valid tenant roles are:
 
 * `manager` - User that can manage tenants
+
+* `operations` - User that can deploy and execute workflows, but cannot manage blueprints or plugins
 
 * `user` - Regular user, can perform actions on tenants resources
 

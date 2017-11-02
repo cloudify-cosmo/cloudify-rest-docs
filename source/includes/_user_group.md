@@ -601,7 +601,7 @@ Add a user to user group.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username_to_add` | string | The name of the user to add to the group.
+`username` | string | The name of the user to add to the group.
 `group_name` | string | The name of the group to which to add the user.
 
 ### Response
@@ -729,7 +729,7 @@ Delete a user from a user group.
 
 Property | Type | Description
 --------- | ------- | -----------
-`username_to_remove` | string | The name of the user to remove from the group.
+`username` | string | The name of the user to remove from the group.
 `group_name` | string | The name of the group from which to remove the user.
 
 ### Response

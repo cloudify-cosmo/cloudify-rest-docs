@@ -6,18 +6,6 @@
 This section describes API features that are part of the Cloudify premium edition
 </aside>
 
-> `Note`
-
-```python
-# include this code when using cloudify python client-
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-        host='<manager-ip>',
-        username='<manager-username>',
-        password='<manager-password>',
-        tenant='<manager-tenant>')
-```
-
 The User Group is a group of users.
 
 
@@ -26,40 +14,125 @@ The User Group is a group of users.
 Attribute | Type | Description
 --------- | ------- | -------
 `id` | integer | Auto increment, unique identifier for the tenant.
-`ldap_dn` | string | The distinguish name of corresponding LDAP group (if using LDAP).
+`ldap_dn` | string | The distinguished name of corresponding LDAP group (if using LDAP).
 `name` | string | The name of the user group.
 
 
 ## List User Groups
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/user-groups"
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<password> \
+    "http://<manager_ip>/api/v3.1/user-groups"
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
 client.user_groups.list()
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
-    "items":
-        [
-            {
-                "ldap_dn": null,
-                "tenants": [],
-                "name": "new_group",
-                "users": []
-            }
-        ]
+  "items": [
+    {
+      "ldap_dn": "ldap_group_dn",
+      "tenants": 0,
+      "name": "group_name",
+      "users": 0
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/user-groups"`
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<password> \
+    "http://<manager_ip>/api/v3.1/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.list(_get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "items": [
+    {
+      "ldap_dn": "ldap_group_dn",
+      "tenants": {},
+      "name": "group_name",
+      "users": []
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager_ip}/api/v3.1/user-groups"`
 
 List all user groups.
 
@@ -71,64 +144,221 @@ Field | Type | Description
 
 ## Get User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
-$ curl -X GET --header "tenant: default_tenant" -u user:password "http://<manager-ip>/api/v3.1/user-groups/<group-name>"
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/user-groups/<group_name>"
 ```
 
 ```python
-# Python Client-
-client.user_groups.get(<group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.get('<group_name>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/<group_name>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
-    "ldap_dn": null,
-    "name": "new_group",
-    "tenants": [],
-    "users": []
+  "ldap_dn": "ldap_group_dn",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 0
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/user-groups/{group-name}"`
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/user-groups/<group_name>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.get('<group_name>', _get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/<group_name>?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "ldap_dn": "ldap_group_dn",
+  "tenants": {},
+  "name": "<group_name>",
+  "users": []
+}
+```
+
+`GET "{manager_ip}/api/v3.1/user-groups/{group_name}"`
 
 Retrieves a specific group.
 
 ### URI Parameters
-* `group-name`: The name of the group to retrieve.
+* `group_name`: The name of the group to retrieve.
 
 ### Response
 A `Group` resource.
 
 
-## Create User Groups
+## Create User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
-$ curl -X POST -H "Content-Type: application/json" -H "tenant: default_tenant" -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' -u user:password "http://<manager-ip>/api/v3.1/user-groups"
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": <group_name>, "ldap_group_dn": <ldap_group_dn>}' \
+    "http://<manager_ip>/api/v3.1/user-groups"
 ```
 
 ```python
-# Python Client-
-client.user_groups.create(group_name=<group-name>, ldap_group_dn=<optional-ldap-dn>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.create(
+    group_name='<group_name>',
+    ldap_group_dn='<ldap_group_dn>',
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'group_name': '<group_name>',
+    'ldap_group_dn': '<ldap_group_dn>',
+}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": []
+  "ldap_dn": "<ldap_group_dn>",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 0
 }
 ```
 
-`POST -d '{"group_name": <group-name>, "ldap_group_dn": <optional-ldap-dn>}' "{manager-ip}/api/v3.1/user-groups"`
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"group_name": <group_name>, "ldap_group_dn": <ldap_group_dn>}' \
+    "http://<manager_ip>/api/v3.1/user-groups?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.create(
+    group_name='<group_name>',
+    ldap_group_dn='<ldap_group_dn>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'group_name': '<group_name>',
+    'ldap_group_dn': '<ldap_group_dn>',
+}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "ldap_dn": "<ldap_group_dn>",
+  "tenants": {},
+  "name": "<group_name>",
+  "users": []
+}
+```
+
+`POST -d '{"group_name": <group-name>, "ldap_group_dn": <ldap_group_dn>}' "{manager-ip}/api/v3.1/user-groups"`
 
 Creates a new user group.
 
@@ -148,34 +378,102 @@ A `User` resource.
 
 ## Delete User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/user-groups/<user-group-name-to-delete>"
+$ curl -X DELETE \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>"
 ```
 
 ```python
-# Python Client-
-client.user_groups.delete(<group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.delete('<user_group_name_to_delete>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
+    "ldap_dn": "ldap_group_dn",
+    "name": "<user_group_name_to_delete>",
+    "tenants": 0,
+    "users": 0
+}
+```
+
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X DELETE \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.delete('<user_group_name_to_delete>', _get_data=True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+    "ldap_dn": "ldap_group_dn",
+    "name": "<user_group_name_to_delete>",
+    "tenants": {},
     "users": []
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/user-groups/{user-group-to-delete}"`
+`DELETE "{manager_ip}/api/v3.1/user-groups/{user_group_name_to_delete}"`
 
 Deletes a user group.
 
 ### URI Parameters
-* `user-group-to-delete`: The name of the user group to delete.
+* `user_group_name_to_delete`: The name of the user group to delete.
 
 ### Response
 A `Group` resource.
@@ -184,39 +482,126 @@ A `Group` resource.
 
 
 
-## Add User to Group
+## Add User to User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3.1/user-groups/users"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_add>, "group_name": <group_name>}' \
+    "http://<manager_ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
-# Python Client-
-client.user_groups.add_user(<user-name>, <group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.add_user('<username_to_add>', '<group_name>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_add>'
+    'group_name': '<group_name>',
+}
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": ["user_name"]
+  "ldap_dn": "ldap_group_dn",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 1
 }
 ```
 
-`PUT "{manager-ip}/api/v3.1/user-groups/users"`
+> Request Example - Get tenants and users details
 
-Add a user to group.
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_add>, "group_name": <group_name>}' \
+    "http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.add_user(
+    '<username_to_add>',
+    '<group_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_add>'
+    'group_name': '<group_name>',
+}
+response = requests.put(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "ldap_dn": "ldap_group_dn",
+  "tenants": {},
+  "name": "<group_name>",
+  "users": [
+    "<username_to_add>"
+  ]
+}
+```
+`PUT "{manager_ip}/api/v3.1/user-groups/users"`
+
+Add a user to user group.
 
 ### Request Body
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The name of the user to add to the group.
+`username_to_add` | string | The name of the user to add to the group.
 `group_name` | string | The name of the group to which to add the user.
 
 ### Response
@@ -226,39 +611,125 @@ A `Group` resource.
 
 
 
-## Remove User from Group
+## Remove User from User Group
 
-> Request Example
+> Request Example - Get tenants and users counts
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password -d '{"username": <user-name>, "group_name": <group-name>}' `"http://<manager-ip>/api/v3.1/user-groups/users"
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_remove>, "group_name": <group_name>}' \
+    "http://<manager_ip>/api/v3.1/user-groups/users"
 ```
 
 ```python
-# Python Client-
-client.user_groups.remove_user(<user-name>, <group-name>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.remove_user('<username_to_remove>', '<group_name>')
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_remove>'
+    'group_name': '<group_name>',
+}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
 ```
 
-> Response Example
+> Response Example - Get tenants and users counts
 
 ```json
 {
-    "ldap_dn": "group_ldap_dn",
-    "name": "new_group",
-    "tenants": [],
-    "users": ["user_name"]
+  "ldap_dn": "ldap_group_dn",
+  "tenants": 0,
+  "name": "<group_name>",
+  "users": 0
+}
+```
+
+> Request Example - Get tenants and users details
+
+```shell
+$ curl -X DELETE \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"username": <username_to_remove>, "group_name": <group_name>}' \
+    "http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.user_groups.remove_user(
+    '<username_to_remove>',
+    '<group_name>',
+    _get_data=True,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'username': '<username_to_remove>'
+    'group_name': '<group_name>',
+}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Get tenants and users details
+
+```json
+{
+  "ldap_dn": "ldap_group_dn",
+  "tenants": {},
+  "name": "<group_name>",
+  "users": []
 }
 ```
 
 `DELETE "{manager-ip}/api/v3.1/user-groups/users"`
 
-Delete a user from a group.
+Delete a user from a user group.
 
 ### Request Body
 
 Property | Type | Description
 --------- | ------- | -----------
-`username` | string | The name of the user to remove from the group.
+`username_to_remove` | string | The name of the user to remove from the group.
 `group_name` | string | The name of the group from which to remove the user.
 
 ### Response

@@ -35,7 +35,10 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets"
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets"
 ```
 
 ```python
@@ -78,7 +81,10 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets/<secret-key>"
 ```
 
 ```python
@@ -118,7 +124,12 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-secret-value>}' -u user:password "http://<manager-ip>/api/v3.1/secrets/<new-secret-key>"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"value": <new-secret-value>}' \
+    "http://<manager-ip>/api/v3.1/secrets/<new-secret-key>"
 ```
 
 ```python
@@ -163,7 +174,12 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-value>}' -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"value": <new-value>}' \
+    "http://<manager_ip>/api/v3.1/secrets/<secret-key>"
 ```
 
 ```python
@@ -208,7 +224,10 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
+$ curl -X DELETE \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets/<secret-key>"
 ```
 
 ```python
@@ -248,8 +267,11 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
-    -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>/set-global"
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager-ip>/api/v3.1/secrets/<secret-key>/set-global"
 ```
 
 ```python

@@ -3,16 +3,6 @@
 ## The Secret Resource
 
 
-```python
-# include this code when using cloudify python client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-        host='<manager-ip>',
-        username='<manager-username>',
-        password='<manager-password>',
-        tenant='<manager-tenant>')
-```
-
 A Secret resource is a key-value pair saved per tenant.
 A user can ensure all secrets (such as credentials to IaaS environments, passwords, etc) are kept in a secured manner,
 and adhere to isolation requirements between different tenants.
@@ -42,7 +32,14 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.list()
 ```
 
@@ -88,7 +85,14 @@ $ curl -X GET \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.get(<secret-key>)
 ```
 
@@ -133,7 +137,14 @@ $ curl -X PUT \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.create(<new-secret-key>, <new-secret-value>)
 ```
 
@@ -183,7 +194,14 @@ $ curl -X PATCH \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.update(<secret-key>, <new-value>)
 ```
 
@@ -231,7 +249,14 @@ $ curl -X DELETE \
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.delete(<secret-key>)
 ```
 
@@ -275,7 +300,14 @@ $ curl -X PATCH \
 ```
 
 ```python
-# Python Client
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.set_global(<secret-key>)
 ```
 

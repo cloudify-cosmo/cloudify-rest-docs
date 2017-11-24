@@ -41,24 +41,43 @@ client = CloudifyClient(
         tenant='<manager_tenant>',
 )
 client.secrets.list()
+
+# Using request
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
- "items":
-    [
+    "items": [
         {
-            "key": "key1",
-            "created_at": "2017-03-20T08:23:31.276Z",
-            "updated_at": "2017-03-20T08:43:19.468Z",
-            "permission": "creator",
-            "tenant_name": "default_tenant",
+            "created_at": "2017-11-24T10:42:29.756Z",
             "created_by": "admin",
-            "resource_availability": "tenant"
+            "key": "<secret_key>",
+            "resource_availability": "tenant",
+            "tenant_name": "default_tenant",
+            "updated_at": "2017-11-24T10:42:29.756Z"
         }
-    ]
+    ],
+    "metadata": {
+        "pagination": {
+            "offset": 0,
+            "size": 0,
+            "total": 1
+        }
+    }
 }
 ```
 

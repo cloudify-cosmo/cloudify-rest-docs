@@ -396,20 +396,34 @@ client = CloudifyClient(
         tenant='<manager_tenant>',
 )
 client.secrets.set_global(<secret_key>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<secret_key>/set-global'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:43:19.468Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T12:10:49.789Z",
     "created_by": "admin",
-    "resource_availability": "global"
+    "key": "<secret_key>",
+    "private_resource": false,
+    "resource_availability": "global",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T12:11:16.495Z",
+    "value": "<secret_value>"
 }
 ```
 

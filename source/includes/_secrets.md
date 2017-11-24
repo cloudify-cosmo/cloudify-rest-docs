@@ -42,7 +42,7 @@ client = CloudifyClient(
 )
 client.secrets.list()
 
-# Using request
+# Using requests
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -165,7 +165,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"value": <new_secret_value>}' \
+    -d '{"value": <new_secret_value>, "upsert": false}' \
     "http://<manager_ip>/api/v3.1/secrets/<new_secret_key>"
 ```
 
@@ -178,21 +178,44 @@ client = CloudifyClient(
         password='<manager_password>',
         tenant='<manager_tenant>',
 )
-client.secrets.create(<new_secret_key>, <new_secret_value>)
+client.secrets.create(
+    <new_secret_key>,
+    <new_secret_value>,
+    upsert=False,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<new_secret_key>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'value': '<new_secret_value>',
+    'upsert': False,
+}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:23:31.276Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T10:42:29.756Z",
     "created_by": "admin",
-    "resource_availability": "tenant"
+    "key": "<new_secret_key>",
+    "private_resource": false,
+    "resource_availability": "tenant",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T10:42:29.756Z",
+    "value": "<new_secret_value>"
 }
 ```
 
@@ -207,6 +230,7 @@ Creates a secret.
 Property | Type | Description
 --------- | ------- | -----------
 `value` | string | The secret's value.
+`upsert` | boolean | Update value if secret already exists (optional, defaults to false).
 
 ### Response
 A `Secret` resource.

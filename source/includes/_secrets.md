@@ -62,7 +62,7 @@ client.secrets.list()
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/secrets"`
+`GET "{manager_ip}/api/v3.1/secrets"`
 
 List all secrets.
 
@@ -81,7 +81,7 @@ Field | Type | Description
 $ curl -X GET \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    "http://<manager_ip>/api/v3.1/secrets/<secret-key>"
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
 ```python
@@ -93,7 +93,7 @@ client = CloudifyClient(
         password='<manager_password>',
         tenant='<manager_tenant>',
 )
-client.secrets.get(<secret-key>)
+client.secrets.get(<secret_key>)
 ```
 
 > Response Example
@@ -111,12 +111,12 @@ client.secrets.get(<secret-key>)
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/secrets/{secret-key}"`
+`GET "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Retrieves a specific secret.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to retrieve.
+* `secret_key`: The key of the secret to retrieve.
 
 ### Response
 A `Secret` resource.
@@ -132,8 +132,8 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"value": <new-secret-value>}' \
-    "http://<manager-ip>/api/v3.1/secrets/<new-secret-key>"
+    -d '{"value": <new_secret_value>}' \
+    "http://<manager_ip>/api/v3.1/secrets/<new_secret_key>"
 ```
 
 ```python
@@ -145,7 +145,7 @@ client = CloudifyClient(
         password='<manager_password>',
         tenant='<manager_tenant>',
 )
-client.secrets.create(<new-secret-key>, <new-secret-value>)
+client.secrets.create(<new_secret_key>, <new_secret_value>)
 ```
 
 > Response Example
@@ -163,12 +163,12 @@ client.secrets.create(<new-secret-key>, <new-secret-value>)
 }
 ```
 
-`PUT -d '{"value": <new-secret-value>}' "{manager-ip}/api/v3.1/secrets/{new-secret-key}"`
+`PUT -d '{"value": <new_secret_value>}' "{manager_ip}/api/v3.1/secrets/{new_secret_key}"`
 
 Creates a secret.
 
 ### URI Parameters
-* `new-secret-key`: The key of the secret to create.
+* `new_secret_key`: The key of the secret to create.
 
 ### Request Body
 Property | Type | Description
@@ -189,8 +189,8 @@ $ curl -X PATCH \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"value": <new-value>}' \
-    "http://<manager_ip>/api/v3.1/secrets/<secret-key>"
+    -d '{"value": <new_secret_value>}' \
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
 ```python
@@ -202,7 +202,7 @@ client = CloudifyClient(
         password='<manager_password>',
         tenant='<manager_tenant>',
 )
-client.secrets.update(<secret-key>, <new-value>)
+client.secrets.update(<secret_key>, <new_secret_value>)
 ```
 
 > Response Example
@@ -220,12 +220,12 @@ client.secrets.update(<secret-key>, <new-value>)
 }
 ```
 
-`PATCH -d '{"value": <new-value>}' "{manager-ip}/api/v3.1/secrets/{secret-key}"`
+`PATCH -d '{"value": <new_secret_value>}' "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Updates a secret.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to update.
+* `secret_key`: The key of the secret to update.
 
 ### Request Body
 Property | Type | Description
@@ -245,7 +245,7 @@ A `Secret` resource.
 $ curl -X DELETE \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    "http://<manager_ip>/api/v3.1/secrets/<secret-key>"
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
 ```python
@@ -257,7 +257,7 @@ client = CloudifyClient(
         password='<manager_password>',
         tenant='<manager_tenant>',
 )
-client.secrets.delete(<secret-key>)
+client.secrets.delete(<secret_key>)
 ```
 
 > Response Example
@@ -275,12 +275,12 @@ client.secrets.delete(<secret-key>)
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/secrets/{secret-key}"`
+`DELETE "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Deletes a secret.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to delete.
+* `secret_key`: The key of the secret to delete.
 
 ### Response
 A `Secret` resource.
@@ -296,7 +296,7 @@ $ curl -X PATCH \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    "http://<manager-ip>/api/v3.1/secrets/<secret-key>/set-global"
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>/set-global"
 ```
 
 ```python
@@ -308,7 +308,7 @@ client = CloudifyClient(
         password='<manager_password>',
         tenant='<manager_tenant>',
 )
-client.secrets.set_global(<secret-key>)
+client.secrets.set_global(<secret_key>)
 ```
 
 > Response Example
@@ -326,12 +326,12 @@ client.secrets.set_global(<secret-key>)
 }
 ```
 
-`PATCH "{manager-ip}/api/v3.1/secrets/{secret-key}/set-global"`
+`PATCH "{manager_ip}/api/v3.1/secrets/{secret_key}/set-global"`
 
 Set the secret's availability to global.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to update.
+* `secret_key`: The key of the secret to update.
 
 
 ### Response

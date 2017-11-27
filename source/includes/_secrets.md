@@ -165,7 +165,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"value": <new_secret_value>, "upsert": false}' \
+    -d '{"value": <new_secret_value>, "update_if_exists": false}' \
     "http://<manager_ip>/api/v3.1/secrets/<new_secret_key>"
 ```
 
@@ -181,7 +181,7 @@ client = CloudifyClient(
 client.secrets.create(
     <new_secret_key>,
     <new_secret_value>,
-    upsert=False,
+    update_if_exists=False,
 )
 
 # Using requests
@@ -193,7 +193,7 @@ auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'value': '<new_secret_value>',
-    'upsert': False,
+    'update_if_exists': False,
 }
 response = requests.get(
     url,
@@ -230,7 +230,7 @@ Creates a secret.
 Property | Type | Description
 --------- | ------- | -----------
 `value` | string | The secret's value.
-`upsert` | boolean | Update value if secret already exists (optional, defaults to false).
+`update_if_exists` | boolean | Update value if secret already exists (optional, defaults to false).
 
 ### Response
 A `Secret` resource.

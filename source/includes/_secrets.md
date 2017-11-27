@@ -3,16 +3,6 @@
 ## The Secret Resource
 
 
-```python
-# include this code when using cloudify python client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-        host='<manager-ip>',
-        username='<manager-username>',
-        password='<manager-password>',
-        tenant='<manager-tenant>')
-```
-
 A Secret resource is a key-value pair saved per tenant.
 A user can ensure all secrets (such as credentials to IaaS environments, passwords, etc) are kept in a secured manner,
 and adhere to isolation requirements between different tenants.
@@ -35,34 +25,63 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets"
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets"
 ```
 
 ```python
-# Python Client-
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
 client.secrets.list()
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
- "items":
-    [
+    "items": [
         {
-            "key": "key1",
-            "created_at": "2017-03-20T08:23:31.276Z",
-            "updated_at": "2017-03-20T08:43:19.468Z",
-            "permission": "creator",
-            "tenant_name": "default_tenant",
+            "created_at": "2017-11-24T10:42:29.756Z",
             "created_by": "admin",
-            "resource_availability": "tenant"
+            "key": "<secret_key>",
+            "resource_availability": "tenant",
+            "tenant_name": "default_tenant",
+            "updated_at": "2017-11-24T10:42:29.756Z"
         }
-    ]
+    ],
+    "metadata": {
+        "pagination": {
+            "offset": 0,
+            "size": 0,
+            "total": 1
+        }
+    }
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/secrets"`
+`GET "{manager_ip}/api/v3.1/secrets"`
 
 List all secrets.
 
@@ -78,35 +97,59 @@ Field | Type | Description
 > Request Example
 
 ```shell
-$ curl -X GET --header "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
+$ curl -X GET \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
 ```python
-# Python Client-
-client.secrets.get(<secret-key>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
+client.secrets.get(<secret_key>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<secret_key>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:43:19.468Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T10:42:29.756Z",
     "created_by": "admin",
-    "resource_availability": "tenant"
+    "key": "<secret_key>",
+    "private_resource": false,
+    "resource_availability": "tenant",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T10:42:29.756Z",
+    "value": "<secret_value>"
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/secrets/{secret-key}"`
+`GET "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Retrieves a specific secret.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to retrieve.
+* `secret_key`: The key of the secret to retrieve.
 
 ### Response
 A `Secret` resource.
@@ -118,40 +161,76 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PUT -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-secret-value>}' -u user:password "http://<manager-ip>/api/v3.1/secrets/<new-secret-key>"
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"value": <new_secret_value>, "update_if_exists": false}' \
+    "http://<manager_ip>/api/v3.1/secrets/<new_secret_key>"
 ```
 
 ```python
-# Python Client-
-client.secrets.create(<new-secret-key>, <new-secret-value>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
+client.secrets.create(
+    <new_secret_key>,
+    <new_secret_value>,
+    update_if_exists=False,
+)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<new_secret_key>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {
+    'value': '<new_secret_value>',
+    'update_if_exists': False,
+}
+response = requests.get(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:23:31.276Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T10:42:29.756Z",
     "created_by": "admin",
-    "resource_availability": "tenant"
+    "key": "<new_secret_key>",
+    "private_resource": false,
+    "resource_availability": "tenant",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T10:42:29.756Z",
+    "value": "<new_secret_value>"
 }
 ```
 
-`PUT -d '{"value": <new-secret-value>}' "{manager-ip}/api/v3.1/secrets/{new-secret-key}"`
+`PUT -d '{"value": <new_secret_value>}' "{manager_ip}/api/v3.1/secrets/{new_secret_key}"`
 
 Creates a secret.
 
 ### URI Parameters
-* `new-secret-key`: The key of the secret to create.
+* `new_secret_key`: The key of the secret to create.
 
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
 `value` | string | The secret's value.
+`update_if_exists` | boolean | Update value if secret already exists (optional, defaults to false).
 
 ### Response
 A `Secret` resource.
@@ -163,35 +242,63 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>" -d '{"value": <new-value>}' -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"value": <new_secret_value>}' \
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
 ```python
-# Python Client-
-client.secrets.update(<secret-key>, <new-value>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
+client.secrets.update(<secret_key>, <new_secret_value>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<secret_key>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {'value': '<new_secret_value>'}
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:43:19.468Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T11:01:05.357Z",
     "created_by": "admin",
-    "resource_availability": "tenant"
+    "key": "<secret_key>",
+    "private_resource": false,
+    "resource_availability": "tenant",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T12:02:38.296Z",
+    "value": "<new_secret_value>"
 }
 ```
 
-`PATCH -d '{"value": <new-value>}' "{manager-ip}/api/v3.1/secrets/{secret-key}"`
+`PATCH -d '{"value": <new_secret_value>}' "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Updates a secret.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to update.
+* `secret_key`: The key of the secret to update.
 
 ### Request Body
 Property | Type | Description
@@ -208,35 +315,59 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X DELETE -H "Content-Type: application/json" -H "tenant: <tenant-name>" -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>"
+$ curl -X DELETE \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
 ```python
-# Python Client-
-client.secrets.delete(<secret-key>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
+client.secrets.delete(<secret_key>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<secret_key>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.delete(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:43:19.468Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T11:01:05.357Z",
     "created_by": "admin",
-    "resource_availability": "tenant"
+    "key": "<secret_key>",
+    "private_resource": false,
+    "resource_availability": "tenant",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T12:05:30.190Z",
+    "value": "<secret_value>"
 }
 ```
 
-`DELETE "{manager-ip}/api/v3.1/secrets/{secret-key}"`
+`DELETE "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Deletes a secret.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to delete.
+* `secret_key`: The key of the secret to delete.
 
 ### Response
 A `Secret` resource.
@@ -248,36 +379,60 @@ A `Secret` resource.
 > Request Example
 
 ```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
-    -u user:password "http://<manager-ip>/api/v3.1/secrets/<secret-key>/set-global"
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    "http://<manager_ip>/api/v3.1/secrets/<secret_key>/set-global"
 ```
 
 ```python
-# Python Client
-client.secrets.set_global(<secret-key>)
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+        host='<manager_ip>',
+        username='<manager_username>',
+        password='<manager_password>',
+        tenant='<manager_tenant>',
+)
+client.secrets.set_global(<secret_key>)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/secrets/<secret_key>/set-global'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+response = requests.patch(
+    url,
+    auth=auth,
+    headers=headers,
+)
+response.json()
 ```
 
 > Response Example
 
 ```json
 {
-    "key": "key1",
-    "value": "value1",
-    "created_at": "2017-03-20T08:23:31.276Z",
-    "updated_at": "2017-03-20T08:43:19.468Z",
-    "permission": "creator",
-    "tenant_name": "default_tenant",
+    "created_at": "2017-11-24T12:10:49.789Z",
     "created_by": "admin",
-    "resource_availability": "global"
+    "key": "<secret_key>",
+    "private_resource": false,
+    "resource_availability": "global",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T12:11:16.495Z",
+    "value": "<secret_value>"
 }
 ```
 
-`PATCH "{manager-ip}/api/v3.1/secrets/{secret-key}/set-global"`
+`PATCH "{manager_ip}/api/v3.1/secrets/{secret_key}/set-global"`
 
 Set the secret's availability to global.
 
 ### URI Parameters
-* `secret-key`: The key of the secret to update.
+* `secret_key`: The key of the secret to update.
 
 
 ### Response

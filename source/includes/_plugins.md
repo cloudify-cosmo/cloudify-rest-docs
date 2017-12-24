@@ -191,12 +191,13 @@ The deleted `Plugin` resource.
 $ curl -X POST \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id"
+    "http://<manager-ip>/api/v3.1/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id&visibility=<visibility>"
 ```
 
 ```python
 # Using CloudifyClient
-client.plugins.upload(plugin_path='http://url/to/archive.wgn')
+client.plugins.upload(plugin_path='http://url/to/archive.wgn',
+                      visibility='<visibility>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/plugins'
@@ -204,6 +205,7 @@ headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'plugin_archive_url': 'http://url/to/archive.wgn',
     '_include': 'id',
+    'visibility': '<visibility>'
 }
 response = requests.post(
     url,
@@ -224,13 +226,19 @@ response.json()
 
 `POST "{manager-ip}/api/v3.1/plugins"`
 
-Upload a plugins
+Upload a plugin
 
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
 `plugin_path` | string | The plugin archive local path.
 `plugin_archive_url` | string | A URL of the plugin archive to be uploaded. The plugin will be downloaded by the manager.
+`visibility` | string | Optional parameter, defines who can see the plugin (default: tenant).
+
+Valid visibility values are:
+* `private` - The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant` - The resource is available to all users in the current tenant. (Default value)
+* `global` - The resource is available to all users in all tenants across the manager.
 
 ### Response
 The new uploaded `Plugin` resource.
@@ -311,7 +319,7 @@ client.plugins.set_global(<plugin-id>)
   "distribution": "centos",
   "package_source": "https://github.com/cloudify-cosmo/cloudify-openstack-plugin/archive/master.tar.gz",
   "private_resource": false,
-  "resource_availability": "global",
+  "visibility": "global",
   "supported_platform": "linux_x86_64",
   "package_version": "2.0.1",
   "wheels": [
@@ -325,11 +333,81 @@ client.plugins.set_global(<plugin-id>)
 
 `PATCH "{manager-ip}/api/v3.1/plugins/{plugin-id}/set-global"`
 
-Set the plugin's availability to global.
+Set the plugin's visibility to global.
+Will be deprecated soon. Use 'set-visibility' instead.
 
 ### URI Parameters
 * `plugin-id`: The id of the plugin to update.
 
+
+### Response
+A `Plugin` resource.
+
+
+## Set Plugin Visibility
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/plugins/<plugin-id>/set-visibility"
+```
+
+```python
+# Python Client
+client.plugins.set_visibility('<plugin-id>', '<visibility>')
+```
+
+> Response Example
+
+```json
+{
+  "distribution_release": "core",
+  "supported_py_versions": [
+    "py27"
+  ],
+  "uploaded_at": "2017-10-19T14:19:39.727Z",
+  "archive_name": "cloudify_openstack_plugin-2.0.1-py27-none-linux_x86_64-centos-Core.wgn",
+  "package_name": "cloudify-openstack-plugin",
+  "distribution_version": "7.0.1406",
+  "tenant_name": "default_tenant",
+  "excluded_wheels": [
+
+  ],
+  "created_by": "admin",
+  "distribution": "centos",
+  "package_source": "https://github.com/cloudify-cosmo/cloudify-openstack-plugin/archive/master.tar.gz",
+  "private_resource": false,
+  "visibility": "global",
+  "supported_platform": "linux_x86_64",
+  "package_version": "2.0.1",
+  "wheels": [
+    "keystoneauth1-2.19.0-py2.py3-none-any.whl",
+    "python_novaclient-7.0.0-py2.py3-none-any.whl",
+     ...
+  ],
+  "id": "c7f6757e-b48d-4c26-ab91-cfc8c1e4851c"
+}
+```
+
+`PATCH "<manager-ip>/api/v3.1/plugins/{plugin-id}/set-visibility"`
+
+Update the visibility of the plugin.
+
+### URI Parameters
+* `plugin-id`: The id of the plugin to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`visibility` | string | Defines who can see the plugin. (Required)
+
+Valid values are `tenant` or `global`.
 
 ### Response
 A `Plugin` resource.

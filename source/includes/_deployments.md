@@ -157,7 +157,7 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}}' \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility"="<visibility>"}' \
     "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 
@@ -167,6 +167,7 @@ client.deployments.create(
     blueprint_id='<blueprint-id>',
     deployment_id='<deployment-id>',
     inputs={...},
+    visibility='<visibility>'
 )
 
 # Using requests
@@ -179,6 +180,7 @@ querystring = {'_include': 'id'}
 payload ={
     'blueprint_id': '<blueprint-id>',
     'inputs': {...},
+    'visibility': '<visibility>'
 }
 response = requests.put(
     url,
@@ -212,6 +214,11 @@ Property | Type | Description
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
 `private_resource` | boolean | Optional parameter, if set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).
 `skip_plugins_validation` | boolean | Optional parameter, determines whether to validate if the required deployment plugins exist on the manager (default: False).
+`visibility` | string | Optional parameter, defines who can see the deployment (default: tenant).
+
+Valid visibility values are:
+* `private` - The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant` - The resource is available to all users in the current tenant. (Default value)
 
 ### Response
 A `Deployment` resource.
@@ -267,6 +274,79 @@ Property | Type | Description
 `ignore_live_nodes` | boolean | Specifies whether to ignore the live nodes validation.
 
 
+
+### Response
+A `Deployment` resource.
+
+
+## Set Deployment Visibility
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>/set-visibility"
+```
+
+```python
+# Python Client
+client.deployments.set_visibility('<deployment-id>', '<visibility>')
+```
+
+> Response Example
+
+```json
+{
+  "inputs": {
+    ...
+  },
+  "permalink": null,
+  "description": "deployment_1",
+  "blueprint_id": "blueprint_1",
+  "policy_types": {
+    ...
+  },
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "updated_at": "2017-12-17T09:29:20.750Z",
+  "created_by": "admin",
+  "policy_triggers": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "groups": {
+    ...
+  },
+  "workflows": {
+    ...
+  },
+  "id": "deployment_1",
+  "outputs": {
+    ...
+  }
+}
+
+```
+
+`PATCH "<manager-ip>/api/v3.1/deployments/{deployment-id}/set-visibility"`
+
+Update the visibility of the deployment.
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`visibility` | string | Defines who can see the deployment. (Required)
+
+The visibility value must be `tenant` because global visibility is not allowed.
 
 ### Response
 A `Deployment` resource.

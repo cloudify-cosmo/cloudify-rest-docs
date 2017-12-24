@@ -17,8 +17,7 @@ Attribute | Type | Description
 `key` | string | The secret's key, unique per tenant.
 `updated_at` | datetime | The time the secret was last updated at.
 `value` | string | The secret's value.
-`resource_availability` | string | The availability of the resource.
-                                   Can be private, tenant or global.
+`visibility` | string | Defines who can see the secret. Can be private, tenant or global.
 
 ## List Secrets
 
@@ -66,7 +65,7 @@ response.json()
             "created_at": "2017-11-24T10:42:29.756Z",
             "created_by": "admin",
             "key": "<secret_key>",
-            "resource_availability": "tenant",
+            "visibility": "tenant",
             "tenant_name": "default_tenant",
             "updated_at": "2017-11-24T10:42:29.756Z"
         }
@@ -137,7 +136,7 @@ response.json()
     "created_by": "admin",
     "key": "<secret_key>",
     "private_resource": false,
-    "resource_availability": "tenant",
+    "visibility": "tenant",
     "tenant_name": "default_tenant",
     "updated_at": "2017-11-24T10:42:29.756Z",
     "value": "<secret_value>"
@@ -165,7 +164,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
-    -d '{"value": <new_secret_value>, "update_if_exists": false}' \
+    -d '{"value": <new_secret_value>, "update_if_exists": false, "visibility": "<visibility>"}' \
     "http://<manager_ip>/api/v3.1/secrets/<new_secret_key>"
 ```
 
@@ -182,6 +181,7 @@ client.secrets.create(
     <new_secret_key>,
     <new_secret_value>,
     update_if_exists=False,
+    visibility='<visibility>'
 )
 
 # Using requests
@@ -194,6 +194,7 @@ headers = {'Tenant': '<manager_tenant>'}
 payload = {
     'value': '<new_secret_value>',
     'update_if_exists': False,
+    'visibility': '<visibility>'
 }
 response = requests.get(
     url,
@@ -212,7 +213,7 @@ response.json()
     "created_by": "admin",
     "key": "<new_secret_key>",
     "private_resource": false,
-    "resource_availability": "tenant",
+    "visibility": "tenant",
     "tenant_name": "default_tenant",
     "updated_at": "2017-11-24T10:42:29.756Z",
     "value": "<new_secret_value>"
@@ -231,6 +232,12 @@ Property | Type | Description
 --------- | ------- | -----------
 `value` | string | The secret's value.
 `update_if_exists` | boolean | Update value if secret already exists (optional, defaults to false).
+`visibility` | string | Optional parameter, defines who can see the secret (default: tenant).
+
+Valid visibility values are:
+* `private` - The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant` - The resource is available to all users in the current tenant. (Default value)
+* `global` - The resource is available to all users in all tenants across the manager.
 
 ### Response
 A `Secret` resource.
@@ -286,7 +293,7 @@ response.json()
     "created_by": "admin",
     "key": "<secret_key>",
     "private_resource": false,
-    "resource_availability": "tenant",
+    "visibility": "tenant",
     "tenant_name": "default_tenant",
     "updated_at": "2017-11-24T12:02:38.296Z",
     "value": "<new_secret_value>"
@@ -355,7 +362,7 @@ response.json()
     "created_by": "admin",
     "key": "<secret_key>",
     "private_resource": false,
-    "resource_availability": "tenant",
+    "visibility": "tenant",
     "tenant_name": "default_tenant",
     "updated_at": "2017-11-24T12:05:30.190Z",
     "value": "<secret_value>"
@@ -420,7 +427,7 @@ response.json()
     "created_by": "admin",
     "key": "<secret_key>",
     "private_resource": false,
-    "resource_availability": "global",
+    "visibility": "global",
     "tenant_name": "default_tenant",
     "updated_at": "2017-11-24T12:11:16.495Z",
     "value": "<secret_value>"
@@ -429,11 +436,65 @@ response.json()
 
 `PATCH "{manager_ip}/api/v3.1/secrets/{secret_key}/set-global"`
 
-Set the secret's availability to global.
+Set the secret's visibility to global.
+Will be deprecated soon. Use 'set-visibility' instead.
 
 ### URI Parameters
 * `secret_key`: The key of the secret to update.
 
+
+### Response
+A `Secret` resource.
+
+
+
+## Set Secret Visibility
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/secrets/<secret-key>/set-visibility"
+```
+
+```python
+# Python Client
+client.secrets.set_visibility('<secret-key>', '<visibility>')
+```
+
+> Response Example
+
+```json
+{
+    "created_at": "2017-11-24T12:10:49.789Z",
+    "created_by": "admin",
+    "key": "<secret-key>",
+    "private_resource": false,
+    "visibility": "global",
+    "tenant_name": "default_tenant",
+    "updated_at": "2017-11-24T12:11:16.495Z",
+    "value": "<secret-value>"
+}
+```
+
+`PATCH "<manager-ip>/api/v3.1/secrets/{secret-key}/set-visibility"`
+
+Update the visibility of the secret.
+
+### URI Parameters
+* `secret-key`: The key of the secret to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`visibility` | string | Defines who can see the secret. (Required)
+
+Valid values are `tenant` or `global`.
 
 ### Response
 A `Secret` resource.

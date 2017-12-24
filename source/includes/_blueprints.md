@@ -83,7 +83,7 @@ A `Blueprint` resource.
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip"
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip&visibility=<visibility>"
 ```
 
 ```python
@@ -92,6 +92,7 @@ client.blueprints._upload(
     blueprint_id='<blueprint-id>',
     archive_location='https://url/to/archive/master.zip',
     application_file_name='<blueprint-id>.yaml',
+    visibility='<visibility>'
 )
 
 # Using requests
@@ -100,6 +101,7 @@ headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'application_file_name': '<blueprint-id>.yaml',
     'blueprint_archive_url': 'https://url/to/archive/master.zip',
+    'visibility': '<visibility>'
 }
 response = requests.put(
     url,
@@ -121,7 +123,7 @@ response.json()
   "updated_at": "2017-04-19T10:56:06.267Z",
   "created_by": "admin",
   "private_resource": false,
-  "resource_availability": "tenant",
+  "visibility": "tenant",
   "plan": {
     ...
   },
@@ -129,7 +131,7 @@ response.json()
 }
 ```
 
-`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip"`
+`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip&visibility=<visibility>"`
 
 Uploads a blueprint to Cloudify's manager.
 The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
@@ -144,6 +146,12 @@ Property | Type | Description
 -------- | ---- | -----------
 `application_file_name` | string | The main blueprint file name in the blueprint's archive.
 `blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
+`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant).
+
+Valid visibility values are:
+* `private` - The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant` - The resource is available to all users in the current tenant. (Default value)
+* `global` - The resource is available to all users in all tenants across the manager.
 
 ### Response
 A `Blueprint` resource.
@@ -249,7 +257,7 @@ response.json()
   "updated_at": "2017-04-19T13:35:13.971Z",
   "created_by": "admin",
   "private_resource": false,
-  "resource_availability": "tenant",
+  "visibility": "tenant",
   "plan": {
     ...
   },
@@ -317,7 +325,7 @@ $ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
 
 ```python
 # Python Client
-client.blueprints.set_global(<blueprint-id>)
+client.blueprints.set_global('<blueprint-id>')
 ```
 
 > Response Example
@@ -331,7 +339,7 @@ client.blueprints.set_global(<blueprint-id>)
   "updated_at": "2017-04-19T10:56:06.267Z",
   "created_by": "admin",
   "private_resource": false,
-  "resource_availability": "global",
+  "visibility": "global",
   "plan": {
     ...
   },
@@ -341,11 +349,67 @@ client.blueprints.set_global(<blueprint-id>)
 
 `PATCH "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/set-global"`
 
-Set the blueprint's availability to global.
+Set the blueprint's visibility to global.
+Will be deprecated soon. Use 'set-visibility' instead.
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to update.
 
+### Response
+A `Blueprint` resource.
+
+
+## Set Blueprint Visibility
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/set-visibility"
+```
+
+```python
+# Python Client
+client.blueprints.set_visibility('<blueprint-id>', '<visibility>')
+```
+
+> Response Example
+
+```json
+{
+  "main_file_name": "singlehost-blueprint.yaml",
+  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-04-19T10:56:06.267Z",
+  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "visibility": "global",
+  "plan": {
+    ...
+  },
+  "id": "hello-world"
+}
+```
+
+`PATCH "<manager-ip>/api/v3.1/blueprints/{blueprint-id}/set-visibility"`
+
+Update the visibility of the blueprint.
+
+### URI Parameters
+* `blueprint-id`: The id of the blueprint to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`visibility` | string | Defines who can see the blueprint. (Required)
+
+Valid values are `tenant` or `global`.
 
 ### Response
 A `Blueprint` resource.

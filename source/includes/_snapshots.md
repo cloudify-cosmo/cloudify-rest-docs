@@ -161,10 +161,10 @@ Creates a new snapshot.
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-`include_metrics` | string | Specifies whether metrics stored in InfluxDB should be included in the created snapshot. It defaults to false.
-`include_credentials` | string | Specifies whether agent SSH keys (including those specified in uploaded blueprints) should be included in the created snapshot. Defaults to false.
-`include_logs` | string | Specifies whether logs should be included in the created snapshot. Defaults to true.
-`include_events` | string | Specifies whether events should be included in the created snapshot. Defaults to true.
+`include_metrics` | string | Specifies whether metrics stored in InfluxDB should be included in the created snapshot (Default: true).
+`include_credentials` | string | Specifies whether agent SSH keys (including those specified in uploaded blueprints) should be included in the created snapshot (Default: false).
+`include_logs` | string | Specifies whether logs should be included in the created snapshot (Default: true).
+`include_events` | string | Specifies whether events should be included in the created snapshot (Default: true).
 
 ### Response
 An [Execution](#the-execution-resource) resource representing the create snapshot workflow execution.

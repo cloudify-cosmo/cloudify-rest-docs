@@ -217,8 +217,8 @@ Property | Type | Description
 `visibility` | string | Optional parameter, defines who can see the deployment (default: tenant).
 
 Valid visibility values are:
-* `private` - The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
-* `tenant` - The resource is available to all users in the current tenant. (Default value)
+* `private`: The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant`: The resource is available to all users in the current tenant. (Default value)
 
 ### Response
 A `Deployment` resource.

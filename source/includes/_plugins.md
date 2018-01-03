@@ -236,9 +236,10 @@ Property | Type | Description
 `visibility` | string | Optional parameter, defines who can see the plugin (default: tenant).
 
 Valid visibility values are:
-* `private`: The resource is available to the user that created the resource, the tenant’s managers and the system’s admins.
-* `tenant`: The resource is available to all users in the current tenant. (Default value)
-* `global`: The resource is available to all users in all tenants across the manager.
+
+* `private`: The resource is visible to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant`: The resource is visible to all users in the current tenant. (Default value)
+* `global`: The resource is visible to all users in all tenants across the manager.
 
 ### Response
 The new uploaded `Plugin` resource.

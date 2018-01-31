@@ -163,8 +163,8 @@ Property | Type | Description
 --------- | ------- | -----------
 `include_metrics` | string | Specifies whether metrics stored in InfluxDB should be included in the created snapshot (Default: true).
 `include_credentials` | string | Specifies whether agent SSH keys (including those specified in uploaded blueprints) should be included in the created snapshot (Default: false).
-`include_logs` | string | Specifies whether logs should be included in the created snapshot (Default: true). Supported for Cloudify Manager 4.3 and above.
-`include_events` | string | Specifies whether events should be included in the created snapshot (Default: true). Supported for Cloudify Manager 4.3 and above.
+`include_logs` | string | Specifies whether logs should be included in the created snapshot (Default: true). **Supported for Cloudify Manager 4.3 and above.**
+`include_events` | string | Specifies whether events should be included in the created snapshot (Default: true). **Supported for Cloudify Manager 4.3 and above.**
 
 ### Response
 An [Execution](#the-execution-resource) resource representing the create snapshot workflow execution.

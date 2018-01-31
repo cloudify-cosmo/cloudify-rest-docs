@@ -233,7 +233,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `plugin_path` | string | The plugin archive local path.
 `plugin_archive_url` | string | A URL of the plugin archive to be uploaded. The plugin will be downloaded by the manager.
-`visibility` | string | Optional parameter, defines who can see the plugin (default: tenant).
+`visibility` | string | Optional parameter, defines who can see the plugin (default: tenant). Supported for Cloudify Manager 4.3 and above.
 
 Valid visibility values are:
 
@@ -335,7 +335,7 @@ client.plugins.set_global(<plugin-id>)
 `PATCH "{manager-ip}/api/v3.1/plugins/{plugin-id}/set-global"`
 
 Set the plugin's visibility to global.
-Will be deprecated soon. Use 'set-visibility' instead.
+Will be deprecated soon. Use 'set-visibility' instead (for Cloudify Manager 4.3 and above).
 
 ### URI Parameters
 * `plugin-id`: The id of the plugin to update.
@@ -397,7 +397,7 @@ client.plugins.set_visibility('<plugin-id>', '<visibility>')
 
 `PATCH "<manager-ip>/api/v3.1/plugins/{plugin-id}/set-visibility"`
 
-Update the visibility of the plugin.
+Update the visibility of the plugin. Supported for Cloudify Manager 4.3 and above.
 
 ### URI Parameters
 * `plugin-id`: The id of the plugin to update.

@@ -214,7 +214,7 @@ Property | Type | Description
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
 `private_resource` | boolean | Optional parameter, if set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).
 `skip_plugins_validation` | boolean | Optional parameter, determines whether to validate if the required deployment plugins exist on the manager (default: False).
-`visibility` | string | Optional parameter, defines who can see the deployment (default: tenant).
+`visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). Supported for Cloudify Manager 4.3 and above.
 
 Valid visibility values are:
 
@@ -336,7 +336,7 @@ client.deployments.set_visibility('<deployment-id>', '<visibility>')
 
 `PATCH "<manager-ip>/api/v3.1/deployments/{deployment-id}/set-visibility"`
 
-Update the visibility of the deployment.
+Update the visibility of the deployment. Supported for Cloudify Manager 4.3 and above.
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment to update.

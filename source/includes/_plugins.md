@@ -335,7 +335,7 @@ client.plugins.set_global(<plugin-id>)
 `PATCH "{manager-ip}/api/v3.1/plugins/{plugin-id}/set-global"`
 
 Set the plugin's visibility to global.
-Will be deprecated soon. Use 'set-visibility' instead (for Cloudify Manager 4.3 and above).
+Will be deprecated soon. For Cloudify Manager 4.3 and above, use 'set-visibility'.
 
 ### URI Parameters
 * `plugin-id`: The id of the plugin to update.

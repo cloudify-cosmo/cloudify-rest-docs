@@ -157,7 +157,7 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility"="<visibility>"}' \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>"}' \
     "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 

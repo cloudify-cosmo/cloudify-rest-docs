@@ -351,7 +351,7 @@ client.blueprints.set_global('<blueprint-id>')
 `PATCH "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/set-global"`
 
 Set the blueprint's visibility to global.
-Will be deprecated soon. Use 'set-visibility' instead (for Cloudify Manager 4.3 and above).
+Will be deprecated soon. For Cloudify Manager 4.3 and above, use 'set-visibility'.
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to update.

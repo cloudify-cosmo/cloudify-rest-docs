@@ -114,9 +114,17 @@ $ curl -X PUT -H "Content-Type: application/json" -u user:password -d '{"host_ip
 Starts the cluster mechanisms on the current Cloudify Manager. If the `join_addrs`
 parameter is provided, joins an existing cluster, otherwise bootstraps a new
 cluster.
-When joining a cluster, the "credentials" parameter is required. To generate
-credentials for use by a new node, use the "Add cluster node" endpoint first.
+
+When starting a new cluster, the current Cloudify Manager will become the
+cluster leader.
+
+When joining a cluster, the current Cloudify Manager will join the cluster
+and become a replica.
+When joining, the "credentials" parameter is required. To generate
+it, first execute the "Add cluster node" API call with the current cluster
+leader.
 Only admin users can execute this operation.
+
 
 ### Request Body
 
@@ -310,9 +318,27 @@ $.ajax(settings).done(function (response) {
 
 `PUT "{manager-ip}/api/v3.1/cluster/nodes/{node-name}"`
 
-Adds a node to the cluster. This prepares the cluster for contacting the new node,
-runs validations and generates credentials for use by a new node. The received
-credentials are passed in the "Join cluster" ("Put Cluster State") API call.
+Adds a new node to the cluster. This API call must be made to the cluster
+leader prior to joining a new node to the cluster.
+
+This prepares the cluster for contacting the new node, runs validations
+and generates credentials for use by a new node.
+
+The received credentials must then be passed in the "Join cluster"
+("Put Cluster State") API call of the Manager that is joining the cluster.
+
+
+### Request Body
+
+Property | Type | Description
+-------- | ---- | -----------
+host_ip | string | The externally accessible IP of the node to be added.
+node_name | string | A unique name for the node to be added.
+
+
+### Response
+A `ClusterNode` resource representing the node that can now be joined to the
+cluster, with a `credentials` attribute.
 
 
 ## Delete Cluster Node

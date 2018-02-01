@@ -17,7 +17,7 @@ Attribute | Type | Description
 `key` | string | The secret's key, unique per tenant.
 `updated_at` | datetime | The time the secret was last updated at.
 `value` | string | The secret's value.
-`visibility` | string | Defines who can see the secret. Can be private, tenant or global.
+`visibility` | string | Defines who can see the secret. Can be private, tenant or global. **Supported for Cloudify Manager 4.3 and above.**
 
 ## List Secrets
 
@@ -232,7 +232,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `value` | string | The secret's value.
 `update_if_exists` | boolean | Update value if secret already exists (optional, defaults to false).
-`visibility` | string | Optional parameter, defines who can see the secret (default: tenant).
+`visibility` | string | Optional parameter, defines who can see the secret (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
 
 Valid visibility values are:
 
@@ -438,7 +438,7 @@ response.json()
 `PATCH "{manager_ip}/api/v3.1/secrets/{secret_key}/set-global"`
 
 Set the secret's visibility to global.
-Will be deprecated soon. Use 'set-visibility' instead.
+Will be deprecated soon. For Cloudify Manager 4.3 and above, use 'set-visibility'.
 
 ### URI Parameters
 * `secret_key`: The key of the secret to update.
@@ -484,7 +484,7 @@ client.secrets.set_visibility('<secret-key>', '<visibility>')
 
 `PATCH "<manager-ip>/api/v3.1/secrets/{secret-key}/set-visibility"`
 
-Update the visibility of the secret.
+Update the visibility of the secret. **Supported for Cloudify Manager 4.3 and above.**
 
 ### URI Parameters
 * `secret-key`: The key of the secret to update.

@@ -146,7 +146,7 @@ Property | Type | Description
 -------- | ---- | -----------
 `application_file_name` | string | The main blueprint file name in the blueprint's archive.
 `blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
-`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant).
+`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
 
 Valid visibility values are:
 
@@ -351,7 +351,7 @@ client.blueprints.set_global('<blueprint-id>')
 `PATCH "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/set-global"`
 
 Set the blueprint's visibility to global.
-Will be deprecated soon. Use 'set-visibility' instead.
+Will be deprecated soon. For Cloudify Manager 4.3 and above, use 'set-visibility'.
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to update.
@@ -399,7 +399,7 @@ client.blueprints.set_visibility('<blueprint-id>', '<visibility>')
 
 `PATCH "<manager-ip>/api/v3.1/blueprints/{blueprint-id}/set-visibility"`
 
-Update the visibility of the blueprint.
+Update the visibility of the blueprint. **Supported for Cloudify Manager 4.3 and above.**
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to update.

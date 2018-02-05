@@ -21,3 +21,4 @@ build/
 _yardoc
 doc/
 .idea/
+*.iml

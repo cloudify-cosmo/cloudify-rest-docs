@@ -4,7 +4,7 @@ Cloudify REST API Docs
 
 Cloudify's REST API documentation is based on [Slate](https://github.com/tripit/slate).
 
-The documentation is available at [api.getcloudify.org](http://docs.getcloudify.org/api).
+The documentation is available at [docs.cloudify.co/api](https://docs.cloudify.co/api).
 
 [![Circle CI](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs)
 

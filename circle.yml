@@ -1,6 +1,6 @@
 machine:
   hosts:
-    docs.getcloudify.org: 127.0.0.1
+    docs.cloudify.co: 127.0.0.1
   ruby:
     version:
       2.2.1

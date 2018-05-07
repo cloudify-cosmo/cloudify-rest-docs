@@ -1,4 +1,8 @@
 ﻿/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+@import url(//fonts.googleapis.com/css?family=Open+Sans);
+@import url(//fonts.googleapis.com/css?family=Podkova);
+@import url(//fonts.googleapis.com/css?family=Roboto);
+
 html{
     font-family:sans-serif;
     -ms-text-size-adjust:100%;
@@ -144,15 +148,16 @@ td,th{
     padding:0
 }
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6,html,body{
-    font-family:"Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
+    font-family:"Open Sans", Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
     font-size:13px
 }
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6{
-    font-weight:bold
+    font-weight:bold;
+    font-family:"Podkova"
 }
 .content code,.content pre{
-    font-family:Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-    font-size:12px;
+    font-family:"RobotoMono", Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+    font-size:10px;
     line-height:1.5
 }
 .content code{
@@ -231,7 +236,7 @@ html,body{
     width:230px;
     background-color:#393939;
     font-size:13px;
-    font-weight:bold
+    font-weight:normal
 }
 .tocify-wrapper .lang-selector{
     display:none
@@ -323,7 +328,7 @@ html,body{
     display:none;
     background-color:#262626;
     font-weight:500;
-    background:linear-gradient(to bottom, rgba(0,0,0,0.2), transparent 8px),linear-gradient(to top, rgba(0,0,0,0.2), transparent 8px),linear-gradient(to bottom, #000, transparent 1.5px),linear-gradient(to top, #939393, rgba(147,147,147,0) 1.5px),#262626
+    background:linear-gradient(to bottom, rgba(0,0,0,0.2), transparent 8px),linear-gradient(to top, rgba(0,0,0,0.2), transparent 8px),linear-gradient(to bottom, #000, transparent 1.5px),linear-gradient(to top, #939393, rgba(147,147,147,0) 1.5px),#000068
 }
 .tocify-wrapper .tocify-subheader .tocify-item>a{
     padding-left:25px;
@@ -538,7 +543,8 @@ html,body{
 }
 .content pre>code{
     background-color:transparent;
-    padding:0
+    padding:0;
+    color: #ffffff;
 }
 .content aside{
     padding-top:1em;
@@ -546,11 +552,12 @@ html,body{
     text-shadow:0 1px 0 #c6dde9;
     margin-top:1.5em;
     margin-bottom:1.5em;
-    background:#8fbcd4;
-    line-height:1.6
+    background:#29abe2;
+    line-height:1.6;
+    color: #ffffff
 }
 .content aside.warning{
-    background-color:#c97a7e;
+    background-color:#e72537;
     text-shadow:0 1px 0 #dfb0b3
 }
 .content aside.success{

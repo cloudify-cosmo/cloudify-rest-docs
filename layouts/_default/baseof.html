@@ -19,6 +19,7 @@
     <div class="tocify-wrapper">
         {{ partial "hook_left_sidebar_start.html" . }}
         {{ partial "hook_left_sidebar_logo.html" . }}
+        {{ partial "versions.html" . }}
         {{ with .Site.Params.language_tabs }}
         <div class="lang-selector">
             {{ range . }}
@@ -45,9 +46,6 @@
             {{ range . }}
             <li>{{ . | markdownify }}</li>
             {{ end}}
-            <li>
-                {{ partial "versions.html" . }}
-            </li>
         </ul>
         {{ end}}
         {{ partial "hook_left_sidebar_end.html" . }}

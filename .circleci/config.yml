@@ -29,6 +29,9 @@ jobs:
                     fi
                     echo ${LOCATION}
                     hugo -v --baseURL //docs.cloudify.co/api/$LOCATION
+            - run:
+                name: Show directory contents
+                command: echo ls
             - persist_to_workspace:
                 root: .
                 paths:

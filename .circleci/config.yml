@@ -28,7 +28,7 @@ jobs:
                         export LOCATION=staging/${CIRCLE_BRANCH} ;
                     fi
                     echo ${LOCATION}
-                    hugo -v --baseURL //docs.cloudify.co/api/$LOCATION
+                    hugo -v --baseURL //apidocs.cloudify.co/$LOCATION
             - run:
                 name: Show directory contents
                 command: echo ls
@@ -53,7 +53,7 @@ jobs:
                 name: Building site
                 command: |
                     export VERSION=${CIRCLE_BRANCH/-build/}
-                    HUGO_ENV=production hugo -v --baseURL //docs.cloudify.co/api/$VERSION
+                    HUGO_ENV=production hugo -v --baseURL //apidocs.cloudify.co/$VERSION
             - persist_to_workspace:
                 root: .
                 paths:
@@ -80,7 +80,7 @@ jobs:
                     else
                         export LOCATION=staging/${CIRCLE_BRANCH} ;
                     fi
-                    aws s3 sync public s3://docs.cloudify.co/api/$LOCATION --delete --acl public-read
+                    aws s3 sync public s3://apidocs.cloudify.co/$LOCATION --delete --acl public-read
 
     # Deploy for -build to push to /{version} without -build
     deploy-prod:
@@ -99,7 +99,7 @@ jobs:
                 name: Deploy to S3
                 command:  |
                     export VERSION=${CIRCLE_BRANCH/-build/}
-                    aws s3 sync public s3://docs.cloudify.co/api/$VERSION --delete --acl public-read
+                    aws s3 sync public s3://apidocs.cloudify.co/$VERSION --delete --acl public-read
 
 workflows:
   version: 2

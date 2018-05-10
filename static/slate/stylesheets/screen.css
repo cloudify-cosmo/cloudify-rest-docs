@@ -1,5 +1,5 @@
 ﻿/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
-@import url(//fonts.googleapis.com/css?family=Open+Sans);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600);
 @import url(//fonts.googleapis.com/css?family=Podkova);
 @import url(//fonts.googleapis.com/css?family=Roboto);
 
@@ -305,13 +305,13 @@ html,body{
     display:block;
     overflow-x:hidden;
     white-space:nowrap;
-    text-overflow:ellipsis
+    text-overflow:ellipsis;
 }
 .tocify-wrapper ul,.tocify-wrapper li{
     list-style:none;
     margin:0;
     padding:0;
-    line-height:28px
+    line-height:2.5rem;
 }
 .tocify-wrapper li{
     color:#fff;
@@ -323,6 +323,9 @@ html,body{
     box-shadow:0px 1px 0px #000;
     background-color:#29abe2;
     color:#fff
+}
+.tocify-wrapper .tocify-header{
+    font-weight: 600
 }
 .tocify-wrapper .tocify-subheader{
     display:none;

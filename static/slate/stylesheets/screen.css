@@ -149,7 +149,7 @@ td,th{
 }
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6,html,body{
     font-family:"Open Sans", Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
-    font-size:13px
+    font-size:14px
 }
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6{
     font-weight:bold;
@@ -157,7 +157,6 @@ td,th{
 }
 .content code,.content pre{
     font-family:"RobotoMono", Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-    font-size:10px;
     line-height:1.5
 }
 .content code{

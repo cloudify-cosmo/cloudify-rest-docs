@@ -412,7 +412,6 @@ html,body{
 .lang-selector{
     background-color:#222;
     width:100%;
-    font: weight 600
 }
 .lang-selector a{
     display:block;
@@ -421,7 +420,8 @@ html,body{
     text-decoration:none;
     padding:0 10px;
     line-height:30px;
-    outline:0
+    outline:0;
+    font-weight: 600
 }
 .lang-selector a:active,.lang-selector a:focus{
     background-color:#111;

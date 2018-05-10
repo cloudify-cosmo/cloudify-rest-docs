@@ -412,7 +412,7 @@ html,body{
 .lang-selector{
     background-color:#222;
     width:100%;
-    font-weight:bold
+    font: weight 600
 }
 .lang-selector a{
     display:block;

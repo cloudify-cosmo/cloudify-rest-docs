@@ -2,23 +2,41 @@
 Cloudify REST API Docs
 ======================
 
-Cloudify's REST API documentation is based on [Slate](https://github.com/tripit/slate).
+Cloudify's REST API documentation is built with [Hugo](https://gohugo.io/) and is based on the [DocuAPI](https://github.com/bep/docuapi) theme and [Slate](https://github.com/tripit/slate).
 
-The documentation is available at [api.getcloudify.org](http://docs.getcloudify.org/api).
+The documentation is available in the [Cloudify Documentation Center](https://docs.cloudify.co/latest/developer/apis/rest-service/).
 
 [![Circle CI](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs)
 
-# Installation
+# Installing the Cloudify Documentation Center
 
-* Clone this repository.
-* Make sure you have `ruby` in your path with `bundler` installed (gem install bundler).
-* Install ruby-dev
-* Run `bundler install` from the cloudify-rest-docs root to install the necessary dependencies.
+To run the Cloudify Documentation Center locally:
 
-# Running A Local Server
+1. Install the latest Hugo:
 
-Run: `bundle exec middleman server`
+    * On CentOS:
 
-The documentation will be available at: http://localhost:4567/
+        1. Install the copr plugin for yum: `sudo yum install yum-plugin-copr`
+        1. Enable the Hugo repository: `sudo yum copr enable daftaupe/hugo`
+        1. Install Hugo: `sudo yum install hugo`
 
-The middleman server is automatically watching for changes.
+    * On Ubuntu:
+    
+        * Install Hugo: `sudo apt-get install hugo`
+
+    * On Windows:
+
+        1. Install [chocolatey](https://chocolatey.org/install).
+        1. Install Hugo: `choco install hugo -confirm`
+        
+    * On MacOS:
+
+        1. Install [homebrew](https://brew.sh/)
+        2. Install Hugo: `brew install hugo`
+
+1. Verify that Hugo is installed: `hugo version`
+1. Clone this repository to your local host.
+1. Change directory to the cloudify-rest-docs directory.
+1. Start the hugo web server: `hugo server`
+
+To access the site, go to: http://localhost:1313

@@ -6,7 +6,7 @@ Cloudify's REST API documentation is built with [Hugo](https://gohugo.io/) and i
 
 The documentation is available in the [Cloudify Documentation Center](https://docs.cloudify.co/latest/developer/apis/rest-service/).
 
-[![Circle CI](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs.svg?style=svg)](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs)
+[![CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs/tree/master.svg?style=shield)](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs/tree/master)
 
 # Installing the Cloudify Documentation Center
 

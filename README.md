@@ -2,9 +2,9 @@
 Cloudify REST API Docs
 ======================
 
-Cloudify's REST API documentation is built with [Hugo](https://gohugo.io/) and is based on the [DocuAPI](https://github.com/bep/docuapi) theme and [Slate](https://github.com/tripit/slate).
+The Cloudify REST API documentation is built with [Hugo](https://gohugo.io/) and is based on the [DocuAPI](https://github.com/bep/docuapi) theme and [Slate](https://github.com/tripit/slate).
 
-The documentation is available in the [Cloudify Documentation Center](https://docs.cloudify.co/latest/developer/apis/rest-service/).
+The documentation is available in the [REST API section](https://docs.cloudify.co/latest/developer/apis/rest-service/) of the [Cloudify Documentation Center](https://docs.cloudify.co/).
 
 [![CircleCI](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs/tree/master.svg?style=shield)](https://circleci.com/gh/cloudify-cosmo/cloudify-rest-docs/tree/master)
 
@@ -40,3 +40,9 @@ To run the Cloudify Documentation Center locally:
 1. Start the hugo web server: `hugo server`
 
 To access the site, go to: http://localhost:1313
+
+# Publishing
+
+The documentation for the latest version of the REST API is published from the master branch to `https://docs.cloudify.co/api/v<latest_version>/`.
+
+The documentation for older version of the REST API is published from the version branch to `https://docs.cloudify.co/api/v<version>/`.

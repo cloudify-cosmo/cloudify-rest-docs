@@ -8,6 +8,7 @@ Attribute | Type | Description
 --------- | ------- | -------
 `blueprint_id` | string | The id of the blueprint the execution is in the context of.
 `created_at` | datetime | The time the execution was queued at.
+`ended_at` | datetime | The time the execution ended in successful, failed or cancelled state. **Supported for Cloudify Manager 4.4 and above.**
 `created_by` | string | The name of the user that created the execution.
 `deployment_id` | string | The id of the deployment the execution is in the context of.
 `error` | string | The execution's error message on execution failure.

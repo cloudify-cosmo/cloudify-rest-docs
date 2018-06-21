@@ -351,3 +351,129 @@ The visibility value must be `tenant` because global visibility is not allowed.
 
 ### Response
 A `Deployment` resource.
+
+
+## Update Deployment
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>"}' \
+    "http://<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"
+```
+
+```python
+# Python Client
+client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_install>", skip_uninstall="<skip_uninstall>", skip_reinstall="<skip_reinstall>", force="<force>", ignore_failure="<ignore_failure>", install_first="<install_first>", blueprint_id="<blueprint_id>", inputs="<inputs>", reinstall_list="<reinstall_list>")
+```
+
+> Response Example
+
+```json
+{
+  TODO - DeploymentUpdate object response
+}
+
+```
+
+`PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
+
+Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`visibility` | string | Defines who can see the deployment. (Required)
+`skip_install` | boolean | Determines whether to skip install workflow
+`skip_reinstall` | boolean | Determines whether to skip reinstall for nodes whos properties changed
+`force` | boolean | Force running update even if previous update failed
+`ignore_failure` | boolean | Pass ignore-failures to uninstall workflow
+`install_first` | boolean | Execute install workflow first, then uninstall workflow
+`inputs` | object | Dictionary containing inputs to update in the deployment
+`reinstall_list` | object | List of nodes instances IDs to reinstall
+
+
+### Response
+A `Deployment Update` resource.
+
+
+## The Deployment Update Resource
+
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | A unique identifier for the deployment update.
+`deployment_id` | string | The id of the deployment.
+`old_blueprint_id` | string | The id of the deployment's blueprint before the update.
+`new_blueprint_id` | string | The id of the deployment's blueprint after the update.
+`old_inputs` | string | The inputs of the deployment before the update.
+`new_inputs` | string | The inputs of the deployment after the update.
+
+
+## List Deployment Updates
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployment-updates?_include=id"
+```
+
+```python
+# Using CloudifyClient
+deployment_updates = client.deployment_updates.list(
+        sort=sort_by,
+        is_descending=descending,
+        _all_tenants=all_tenants,
+        _search=search,
+        _offset=pagination_offset,
+        _size=pagination_size,
+        deployment_id=deployment_id
+    )
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "update1"
+    },
+    {
+      "id": "update2"
+    },
+    {
+      "id": "update3"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3.1/deployments"`
+
+Lists deployment updates.
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of `Deployment Update` resources.

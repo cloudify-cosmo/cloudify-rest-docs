@@ -470,7 +470,7 @@ deployment_updates = client.deployment_updates.list(
 
 `GET "{manager-ip}/api/v3.1/deployments"`
 
-Lists deployment updates.
+Lists deployment updates. **Supported for Cloudify Manager 4.4 and above.**
 
 ### Response
 

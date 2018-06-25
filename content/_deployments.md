@@ -353,6 +353,34 @@ The visibility value must be `tenant` because global visibility is not allowed.
 A `Deployment` resource.
 
 
+## The Deployment Update Resource
+
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | A unique identifier for the deployment update.
+`deployment_id` | string | The id of the deployment.
+`old_blueprint_id` | string | The id of the deployment's blueprint before the update.
+`new_blueprint_id` | string | The id of the deployment's blueprint after the update.
+`old_inputs` | string | The inputs of the deployment before the update.
+`new_inputs` | string | The inputs of the deployment after the update.
+`state` | string | The state of this update (successful, failed, updating, etc...).
+`tenant_name` | string | The name of the tenant the deployment belongs to.
+`created_at` | datetime | The time when the deployment update was started.
+`created_by` | string | The name of the user that started the deployment update.
+`execution_id` | string | The id of the execution performing the update.
+`private_resource` | boolean | Is the deployment private.
+`visibility` | string | The visibility of the deployment.
+`resource_availability` | string | The availability of the deployment.
+`deployment_update_nodes` | object | The list of the nodes in the deployment update.
+`deployment_update_node_instances` | object | A dict containing the node instances in the deployment update.
+`modified_entity_ids` | object | A dict containing the modified entities.
+`steps` | object | The list of deployment update steps.
+`deployment_plan` | object | A dict of the deployment plan.
+`deployment_update_deployment` | object | A dict of the raw deployment.
+
+
 ## Update Deployment
 
 > Request Example
@@ -441,32 +469,72 @@ Property | Type | Description
 A `Deployment Update` resource.
 
 
-## The Deployment Update Resource
+## Get Deployment-Update
 
-### Attributes:
+> Request Example
 
-Attribute | Type | Description
---------- | ------- | -------
-`id` | string | A unique identifier for the deployment update.
-`deployment_id` | string | The id of the deployment.
-`old_blueprint_id` | string | The id of the deployment's blueprint before the update.
-`new_blueprint_id` | string | The id of the deployment's blueprint after the update.
-`old_inputs` | string | The inputs of the deployment before the update.
-`new_inputs` | string | The inputs of the deployment after the update.
-`state` | string | The state of this update (successful, failed, updating, etc...).
-`tenant_name` | string | The name of the tenant the deployment belongs to.
-`created_at` | datetime | The time when the deployment update was started.
-`created_by` | string | The name of the user that started the deployment update.
-`execution_id` | string | The id of the execution performing the update.
-`private_resource` | boolean | Is the deployment private.
-`visibility` | string | The visibility of the deployment.
-`resource_availability` | string | The availability of the deployment.
-`deployment_update_nodes` | object | The list of the nodes in the deployment update.
-`deployment_update_node_instances` | object | A dict containing the node instances in the deployment update.
-`modified_entity_ids` | object | A dict containing the modified entities.
-`steps` | object | The list of deployment update steps.
-`deployment_plan` | object | A dict of the deployment plan.
-`deployment_update_deployment` | object | A dict of the raw deployment.
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployment-updates/<deployment-update-id>?_include=id"
+```
+
+```python
+# Using CloudifyClient
+deployment_update = client.deployment_updates.get(update_id)
+```
+
+> Response Example
+
+```json
+{
+  "old_inputs": {
+    ...
+  },
+  "new_inputs": {
+    ...
+  },
+  "state": "successful",
+  "deployment_id": "deployment_1",
+  "old_blueprint_id": "blueprint_1",
+  "new_blueprint_id": "blueprint_2",
+  "steps": [
+    ...
+  ],
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "created_by": "admin",
+  "execution_id": "f92754a0-4cf4-4baa-80d3-0602f03f2b91",
+  "deployment_update_deployment": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "resource_availability": "tenant",
+  "modified_entity_ids": {
+    ...
+  },
+  "deployment_plan": {
+    ...
+  },
+  "id": "deployment_1-b22cd6b3-6dc1-4215-b9c0-404155eea939",
+  "deployment_update_node_instances": {
+    ...
+  }
+  "deployment_update_nodes": [
+    ...
+  ]
+}
+
+```
+
+`GET "{manager-ip}/api/v3.1/deployment-updates/<deployment-update-id>"`
+
+Get a deployment update. **Supported for Cloudify Manager 4.4 and above.**
+
+### Response
+A `Deployment Update` resource.
 
 
 ## List Deployment Updates
@@ -518,7 +586,7 @@ deployment_updates = client.deployment_updates.list(
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/deployments"`
+`GET "{manager-ip}/api/v3.1/deployment-updates"`
 
 Lists deployment updates. **Supported for Cloudify Manager 4.4 and above.**
 

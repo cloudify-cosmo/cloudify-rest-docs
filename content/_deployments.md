@@ -351,3 +351,247 @@ The visibility value must be `tenant` because global visibility is not allowed.
 
 ### Response
 A `Deployment` resource.
+
+
+## The Deployment Update Resource
+
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | A unique identifier for the deployment update.
+`deployment_id` | string | The id of the deployment.
+`old_blueprint_id` | string | The id of the deployment's blueprint before the update.
+`new_blueprint_id` | string | The id of the deployment's blueprint after the update.
+`old_inputs` | string | The inputs of the deployment before the update.
+`new_inputs` | string | The inputs of the deployment after the update.
+`state` | string | The state of this update (successful, failed, updating, etc...).
+`tenant_name` | string | The name of the tenant the deployment belongs to.
+`created_at` | datetime | The time when the deployment update was started.
+`created_by` | string | The name of the user that started the deployment update.
+`execution_id` | string | The id of the execution performing the update.
+`private_resource` | boolean | Is the deployment private.
+`visibility` | string | The visibility of the deployment.
+`resource_availability` | string | The availability of the deployment.
+`deployment_update_nodes` | object | The list of the nodes in the deployment update.
+`deployment_update_node_instances` | object | A dict containing the node instances in the deployment update.
+`modified_entity_ids` | object | A dict containing the modified entities.
+`steps` | object | The list of deployment update steps.
+`deployment_plan` | object | A dict of the deployment plan.
+`deployment_update_deployment` | object | A dict of the raw deployment.
+
+
+## Update Deployment
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>"}' \
+    "http://<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"
+```
+
+```python
+# Python Client
+client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_install>", skip_uninstall="<skip_uninstall>", skip_reinstall="<skip_reinstall>", force="<force>", ignore_failure="<ignore_failure>", install_first="<install_first>", blueprint_id="<blueprint_id>", inputs="<inputs>", reinstall_list="<reinstall_list>")
+```
+
+> Response Example
+
+```json
+{
+  "old_inputs": {
+    ...
+  },
+  "new_inputs": {
+    ...
+  },
+  "state": "successful",
+  "deployment_id": "deployment_1",
+  "old_blueprint_id": "blueprint_1",
+  "new_blueprint_id": "blueprint_2",
+  "steps": [
+    ...
+  ],
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "created_by": "admin",
+  "execution_id": "f92754a0-4cf4-4baa-80d3-0602f03f2b91",
+  "deployment_update_deployment": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "resource_availability": "tenant",
+  "modified_entity_ids": {
+    ...
+  },
+  "deployment_plan": {
+    ...
+  },
+  "id": "deployment_1-b22cd6b3-6dc1-4215-b9c0-404155eea939",
+  "deployment_update_node_instances": {
+    ...
+  }
+  "deployment_update_nodes": [
+    ...
+  ]
+}
+
+```
+
+`PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
+
+Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`blueprint_id` | string | The id of the blueprint to use for the update
+`skip_install` | boolean | Determines whether to skip installing node instances in update workflow
+`skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
+`skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
+`force` | boolean | Force running update even if previous update failed
+`ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
+`install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
+`inputs` | object | Dictionary containing inputs to update in the deployment
+`reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
+
+
+### Response
+A `Deployment Update` resource.
+
+
+## Get Deployment-Update
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployment-updates/<deployment-update-id>?_include=id"
+```
+
+```python
+# Using CloudifyClient
+deployment_update = client.deployment_updates.get(update_id)
+```
+
+> Response Example
+
+```json
+{
+  "old_inputs": {
+    ...
+  },
+  "new_inputs": {
+    ...
+  },
+  "state": "successful",
+  "deployment_id": "deployment_1",
+  "old_blueprint_id": "blueprint_1",
+  "new_blueprint_id": "blueprint_2",
+  "steps": [
+    ...
+  ],
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "created_by": "admin",
+  "execution_id": "f92754a0-4cf4-4baa-80d3-0602f03f2b91",
+  "deployment_update_deployment": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "resource_availability": "tenant",
+  "modified_entity_ids": {
+    ...
+  },
+  "deployment_plan": {
+    ...
+  },
+  "id": "deployment_1-b22cd6b3-6dc1-4215-b9c0-404155eea939",
+  "deployment_update_node_instances": {
+    ...
+  }
+  "deployment_update_nodes": [
+    ...
+  ]
+}
+
+```
+
+`GET "{manager-ip}/api/v3.1/deployment-updates/<deployment-update-id>"`
+
+Get a deployment update. **Supported for Cloudify Manager 4.4 and above.**
+
+### Response
+A `Deployment Update` resource.
+
+
+## List Deployment Updates
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployment-updates?_include=id"
+```
+
+```python
+# Using CloudifyClient
+deployment_updates = client.deployment_updates.list(
+        sort=sort_by,
+        is_descending=descending,
+        _all_tenants=all_tenants,
+        _search=search,
+        _offset=pagination_offset,
+        _size=pagination_size,
+        deployment_id=deployment_id
+    )
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "update1"
+    },
+    {
+      "id": "update2"
+    },
+    {
+      "id": "update3"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3.1/deployment-updates"`
+
+Lists deployment updates. **Supported for Cloudify Manager 4.4 and above.**
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of `Deployment Update` resources.

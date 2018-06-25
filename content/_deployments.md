@@ -375,7 +375,42 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
 
 ```json
 {
-  TODO - DeploymentUpdate object response
+  "old_inputs": {
+    ...
+  },
+  "new_inputs": {
+    ...
+  },
+  "state": "successful",
+  "deployment_id": "deployment_1",
+  "old_blueprint_id": "blueprint_1",
+  "new_blueprint_id": "blueprint_2",
+  "steps": {
+    ...
+  },
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "created_by": "admin",
+  "execution_id": "2017-12-17T09:29:20.750Z",
+  "deployment_update_deployment": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "resource_availability": "tenant",
+  "modified_entity_ids": {
+    ...
+  },
+  "deployment_plan": {
+    ...
+  },
+  "id": "deployment_1-b22cd6b3-6dc1-4215-b9c0-404155eea939",
+  "deployment_update_node_instances": {
+    ...
+  }
+  "deployment_update_nodes": {
+    ...
+  }
 }
 
 ```

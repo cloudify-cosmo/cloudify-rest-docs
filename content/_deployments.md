@@ -385,13 +385,13 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
   "deployment_id": "deployment_1",
   "old_blueprint_id": "blueprint_1",
   "new_blueprint_id": "blueprint_2",
-  "steps": {
+  "steps": [
     ...
-  },
+  ],
   "tenant_name": "default_tenant",
   "created_at": "2017-12-17T09:28:22.800Z",
   "created_by": "admin",
-  "execution_id": "2017-12-17T09:29:20.750Z",
+  "execution_id": "f92754a0-4cf4-4baa-80d3-0602f03f2b91",
   "deployment_update_deployment": {
     ...
   },
@@ -408,9 +408,9 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
   "deployment_update_node_instances": {
     ...
   }
-  "deployment_update_nodes": {
+  "deployment_update_nodes": [
     ...
-  }
+  ]
 }
 
 ```
@@ -426,14 +426,15 @@ Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
 
 Property | Type | Description
 --------- | ------- | -----------
-`visibility` | string | Defines who can see the deployment. (Required)
-`skip_install` | boolean | Determines whether to skip install workflow
-`skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties are modified in the deployment update
+`blueprint_id` | string | The id of the blueprint to use for the update
+`skip_install` | boolean | Determines whether to skip installing node instances in update workflow
+`skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
+`skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
 `force` | boolean | Force running update even if previous update failed
-`ignore_failure` | boolean | Pass ignore-failures to uninstall workflow
-`install_first` | boolean | Execute install workflow first, then uninstall workflow
+`ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
+`install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
 `inputs` | object | Dictionary containing inputs to update in the deployment
-`reinstall_list` | object | List of IDs for node instances to reinstall
+`reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
 
 
 ### Response
@@ -452,6 +453,20 @@ Attribute | Type | Description
 `new_blueprint_id` | string | The id of the deployment's blueprint after the update.
 `old_inputs` | string | The inputs of the deployment before the update.
 `new_inputs` | string | The inputs of the deployment after the update.
+`state` | string | The state of this update (successful, failed, updating, etc...).
+`tenant_name` | string | The name of the tenant the deployment belongs to.
+`created_at` | datetime | The time when the deployment update was started.
+`created_by` | string | The name of the user that started the deployment update.
+`execution_id` | string | The id of the execution performing the update.
+`private_resource` | boolean | Is the deployment private.
+`visibility` | string | The visibility of the deployment.
+`resource_availability` | string | The availability of the deployment.
+`deployment_update_nodes` | object | The list of the nodes in the deployment update.
+`deployment_update_node_instances` | object | A dict containing the node instances in the deployment update.
+`modified_entity_ids` | object | A dict containing the modified entities.
+`steps` | object | The list of deployment update steps.
+`deployment_plan` | object | A dict of the deployment plan.
+`deployment_update_deployment` | object | A dict of the raw deployment.
 
 
 ## List Deployment Updates

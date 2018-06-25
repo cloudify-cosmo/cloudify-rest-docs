@@ -393,12 +393,12 @@ Property | Type | Description
 --------- | ------- | -----------
 `visibility` | string | Defines who can see the deployment. (Required)
 `skip_install` | boolean | Determines whether to skip install workflow
-`skip_reinstall` | boolean | Determines whether to skip reinstall for nodes whos properties changed
+`skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties are modified in the deployment update
 `force` | boolean | Force running update even if previous update failed
 `ignore_failure` | boolean | Pass ignore-failures to uninstall workflow
 `install_first` | boolean | Execute install workflow first, then uninstall workflow
 `inputs` | object | Dictionary containing inputs to update in the deployment
-`reinstall_list` | object | List of nodes instances IDs to reinstall
+`reinstall_list` | object | List of IDs for node instances to reinstall
 
 
 ### Response

@@ -165,6 +165,7 @@ Property | Type | Description
 `include_credentials` | string | Specifies whether agent SSH keys (including those specified in uploaded blueprints) should be included in the created snapshot (Default: false).
 `include_logs` | string | Specifies whether logs should be included in the created snapshot (Default: true). **Supported for Cloudify Manager 4.3 and above.**
 `include_events` | string | Specifies whether events should be included in the created snapshot (Default: true). **Supported for Cloudify Manager 4.3 and above.**
+`queue` | boolean | If set, snapshot-creation-workflow that can`t currently run will be queued and run automatically when possible. **Supported for Cloudify Manager 4.5 and above.**
 
 ### Response
 An [Execution](#the-execution-resource) resource representing the create snapshot workflow execution.

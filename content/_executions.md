@@ -18,6 +18,7 @@ Attribute | Type | Description
 `status` | string | The executions status.
 `tenant_name` | string | The name of the tenant that owns the execution.
 `workflow_id` | string | The id/name of the workflow the execution is of.
+`started_at` | datetime | The time the execution was started at. **Supported for Cloudify Manager 4.5 and above.**
 
 
 ## List Executions
@@ -188,6 +189,7 @@ Property | Type | Description
 `allow_custom_parameters` | boolean | Specifies whether to allow custom parameters, which are not present in the parameters schema of the workflow, to be passed when starting the execution (default=false).
 `parameters` | object | A dictionary containing parameters to be passed to the execution when starting it.
 `force` | boolean | Specifies whether to force the workflow execution in a case where there is already a running execution in the context of the same deployment or system wide workflow (default=false).
+`queue` | boolean | If set, executions that can`t currently run will be queued and run automatically when possible. **Supported for Cloudify Manager 4.5 and above.**
 
 ### Response
 An `Execution` resource.

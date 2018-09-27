@@ -60,7 +60,7 @@ you can use the `default_tenant` as the tenant for the request.
 * `<manager-username>`: Replace with a username for the Cloudify Manager instance username
 * `<manager-password>`: Replace with the password for the user specified in <manager-username>
 * `<manager-tenant>`: Replace with the tenant on which to perform the request
-* `<manager-token>`: Replace with a token obtained using the tokens endpoint (see the [athentication](#authentication) section)
+* `<manager-token>`: Replace with a token obtained using the tokens endpoint (see the [authentication](#authentication) section)
 
 ## Response Fields Filtering (Projection)
 

@@ -52,25 +52,25 @@ response.json()
 > Response Example
 ```json
 {
-	"items": [
-		{
-			"node": "x",
-			"ip": "127.0.0.1",
-			"system": "centos core",
-			"install_method": "remote",
-			"version": "4.5.0",
-			"deployment": "d4",
-			"host_id": "x_asa5b3",
-			"id": "x_asa5b3"
-		}
-	],
-	"metadata": {
-		"pagination": {
-			"total": 1,
-			"offset": 0,
-			"size": 1
-		}
-	}
+    "items": [
+        {
+            "node": "x",
+            "ip": "127.0.0.1",
+            "system": "centos core",
+            "install_method": "remote",
+            "version": "4.5.0",
+            "deployment": "d4",
+            "host_id": "x_asa5b3",
+            "id": "x_asa5b3"
+        }
+    ],
+    "metadata": {
+        "pagination": {
+            "total": 1,
+            "offset": 0,
+            "size": 1
+        }
+    }
 }
 ```
 

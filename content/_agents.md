@@ -1,5 +1,7 @@
 # Agents
 
+**Supported for Cloudify Manager 4.5 and above.**
+
 ## The Agents Resource
 
 This resource represents a Cloudify Agent, and is used for examining the details

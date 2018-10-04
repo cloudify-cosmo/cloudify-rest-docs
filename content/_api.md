@@ -1,3 +1,7 @@
+---
+weight: 1000
+---
+
 # Cloudify REST API V3.1
 
 > Basic usage

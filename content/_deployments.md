@@ -14,6 +14,7 @@ Attribute | Type | Description
 `id` | string | A unique identifier for the deployment.
 `inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `outputs` | object | A dictionary containing an outputs definition of a deployment.
+`capabilities` | object | A dictionary containing an capabilities definition of a deployment.
 `policy_triggers` | object | A dictionary containing policy triggers of a deployment.
 `policy_types` | object | A dictionary containing policies of a deployment.
 `tenant_name` | string | The name of the tenant that owns the deployment.
@@ -595,3 +596,101 @@ Lists deployment updates. **Supported for Cloudify Manager 4.4 and above.**
 Field | Type | Description
 --------- | ------- | -------
 `items` | list | A list of `Deployment Update` resources.
+
+## Get Deployment Outputs
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>/outputs"
+```
+
+```python
+# Using CloudifyClient
+client.deployments.outputs.get(deployment_id='<deployment-id>')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/<deployment-id>/outputs'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "deployment_id": "dep", 
+  "outputs": {
+    "output_1": "node_vbs4o4",
+    "output_2": "some_value"
+  }
+}
+```
+
+
+`GET "{manager-ip}/api/v3.1/deployments/{deployment-id}/outputs"`
+
+Gets deployment outputs.
+
+### URI Parameters
+* `deployment-id`: The id of the deployment.
+
+### Response
+A `DeploymentOutput` resource.
+
+## Get Deployment Capabilities
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>/capabilities"
+```
+
+```python
+# Using CloudifyClient
+client.deployments.capabilities.get(deployment_id='<deployment-id>')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/<deployment-id>/capabilities'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "deployment_id": "dep", 
+  "capabilities": {
+    "capability_1": "node_vbs4o4",
+    "capability_2": "some_capability"
+  }
+}
+```
+
+
+`GET "{manager-ip}/api/v3.1/deployments/{deployment-id}/capabilities"`
+
+Gets deployment capabilities.
+
+### URI Parameters
+* `deployment-id`: The id of the deployment.
+
+### Response
+A `DeploymentOutput` resource.

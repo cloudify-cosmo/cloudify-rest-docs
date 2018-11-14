@@ -221,6 +221,10 @@ Valid visibility values are:
 
 * `private`: The resource is visible to the user that created the resource, the tenant’s managers and the system’s admins.
 * `tenant`: The resource is visible to all users in the current tenant. (Default value)
+* `global`: The resource is visible to all users in all tenants across the manager.
+A deployment can only be global if the blueprint from which it was created is 
+also global. Only administrators or users with access to the tenant on which
+the deployment was created have permissions to execute workflow on it. **Supported for Cloudify Manager 4.5.5 and above.**
 
 ### Response
 A `Deployment` resource.
@@ -348,7 +352,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `visibility` | string | Defines who can see the deployment. (Required)
 
-The visibility value must be `tenant` because global visibility is not allowed.
+Valid values are `tenant` or `global`. **`global` is supported for Cloudify Manager 4.5.5 and above.**
 
 ### Response
 A `Deployment` resource.

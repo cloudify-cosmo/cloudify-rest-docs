@@ -14,7 +14,7 @@ Attribute | Type | Description
 `id` | string | A unique identifier for the deployment.
 `inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `outputs` | object | A dictionary containing an outputs definition of a deployment.
-`capabilities` | object | A dictionary containing an capabilities definition of a deployment.
+`capabilities` | object | A dictionary containing an capabilities definition of a deployment. **Supported for Cloudify Manager 4.5.5 and above.**
 `policy_triggers` | object | A dictionary containing policy triggers of a deployment.
 `policy_types` | object | A dictionary containing policies of a deployment.
 `tenant_name` | string | The name of the tenant that owns the deployment.
@@ -687,7 +687,7 @@ response.json()
 
 `GET "{manager-ip}/api/v3.1/deployments/{deployment-id}/capabilities"`
 
-Gets deployment capabilities.
+Gets deployment capabilities. **Supported for Cloudify Manager 4.5.5 and above.**
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.

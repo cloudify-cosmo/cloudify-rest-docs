@@ -231,15 +231,15 @@ Field | Type | Description
 $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "<manager-ip>/blueprints/<blueprint-id>"
+    "<manager-ip>/blueprints/<blueprint-id>?force=false"
 ```
 
 ```python
 # Using CloudifyClient
-client.blueprints.delete(blueprint_id='<blueprint-id>')
+client.blueprints.delete(blueprint_id='<blueprint-id>', force=False)
 
 # Using requests
-url = 'http://<manager-ip>/ap/v3.1/blueprints/<blueprint-id>'
+url = 'http://<manager-ip>/ap/v3.1/blueprints/<blueprint-id>?force=false'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.delete(
     url,
@@ -270,9 +270,11 @@ response.json()
 
 Deletes a specific blueprint.
 
-
 ### URI Parameters
-* `blueprint-id`: The id of the blueprint to delete.
+Property | Type | Description
+--------- | ------- | -----------
+`blueprint_id` | string | The id of the blueprint to delete.
+`force` | bool | Delete the blueprint, even if there are blueprints that are currently using it. **Supported for Cloudify Manager 4.5.5 and above.**
 
 ### Response
 A `Blueprint` resource.

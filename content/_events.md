@@ -171,9 +171,12 @@ Allowed filters:
 - `blueprint_id`
 - `deployment_id`
 - `execution_id`
+- `node_id` (from 4.5.5)
+- `node_instance_id` (from 4.5.5)
 - `event_type` (only returns `cloudify-event` items)
 - `level` (only returns `cloudify-log` items)
 - `message`([SQL's LIKE style pattern expected](https://www.postgresql.org/docs/9.5/static/functions-matching.html#FUNCTIONS-LIKE))
+- `operation`([SQL's LIKE style pattern expected](https://www.postgresql.org/docs/9.5/static/functions-matching.html#FUNCTIONS-LIKE)) (from 4.5.5)
 
 Multiple filters can be passed in the same request:
 

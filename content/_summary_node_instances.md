@@ -6,7 +6,8 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`_target_field` | string | The field to generate a summary on. Valid: deployment_id, node_id
+`_target_field` | string | The field to generate a summary on. Valid: deployment_id, node_id, host_id, state, tenant_name, visibility
+`_sub_field` | string | Optional sub-field to summarise on. Valid fields are identical to those for `_target_field`.
 
 All attributes for filtering node instances are also supported, e.g. filtering by `deployment_id`.
 See Node Instance documentation for details.
@@ -21,6 +22,15 @@ $ curl -X GET \
     -u <manager-username>:<manager-password> \
     "http://<manager-ip>/api/v3.1/summary/node_instances?_target_field=deployment_id"
 ```
+
+With sub-field:
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/summary/node_instances?_target_field=node_id&_sub_field=state"
+```
+
 
 ```python
 # Using CloudifyClient
@@ -79,18 +89,83 @@ response.json()
     "pagination": {
       "total": 7,
       "offset": 0,
-      "size": 0
+      "size": 1000
     }
   }
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/summary/node_instances?_target_field={target-field}"`
+With sub-field:
+```json
+{
+  "items": [
+    {
+      "by state": [
+        {
+          "node_instances": 42,
+          "state": "started"
+        }
+      ],
+      "node_id": "fakeapp1",
+      "node_instances": 42
+    },
+    {
+      "by state": [
+        {
+          "node_instances": 84,
+          "state": "started"
+        }
+      ],
+      "node_id": "fakevm2",
+      "node_instances": 84
+    },
+    {
+      "by state": [
+        {
+          "node_instances": 3,
+          "state": "started"
+        }
+      ],
+      "node_id": "fakeplatformthing1",
+      "node_instances": 3
+    },
+    {
+      "by state": [
+        {
+          "node_instances": 66,
+          "state": "started"
+        }
+      ],
+      "node_id": "fakevm",
+      "node_instances": 66
+    },
+    {
+      "by state": [
+        {
+          "node_instances": 3,
+          "state": "started"
+        }
+      ],
+      "node_id": "fakeappconfig1",
+      "node_instances": 3
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "offset": 0,
+      "size": 1000,
+      "total": 5
+    }
+  }
+}
+```
 
-Get a summary of node instances based on the target field.
+`GET "{manager-ip}/api/v3.1/summary/node_instances?_target_field={target-field}&_sub_field={optional sub-field}"`
+
+Get a summary of node instances based on the target field and optional sub-field.
 
 ### Response
 
 Field | Type | Description
 --------- | ------- | -------
-`items` | list | A list of node instance summaries based on the target field.
+`items` | list | A list of node instance summaries based on the target field and optional sub-field.

@@ -23,7 +23,8 @@ $ curl -X GET \
     "http://<manager-ip>/api/v3.1/summary/blueprints?_target_field=tenant_name&_all_tenants=true"
 ```
 
-With sub-field:
+> With sub-field
+
 ```shell
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
@@ -78,7 +79,8 @@ response.json()
 }
 ```
 
-With sub-field:
+> With sub-field
+
 ```json
 {
   "items": [

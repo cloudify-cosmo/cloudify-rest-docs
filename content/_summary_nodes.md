@@ -23,7 +23,8 @@ $ curl -X GET \
     "http://<manager-ip>/api/v3.1/summary/nodes?_target_field=deployment_id"
 ```
 
-With sub-field:
+> With sub-field
+
 ```shell
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
@@ -31,7 +32,6 @@ $ curl -X GET \
     "http://<manager-ip>/api/v3.1/summary/nodes?_target_field=tenant_name&_sub_field=deployment_id&_all_tenants=true"
 ```
 
-With sub-field
 ```python
 # Using CloudifyClient
 summaries = client.summary.nodes.get(_target_field='deployment_id')
@@ -74,7 +74,8 @@ response.json()
 }
 ```
 
-With sub-field:
+> With sub-field
+
 ```json
 {
     "items": [

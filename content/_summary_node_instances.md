@@ -23,7 +23,8 @@ $ curl -X GET \
     "http://<manager-ip>/api/v3.1/summary/node_instances?_target_field=deployment_id"
 ```
 
-With sub-field:
+> With sub-field
+
 ```shell
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
@@ -95,7 +96,8 @@ response.json()
 }
 ```
 
-With sub-field:
+> With sub-field
+
 ```json
 {
   "items": [

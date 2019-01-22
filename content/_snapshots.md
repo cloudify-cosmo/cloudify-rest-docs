@@ -300,7 +300,7 @@ An [Execution](#the-execution-resource) resource representing the restore snapsh
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/snapshot/<snapshot-id>/archive" > <snapshot-archive-filename>.zip
+    "http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>/archive" > <snapshot-archive-filename>.zip
 ```
 
 ```python
@@ -311,7 +311,7 @@ client.snapshots.download(
 )
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/snapshot/<snapshot-id>/archive'
+url = 'http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>/archive'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,

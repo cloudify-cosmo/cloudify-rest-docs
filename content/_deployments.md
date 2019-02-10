@@ -468,6 +468,7 @@ Property | Type | Description
 `install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
 `inputs` | object | Dictionary containing inputs to update in the deployment
 `reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
+`preview` | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.**
 
 
 ### Response

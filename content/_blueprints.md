@@ -239,7 +239,7 @@ $ curl -X DELETE \
 client.blueprints.delete(blueprint_id='<blueprint-id>', force=False)
 
 # Using requests
-url = 'http://<manager-ip>/ap/v3.1/blueprints/<blueprint-id>?force=false'
+url = 'http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?force=false'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.delete(
     url,

@@ -216,7 +216,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
-`site_name` | string | The name of the site to assign the new deployment to.
+`site_name` | string | The name of the site to assign the new deployment to. **Supported for Cloudify Manager 4.5.5 and above.**
 `private_resource` | boolean | Optional parameter, if set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).
 `skip_plugins_validation` | boolean | Optional parameter, determines whether to validate if the required deployment plugins exist on the manager (default: False).
 `visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). **Supported for Cloudify Manager 4.3 and above.**

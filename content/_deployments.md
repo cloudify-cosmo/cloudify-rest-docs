@@ -396,16 +396,11 @@ client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_s
   "permalink": null,
   "description": "deployment_1",
   "blueprint_id": "blueprint_1",
-  "policy_types": {
-    ...
-  },
   "tenant_name": "default_tenant",
   "created_at": "2017-12-17T09:28:22.800Z",
   "updated_at": "2017-12-17T09:29:20.750Z",
   "created_by": "admin",
-  "policy_triggers": {
-    ...
-  },
+  "site_name": "a site name",
   "private_resource": false,
   "visibility": "tenant",
   "groups": {

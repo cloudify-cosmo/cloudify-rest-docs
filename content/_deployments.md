@@ -368,6 +368,80 @@ Valid values are `tenant` or `global`. **`global` is supported for Cloudify Mana
 A `Deployment` resource.
 
 
+## Set Deployment Site
+
+> Request Example
+
+```shell
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"site_name": "<site name>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>/set-site"
+```
+
+```python
+# Python Client
+client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_site=False)
+```
+
+> Response Example
+
+```json
+{
+  "inputs": {
+    ...
+  },
+  "permalink": null,
+  "description": "deployment_1",
+  "blueprint_id": "blueprint_1",
+  "policy_types": {
+    ...
+  },
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "updated_at": "2017-12-17T09:29:20.750Z",
+  "created_by": "admin",
+  "policy_triggers": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "groups": {
+    ...
+  },
+  "workflows": {
+    ...
+  },
+  "id": "deployment_1",
+  "outputs": {
+    ...
+  }
+}
+
+```
+
+`POST "<manager-ip>/api/v3.1/deployments/{deployment-id}/set-site"`
+
+Update the site of the deployment. **Supported for Cloudify Manager 5.0 and above.**
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`site_name` | string | The site name to assign the deployment.
+`detach_site` | Boolean | Clear site relation from the deployment.
+
+
+
+### Response
+A `Deployment` resource.
+
+
 ## The Deployment Update Resource
 
 ### Attributes:

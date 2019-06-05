@@ -15,6 +15,7 @@ Attribute | Type | Description
 `inputs` | object | A dictionary containing key value pairs which represents a deployment input and its provided value.
 `outputs` | object | A dictionary containing an outputs definition of a deployment.
 `capabilities` | object | A dictionary containing an capabilities definition of a deployment. **Supported for Cloudify Manager 4.5.5 and above.**
+`site_name` | string | The name of the site the deployment is assigned to. **Supported for Cloudify Manager 5.0 and above.**
 `policy_triggers` | object | A dictionary containing policy triggers of a deployment.
 `policy_types` | object | A dictionary containing policies of a deployment.
 `tenant_name` | string | The name of the tenant that owns the deployment.
@@ -158,7 +159,7 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>"}' \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>", "site_name": "<site name>"}' \
     "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 
@@ -168,7 +169,8 @@ client.deployments.create(
     blueprint_id='<blueprint-id>',
     deployment_id='<deployment-id>',
     inputs={...},
-    visibility='<visibility>'
+    visibility='<visibility>',
+    site_name='<site name>'
 )
 
 # Using requests
@@ -181,7 +183,8 @@ querystring = {'_include': 'id'}
 payload ={
     'blueprint_id': '<blueprint-id>',
     'inputs': {...},
-    'visibility': '<visibility>'
+    'visibility': '<visibility>',
+    'site_name': '<site name>'
 }
 response = requests.put(
     url,
@@ -213,6 +216,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
+`site_name` | string | The name of the site to assign the new deployment to. **Supported for Cloudify Manager 5.0 and above.**
 `private_resource` | boolean | Optional parameter, if set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).
 `skip_plugins_validation` | boolean | Optional parameter, determines whether to validate if the required deployment plugins exist on the manager (default: False).
 `visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
@@ -238,16 +242,20 @@ A `Deployment` resource.
 $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id&delete_logs=True"
 ```
 
 ```python
 # Using CloudifyClient
-client.deployments.delete(deployment_id='<deployments-id>')
+client.deployments.delete(deployment_id='<deployments-id>',
+                          with_logs=False)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/deployments/<deployment-id>'
 headers = {'content-type': 'application/json'}
+querystring = {
+    'delete_logs': True
+}
 response = requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
@@ -273,6 +281,8 @@ An error is raised if the deployment has any live node instances. In order to ig
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
+* `delete_logs`: Determines if to delete the deployment logs, default: false.
+
 
 ### Request Body
 Property | Type | Description
@@ -353,6 +363,75 @@ Property | Type | Description
 `visibility` | string | Defines who can see the deployment. (Required)
 
 Valid values are `tenant` or `global`. **`global` is supported for Cloudify Manager 4.5.5 and above.**
+
+### Response
+A `Deployment` resource.
+
+
+## Set Deployment Site
+
+> Request Example
+
+```shell
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"site_name": "<site name>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>/set-site"
+```
+
+```python
+# Python Client
+client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_site=False)
+```
+
+> Response Example
+
+```json
+{
+  "inputs": {
+    ...
+  },
+  "permalink": null,
+  "description": "deployment_1",
+  "blueprint_id": "blueprint_1",
+  "tenant_name": "default_tenant",
+  "created_at": "2017-12-17T09:28:22.800Z",
+  "updated_at": "2017-12-17T09:29:20.750Z",
+  "created_by": "admin",
+  "site_name": "a site name",
+  "private_resource": false,
+  "visibility": "tenant",
+  "groups": {
+    ...
+  },
+  "workflows": {
+    ...
+  },
+  "id": "deployment_1",
+  "outputs": {
+    ...
+  }
+}
+
+```
+
+`POST "<manager-ip>/api/v3.1/deployments/{deployment-id}/set-site"`
+
+Update the site of the deployment. **Supported for Cloudify Manager 5.0 and above.**
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`site_name` | string | The site name to assign the deployment.
+`detach_site` | Boolean | Clear site relation from the deployment.
+
+
 
 ### Response
 A `Deployment` resource.

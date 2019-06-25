@@ -512,3 +512,107 @@ Valid values are `tenant` or `global`.
 
 ### Response
 A `Secret` resource.
+
+## Export Secrets
+
+> Request Example
+
+```shell
+ $ curl -X GET \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/secrets/share/export?_passphrase=<passphrase>?non-encrypted=false"
+```
+
+```python
+# Python Client
+
+client.secrets.export(_passphrase=<passphrase>)
+
+# Using request
+url = 'http://<manager-ip>/api/v3.1/secrets/share/export'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_passphrase': '<passphrase>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+
+```
+
+> Response Example
+
+```json
+
+[
+    {"is_hidden_value": false,
+     "tenant_name": "default_tenant",
+     "visibility": "tenant",
+     "value": "gAAAAABdEfLE3sdIzNRd1c0-_LlMn9YhNxjv8ZYlopi7suuayyW4IajlBAfFBUNYYOxoTJP1iTjAGhxangEFvkwLp14vmmiCZQ==",
+     "key": "<secret_key>",
+     "encrypted": true
+     },
+      {
+      "is_hidden_value": false,
+      "tenant_name": "default_tenant",
+      "visibility": "tenant",
+      "value": "gAAAAABdEfLERkwqzBuWNtBoK4ftN89LGd8pRP4XFirzlQdXVvMcWpCSuBgUZ_XapD9dffv91Ge7-1p8nzXZfB75YJAO5P-WbQ==",
+      "key": "<secret_key>",
+      "encrypted": true
+      }
+]
+
+```
+
+`GET "<manager-ip>/api/v3.1/secrets/share/export"`
+
+Export secretes from the Manager to a file. **Supported for Cloudify Manager 5.0 and above.**
+
+### URI Parameters
+* `_passphrase`: The passphrase used to encrypt or secrets` values, must be 8 characters long.
+
+### Response
+A list of `Secret` resources.
+
+
+## Import Secrets
+
+
+        data = {
+            'secrets_list': secrets_list,
+            'tenant_map_dict': tenant_map_dict,
+            'passphrase': passphrase,
+            'override_collisions': override_collisions
+        }
+
+
+> Request Example
+
+```shell
+ $ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"secrets_list": "<secrets_list>", "tenant_map_dict": "<tenant_map_dict>", "passphrase": "<passphrase>", "override_collisions": false}' \
+    "http://<manager-ip>/api/v3.1/secrets/share/import"
+```
+
+```python
+# Python Client
+
+client.secrets.import_secrets(secrets_list=<secrets_list>,
+                              tenant_map_dict=<tenant_map_dict>,
+                              passphrase=<passphrase>,
+                              override_collisions=<override_collisions>)
+
+```
+
+
+
+`POST "<manager-ip>/api/v3.1/secrets/share/import"`
+
+Import secrets from a file to the Manager. **Supported for Cloudify Manager 5.0 and above.**

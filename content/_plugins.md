@@ -412,3 +412,189 @@ Valid values are `tenant` or `global`.
 
 ### Response
 A `Plugin` resource.
+
+## The Plugins Update Resource
+
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`id` | string | A unique identifier for the plugins update.
+`state` | string | The state of this update ("updating", "executing_workflow", "finalizing", "successful", or "failed").
+`blueprint_id` | string | The id of the blueprint that its deployments will get their plugins updated.
+`temp_blueprint_id` | string | The id of the temporary internal blueprint created for the purpose of this plugins update.
+`execution_id` | string | The id of the plugins update execution.
+`deployments_to_update` | list | A list of deployment IDs that are updated in this plugins update.
+`forced` | bool | Whether or not this plugins update was executed regardless of other active/failed plugins updates.
+`created_at` | datetime | The time when the plugins update was started.
+`created_by` | string | The name of the user that started the plugins update.
+`tenant_name` | string | The name of the tenant the plugins update belongs to.
+`visibility` | string | The visibility of the plugins update.
+`private_resource` | boolean | Is the plugins update private.
+`resource_availability` | string | The availability of the plugins update.
+
+## Update Plugins
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"force": "<force>"}' \
+    "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"
+```
+
+```python
+# Python Client
+client.plugins_update.update_plugins(blueprint_id="<blueprint_id>", force="<force>")
+```
+
+> Response Example
+
+```json
+{
+ "forced": false,
+ "blueprint_id": "baddd86fb-864b-483e-a98a-d53e2b728ccd",
+ "tenant_name": "default_tenant",
+ "created_at": "2019-07-10T07:24:40.520Z",
+ "visibility": "tenant",
+ "private_resource": false,
+ "state": "executing_workflow",
+ "temp_blueprint_id": "bbf4b172-3b21-460c-aed8-4f55b55f3b4f",
+ "created_by": "admin",
+ "deployments_to_update": [
+    "dd7b03fb3-8f92-404c-8ddd-d81bd6a2bc9b"
+ ],
+ "resource_availability": "tenant",
+ "id": "ce63a9d6-726b-4ff2-a267-f953af5dc32d",
+ "execution_id": "8ec77e89-b418-4472-9b44-fe9d7a7fe163"
+}
+
+```
+
+`PUT "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"`
+
+Update the plugins for that blueprint's deployments. **Supported for Cloudify Manager 5.0.0 and above.**
+
+### URI Parameters
+* `blueprint-id`: The id of the blueprint that its deployments will get their plugins updated.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`force` | boolean | Specifies whether to force the plugin update regardless of other active/failed plugins updates state.
+
+
+### Response
+A `Plugins Update` resource.
+
+## Get Plugins-Update
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/plugins-updates/<plugins-update-id>?_include=id"
+```
+
+```python
+# Using CloudifyClient
+plugins_update = client.plugins_update.get(plugins_update_id=plugins_update_id)
+```
+
+> Response Example
+
+```json
+{
+ "forced": false,
+ "blueprint_id": "baddd86fb-864b-483e-a98a-d53e2b728ccd",
+ "tenant_name": "default_tenant",
+ "created_at": "2019-07-10T07:24:40.520Z",
+ "visibility": "tenant",
+ "private_resource": false,
+ "state": "executing_workflow",
+ "temp_blueprint_id": "bbf4b172-3b21-460c-aed8-4f55b55f3b4f",
+ "created_by": "admin",
+ "deployments_to_update": [
+    "dd7b03fb3-8f92-404c-8ddd-d81bd6a2bc9b"
+ ],
+ "resource_availability": "tenant",
+ "id": "ce63a9d6-726b-4ff2-a267-f953af5dc32d",
+ "execution_id": "8ec77e89-b418-4472-9b44-fe9d7a7fe163"
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/plugins-updates/<plugins-update-id>"`
+
+Get a plugins update. **Supported for Cloudify Manager 5.0.0 and above.**
+
+### Response
+A `Plugins Update` resource.
+
+## List Plugins Updates
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/plugins-updates?_include=id"
+```
+
+```python
+# Using CloudifyClient
+plugins_updates = client.plugins_update.list(
+        sort=sort_by,
+        is_descending=descending,
+        _all_tenants=all_tenants,
+        _search=search,
+        _offset=pagination_offset,
+        _size=pagination_size,
+        plugins_update_id=plugins_update_id
+    )
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "id": "update1",
+      ...
+    },
+    {
+      "id": "update2",
+      ...
+    },
+    {
+      "id": "update3",
+      ...
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3.1/plugins-updates"`
+
+Lists the plugins updates. **Supported for Cloudify Manager 5.0.0 and above.**
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of `Plugins Update` resources.

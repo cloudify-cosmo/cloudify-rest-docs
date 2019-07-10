@@ -449,7 +449,7 @@ Attribute | Type | Description
 `new_blueprint_id` | string | The id of the deployment's blueprint after the update.
 `old_inputs` | string | The inputs of the deployment before the update.
 `new_inputs` | string | The inputs of the deployment after the update.
-`state` | string | The state of this update (successful, failed, updating, etc...).
+`state` | string | The state of this update ("updating", "executing_workflow", "finalizing", "successful", "failed", or "preview").
 `tenant_name` | string | The name of the tenant the deployment belongs to.
 `created_at` | datetime | The time when the deployment update was started.
 `created_by` | string | The name of the user that started the deployment update.
@@ -463,6 +463,8 @@ Attribute | Type | Description
 `steps` | object | The list of deployment update steps.
 `deployment_plan` | object | A dict of the deployment plan.
 `deployment_update_deployment` | object | A dict of the raw deployment.
+`central_plugins_to_install` | list | A list of the plugins that are executed by the central deployment agent and will be installed.
+`central_plugins_to_uninstall` | list | A list of the plugins that are executed by the central deployment agent and will be uninstalled.
 
 
 ## Update Deployment
@@ -474,7 +476,7 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>"}' \
+    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>", "update_plugins": "<update_plugins>"}' \
     "http://<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"
 ```
 
@@ -521,6 +523,12 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
     ...
   }
   "deployment_update_nodes": [
+    ...
+  ],
+  "central_plugins_to_install": [
+    ...
+  ],
+  "central_plugins_to_uninstall": [
     ...
   ]
 }
@@ -608,6 +616,12 @@ deployment_update = client.deployment_updates.get(update_id)
     ...
   }
   "deployment_update_nodes": [
+    ...
+  ],
+  "central_plugins_to_install": [
+    ...
+  ],
+  "central_plugins_to_uninstall": [
     ...
   ]
 }

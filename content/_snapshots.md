@@ -395,3 +395,37 @@ Property | Type | Description
 
 ### Response
 A [Snapshot](#the-snapshot-resource) resource.
+
+
+## Snapshot-Restore Status
+
+> Request Example
+
+```shell
+$ curl -X GET "http://<manager-ip>/api/v3.1/snapshot-status"
+```
+
+```python
+# Using CloudifyClient
+client.snapshots.get_snapshot_status()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/snapshot-status'
+response = requests.get(url)
+response.json()
+
+```
+
+> Response Example
+
+```json
+{
+  "status": "No `restore_snapshot` workflow currently running.",
+}
+```
+
+
+`GET "{manager-ip}/api/v3.1/snapshot-status"`
+
+This method returns the status of the `restore_snapshot` workflow
+(whether or not it's in progress). **Supported for Cloudify Manager 5.0.5 and above.**

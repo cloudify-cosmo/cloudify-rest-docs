@@ -407,7 +407,7 @@ $ curl -X GET "http://<manager-ip>/api/v3.1/snapshot-status"
 
 ```python
 # Using CloudifyClient
-client.snapshots.get_snapshot_status()
+client.snapshots.get_status()
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/snapshot-status'

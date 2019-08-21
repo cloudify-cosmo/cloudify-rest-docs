@@ -52,7 +52,7 @@ client = CloudifyClient(
     username='<manager-username>',
     password='<manager-password>',
     tenant='<manager-tenant>')
-events = client.events.list()
+events = client.events.list(include_logs=True)
 for event in events:
     print event
 
@@ -174,6 +174,7 @@ Allowed filters:
 - `event_type` (only returns `cloudify-event` items)
 - `level` (only returns `cloudify-log` items)
 - `message`([SQL's LIKE style pattern expected](https://www.postgresql.org/docs/9.5/static/functions-matching.html#FUNCTIONS-LIKE))
+- `include_logs`(Include also logs in the response, defaults to False)
 
 Multiple filters can be passed in the same request:
 

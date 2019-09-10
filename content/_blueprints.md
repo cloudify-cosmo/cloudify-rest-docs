@@ -80,10 +80,17 @@ A `Blueprint` resource.
 > Request Example
 
 ```shell
+# create blueprint from blueprint_archive_url
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&blueprint_archive_url=https://url/to/archive/master.zip&visibility=<visibility>"
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>&blueprint_archive_url=https://url/to/archive/master.zip"
+
+# create blueprint from uploaded archive
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>" -T <blueprint_archive>.tar.gz
 ```
 
 ```python

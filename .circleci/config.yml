@@ -10,7 +10,7 @@ jobs:
             - checkout
             # Set GitHub branch name in config.toml for the Improve this Page link
             - run:
-                name: Replace "branch" with branch name in config.toml 
+                name: Replace "branch" with branch name in config.toml
                 command: |
                     if [ "${CIRCLE_BRANCH}" == "4.3.0-build" ] ;
                         then sed -i s/branch/master/g config.toml
@@ -30,7 +30,7 @@ jobs:
                     echo ${LOCATION}
                     hugo -v --baseURL //docs.cloudify.co/api/$LOCATION
             - run:
-                name: Patch - forcefully add tar
+                name: PATCH - forcefully add tar
                 command: |
                     apk update
                     apk add tar
@@ -49,13 +49,18 @@ jobs:
             - checkout
             # Set GitHub branch name in config.toml for the Improve this Page link
             - run:
-                name: Replace "branch" with branch name in config.toml 
+                name: Replace "branch" with branch name in config.toml
                 command: sed -i s/branch/${CIRCLE_BRANCH}/g config.toml
             - run:
                 name: Building site
                 command: |
                     export VERSION=${CIRCLE_BRANCH/-build/}
                     HUGO_ENV=production hugo -v --baseURL //docs.cloudify.co/api/$VERSION
+            - run:
+                name: PATCH - forcefully add tar
+                command: |
+                    apk update
+                    apk add tar
             - persist_to_workspace:
                 root: .
                 paths:

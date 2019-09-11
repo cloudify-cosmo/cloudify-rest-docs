@@ -30,7 +30,6 @@ jobs:
                     echo ${LOCATION}
                     hugo -v --baseURL //docs.cloudify.co/api/$LOCATION
             - run:
-                name: PATCH - forcefully add tar
                 command: |
                     apk update
                     apk add tar
@@ -57,7 +56,7 @@ jobs:
                     export VERSION=${CIRCLE_BRANCH/-build/}
                     HUGO_ENV=production hugo -v --baseURL //docs.cloudify.co/api/$VERSION
             - run:
-                name: PATCH - forcefully add tar
+                name: Patch - forcefully add tar
                 command: |
                     apk update
                     apk add tar

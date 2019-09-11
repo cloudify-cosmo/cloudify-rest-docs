@@ -30,8 +30,10 @@ jobs:
                     echo ${LOCATION}
                     hugo -v --baseURL //docs.cloudify.co/api/$LOCATION
             - run:
-                name: Show directory contents
-                command: echo ls
+                name: Patch - forcefully add tar
+                command: |
+                    apk update
+                    apk add tar
             - persist_to_workspace:
                 root: .
                 paths:

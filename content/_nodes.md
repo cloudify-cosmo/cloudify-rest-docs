@@ -6,6 +6,8 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
+`actual_number_of_instances` | integer | The number of deployed node instances the node has. This number _accounts_ for scaled groups.<br><b>Note:</b> this attribute appears in the CLI table as `number_of_instances`.
+`actual_planned_number_of_instances` | integer | The number of node instances specified for this node in the deployment.<br>This number _accounts_ for scaled groups.<br><b>Note:</b> this attribute appears in the CLI table as `planned_number_of_instances`.
 `blueprint_id` | string | The id of the blueprint the node belongs to.
 `deploy_number_of_instances` | integer | Default number of instances on deploy.
 `deployment_id` | string | The id of the deployment the node belongs to.
@@ -13,9 +15,9 @@ Attribute | Type | Description
 `id` | string | The name of the node.
 `max_number_of_instances` | integer | Maximum number of instances.
 `min_number_of_instances` | integer | Minimum number of instances.
-`number_of_instances` | integer | The number of node instances the node has.
+`number_of_instances` | integer | The number of deployed node instances the node has. This number _does not_ account for scaled groups.
 `operations` | object | The operations the node exposes.
-`planned_number_of_instances` | integer | -
+`planned_number_of_instances` | integer | The number of node instances specified for this node in the deployment.<br>This number _does not_ account for scaled groups.
 `plugins_to_install` | list | A list of required plugins to install in order to execute the node's operations.
 `plugins` | list | A list of plugins the node is using for executing its operations.
 `properties` | object | The properties of the node.

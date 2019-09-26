@@ -6,8 +6,8 @@
 
 Attribute | Type | Description
 --------- | ------- | -------
-`actual_number_of_instances` | integer | The number of deployed node instances the node has. This number _accounts_ for scaled groups.<br><b>Note:</b> this attribute appears in the CLI table as `number_of_instances`.
-`actual_planned_number_of_instances` | integer | The number of node instances specified for this node in the deployment.<br>This number _accounts_ for scaled groups.<br><b>Note:</b> this attribute appears in the CLI table as `planned_number_of_instances`.
+`actual_number_of_instances` | integer | The number of deployed node instances the node has. This number _accounts_ for scaled groups.<br>**Note:** this attribute appears in the CLI table as `number_of_instances`.<br>**Supported for Cloudify Manager 5.0.5 and above.**
+`actual_planned_number_of_instances` | integer | The number of node instances specified for this node in the deployment.<br>This number _accounts_ for scaled groups.<br>**Note:** this attribute appears in the CLI table as `planned_number_of_instances`.<br>**Supported for Cloudify Manager 5.0.5 and above.**
 `blueprint_id` | string | The id of the blueprint the node belongs to.
 `deploy_number_of_instances` | integer | Default number of instances on deploy.
 `deployment_id` | string | The id of the deployment the node belongs to.

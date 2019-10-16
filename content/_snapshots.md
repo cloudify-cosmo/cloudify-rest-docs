@@ -94,7 +94,6 @@ $ curl -X PUT \
 # Using CloudifyClient
 client.snapshots.create(
     snapshot_id='<snapshot-id>',
-    include_metrics=False,
     include_credentials=False,
 )
 
@@ -121,7 +120,6 @@ response.json()
 {
   "status": "pending",
   "parameters": {
-    "include_metrics": false,
     "config": {
       "postgresql_db_name": "cloudify_db",
       "default_tenant_name": "default_tenant",
@@ -161,7 +159,6 @@ Creates a new snapshot.
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-`include_metrics` | string | Specifies whether metrics stored in InfluxDB should be included in the created snapshot (Default: true).
 `include_credentials` | string | Specifies whether agent SSH keys (including those specified in uploaded blueprints) should be included in the created snapshot (Default: false).
 `include_logs` | string | Specifies whether logs should be included in the created snapshot (Default: true). **Supported for Cloudify Manager 4.3 and above.**
 `include_events` | string | Specifies whether events should be included in the created snapshot (Default: true). **Supported for Cloudify Manager 4.3 and above.**

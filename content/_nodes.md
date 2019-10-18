@@ -39,6 +39,39 @@ $ curl -X GET \
     "http://<manager-ip>/api/v3.1/nodes?_include=id"
 ```
 
+```javascript
+var request = require('request-promise');
+
+async function nodes(host, username, password, tenant){
+    var nodes = await request(
+        {
+            method: 'GET',
+            url: host + "/api/v3.1/nodes",
+            headers: {
+                'Content-Type': 'application/json',
+                'Tenant': tenant,
+           },
+           auth: { username: username, password: password},
+           qs: {'_include': 'id'},
+           strictSSL: false
+        }
+    );
+    return nodes;
+}
+
+async function main() {
+
+    var nodes = JSON.parse(
+        await nodes("<manager-ip>", "<manager-username>",
+                    "<manager-password>", "<manager-tenant>")
+    );
+
+    console.log(nodes);
+}
+
+main();
+```
+
 ```python
 # Using CloudifyClient
 nodes = client.nodes.list(_include=['id'])

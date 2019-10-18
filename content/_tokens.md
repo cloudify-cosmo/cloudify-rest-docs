@@ -21,6 +21,35 @@ $ curl -X GET \
     "http://<manager-ip>/api/v3.1/tokens"
 ```
 
+```javascript
+var request = require('request-promise');
+
+async function login(host, username, password, tenant){
+    var tokens = await request(
+        {
+           method: 'GET',
+           url: host + "/api/v3.1/tokens",
+           auth: { username: username, password: password},
+           headers: {'Tenant': tenant},
+           strictSSL: false
+        }
+    );
+    return tokens;
+}
+
+async function main() {
+
+    var token = JSON.parse(
+        await login("<manager-ip>", "<manager-username>",
+                    "<manager-password>", "<manager-tenant>")
+    );
+
+    console.log(token);
+}
+
+main();
+```
+
 ```python
 # Using CloudifyClient
 client.tokens.get()

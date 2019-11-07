@@ -88,6 +88,7 @@ Those are the same parameters as accepted by the `cfy agents validate` and `cfy 
 * `node_ids`: the agent node ID (can be provided multiple times)
 * `node_instance_ids`: the agent node instance ID (can be provided multiple times)
 * `install_method`: the agent install method (can be provided multiple times)
+* `_all_tenants`: whether to include resources from all tenants associated with the user.
 
 ### Response
 A list of `Agent` resources.

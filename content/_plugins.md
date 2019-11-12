@@ -420,7 +420,7 @@ A `Plugin` resource.
 Attribute | Type | Description
 --------- | ------- | -------
 `id` | string | A unique identifier for the plugins update.
-`state` | string | The state of this update ("updating", "executing_workflow", "finalizing", "successful", or "failed").
+`state` | string | The state of this update ("updating", "executing_workflow", "finalizing", "successful", "failed", or "no_changes_required").
 `blueprint_id` | string | The id of the blueprint that its deployments will get their plugins updated.
 `temp_blueprint_id` | string | The id of the temporary internal blueprint created for the purpose of this plugins update.
 `execution_id` | string | The id of the plugins update execution.

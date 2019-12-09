@@ -284,8 +284,7 @@ response.json()
 ```json
 {
   "status": "OK",
-  "services": {[]
-  }
+  "services": {}
 }
 ```
 

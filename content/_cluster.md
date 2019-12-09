@@ -161,3 +161,140 @@ Only admin users can execute this operation.
 
 ### Response
 A `ManagerItem` resource representing the node that was removed from the cluster.
+
+## Cluster Status
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/cluster-status"
+```
+
+```python
+# Using ClodifyManager
+client.cluster_status.get_status()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/cluster-status'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "status": "OK",
+  "services": {
+    "manager": {
+      "status": "OK",
+      "nodes": {
+        "cfy-manager": {
+          "status": "OK",
+          "version": "5.0.5",
+          "public_ip": "172.20.0.2",
+          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
+          "private_ip": "172.20.0.2",
+          "services": {
+            <Cloudify manager's services status data>
+      },
+      "is_external": false
+    },
+    "db": {
+      "status": "OK",
+      "nodes": {
+        "cfy-db": {
+          "status": "OK",
+          "version": "5.0.5",
+          "public_ip": null,
+          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
+          "private_ip": "172.20.0.2",
+          "services": {
+            <DB's status data>
+      },
+      "is_external": false
+    },
+    "broker": {
+      "status": "OK",
+      "nodes": {
+        "cfy-manager": {
+          "status": "OK",
+          "version": "5.0.5",
+          "public_ip": null,
+          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
+          "private_ip": "172.20.0.2",
+          "services": {
+            "RabbitMQ": {
+              "status": "Active",
+              "is_remote": false,
+              "extra_info": {
+              }
+            }
+          }
+        }
+      },
+      "is_external": false
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3.1/cluster-status"`
+
+Gets Cloudify cluster status.
+
+### Getting summarised cluster status
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/cluster-status"
+```
+
+```python
+# Using ClodifyManager
+client.cluster_status.get_status()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/cluster-status'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'summary': 'true'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "status": "OK",
+  "services": {}
+}
+```
+
+`GET "{manager-ip}/api/v3.1/cluster-status?summary=true"`
+
+Gets Cloudify cluster status.
+
+### Attributes:
+
+Attribute | Type | Description
+--------- | ------- | -------
+`status` | string | The status of the manager. Will always have a "running" value.
+`services`| list | List of [Service](#the-service-object) resources each, representing a service running in the manager.

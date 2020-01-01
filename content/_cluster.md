@@ -164,6 +164,8 @@ A `ManagerItem` resource representing the node that was removed from the cluster
 
 ## Cluster Status
 
+**Supported for Cloudify Manager 5.0.5 and above.**
+
 > Request Example
 
 ```shell
@@ -259,7 +261,7 @@ Gets Cloudify cluster status.
 $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/cluster-status"
+    "http://<manager-ip>/api/v3.1/cluster-status?summary=true"
 ```
 
 ```python
@@ -290,11 +292,11 @@ response.json()
 
 `GET "{manager-ip}/api/v3.1/cluster-status?summary=true"`
 
-Gets Cloudify cluster status.
+Gets summary of Cloudify cluster status.
 
 ### Attributes:
 
 Attribute | Type | Description
 --------- | ------- | -------
-`status` | string | The status of the manager. Will always have a "running" value.
-`services`| list | List of [Service](#the-service-object) resources each, representing a service running in the manager.
+`status` | string | The status of the cluster, can be `OK`, `Degraded` or `Fail`.
+`services`| object | A dictionary containing the services data of the Cloudify cluster.

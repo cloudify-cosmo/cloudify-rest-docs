@@ -20,12 +20,137 @@ client.manager.get_status()
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/status'
 headers = {'Tenant': '<manager-tenant>'}
-querystring = {'_include': 'status'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers
+)
+response.json()
+```
+
+> Response Example - for Cloudify Manager 5.0.5 and above.
+
+```json
+{
+  "status": "OK",
+  "services": {
+    "PostgreSQL": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        "systemd": {
+          "instances": [
+            {
+              "LoadState": "loaded",
+              "Description": "PostgreSQL 9.5 database server",
+              "state": "running",
+              "MainPID": 39,
+              "Id": "postgresql-9.5.service",
+              "ActiveState": "active",
+              "SubState": "running"
+            }
+          ],
+          "display_name": "PostgreSQL",
+          "unit_id": "postgresql-9.5.service"
+        }
+      }
+    },
+    "RabbitMQ": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        "systemd": {
+          "instances": [
+            {
+              "LoadState": "loaded",
+              "Description": "RabbitMQ Service",
+              "state": "running",
+              "MainPID": 351,
+              "Id": "cloudify-rabbitmq.service",
+              "ActiveState": "active",
+              "SubState": "running"
+            }
+          ],
+          "display_name": "RabbitMQ",
+          "unit_id": "cloudify-rabbitmq.service"
+        },
+        "connection_check": "OK"
+      }
+    },
+    "Cloudify Console": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        <Console's status data>
+      }
+    },
+    "Manager Rest-Service": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        <Rest-Service's status data>
+      }
+    },
+    "AMQP-Postgres": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        <AMQP-Postgres's status data>
+      }
+    },
+    "Webserver": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        <Webserver's status data>
+      }
+    },
+    "Cloudify Composer": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        <Composer's status data>
+      }
+    },
+    "Management Worker": {
+      "status": "Active",
+      "is_remote": false,
+      "extra_info": {
+        <Management worker's status data>
+      }
+    }
+  }
+}
+```
+
+`GET "{manager-ip}/api/v3.1/status"`
+
+Gets Cloudify manager status.
+
+### Getting summarised manager status
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/status?summary=true"
+```
+
+```python
+# Using ClodifyManager
+client.manager.get_status()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/status'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'summary': 'true'}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
-    params=querystring,
+    params=querystring
 )
 response.json()
 ```
@@ -34,20 +159,21 @@ response.json()
 
 ```json
 {
-  "status": "running"
+  "status": "OK",
+  "services": {}
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/status"`
+`GET "{manager-ip}/api/v3.1/status?summary=true"`
 
-Gets Cloudify manager status.
+Gets summary of Cloudify manager status.
 
 ### Attributes:
 
 Attribute | Type | Description
 --------- | ------- | -------
-`status` | string | The status of the manager. Will always have a "running" value.
-`services`| list | List of [Service](#the-service-object) resources each, representing a service running in the manager.
+`status` | string | The status of the manager, can be `OK` or `Fail`.
+`services`| object | A dictionary containing [Service](#the-service-object) resources, representing a service running in the manager.
 
 ### The Service Object:
 

@@ -94,11 +94,18 @@ $ curl -X PUT \
 ```
 
 ```python
-# Using CloudifyClient
-client.blueprints._upload(
+# Using CloudifyClient, uploading a zip file
+client.blueprints.publish_archive(
     blueprint_id='<blueprint-id>',
     archive_location='https://url/to/archive/master.zip',
-    application_file_name='<blueprint-id>.yaml',
+    blueprint_filename='<blueprint-id>.yaml',
+    visibility='<visibility>'
+)
+# Using CloudifyClient, uploading a directory
+# (will be tar'ed on the fly)
+client.blueprints.upload(
+    'path/to/blueprint.yaml',
+    '<blueprint-id>',
     visibility='<visibility>'
 )
 

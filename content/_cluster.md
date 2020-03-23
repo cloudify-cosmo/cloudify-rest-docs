@@ -254,6 +254,8 @@ response.json()
 Gets Cloudify cluster status.
 
 ### Getting summarised cluster status
+Gets summarised cluster status and determines the return code based on it, i.e.   
+return code 200 means: 'OK' or 'Degraded'; return code 500 means: 'FAIL'. 
 
 > Request Example
 

@@ -793,7 +793,6 @@ Gets deployment capabilities. **Supported for Cloudify Manager 4.5.5 and above.*
 ### Response
 A `DeploymentOutput` resource.
 
-
 ## Get Inter Deployment Dependencies List
 
 > Request Example
@@ -814,7 +813,7 @@ url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
 headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
-    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    auth=('<manager-username>', '<manager-password>'),
     headers=headers,
 )
 response.json()
@@ -863,4 +862,128 @@ response.json()
 
 `GET "{manager-ip}/api/v3.1/deployments/inter-deployment-dependencies"`
 
-Gets inter deployment dependencies. **Supported for Cloudify Manager 5.1 and above.**
+Gets an inter deployment dependencies list. **Supported for Cloudify Manager 5.1 and above.**
+
+## Create Inter Deployment Dependency
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies"
+```
+
+```python
+# Using CloudifyClient
+client.inter_deployment_dependencies.create(
+    dependency_creator='<dependency_creator>', 
+    source_deployment='<source_deployment>',
+    target_deployment='<target_deployment>'
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload ={
+    'dependency_creator': '<dependency_creator>', 
+    'source_deployment': '<source_deployment>',
+    'target_deployment': '<target_deployment>'
+}
+response = requests.put(
+    url,
+    auth=('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "dependency_creator": "component.infrastructure_vkd2zx",
+  "tenant_name": "default_tenant",
+  "created_at": "2020-04-27T08:24:45.938Z",
+  "visibility": "tenant",
+  "private_resource": false,
+  "target_deployment_id": "infrastructure_vkd2zx",
+  "resource_availability": "tenant",
+  "created_by": "admin",
+  "id": "451f2d61-448a-47db-a786-aa8b64c905ed",
+  "source_deployment_id": "jboss-app"
+}
+```
+
+`PUT -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}'`
+
+Creates a new inter deployment dependency. **Supported for Cloudify Manager 5.1 and above.**
+
+## Delete Inter Deployment Dependency
+
+> Request Example
+
+```shell
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies"
+```
+
+```python
+# Using CloudifyClient
+client.inter_deployment_dependencies.delete(
+    dependency_creator='<dependency_creator>', 
+    source_deployment='<source_deployment>',
+    target_deployment='<target_deployment>'
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload ={
+    'dependency_creator': '<dependency_creator>', 
+    'source_deployment': '<source_deployment>',
+    'target_deployment': '<target_deployment>'
+}
+response = requests.delete(
+    url,
+    auth=('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "dependency_creator": "component.infrastructure_vkd2zx",
+  "tenant_name": "default_tenant",
+  "created_at": "2020-04-27T08:24:45.938Z",
+  "visibility": "tenant",
+  "private_resource": false,
+  "target_deployment_id": "infrastructure_vkd2zx",
+  "resource_availability": "tenant",
+  "created_by": "admin",
+  "id": "451f2d61-448a-47db-a786-aa8b64c905ed",
+  "source_deployment_id": "jboss-app"
+}
+```
+
+`DELETE -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}'`
+
+Deletes an inter deployment dependency. **Supported for Cloudify Manager 5.1 and above.**

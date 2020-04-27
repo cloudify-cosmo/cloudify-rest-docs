@@ -792,3 +792,75 @@ Gets deployment capabilities. **Supported for Cloudify Manager 4.5.5 and above.*
 
 ### Response
 A `DeploymentOutput` resource.
+
+
+## Get Inter Deployment Dependencies List
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies"
+```
+
+```python
+# Using CloudifyClient
+client.inter_deployment_dependencies.list()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "dependency_creator": "nodes.jboss.operations.cloudify.interfaces.lifecycle.stop.inputs.fabric_env.key_filename.get_capability",
+      "tenant_name": "default_tenant",
+      "created_at": "2020-04-27T06:51:29.543Z",
+      "visibility": "tenant",
+      "private_resource": false,
+      "target_deployment_id": null,
+      "resource_availability": "tenant",
+      "created_by": "admin",
+      "id": "769589d1-51bf-4f18-bcc5-726fa667a10a",
+      "source_deployment_id": "jboss-app"
+    },
+    {
+      "dependency_creator": "component.infrastructure_vkd2zx",
+      "tenant_name": "default_tenant",
+      "created_at": "2020-04-27T06:51:43.124Z",
+      "visibility": "tenant",
+      "private_resource": false,
+      "target_deployment_id": "infrastructure_vkd2zx",
+      "resource_availability": "tenant",
+      "created_by": "admin",
+      "id": "7392a4ad-484c-4b6f-aa42-75d78e884918",
+      "source_deployment_id": "jboss-app"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 1000
+    }
+  }
+}
+```
+
+
+`GET "{manager-ip}/api/v3.1/deployments/inter-deployment-dependencies"`
+
+Gets inter deployment dependencies. **Supported for Cloudify Manager 5.1 and above.**

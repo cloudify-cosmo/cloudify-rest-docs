@@ -18,6 +18,7 @@ Attribute | Type | Description
 `supported_platform` | string | The supported platform for the plugin package, 'any' if the plugin is compatible with all platforms.
 `supported_py_versions` | list | a list of python platforms supported by the plugin.
 `tenant_name` | string | The name of the tenant that owns the plugin.
+`title` | string | The plugin title used e.g. in UI topology view.
 `uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
 `wheels` | list | A list of wheels contained in the plugin package.
 
@@ -191,12 +192,13 @@ The deleted `Plugin` resource.
 $ curl -X POST \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/plugins?plugin_archive_url=http://url/to/archive.wgn&_include=id&visibility=<visibility>"
+    "http://<manager-ip>/api/v3.1/plugins?plugin_archive_url=http://url/to/archive.wgn&title=<title>&_include=id&visibility=<visibility>"
 ```
 
 ```python
 # Using CloudifyClient
 client.plugins.upload(plugin_path='http://url/to/archive.wgn',
+                      plugin_title='My Plugin',
                       visibility='<visibility>')
 
 # Using requests
@@ -204,6 +206,7 @@ url = 'http://<manager-ip>/api/v3.1/plugins'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'plugin_archive_url': 'http://url/to/archive.wgn',
+    'title': 'My Plugin',
     '_include': 'id',
     'visibility': '<visibility>'
 }
@@ -233,6 +236,7 @@ Property | Type | Description
 --------- | ------- | -----------
 `plugin_path` | string | The plugin archive local path.
 `plugin_archive_url` | string | A URL of the plugin archive to be uploaded. The plugin will be downloaded by the manager.
+`title` | string | The plugin title, used e.g. in UI topology view (this is an optional parameter).
 `visibility` | string | Optional parameter, defines who can see the plugin (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
 
 Valid visibility values are:

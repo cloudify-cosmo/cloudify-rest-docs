@@ -315,3 +315,77 @@ Property | Type | Description
 
 ### Response
 An `Execution` resource.
+
+
+## Delete Executions
+> Request Example
+
+```shell
+curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"keep_last": <num_executions>}' \
+    "http://<manager-ip>/api/v3.1/executions"
+```
+
+```python
+# Using CloudifyClient
+client.executions.delete(keep_days=<num_days>, all_tenants=True)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/executions'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+querystring = {'deployment_id': 'id'}
+payload = {'to_datetime': <date>}
+response = requests.delete(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring, 
+    json=payload,   
+)
+response.json()
+```
+
+> Example Response
+
+```json
+{
+  "items": [
+    {
+      "id": "dab3d7ac-fef0-4b8b-912f-5611cc8f20b5"
+    },
+    {
+      "id": "ca3d7413-c8af-41a3-b864-571cef25899b"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 0
+    }
+  }
+}
+```
+
+`DELETE "{manager-ip}/api/v3.1/executions"`
+
+Deletes finished executions.
+
+### Request Body
+Property | Type | Description
+--------- | ------- | -----------
+`to_datetime` | datetime |  Until which date (timestamp) to delete executions.
+`keep_last` | integer | How many most recent executions to keep from deletion.
+* these fields are mutually exclusive
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A count of `Execution` resources deleted by the command.

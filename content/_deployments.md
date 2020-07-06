@@ -277,7 +277,9 @@ response.json()
 
 Deletes a deployment.
 
-An error is raised if the deployment has any live node instances. In order to ignore this validation, the `ignore_live_nodes` argument in request body can be used.
+An error is raised if the deployment has any live node instances, or there
+ are installations which depend on this deployment. In order to ignore this
+ validation, the `force` argument in request body can be used.
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
@@ -287,7 +289,7 @@ An error is raised if the deployment has any live node instances. In order to ig
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-`ignore_live_nodes` | boolean | Specifies whether to ignore the live nodes validation.
+`force` | boolean | Specifies whether to force deployment deletion even if there are existing live nodes for it, or existing installations which depend on it
 
 
 

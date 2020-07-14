@@ -152,7 +152,7 @@ $ curl -X DELETE -u user:password "http://<manager-ip>/api/v3.1/managers/<hostna
 
 Removes a node from the cluster. The node disconnects from the cluster and
 disables all cluster mechanisms. You can rejoin it to the cluster.
-The node is still connected to the DB of the cluster so it is highly 
+The node is still connected to the DB of the cluster so it is highly
 recommended to dispose of it once removed.
 Only admin users can execute this operation.
 
@@ -201,12 +201,10 @@ response.json()
       "nodes": {
         "cfy-manager": {
           "status": "OK",
-          "version": "5.0.5",
+          "version": "5.1",
           "public_ip": "172.20.0.2",
-          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
-          "private_ip": "172.20.0.2",
-          "services": {
-            <Cloudify manager's services status data>
+          "private_ip": "172.20.0.2"
+        }
       },
       "is_external": false
     },
@@ -215,12 +213,10 @@ response.json()
       "nodes": {
         "cfy-db": {
           "status": "OK",
-          "version": "5.0.5",
+          "version": "5.1",
           "public_ip": null,
-          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
-          "private_ip": "172.20.0.2",
-          "services": {
-            <DB's status data>
+          "private_ip": "172.20.0.2"
+        }
       },
       "is_external": false
     },
@@ -229,18 +225,9 @@ response.json()
       "nodes": {
         "cfy-manager": {
           "status": "OK",
-          "version": "5.0.5",
+          "version": "5.1",
           "public_ip": null,
-          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
-          "private_ip": "172.20.0.2",
-          "services": {
-            "RabbitMQ": {
-              "status": "Active",
-              "is_remote": false,
-              "extra_info": {
-              }
-            }
-          }
+          "private_ip": "172.20.0.2"
         }
       },
       "is_external": false
@@ -254,8 +241,8 @@ response.json()
 Gets Cloudify cluster status.
 
 ### Getting summarised cluster status
-Gets summarised cluster status and determines the return code based on it, i.e.   
-return code 200 means: 'OK' or 'Degraded'; return code 500 means: 'FAIL'. 
+Gets summarised cluster status and determines the return code based on it, i.e.
+return code 200 means: 'OK' or 'Degraded'; return code 500 means: 'FAIL'.
 
 > Request Example
 

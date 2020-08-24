@@ -203,7 +203,44 @@ response.json()
           "status": "OK",
           "version": "5.1",
           "public_ip": "172.20.0.2",
-          "private_ip": "172.20.0.2"
+          "private_ip": "172.20.0.2",
+          "services": {
+            "Blackbox Exporter": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Blackbox Exporter",
+                  "instances": [
+                    {
+                      "Description": "Prometheus blackbox exporter (HTTP/HTTPS/TCP pings)",
+                      "Id": "blackbox_exporter.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "blackbox_exporter.service"
+                }
+              },
+              "status": "Active"
+            },
+            "Cloudify Composer": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Cloudify Composer",
+                  "instances": [
+                    {
+                      "Description": "Cloudify Composer service",
+                      "Id": "cloudify-composer.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "cloudify-composer.service"
+                }
+              },
+              "status": "Active"
+            },
+
+            ...
+
+          }
         }
       },
       "is_external": false
@@ -215,7 +252,60 @@ response.json()
           "status": "OK",
           "version": "5.1",
           "public_ip": null,
-          "private_ip": "172.20.0.2"
+          "private_ip": "172.20.0.2",
+          "services": {
+            "Node Exporter": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Node Exporter",
+                  "instances": [
+                    {
+                      "Description": "Prometheus exporter for hardware and OS metrics",
+                      "Id": "node_exporter.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "node_exporter.service"
+                }
+              },
+              "status": "Active"
+            },
+            "PostgreSQL 9.5 database server": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "PostgreSQL 9.5 database server",
+                  "instances": [
+                    {
+                      "Description": "PostgreSQL 9.5 database server",
+                      "Id": "postgresql-9.5.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "postgresql-9.5.service"
+                }
+              },
+              "status": "Active"
+            },
+            "Prometheus": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Prometheus",
+                  "instances": [
+                    {
+                      "Description": "Prometheus monitoring service",
+                      "Id": "prometheus.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "prometheus.service"
+                }
+              },
+              "status": "Active"
+            },
+
+            ...
+
+          }
         }
       },
       "is_external": false
@@ -227,7 +317,12 @@ response.json()
           "status": "OK",
           "version": "5.1",
           "public_ip": null,
-          "private_ip": "172.20.0.2"
+          "private_ip": "172.20.0.2",
+          "services": {
+
+            ...
+
+          }
         }
       },
       "is_external": false

@@ -226,7 +226,7 @@ Valid visibility values are:
 * `private`: The resource is visible to the user that created the resource, the tenant’s managers and the system’s admins.
 * `tenant`: The resource is visible to all users in the current tenant. (Default value)
 * `global`: The resource is visible to all users in all tenants across the manager.
-A deployment can only be global if the blueprint from which it was created is 
+A deployment can only be global if the blueprint from which it was created is
 also global. Only administrators or users with access to the tenant on which
 the deployment was created have permissions to execute workflow on it. **Supported for Cloudify Manager 4.5.5 and above.**
 
@@ -256,21 +256,12 @@ headers = {'content-type': 'application/json'}
 querystring = {
     'delete_logs': True
 }
-response = requests.delete(
+requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
 )
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "id": "hello4"
-}
 ```
 
 `DELETE "{manager-ip}/api/v3.1/deployments/{deployment-id}"`
@@ -294,7 +285,7 @@ Property | Type | Description
 
 
 ### Response
-A `Deployment` resource.
+No content - HTTP code 204.
 
 
 ## Set Deployment Visibility
@@ -727,7 +718,7 @@ response.json()
 
 ```json
 {
-  "deployment_id": "dep", 
+  "deployment_id": "dep",
   "outputs": {
     "output_1": "node_vbs4o4",
     "output_2": "some_value"
@@ -776,7 +767,7 @@ response.json()
 
 ```json
 {
-  "deployment_id": "dep", 
+  "deployment_id": "dep",
   "capabilities": {
     "capability_1": "node_vbs4o4",
     "capability_2": "some_capability"
@@ -882,7 +873,7 @@ $ curl -X PUT \
 ```python
 # Using CloudifyClient
 client.inter_deployment_dependencies.create(
-    dependency_creator='<dependency_creator>', 
+    dependency_creator='<dependency_creator>',
     source_deployment='<source_deployment>',
     target_deployment='<target_deployment>'
 )
@@ -894,7 +885,7 @@ headers = {
     'Tenant': '<manager-tenant>',
 }
 payload ={
-    'dependency_creator': '<dependency_creator>', 
+    'dependency_creator': '<dependency_creator>',
     'source_deployment': '<source_deployment>',
     'target_deployment': '<target_deployment>'
 }
@@ -944,7 +935,7 @@ $ curl -X DELETE \
 ```python
 # Using CloudifyClient
 client.inter_deployment_dependencies.delete(
-    dependency_creator='<dependency_creator>', 
+    dependency_creator='<dependency_creator>',
     source_deployment='<source_deployment>',
     target_deployment='<target_deployment>'
 )
@@ -956,7 +947,7 @@ headers = {
     'Tenant': '<manager-tenant>',
 }
 payload ={
-    'dependency_creator': '<dependency_creator>', 
+    'dependency_creator': '<dependency_creator>',
     'source_deployment': '<source_deployment>',
     'target_deployment': '<target_deployment>'
 }

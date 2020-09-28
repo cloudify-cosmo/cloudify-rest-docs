@@ -324,29 +324,11 @@ client.blueprints.delete(blueprint_id='<blueprint-id>', force=False)
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?force=false'
 headers = {'Tenant': '<manager-tenant>'}
-response = requests.delete(
+requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
 )
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "tenant_name": "default_tenant",
-  "created_at": "2017-04-19T13:35:13.971Z",
-  "updated_at": "2017-04-19T13:35:13.971Z",
-  "created_by": "admin",
-  "private_resource": false,
-  "visibility": "tenant",
-  "plan": {
-    ...
-  },
-  "id": "hello-world"
-}
 ```
 
 `DELETE "{manager-ip}/api/v3.1/blueprints/{blueprint-id}"`
@@ -360,7 +342,7 @@ Property | Type | Description
 `force` | bool | Delete the blueprint, even if there are blueprints that are currently using it. **Supported for Cloudify Manager 4.5.5 and above.**
 
 ### Response
-A `Blueprint` resource.
+No content - HTTP code 204.
 
 
 ## Download Blueprint

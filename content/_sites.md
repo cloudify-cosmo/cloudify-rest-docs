@@ -373,25 +373,11 @@ from requests.auth import HTTPBasicAuth
 url = 'http://<manager_ip>/api/v3.1/sites/<site_name>'
 auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
-response = requests.delete(
+requests.delete(
     url,
     auth=auth,
     headers=headers,
 )
-response.json()
-```
-
-> Response Example
-
-```json
-{
-    "created_at": "2019-06-13T12:38:37.747Z",
-    "created_by": "admin",
-    "name": "Tel-Aviv",
-    "location": "32.080327, 34.767420",
-    "visibility": "tenant",
-    "tenant_name": "default_tenant"
-}
 ```
 
 `DELETE "{manager_ip}/api/v3.1/sites/{site_name}"`
@@ -402,4 +388,4 @@ Deletes a site.
 * `site_name`: The name of the site to delete.
 
 ### Response
-A `Site` resource.
+No content - HTTP code 204.

@@ -186,26 +186,11 @@ client.snapshots.delete(snapshot_id='<snapshot-id>')
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/snapshots/<snapshot-id>'
 headers = {'Tenant': '<manager-tenant>'}
-response = requests.get(
+requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
 )
-response.json()
-```
-
-> Example Response
-
-```json
-{
-  "status": "uploaded",
-  "tenant_name": "default_tenant",
-  "created_at": "2017-05-11T17:04:22.989Z",
-  "created_by": "admin",
-  "private_resource": false,
-  "error": "",
-  "id": "snapshot4"
-}
 ```
 
 `DELETE "{manager-ip}/api/v3.1/snapshots/{snapshot-id}"`
@@ -216,7 +201,7 @@ Deletes an existing snapshot.
 * `snapshot-id`: The id of the snapshot to be deleted.
 
 ### Response
-An empty [Snapshot](#the-snapshot-resource) resource, with one non-empty field (its id).
+No content - HTTP code 204.
 
 ## Restore Snapshot
 

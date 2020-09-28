@@ -379,7 +379,7 @@ A `Group` resource.
 
 ## Delete User Group
 
-> Request Example - Get tenants and users counts
+> Request Example
 
 ```shell
 $ curl -X DELETE \
@@ -406,67 +406,11 @@ from requests.auth import HTTPBasicAuth
 url = 'http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>'
 auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
-response = requests.delete(
+requests.delete(
     url,
     auth=auth,
     headers=headers,
 )
-```
-
-> Response Example - Get tenants and users counts
-
-```json
-{
-    "ldap_dn": "ldap_group_dn",
-    "name": "<user_group_name_to_delete>",
-    "tenants": 0,
-    "users": 0
-}
-```
-
-> Request Example - Get tenants and users details
-
-```shell
-$ curl -X DELETE \
-    -H "Tenant: <manager_tenant>" \
-    -u <manager_username>:<manager_password> \
-    "http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>?_get_data=true"
-```
-
-```python
-# Using Cloudify client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-    host='<manager_ip>',
-    username='<manager_username>',
-    password='<manager_password>',
-    tenant='<manager_tenant>',
-)
-client.user_groups.delete('<user_group_name_to_delete>', _get_data=True)
-
-# Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
-url = 'http://<manager_ip>/api/v3.1/user-groups/<user_group_name_to_delete>?_get_data=true'
-auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
-headers = {'Tenant': '<manager_tenant>'}
-response = requests.delete(
-    url,
-    auth=auth,
-    headers=headers,
-)
-```
-
-> Response Example - Get tenants and users details
-
-```json
-{
-    "ldap_dn": "ldap_group_dn",
-    "name": "<user_group_name_to_delete>",
-    "tenants": {},
-    "users": []
-}
 ```
 
 `DELETE "{manager_ip}/api/v3.1/user-groups/{user_group_name_to_delete}"`
@@ -477,10 +421,7 @@ Deletes a user group.
 * `user_group_name_to_delete`: The name of the user group to delete.
 
 ### Response
-A `Group` resource.
-
-
-
+No content - HTTP code 204.
 
 
 ## Add User to User Group
@@ -614,7 +555,7 @@ A `Group` resource.
 
 ## Remove User from User Group
 
-> Request Example - Get tenants and users counts
+> Request Example
 
 ```shell
 $ curl -X DELETE \
@@ -647,79 +588,12 @@ payload = {
     'username': '<username_to_remove>'
     'group_name': '<group_name>',
 }
-response = requests.delete(
+requests.delete(
     url,
     auth=auth,
     headers=headers,
     json=payload,
 )
-```
-
-> Response Example - Get tenants and users counts
-
-```json
-{
-  "ldap_dn": "ldap_group_dn",
-  "tenants": 0,
-  "name": "<group_name>",
-  "users": 0
-}
-```
-
-> Request Example - Get tenants and users details
-
-```shell
-$ curl -X DELETE \
-    -H "Content-Type: application/json" \
-    -H "Tenant: <manager_tenant>" \
-    -u <manager_username>:<manager_password> \
-    -d '{"username": <username_to_remove>, "group_name": <group_name>}' \
-    "http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true"
-```
-
-```python
-# Using Cloudify client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-    host='<manager_ip>',
-    username='<manager_username>',
-    password='<manager_password>',
-    tenant='<manager_tenant>',
-)
-client.user_groups.remove_user(
-    '<username_to_remove>',
-    '<group_name>',
-    _get_data=True,
-)
-
-# Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
-url = 'http://<manager_ip>/api/v3.1/user-groups/users?_get_data=true'
-auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
-headers = {'Tenant': '<manager_tenant>'}
-payload = {
-    'username': '<username_to_remove>'
-    'group_name': '<group_name>',
-}
-response = requests.delete(
-    url,
-    auth=auth,
-    headers=headers,
-    json=payload,
-)
-```
-
-> Response Example - Get tenants and users details
-
-```json
-{
-  "ldap_dn": "ldap_group_dn",
-  "tenants": {},
-  "name": "<group_name>",
-  "users": []
-}
 ```
 
 `DELETE "{manager-ip}/api/v3.1/user-groups/users"`
@@ -734,4 +608,4 @@ Property | Type | Description
 `group_name` | string | The name of the group from which to remove the user.
 
 ### Response
-A `Group` resource.
+No content - HTTP code 204.

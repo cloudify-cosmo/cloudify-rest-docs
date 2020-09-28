@@ -357,28 +357,11 @@ from requests.auth import HTTPBasicAuth
 url = 'http://<manager_ip>/api/v3.1/secrets/<secret_key>'
 auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
-response = requests.delete(
+requests.delete(
     url,
     auth=auth,
     headers=headers,
 )
-response.json()
-```
-
-> Response Example
-
-```json
-{
-    "created_at": "2017-11-24T11:01:05.357Z",
-    "created_by": "admin",
-    "key": "<secret_key>",
-    "private_resource": false,
-    "visibility": "tenant",
-    "tenant_name": "default_tenant",
-    "updated_at": "2017-11-24T12:05:30.190Z",
-    "value": "<secret_value>",
-    "is_hidden_value": false
-}
 ```
 
 `DELETE "{manager_ip}/api/v3.1/secrets/{secret_key}"`
@@ -389,8 +372,7 @@ Deletes a secret.
 * `secret_key`: The key of the secret to delete.
 
 ### Response
-A `Secret` resource.
-
+No content - HTTP code 204.
 
 
 ## Set Global Secret

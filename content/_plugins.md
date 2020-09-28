@@ -158,14 +158,13 @@ headers = {
 }
 querystring = {'_include': 'id'}
 payload = {'force': False}
-response = requests.delete(
+requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
     json=payload,
 )
-response.json()
 ```
 
 `DELETE "{manager-ip}/api/v3.1/plugins/{plugin-id}"`
@@ -181,7 +180,7 @@ Property | Default | Description
 `force`  |  false  | Specifies whether to force plugin deletion even if there are deployments that currently use it.
 
 ### Response
-The deleted `Plugin` resource.
+No content - HTTP code 204.
 
 
 ## Upload Plugin

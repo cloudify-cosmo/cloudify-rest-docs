@@ -160,7 +160,7 @@ Only admin users can execute this operation.
 * `hostname`: The hostname of the node to remove from the cluster
 
 ### Response
-A `ManagerItem` resource representing the node that was removed from the cluster.
+No content - HTTP code 204.
 
 ## Cluster Status
 

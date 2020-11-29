@@ -21,6 +21,7 @@ Attribute | Type | Description
 `tenant_name` | string | The name of the tenant that owns the deployment.
 `updated_at` | datetime | The time the deployment was last updated at.
 `workflows` | list | A list of workflows that can be executed on a deployment.
+`labels` | list | A list of the deployment's labels. **Supported for Cloudify Manager 5.1.1 and above.**
 
 
 ## List Deployments
@@ -159,7 +160,7 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>", "site_name": "<site name>"}' \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>", "site_name": "<site name>", "labels": [{"<key1>": "<val1>"}, {"<key2>": "<val2>"}]}' \
     "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 
@@ -170,7 +171,8 @@ client.deployments.create(
     deployment_id='<deployment-id>',
     inputs={...},
     visibility='<visibility>',
-    site_name='<site name>'
+    site_name='<site name>',
+    labels=[{'<key1': '<val1>', '<key2>': '<val2>'}]
 )
 
 # Using requests
@@ -184,7 +186,8 @@ payload ={
     'blueprint_id': '<blueprint-id>',
     'inputs': {...},
     'visibility': '<visibility>',
-    'site_name': '<site name>'
+    'site_name': '<site name>',
+    'labels': [{'<key1>': '<val1>'}, {'<key2>': '<val2>'}]
 }
 response = requests.put(
     url,
@@ -217,6 +220,7 @@ Property | Type | Description
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
 `site_name` | string | The name of the site to assign the new deployment to. **Supported for Cloudify Manager 5.0 and above.**
+`labels` | list | A list of labels to assign to the new deployment. **Supported for Cloudify Manager 5.1.1 and above.**
 `private_resource` | boolean | Optional parameter, if set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).
 `skip_plugins_validation` | boolean | Optional parameter, determines whether to validate if the required deployment plugins exist on the manager (default: False).
 `visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
@@ -337,7 +341,10 @@ client.deployments.set_visibility('<deployment-id>', '<visibility>')
   "id": "deployment_1",
   "outputs": {
     ...
-  }
+  },
+  "labels": [
+    ...
+  ]
 }
 
 ```
@@ -376,7 +383,7 @@ $ curl -X POST \
 
 ```python
 # Python Client
-client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_site=False)
+client.deployments.set_site('<deployment-id>', site_name='<site name>', detach_site=False)
 ```
 
 > Response Example
@@ -405,7 +412,10 @@ client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_s
   "id": "deployment_1",
   "outputs": {
     ...
-  }
+  },
+  "labels": [
+    ...
+  ]
 }
 
 ```
@@ -980,3 +990,183 @@ response.json()
 `DELETE -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}'`
 
 Deletes an inter deployment dependency. **Supported for Cloudify Manager 5.1 and above.**
+
+
+## Update (add / delete) Deployment Labels
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"labels": [{"<key1>": "<val1>"}, {"<key2>": "<val2>"}]}' \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>"
+```
+
+```python
+# Python Client
+client.deployments.update_labels(
+deployment_id='<deployment-id>', 
+labels=[{'<key1>': '<val1>', '<key2>': '<val2>'}]
+)
+```
+
+> Response Example
+
+```json
+{
+  "inputs": {
+    ...
+  },
+  "permalink": null,
+  "description": "deployment_1",
+  "blueprint_id": "blueprint_1",
+  "policy_types": {
+    ...
+  },
+  "tenant_name": "default_tenant",
+  "created_at": "2020-11-29T11:18:01.324Z",
+  "updated_at": "2020-11-29T11:18:01.324Z",
+  "created_by": "admin",
+  "policy_triggers": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "groups": {
+    ...
+  },
+  "workflows": {
+    ...
+  },
+  "id": "deployment_1",
+  "outputs": {
+    ...
+  },
+  "labels": [
+    {
+      "key": "key2",
+      "value": "val2",
+      "created_at": "2020-11-29T11:19:03.324Z",
+      "creator_id": 0
+    },
+    {
+      "key": "key1",
+      "value": "val1",
+      "created_at": "2020-11-29T11:19:03.324Z",
+      "creator_id": 0
+    }
+  ]
+}
+
+```
+
+`PATCH "<manager-ip>/api/v3.1/deployments/{deployment-id}"`
+
+Update the deployment's labels. **Supported for Cloudify Manager 5.1.1 and above.**
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`labels` | list | A list of the new deployment's labels (required).
+
+
+### Response
+A `Deployment` resource.
+
+
+## Get all Deployments' Labels' Keys
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/labels/deployments"
+```
+
+```python
+# Python Client
+client.deployments_labels.list_keys()
+```
+
+> Response Example
+
+```json
+{
+  "metadata": {
+    "pagination": {
+      "total": 5,
+      "size": 1000,
+      "offset": 0
+    }
+  },
+  "items": [
+    "key1",
+    "key2"
+  ]
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/labels/deployments"`
+
+Get all deployments' labels' keys in the specified tenant. **Supported for Cloudify Manager 5.1.1 and above.**
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of all deployments' labels' keys.
+
+
+## Get All Deployments' Labels' Values For a Specified Key
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/labels/deployments/<label-key>"
+```
+
+```python
+# Python Client
+client.deployments_labels.list_key_values(label_key='<label-key>')
+```
+
+> Response Example
+
+```json
+{
+  "metadata": {
+    "pagination": {
+      "total": 5,
+      "size": 1000,
+      "offset": 0
+    }
+  },
+  "items": [
+    "val1"
+  ]
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/labels/deployments/<label-key>"`
+
+Get all deployments' labels' values for the specified key. **Supported for Cloudify Manager 5.1.1 and above.**
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of all deployments' labels' values associated with the specified key.

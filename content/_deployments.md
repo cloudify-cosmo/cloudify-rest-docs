@@ -58,7 +58,7 @@ response.json()
 
 In order to filter out the deployments' list based on the deployments' labels, you can use filter-rules in one of two forms:
 1. Providing the ID of a pre-created filter, using the parameter `_filter_id`. 
-2. Providing a list of filter rules divided by a comma (`,`), using the parameter `_filter_rules`. E.g. `_filter_rules="env=aws,arch!=k8s"`
+2. Providing a list of filter rules separated by a comma (`,`), using the parameter `_filter_rules`. E.g. `_filter_rules="env=aws,arch!=k8s"`
 
 ```shell
 $ curl -X GET \

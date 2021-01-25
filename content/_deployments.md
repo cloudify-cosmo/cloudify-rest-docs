@@ -54,6 +54,58 @@ response = requests.get(
 response.json()
 ```
 
+> Request Example Using Filter-Rules
+
+In order to filter out the deployments' list based on the deployments' labels, you can use filter-rules in one of two forms:
+1. Providing the ID of a pre-created filter, using the parameter `_filter_id`. 
+2. Providing a list of filter rules divided by a comma (`,`), using the parameter `_filter_rules`. E.g. `_filter_rules="env=aws,arch!=k8s"`
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployments?_filter_id=<filter_id>&_include=id"
+    
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployments?_filter_rules=<filter_rules>&_include=id"
+```
+
+```python
+# Using CloudifyClient
+deployments = client.deployments.list(filter_rules={'_filter_id': 'london_sites'})
+for deployment in deployments:
+  print deployment
+
+deployments = client.deployments.list(filter_rules={'_filter_rules': ['env=aws', 'arch is null']})
+for deployment in deployments:
+  print deployment
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id', '_filter_id': 'london_sites'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+
+url = 'http://<manager-ip>/api/v3.1/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id', '_filter_rules': ['env=aws', 'arch is null']}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
 > Response Example
 
 ```json

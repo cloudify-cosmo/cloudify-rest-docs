@@ -12,7 +12,7 @@ Filter-rules can be of the following forms:
 
 * `x!=y`: All objects with the label `x:<any value other than y>`.  
 
-* `x!=[w,z]`: All objects with the label `x:<any value other than y and z>`.
+* `x!=[y,z]`: All objects with the label `x:<any value other than y and z>`.
 
 * `x is null`: All objects that don’t have the label `x:<any value>`.
 

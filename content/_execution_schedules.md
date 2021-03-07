@@ -8,12 +8,12 @@ Attribute | Type | Description
 --------- | ------- | -------
 `id` | string | The name of the execution schedule.
 `deployment_id` | string | The id of the deployment to which the scheduled execution is related.
-`workflow_id` | string | he id of the workflow which the scheduled execution runs.
+`workflow_id` | string | The id of the workflow which the scheduled execution runs.
 `parameters` | object | A dict of the workflow parameters passed when starting the scheduled execution.
 `created_at` | datetime | The time the execution schedule was created at.
 `next_occurrence` | datetime | The calculated next time in which the scheduled workflow should be executed at.
 `since` | datetime | The earliest time the scheduled workflow should be executed at.
-`until` | datetime | The earliest time the scheduled workflow may be executed at (optional).
+`until` | datetime | The latest time the scheduled workflow may be executed at (optional).
 `stop_on_fail` | boolean | Whether the scheduler should stop attempting to run the execution once it failed (**False** by default).
 `enabled` | boolean | Whether this schedule is currently enabled (**True** by default).
 
@@ -200,14 +200,14 @@ Property | Type | Description
 --------- | ------- | -----------
 `deployment_id` | string | The deployment's id to execute a workflow for.
 `workflow_id` | string | The workflow id/name that the schedule should execute.
-`execution_arguments` | object | A dictionary of arguments passed directly to the  workflow execution. May contain the following keys:
+`execution_arguments` | object | A dictionary of arguments passed directly to the workflow execution.
 `parameters` | object | A dictionary containing parameters to be passed to the execution when starting it.
 `since` | string | A string representing the earliest date and time this workflow should be executed at, of the format `%Y-%m-%d %H:%M:%S`. Must be provided if no `rrule` is given.
-`until` | string | A string representing latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S`. May be empty. 
+`until` | string | A string representing the latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S` (optional).
 `frequency` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`. Must be provided if no `rrule` is given and `count` is other than 1.
 `count` | integer | Maximum number of times to run the execution. If left empty, there's no limit on repetition.
 `weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`. If left empty, the execution will run on any weekday.
-`rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Mutually exclusive with `frequency`, `count` and `weekdays`.
+`rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Optional. Mutually exclusive with `frequency`, `count` and `weekdays`.
 `slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes). If not provided, defaults to 0. 
 `stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it. If not provided, defaults to `false`.
 
@@ -291,16 +291,18 @@ Updates an existing execution schedule.
 * `schedule-id`: The id of the execution schedule to update.
 
 ### Request Body
+All fields below are optional.
+
 Property | Type | Description
 --------- | ------- | -----------
-`since` | string | A string representing the earliest date and time this workflow should be executed at, of the format `%Y-%m-%d %H:%M:%S`. Must be provided.
-`until` | string | A string representing latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S`. May be empty. 
-`frequency` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`. Must be provided if no `rrule` is given and `count` is other than 1.
-`count` | integer | Maximum number of times to run the execution. If left empty, there's no limit on repetition.
-`weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`. If left empty, the execution will run on any weekday.
+`since` | string | A string representing the earliest date and time this workflow should be executed at, of the format `%Y-%m-%d %H:%M:%S`.
+`until` | string | A string representing the latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S`.
+`frequency` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`.
+`count` | integer | Maximum number of times to run the execution.
+`weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`.
 `rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Mutually exclusive with `frequency`, `count` and `weekdays`.
-`slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes). If not provided, defaults to 0. 
-`stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it. If not provided, defaults to `false`.
+`slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes).
+`stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it.
 `enabled` | boolean | Set to false to make the scheduler ignore this schedule, until set to true again.
 
 Valid **frequency** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`.

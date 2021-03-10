@@ -339,7 +339,7 @@ $ curl -X DELETE \
 ```python
 # Using CloudifyClient
 client.execution_schedules.delete(
-    schedule_id='<deployments-id>',
+    schedule_id='<schedule-id>',
     deployment_id='<deployment-id>'
 )
 

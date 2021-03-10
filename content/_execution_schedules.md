@@ -88,18 +88,25 @@ $ curl -X GET \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
     "http://<manager-ip>/api/v3.1/executions-schedules/<schedule-id>?
+    deployment_id=<deployment-id>&
     _include=id,deployment_id,workflow_id,next_occurrence"
 ```
 
 ```python
 # Using CloudifyClient
-client.execution_schedules.get(schedule_id='<schedule_id>',
-                               _include=['id', 'deployment_id', 'workflow_id', 'next_occurrence'])
+client.execution_schedules.get(
+    schedule_id='<schedule_id>',
+    deployment_id='<deployment_id>',
+    _include=['id', 'deployment_id', 'workflow_id', 'next_occurrence']
+)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/executions-schedules/<schedule_id>'
 headers = {'Tenant': '<manager-tenant>'}
-querystring = {'_include': 'id,deployment_id,workflow_id,next_occurrence'}
+querystring = {
+    'deployment_id': '<deployment-id>',
+    '_include': 'id,deployment_id,workflow_id,next_occurrence'
+}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
@@ -120,12 +127,13 @@ response.json()
 }
 ```
 
-`GET "{manager-ip}/api/v3.1/execution-schedules/{schedule-id}"`
+`GET "{manager-ip}/api/v3.1/execution-schedules/{schedule-id}?deployment_id={deployment-id}"`
 
 Gets an execution schedule.
 
 ### URI Parameters
 * `schedule-id`: The id of the execution schedule.
+* `deployment-id`: The id of the deployment to which the schedule belongs.
 
 ### Response
 An `ExecutionSchedule` resource.
@@ -140,9 +148,10 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"deployment_id": "<deployment-id>", "workflow_id": "install", 
-    "since": "2021-1-1 12:00:00", "until": "2022-1-1 12:00:00", "frequency": "1 day"}' \
-    "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?_include=id"
+    -d '{"workflow_id": "install", "since": "2021-1-1 12:00:00", 
+    "until": "2022-1-1 12:00:00", "frequency": "1 day"}' \
+    "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?
+    deployment_id=<deployment-id>&_include=id"
 ```
 
 ```python
@@ -162,9 +171,8 @@ headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
 }
-querystring = {'_include': 'id'}
+querystring = {'deployment_id': '<deployment-id>', '_include': 'id'}
 payload ={
-    'deployment_id': '<deployment-id>',
     'workflow_id': 'install',
     'since': '2021-1-1 12:00:00',
     'until': '2022-1-1 12:00:00',
@@ -188,17 +196,17 @@ response.json()
 }
 ```
 
-`PUT -d '{"deployment_id": "<deployment-id>", "workflow_id": "install", ...}' "{manager-ip}/api/v3.1/execution-schedules/{schedule-id}"`
+`PUT -d '{"workflow_id": "install", ...}' "{manager-ip}/api/v3.1/execution-schedules/{schedule-id}?deployment_id={deployment-id}"`
 
 Creates a new execution schedule.
 
 ### URI Parameters
 * `schedule-id`: The id of the new execution schedule.
+* `deployment-id`: The id of the deployment for which to schedule the workflow.
 
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-`deployment_id` | string | The deployment's id to execute a workflow for.
 `workflow_id` | string | The workflow id/name that the schedule should execute.
 `execution_arguments` | object | A dictionary of arguments passed directly to the workflow execution.
 `parameters` | object | A dictionary containing parameters to be passed to the execution when starting it.
@@ -239,13 +247,15 @@ $ curl -X PATCH \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"since": "2021-1-1 12:00:00", "until": "2022-1-1 12:00:00", "frequency": "1 day", "enabled": True}' \
-    "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?_include=id"
+    "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?
+    deployment_id=<deployment-id>&_include=id"
 ```
 
 ```python
 # Using CloudifyClient
 client.execution_schedules.update(
     schedule_id='<schedule-id>',
+    deployment_id='<deployment-id>',
     since='2021-1-1 12:00:00',
     until='2022-1-1 12:00:00',
     frequency='1 day',
@@ -258,7 +268,7 @@ headers = {
     'Content-Type': 'application/json',
     'Tenant': '<manager-tenant>',
 }
-querystring = {'_include': 'id'}
+querystring = {'deployment_id': '<deployment-id>', '_include': 'id'}
 payload ={
     'since': '2021-1-1 12:00:00',
     'until': '2022-1-1 12:00:00',
@@ -283,12 +293,13 @@ response.json()
 }
 ```
 
-`PATCH -d '{"since": "2021-1-1 12:00:00", "until": "2022-1-1 12:00:00", ...}' "{manager-ip}/api/v3.1/execution-schedules/{schedule-id}"`
+`PATCH -d '{"since": "2021-1-1 12:00:00", "until": "2022-1-1 12:00:00", ...}' "{manager-ip}/api/v3.1/execution-schedules/{schedule-id}?deployment_id={deployment-id}"`
 
 Updates an existing execution schedule.
 
 ### URI Parameters
 * `schedule-id`: The id of the execution schedule to update.
+* `deployment-id`: The id of the deployment to which the schedule belongs.
 
 ### Request Body
 All fields below are optional.
@@ -322,29 +333,35 @@ An `ExecutionSchedule` resource.
 $ curl -X DELETE \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/executions-schedules/<schedule-id>"
+    "http://<manager-ip>/api/v3.1/executions-schedules/<schedule-id>?deployment_id=<deployment-id>"
 ```
 
 ```python
 # Using CloudifyClient
-client.execution_schedules.delete(schedule_id='<deployments-id>')
+client.execution_schedules.delete(
+    schedule_id='<deployments-id>',
+    deployment_id='<deployment-id>'
+)
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/executions-schedules/<schedule-id>'
 headers = {'content-type': 'application/json'}
+querystring = {'deployment_id': '<deployment-id>'}
 requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
+    params=querystring,
 )
 ```
 
-`DELETE "{manager-ip}/api/v3.1/executions-schedules/{schedule-id}"`
+`DELETE "{manager-ip}/api/v3.1/executions-schedules/{schedule-id}?deployment_id={deployment-id}"`
 
 Deletes an execution schedule.
 
 ### URI Parameters
 * `schedule-id`: The id of the execution schedule.
+* `deployment-id`: The id of the deployment to which the schedule belongs.
 
 ### Response
 No content - HTTP code 204.

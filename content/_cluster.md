@@ -162,6 +162,7 @@ Only admin users can execute this operation.
 ### Response
 No content - HTTP code 204.
 
+
 ## Cluster Status
 
 **Supported for Cloudify Manager 5.0.5 and above.**
@@ -241,15 +242,6 @@ response.json()
             ...
 
           }
-        }
-      },
-      "is_external": false
-    },
-    "db": {
-      "status": "OK",
-      "nodes": {
-        "cfy-db": {
-          "status": "OK",
           "version": "5.1",
           "public_ip": null,
           "private_ip": "172.20.0.2",
@@ -315,13 +307,6 @@ response.json()
       "nodes": {
         "cfy-manager": {
           "status": "OK",
-          "version": "5.1",
-          "public_ip": null,
-          "private_ip": "172.20.0.2",
-          "services": {
-
-            ...
-
           }
         }
       },

@@ -21,6 +21,7 @@ Attribute | Type | Description
 `tenant_name` | string | The name of the tenant that owns the deployment.
 `updated_at` | datetime | The time the deployment was last updated at.
 `workflows` | list | A list of workflows that can be executed on a deployment.
+`labels` | list | A list of the deployment's labels. **Supported for Cloudify Manager 5.1.1 and above.**
 
 
 ## List Deployments
@@ -44,6 +45,58 @@ for deployment in deployments:
 url = 'http://<manager-ip>/api/v3.1/deployments'
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+```
+
+> Request Example Using Filter-Rules
+
+In order to filter out the deployments' list based on the deployments' labels, you can use filter-rules in one of two forms:
+1. Providing the ID of a pre-created filter, using the parameter `_filter_id`. 
+2. Providing a list of filter rules separated by a comma (`,`), using the parameter `_filter_rules`. E.g. `_filter_rules="env=aws,arch!=k8s"`
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployments?_filter_id=<filter_id>&_include=id"
+    
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/deployments?_filter_rules=<filter_rules>&_include=id"
+```
+
+```python
+# Using CloudifyClient
+deployments = client.deployments.list(filter_rules={'_filter_id': 'london_sites'})
+for deployment in deployments:
+  print deployment
+
+deployments = client.deployments.list(filter_rules={'_filter_rules': ['env=aws', 'arch is null']})
+for deployment in deployments:
+  print deployment
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id', '_filter_id': 'london_sites'}
+response = requests.get(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+response.json()
+
+url = 'http://<manager-ip>/api/v3.1/deployments'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {'_include': 'id', '_filter_rules': ['env=aws', 'arch is null']}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
@@ -159,7 +212,7 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>", "site_name": "<site name>"}' \
+    -d '{"blueprint_id": "<blueprint-id>", "inputs": {...}, "visibility": "<visibility>", "site_name": "<site name>", "labels": [{"<key1>": "<val1>"}, {"<key2>": "<val2>"}]}' \
     "http://<manager-ip>/api/v3.1/deployments/<deployment-id>?_include=id"
 ```
 
@@ -170,7 +223,8 @@ client.deployments.create(
     deployment_id='<deployment-id>',
     inputs={...},
     visibility='<visibility>',
-    site_name='<site name>'
+    site_name='<site name>',
+    labels=[{'<key1': '<val1>', '<key2>': '<val2>'}]
 )
 
 # Using requests
@@ -184,7 +238,8 @@ payload ={
     'blueprint_id': '<blueprint-id>',
     'inputs': {...},
     'visibility': '<visibility>',
-    'site_name': '<site name>'
+    'site_name': '<site name>',
+    'labels': [{'<key1>': '<val1>'}, {'<key2>': '<val2>'}]
 }
 response = requests.put(
     url,
@@ -217,6 +272,7 @@ Property | Type | Description
 `blueprint_id` | string | The id of the blueprint the new deployment will be based on (required).
 `inputs` | object | The dictionary containing key value pairs which represents the deployment inputs.
 `site_name` | string | The name of the site to assign the new deployment to. **Supported for Cloudify Manager 5.0 and above.**
+`labels` | list | A list of labels to assign to the new deployment. **Supported for Cloudify Manager 5.1.1 and above.**
 `private_resource` | boolean | Optional parameter, if set to True the uploaded resource will only be accessible by its creator. Otherwise, the resource is accessible by all users that belong to the same tenant (default: False).
 `skip_plugins_validation` | boolean | Optional parameter, determines whether to validate if the required deployment plugins exist on the manager (default: False).
 `visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
@@ -226,7 +282,7 @@ Valid visibility values are:
 * `private`: The resource is visible to the user that created the resource, the tenant’s managers and the system’s admins.
 * `tenant`: The resource is visible to all users in the current tenant. (Default value)
 * `global`: The resource is visible to all users in all tenants across the manager.
-A deployment can only be global if the blueprint from which it was created is 
+A deployment can only be global if the blueprint from which it was created is
 also global. Only administrators or users with access to the tenant on which
 the deployment was created have permissions to execute workflow on it. **Supported for Cloudify Manager 4.5.5 and above.**
 
@@ -256,28 +312,21 @@ headers = {'content-type': 'application/json'}
 querystring = {
     'delete_logs': True
 }
-response = requests.delete(
+requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
     params=querystring,
 )
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "id": "hello4"
-}
 ```
 
 `DELETE "{manager-ip}/api/v3.1/deployments/{deployment-id}"`
 
 Deletes a deployment.
 
-An error is raised if the deployment has any live node instances. In order to ignore this validation, the `ignore_live_nodes` argument in request body can be used.
+An error is raised if the deployment has any live node instances, or there
+ are installations which depend on this deployment. In order to ignore this
+ validation, the `force` argument in request body can be used.
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
@@ -287,12 +336,12 @@ An error is raised if the deployment has any live node instances. In order to ig
 ### Request Body
 Property | Type | Description
 --------- | ------- | -----------
-`ignore_live_nodes` | boolean | Specifies whether to ignore the live nodes validation.
+`force` | boolean | Specifies whether to force deployment deletion even if there are existing live nodes for it, or existing installations which depend on it
 
 
 
 ### Response
-A `Deployment` resource.
+No content - HTTP code 204.
 
 
 ## Set Deployment Visibility
@@ -344,7 +393,10 @@ client.deployments.set_visibility('<deployment-id>', '<visibility>')
   "id": "deployment_1",
   "outputs": {
     ...
-  }
+  },
+  "labels": [
+    ...
+  ]
 }
 
 ```
@@ -383,7 +435,7 @@ $ curl -X POST \
 
 ```python
 # Python Client
-client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_site=False)
+client.deployments.set_site('<deployment-id>', site_name='<site name>', detach_site=False)
 ```
 
 > Response Example
@@ -412,7 +464,10 @@ client.deployments.set_site('<deployment-id>', site_name='<site name'>, detach_s
   "id": "deployment_1",
   "outputs": {
     ...
-  }
+  },
+  "labels": [
+    ...
+  ]
 }
 
 ```
@@ -725,7 +780,7 @@ response.json()
 
 ```json
 {
-  "deployment_id": "dep", 
+  "deployment_id": "dep",
   "outputs": {
     "output_1": "node_vbs4o4",
     "output_2": "some_value"
@@ -774,7 +829,7 @@ response.json()
 
 ```json
 {
-  "deployment_id": "dep", 
+  "deployment_id": "dep",
   "capabilities": {
     "capability_1": "node_vbs4o4",
     "capability_2": "some_capability"
@@ -792,3 +847,378 @@ Gets deployment capabilities. **Supported for Cloudify Manager 4.5.5 and above.*
 
 ### Response
 A `DeploymentOutput` resource.
+
+## Get Inter Deployment Dependencies List
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies"
+```
+
+```python
+# Using CloudifyClient
+client.inter_deployment_dependencies.list()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
+headers = {'Tenant': '<manager-tenant>'}
+response = requests.get(
+    url,
+    auth=('<manager-username>', '<manager-password>'),
+    headers=headers,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "items": [
+    {
+      "dependency_creator": "nodes.jboss.operations.cloudify.interfaces.lifecycle.stop.inputs.fabric_env.key_filename.get_capability",
+      "tenant_name": "default_tenant",
+      "created_at": "2020-04-27T06:51:29.543Z",
+      "visibility": "tenant",
+      "private_resource": false,
+      "target_deployment_id": null,
+      "resource_availability": "tenant",
+      "created_by": "admin",
+      "id": "769589d1-51bf-4f18-bcc5-726fa667a10a",
+      "source_deployment_id": "jboss-app"
+    },
+    {
+      "dependency_creator": "component.infrastructure_vkd2zx",
+      "tenant_name": "default_tenant",
+      "created_at": "2020-04-27T06:51:43.124Z",
+      "visibility": "tenant",
+      "private_resource": false,
+      "target_deployment_id": "infrastructure_vkd2zx",
+      "resource_availability": "tenant",
+      "created_by": "admin",
+      "id": "7392a4ad-484c-4b6f-aa42-75d78e884918",
+      "source_deployment_id": "jboss-app"
+    }
+  ],
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "offset": 0,
+      "size": 1000
+    }
+  }
+}
+```
+
+
+`GET "{manager-ip}/api/v3.1/deployments/inter-deployment-dependencies"`
+
+Gets an inter deployment dependencies list. **Supported for Cloudify Manager 5.1 and above.**
+
+## Create Inter Deployment Dependency
+
+> Request Example
+
+```shell
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies"
+```
+
+```python
+# Using CloudifyClient
+client.inter_deployment_dependencies.create(
+    dependency_creator='<dependency_creator>',
+    source_deployment='<source_deployment>',
+    target_deployment='<target_deployment>'
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload ={
+    'dependency_creator': '<dependency_creator>',
+    'source_deployment': '<source_deployment>',
+    'target_deployment': '<target_deployment>'
+}
+response = requests.put(
+    url,
+    auth=('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "dependency_creator": "component.infrastructure_vkd2zx",
+  "tenant_name": "default_tenant",
+  "created_at": "2020-04-27T08:24:45.938Z",
+  "visibility": "tenant",
+  "private_resource": false,
+  "target_deployment_id": "infrastructure_vkd2zx",
+  "resource_availability": "tenant",
+  "created_by": "admin",
+  "id": "451f2d61-448a-47db-a786-aa8b64c905ed",
+  "source_deployment_id": "jboss-app"
+}
+```
+
+`PUT -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}'`
+
+Creates a new inter deployment dependency. **Supported for Cloudify Manager 5.1 and above.**
+
+## Delete Inter Deployment Dependency
+
+> Request Example
+
+```shell
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}' \
+    "http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies"
+```
+
+```python
+# Using CloudifyClient
+client.inter_deployment_dependencies.delete(
+    dependency_creator='<dependency_creator>',
+    source_deployment='<source_deployment>',
+    target_deployment='<target_deployment>'
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/deployments/inter-deployment-dependencies'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload ={
+    'dependency_creator': '<dependency_creator>',
+    'source_deployment': '<source_deployment>',
+    'target_deployment': '<target_deployment>'
+}
+response = requests.delete(
+    url,
+    auth=('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+> Response Example
+
+```json
+{
+  "dependency_creator": "component.infrastructure_vkd2zx",
+  "tenant_name": "default_tenant",
+  "created_at": "2020-04-27T08:24:45.938Z",
+  "visibility": "tenant",
+  "private_resource": false,
+  "target_deployment_id": "infrastructure_vkd2zx",
+  "resource_availability": "tenant",
+  "created_by": "admin",
+  "id": "451f2d61-448a-47db-a786-aa8b64c905ed",
+  "source_deployment_id": "jboss-app"
+}
+```
+
+`DELETE -d '{"dependency_creator": "<dependency_creator>", "source_deployment": "<source_deployment>", "target_deployment": "<target_deployment>"}'`
+
+Deletes an inter deployment dependency. **Supported for Cloudify Manager 5.1 and above.**
+
+
+## Update (add / delete) Deployment Labels
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"labels": [{"<key1>": "<val1>"}, {"<key2>": "<val2>"}]}' \
+    "http://<manager-ip>/api/v3.1/deployments/<deployment-id>"
+```
+
+```python
+# Python Client
+client.deployments.update_labels(
+deployment_id='<deployment-id>', 
+labels=[{'<key1>': '<val1>', '<key2>': '<val2>'}]
+)
+```
+
+> Response Example
+
+```json
+{
+  "inputs": {
+    ...
+  },
+  "permalink": null,
+  "description": "deployment_1",
+  "blueprint_id": "blueprint_1",
+  "policy_types": {
+    ...
+  },
+  "tenant_name": "default_tenant",
+  "created_at": "2020-11-29T11:18:01.324Z",
+  "updated_at": "2020-11-29T11:18:01.324Z",
+  "created_by": "admin",
+  "policy_triggers": {
+    ...
+  },
+  "private_resource": false,
+  "visibility": "tenant",
+  "groups": {
+    ...
+  },
+  "workflows": {
+    ...
+  },
+  "id": "deployment_1",
+  "outputs": {
+    ...
+  },
+  "labels": [
+    {
+      "key": "key2",
+      "value": "val2",
+      "created_at": "2020-11-29T11:19:03.324Z",
+      "creator_id": 0
+    },
+    {
+      "key": "key1",
+      "value": "val1",
+      "created_at": "2020-11-29T11:19:03.324Z",
+      "creator_id": 0
+    }
+  ]
+}
+
+```
+
+`PATCH "<manager-ip>/api/v3.1/deployments/{deployment-id}"`
+
+Update the deployment's labels. **Supported for Cloudify Manager 5.1.1 and above.**
+
+### URI Parameters
+* `deployment-id`: The id of the deployment to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`labels` | list | A list of the new deployment's labels (required).
+
+
+### Response
+A `Deployment` resource.
+
+
+## Get all Deployments' Labels' Keys
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/labels/deployments"
+```
+
+```python
+# Python Client
+client.deployments_labels.list_keys()
+```
+
+> Response Example
+
+```json
+{
+  "metadata": {
+    "pagination": {
+      "total": 5,
+      "size": 1000,
+      "offset": 0
+    }
+  },
+  "items": [
+    "key1",
+    "key2"
+  ]
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/labels/deployments"`
+
+Get all deployments' labels' keys in the specified tenant. **Supported for Cloudify Manager 5.1.1 and above.**
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of all deployments' labels' keys.
+
+
+## Get All Deployments' Labels' Values For a Specified Key
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/labels/deployments/<label-key>"
+```
+
+```python
+# Python Client
+client.deployments_labels.list_key_values(label_key='<label-key>')
+```
+
+> Response Example
+
+```json
+{
+  "metadata": {
+    "pagination": {
+      "total": 5,
+      "size": 1000,
+      "offset": 0
+    }
+  },
+  "items": [
+    "val1"
+  ]
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/labels/deployments/<label-key>"`
+
+Get all deployments' labels' values for the specified key. **Supported for Cloudify Manager 5.1.1 and above.**
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of all deployments' labels' values associated with the specified key.

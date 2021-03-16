@@ -152,7 +152,7 @@ $ curl -X DELETE -u user:password "http://<manager-ip>/api/v3.1/managers/<hostna
 
 Removes a node from the cluster. The node disconnects from the cluster and
 disables all cluster mechanisms. You can rejoin it to the cluster.
-The node is still connected to the DB of the cluster so it is highly 
+The node is still connected to the DB of the cluster so it is highly
 recommended to dispose of it once removed.
 Only admin users can execute this operation.
 
@@ -160,7 +160,8 @@ Only admin users can execute this operation.
 * `hostname`: The hostname of the node to remove from the cluster
 
 ### Response
-A `ManagerItem` resource representing the node that was removed from the cluster.
+No content - HTTP code 204.
+
 
 ## Cluster Status
 
@@ -201,26 +202,103 @@ response.json()
       "nodes": {
         "cfy-manager": {
           "status": "OK",
-          "version": "5.0.5",
+          "version": "5.1",
           "public_ip": "172.20.0.2",
-          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
           "private_ip": "172.20.0.2",
           "services": {
-            <Cloudify manager's services status data>
-      },
-      "is_external": false
-    },
-    "db": {
-      "status": "OK",
-      "nodes": {
-        "cfy-db": {
-          "status": "OK",
-          "version": "5.0.5",
+            "Blackbox Exporter": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Blackbox Exporter",
+                  "instances": [
+                    {
+                      "Description": "Prometheus blackbox exporter (HTTP/HTTPS/TCP pings)",
+                      "Id": "blackbox_exporter.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "blackbox_exporter.service"
+                }
+              },
+              "status": "Active"
+            },
+            "Cloudify Composer": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Cloudify Composer",
+                  "instances": [
+                    {
+                      "Description": "Cloudify Composer service",
+                      "Id": "cloudify-composer.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "cloudify-composer.service"
+                }
+              },
+              "status": "Active"
+            },
+
+            ...
+
+          }
+          "version": "5.1",
           "public_ip": null,
-          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
           "private_ip": "172.20.0.2",
           "services": {
-            <DB's status data>
+            "Node Exporter": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Node Exporter",
+                  "instances": [
+                    {
+                      "Description": "Prometheus exporter for hardware and OS metrics",
+                      "Id": "node_exporter.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "node_exporter.service"
+                }
+              },
+              "status": "Active"
+            },
+            "PostgreSQL 9.5 database server": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "PostgreSQL 9.5 database server",
+                  "instances": [
+                    {
+                      "Description": "PostgreSQL 9.5 database server",
+                      "Id": "postgresql-9.5.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "postgresql-9.5.service"
+                }
+              },
+              "status": "Active"
+            },
+            "Prometheus": {
+              "extra_info": {
+                "systemd": {
+                  "display_name": "Prometheus",
+                  "instances": [
+                    {
+                      "Description": "Prometheus monitoring service",
+                      "Id": "prometheus.service",
+                      "state": "running"
+                    }
+                  ],
+                  "unit_id": "prometheus.service"
+                }
+              },
+              "status": "Active"
+            },
+
+            ...
+
+          }
+        }
       },
       "is_external": false
     },
@@ -229,17 +307,6 @@ response.json()
       "nodes": {
         "cfy-manager": {
           "status": "OK",
-          "version": "5.0.5",
-          "public_ip": null,
-          "node_id": "89947217-e31b-4042-b68f-01576e02e27c",
-          "private_ip": "172.20.0.2",
-          "services": {
-            "RabbitMQ": {
-              "status": "Active",
-              "is_remote": false,
-              "extra_info": {
-              }
-            }
           }
         }
       },
@@ -254,6 +321,8 @@ response.json()
 Gets Cloudify cluster status.
 
 ### Getting summarised cluster status
+Gets summarised cluster status and determines the return code based on it, i.e.
+return code 200 means: 'OK' or 'Degraded'; return code 500 means: 'FAIL'.
 
 > Request Example
 

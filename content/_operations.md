@@ -160,3 +160,6 @@ client.operations.delete(operation_id)
 
 `DELETE "{manager-ip}/api/v3.1/operations/{operation-id}"`
 Deletes an operation. Note that operations which are terminated should still be stored in persistent storage, and should have their state updated to SUCCEEDED or FAILED rather than be deleted.
+
+### Response
+No content - HTTP code 204.

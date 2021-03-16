@@ -94,11 +94,18 @@ $ curl -X PUT \
 ```
 
 ```python
-# Using CloudifyClient
-client.blueprints._upload(
+# Using CloudifyClient, uploading a zip file
+client.blueprints.publish_archive(
     blueprint_id='<blueprint-id>',
     archive_location='https://url/to/archive/master.zip',
-    application_file_name='<blueprint-id>.yaml',
+    blueprint_filename='<blueprint-id>.yaml',
+    visibility='<visibility>'
+)
+# Using CloudifyClient, uploading a directory
+# (will be tar'ed on the fly)
+client.blueprints.upload(
+    'path/to/blueprint.yaml',
+    '<blueprint-id>',
     visibility='<visibility>'
 )
 
@@ -163,6 +170,75 @@ Valid visibility values are:
 
 ### Response
 A `Blueprint` resource.
+
+## Validate Blueprint
+
+> Request Example
+
+```shell
+# validate a blueprint at blueprint_archive_url
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/validate?application_file_name=blueprint.yaml&visibility=<visibility>&blueprint_archive_url=https://url/to/archive/master.zip"
+
+# validate a  blueprint from uploaded archive
+$ curl -X PUT \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/validate?application_file_name=blueprint.yaml&visibility=<visibility>" -T <blueprint_archive>.tar.gz
+```
+
+```python
+# Using CloudifyClient
+client.blueprints.validate(
+    'path/to/blueprint.yaml',
+    '<blueprint-id>',
+    visibility='<visibility>'
+)
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/validate'
+headers = {'Tenant': '<manager-tenant>'}
+querystring = {
+    'application_file_name': '<blueprint-id>.yaml',
+    'blueprint_archive_url': 'https://url/to/archive/master.zip',
+    'visibility': '<visibility>'
+}
+response = requests.put(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    params=querystring,
+)
+```
+
+`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/validate?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip&visibility=<visibility>"`
+
+Validates a blueprint with Cloudify's manager.
+The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
+It is possible to upload a blueprint from a URL by specifying the URL in the `blueprint_archive_url` request body property.
+
+
+### URI Parameters
+* `blueprint-id`: The id of the uploaded blueprint.
+
+### Request Body
+Property | Type | Description
+-------- | ---- | -----------
+`application_file_name` | string | The main blueprint file name in the blueprint's archive.
+`blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
+`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
+
+Valid visibility values are:
+
+* `private`: The resource is visible to the user that created the resource, the tenant’s managers and the system’s admins.
+* `tenant`: The resource is visible to all users in the current tenant. (Default value)
+* `global`: The resource is visible to all users in all tenants across the manager.
+
+### Response
+`204 NO CONTENT` HTTP status and no body at all if uploaded blueprint and `blueprint-id` were valid.
+`400 BAD REQUEST` HTTP status and a body containing description of the cause of the error otherwise.
 
 ## List Blueprints
 
@@ -248,29 +324,11 @@ client.blueprints.delete(blueprint_id='<blueprint-id>', force=False)
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?force=false'
 headers = {'Tenant': '<manager-tenant>'}
-response = requests.delete(
+requests.delete(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
     headers=headers,
 )
-response.json()
-```
-
-> Response Example
-
-```json
-{
-  "tenant_name": "default_tenant",
-  "created_at": "2017-04-19T13:35:13.971Z",
-  "updated_at": "2017-04-19T13:35:13.971Z",
-  "created_by": "admin",
-  "private_resource": false,
-  "visibility": "tenant",
-  "plan": {
-    ...
-  },
-  "id": "hello-world"
-}
 ```
 
 `DELETE "{manager-ip}/api/v3.1/blueprints/{blueprint-id}"`
@@ -284,7 +342,7 @@ Property | Type | Description
 `force` | bool | Delete the blueprint, even if there are blueprints that are currently using it. **Supported for Cloudify Manager 4.5.5 and above.**
 
 ### Response
-A `Blueprint` resource.
+No content - HTTP code 204.
 
 
 ## Download Blueprint

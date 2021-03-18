@@ -428,7 +428,7 @@ Attribute | Type | Description
 `temp_blueprint_id` | string | The id of the temporary internal blueprint created for the purpose of this plugins update.
 `execution_id` | string | The id of the plugins update execution.
 `deployments_to_update` | list | A list of deployment IDs that are updated in this plugins update.
-`forced` | bool | Whether or not this plugins update was executed regardless of other active/failed plugins updates.
+`forced` | bool | Whether or not this plugins update was forced on a blueprint which is used as a component.
 `created_at` | datetime | The time when the plugins update was started.
 `created_by` | string | The name of the user that started the plugins update.
 `tenant_name` | string | The name of the tenant the plugins update belongs to.
@@ -441,17 +441,17 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT \
+$ curl -X POST \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    -d '{"force": "<force>"}' \
+    -d '{"plugin_names": "<plugin_names>", "to-latest": "<to-latest>", "all-to-latest": "<all-to-latest>", "to-minor": "<to-minor>", "all-to-minor": "<all-to-minor>", "force": "<force>", "auto-correct-types": "<auto-correct-types>", "reevaluate-active-statuses": "<reevaluate-active-statuses>"}' \
     "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"
 ```
 
 ```python
 # Python Client
-client.plugins_update.update_plugins(blueprint_id="<blueprint_id>", force="<force>")
+client.plugins_update.update_plugins(blueprint_id="<blueprint_id>", force="<force>", plugin_names="<plugin_names>", to_latest="<to_latest>", all_to_latest="<all_to_latest>", to_minor="<to_minor>", all_to_minor="<all_to_minor>", mapping="<mapping>", auto_correct_types="<auto_correct_types>", reevaluate_active_statuses="<reevaluate_active_statuses>")
 ```
 
 > Response Example
@@ -477,7 +477,7 @@ client.plugins_update.update_plugins(blueprint_id="<blueprint_id>", force="<forc
 
 ```
 
-`PUT "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"`
+`POST "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"`
 
 Update the plugins for that blueprint's deployments. **Supported for Cloudify Manager 5.0.0 and above.**
 
@@ -488,7 +488,14 @@ Update the plugins for that blueprint's deployments. **Supported for Cloudify Ma
 
 Property | Type | Description
 --------- | ------- | -----------
-`force` | boolean | Specifies whether to force the plugin update regardless of other active/failed plugins updates state.
+`plugin_names` | list | Update only the specific plugin in all selected deployments.
+`to_latest` | list | List of plugin names to be upgraded to the latest version.
+`all_to_latest` | boolean | Update all (selected) plugins to the latest version of a plugin
+`to_minor` | list | List of plugin names to be upgraded to the latest minor version.
+`all_to_minor` | boolean | Update all (selected) plugins to the latest minor version of a plugin
+`force` | boolean | Force running the update also in case a blueprint (for which the update is executed) is used as a component
+`auto_correct_types` | boolean | If set, before creating plan for a new deployment, an attempt will be made to cast old inputs' values to the valid types declared in blueprint.
+`reevaluate_active_statuses` | boolean | If set, before attempting to update, the statuses of previous active update operations will be reevaluated based on relevant executions' statuses.  This flag is also passed down to the deployment update flows and has a similar effect on those.
 
 
 ### Response

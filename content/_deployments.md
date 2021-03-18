@@ -531,13 +531,13 @@ $ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>", "update_plugins": "<update_plugins>"}' \
+    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>", "update_plugins": "<update_plugins>", "runtime_eval": "<runtime_eval>", "auto_correct_args": "<auto_correct_args>", "reevaluate_active_statuses": "<reevaluate_active_statuses>"}' \
     "http://<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"
 ```
 
 ```python
 # Python Client
-client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_install>", skip_uninstall="<skip_uninstall>", skip_reinstall="<skip_reinstall>", force="<force>", ignore_failure="<ignore_failure>", install_first="<install_first>", blueprint_id="<blueprint_id>", inputs="<inputs>", reinstall_list="<reinstall_list>")
+client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_install>", skip_uninstall="<skip_uninstall>", skip_reinstall="<skip_reinstall>", force="<force>", ignore_failure="<ignore_failure>", install_first="<install_first>", blueprint_id="<blueprint_id>", inputs="<inputs>", reinstall_list="<reinstall_list>", runtime_eval="<runtime_eval>", auto_correct_args="<auto_correct_args>", reevaluate_active_statuses="<reevaluate_active_statuses>")
 ```
 
 > Response Example
@@ -611,6 +611,9 @@ Property | Type | Description
 `inputs` | object | Dictionary containing inputs to update in the deployment
 `reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
 `preview` | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.**
+`runtime_eval` | boolean | If set, all intrinsic functions will only be evaluated at runtime, and no intrinsic functions will be evaluated at parse time (such as _get_input_, _get_property_)
+`auto_correct_args` | boolean | If set, before creating plan for a new deployment, an attempt will be made to cast old inputs' values to the valid types declared in blueprint
+`reevaluate_active_statuses` | boolean | If set, before attempting to update, the statuses of previous active update operations will be reevaluated based on relevant executions' statuses
 
 
 ### Response

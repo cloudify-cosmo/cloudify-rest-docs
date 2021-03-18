@@ -605,7 +605,7 @@ Property | Type | Description
 `skip_install` | boolean | Determines whether to skip installing node instances in update workflow
 `skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
 `skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
-`force` | boolean | Force running update even if previous update failed
+`force` | boolean | Force running the update also in case a deployment is used as a component
 `ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
 `install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
 `inputs` | object | Dictionary containing inputs to update in the deployment

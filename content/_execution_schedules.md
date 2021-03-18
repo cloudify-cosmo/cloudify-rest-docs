@@ -149,7 +149,7 @@ $ curl -X PUT \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
     -d '{"workflow_id": "install", "since": "2021-1-1 12:00:00", 
-    "until": "2022-1-1 12:00:00", "frequency": "1 day"}' \
+    "until": "2022-1-1 12:00:00", "recurrence": "1 day"}' \
     "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?
     deployment_id=<deployment-id>&_include=id"
 ```
@@ -162,7 +162,7 @@ client.execution_schedules.create(
     workflow_id='install',
     since='2021-1-1 12:00:00',
     until='2022-1-1 12:00:00',
-    frequency='1 day',
+    recurrence='1 day',
 )
 
 # Using requests
@@ -176,7 +176,7 @@ payload ={
     'workflow_id': 'install',
     'since': '2021-1-1 12:00:00',
     'until': '2022-1-1 12:00:00',
-    'frequency': '1 day',
+    'recurrence': '1 day',
 }
 response = requests.put(
     url,
@@ -212,10 +212,10 @@ Property | Type | Description
 `parameters` | object | A dictionary containing parameters to be passed to the execution when starting it.
 `since` | string | A string representing the earliest date and time this workflow should be executed at, of the format `%Y-%m-%d %H:%M:%S`. Must be provided if no `rrule` is given.
 `until` | string | A string representing the latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S` (optional).
-`frequency` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`. Must be provided if no `rrule` is given and `count` is other than 1.
+`recurrence` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`. Must be provided if no `rrule` is given and `count` is other than 1.
 `count` | integer | Maximum number of times to run the execution. If left empty, there's no limit on repetition.
 `weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`. If left empty, the execution will run on any weekday.
-`rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Optional. Mutually exclusive with `frequency`, `count` and `weekdays`.
+`rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Optional. Mutually exclusive with `recurrence`, `count` and `weekdays`.
 `slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes). If not provided, defaults to 0. 
 `stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it. If not provided, defaults to `false`.
 
@@ -228,10 +228,10 @@ Valid execution arguments are:
 * `queue` (boolean): Whether to queue the execution if it can't run. **Useless in schedules**: all executions which cannot run will be queued.
 See Executions for more details on these.
 
-Valid **frequency** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`. 
+Valid **recurrence** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`. 
 
 Valid **weekdays** expressions are any of `su|mo|tu|we|th|fr|sa`, or a comma-separated list of them. 
-These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` frequency. 
+These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` recurrence. 
 
 ### Response
 An `ExecutionSchedule` resource.
@@ -246,7 +246,7 @@ $ curl -X PATCH \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"since": "2021-1-1 12:00:00", "until": "2022-1-1 12:00:00", "frequency": "1 day", "enabled": True}' \
+    -d '{"since": "2021-1-1 12:00:00", "until": "2022-1-1 12:00:00", "recurrence": "1 day", "enabled": True}' \
     "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?
     deployment_id=<deployment-id>&_include=id"
 ```
@@ -258,7 +258,7 @@ client.execution_schedules.update(
     deployment_id='<deployment-id>',
     since='2021-1-1 12:00:00',
     until='2022-1-1 12:00:00',
-    frequency='1 day',
+    recurrence='1 day',
     enabled=True,
 )
 
@@ -272,7 +272,7 @@ querystring = {'deployment_id': '<deployment-id>', '_include': 'id'}
 payload ={
     'since': '2021-1-1 12:00:00',
     'until': '2022-1-1 12:00:00',
-    'frequency': '1 day',
+    'recurrence': '1 day',
     'enabled': True,
 }
 response = requests.patch(
@@ -308,18 +308,18 @@ Property | Type | Description
 --------- | ------- | -----------
 `since` | string | A string representing the earliest date and time this workflow should be executed at, of the format `%Y-%m-%d %H:%M:%S`.
 `until` | string | A string representing the latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S`.
-`frequency` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`.
+`recurrence` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`.
 `count` | integer | Maximum number of times to run the execution.
 `weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`.
-`rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Mutually exclusive with `frequency`, `count` and `weekdays`.
+`rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Mutually exclusive with `recurrence`, `count` and `weekdays`.
 `slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes).
 `stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it.
 `enabled` | boolean | Set to false to make the scheduler ignore this schedule, until set to true again.
 
-Valid **frequency** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`.
+Valid **recurrence** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`.
 
 Valid **weekdays** expressions are any of `su|mo|tu|we|th|fr|sa`, or a comma-separated list of them.
-These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` frequency. 
+These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` recurrence. 
 
 ### Response
 An `ExecutionSchedule` resource.

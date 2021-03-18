@@ -441,7 +441,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT \
+$ curl -X POST \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
@@ -477,7 +477,7 @@ client.plugins_update.update_plugins(blueprint_id="<blueprint_id>", force="<forc
 
 ```
 
-`PUT "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"`
+`POST "<manager-ip>/api/v3.1/plugins-updates/<blueprint-id>/update/initiate"`
 
 Update the plugins for that blueprint's deployments. **Supported for Cloudify Manager 5.0.0 and above.**
 

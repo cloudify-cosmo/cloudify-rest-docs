@@ -52,15 +52,15 @@ response = requests.get(
 {
   "items": [
     {
-      "id": "dep_a", 
-      "next_occurrence": "2021-03-08T18:47:00.000Z", 
-      "workflow_id": "install", 
+      "id": "dep_a",
+      "next_occurrence": "2021-03-08T18:47:00.000Z",
+      "workflow_id": "install",
       "deployment_id": "dep"
     },
     {
-      "id": "dep_b", 
-      "next_occurrence": "2021-03-09T18:47:00.000Z", 
-      "workflow_id": "uninstall", 
+      "id": "dep_b",
+      "next_occurrence": "2021-03-09T18:47:00.000Z",
+      "workflow_id": "uninstall",
       "deployment_id": "dep"
     }
   ],
@@ -120,9 +120,9 @@ response.json()
 
 ```json
 {
-  "id": "dep_a", 
-  "next_occurrence": "2021-03-08T10:16:00.000Z", 
-  "workflow_id": "install", 
+  "id": "dep_a",
+  "next_occurrence": "2021-03-08T10:16:00.000Z",
+  "workflow_id": "install",
   "deployment_id": "dep"
 }
 ```
@@ -148,7 +148,7 @@ $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     --header "Content-Type: application/json" \
     -u <manager-username>:<manager-password> \
-    -d '{"workflow_id": "install", "since": "2021-1-1 12:00:00", 
+    -d '{"workflow_id": "install", "since": "2021-1-1 12:00:00",
     "until": "2022-1-1 12:00:00", "recurrence": "1 day"}' \
     "http://<manager-ip>/api/v3.1/execution-schedules/<schedule-id>?
     deployment_id=<deployment-id>&_include=id"
@@ -214,24 +214,24 @@ Property | Type | Description
 `until` | string | A string representing the latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S` (optional).
 `recurrence` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`. Must be provided if no `rrule` is given and `count` is other than 1.
 `count` | integer | Maximum number of times to run the execution. If left empty, there's no limit on repetition.
-`weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`. If left empty, the execution will run on any weekday.
+`weekdays` | string | A list of strings representing the weekdays on which to run the execution, e.g. `['su', 'mo', 'tu']`. If left empty, the execution will run on any weekday.
 `rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Optional. Mutually exclusive with `recurrence`, `count` and `weekdays`.
-`slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes). If not provided, defaults to 0. 
+`slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes). If not provided, defaults to 0.
 `stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it. If not provided, defaults to `false`.
 
 Valid execution arguments are:
 
 * `allow_custom_parameters` (boolean): Specifies whether to allow custom parameters, which are not present in the parameters schema of the workflow.
-* `force` (boolean): Specifies whether to force the workflow execution in case there is already a running execution. 
-* `dry_run` (boolean): If set to true, no actual actions will be performed. 
+* `force` (boolean): Specifies whether to force the workflow execution in case there is already a running execution.
+* `dry_run` (boolean): If set to true, no actual actions will be performed.
 * `wait_after_fail` (integer): When a task fails, wait this many seconds for already-running tasks to return.
 * `queue` (boolean): Whether to queue the execution if it can't run. **Useless in schedules**: all executions which cannot run will be queued.
 See Executions for more details on these.
 
-Valid **recurrence** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`. 
+Valid **recurrence** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`.
 
-Valid **weekdays** expressions are any of `su|mo|tu|we|th|fr|sa`, or a comma-separated list of them. 
-These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` recurrence. 
+Valid **weekdays** expressions are a list containing any of `su|mo|tu|we|th|fr|sa`.
+These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` recurrence.
 
 ### Response
 An `ExecutionSchedule` resource.
@@ -310,7 +310,7 @@ Property | Type | Description
 `until` | string | A string representing the latest date and time this workflow may be executed at, of the format `%Y-%m-%d %H:%M:%S`.
 `recurrence` | string | A string representing the frequency with which to run the execution, e.g. `2 weeks`.
 `count` | integer | Maximum number of times to run the execution.
-`weekdays` | string | A string representing the weekdays on which to run the execution, e.g. `su,mo,tu`.
+`weekdays` | string | A list of strings representing the weekdays on which to run the execution, e.g. `['su', 'mo', 'tu']`.
 `rrule` | string | A string representing a scheduling rule in the iCalendar format, e.g. `RRULE:FREQ=DAILY;INTERVAL=3`, which means "run every 3 days". Mutually exclusive with `recurrence`, `count` and `weekdays`.
 `slip` | integer | Maximum time window after the target time has passed, in which the scheduled execution can run (in minutes).
 `stop_on_fail` | boolean | If set to true, once the execution has failed, the scheduler won't make further attempts to run it.
@@ -318,8 +318,8 @@ Property | Type | Description
 
 Valid **recurrence** expressions are of the form `<integer> minutes|hours|days|weeks|months|years`. These can be also written without a space after the number, without the final `s`, or using the short forms `min|h|d|w|mo|y`.
 
-Valid **weekdays** expressions are any of `su|mo|tu|we|th|fr|sa`, or a comma-separated list of them.
-These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` recurrence. 
+Valid **weekdays** expressions are a list containing any of `su|mo|tu|we|th|fr|sa`.
+These may be optionally prefixed by `1` to `4` or `l-` (for "last") signifying a "complex weekday", e.g. `2mo` for "the 2nd Monday of a month" or `l-fr` for "the last Friday of a month". Complex weekdays can only be used in tandem with a `months` or `years` recurrence.
 
 ### Response
 An `ExecutionSchedule` resource.

@@ -12,7 +12,7 @@ Attribute | Type | Description
 `main_file_name` | string | The blueprint's main file name.
 `plan` | dict | The parsed result of the blueprint.
 `updated_at` | datetime | The last time the blueprint was updated.
-`labels` | list | A list of the deployment's labels. **Supported for Cloudify Manager 5.3 and above.**
+`labels` | list | A list of the deployment's labels.
 
 
 ## Get Blueprint
@@ -553,7 +553,7 @@ update_dict={'labels': [{'<key1>': '<val1>', '<key2>': '<val2>'}]}
 
 `PATCH "<manager-ip>/api/v3.1/blueprints/{blueprint-id}"`
 
-Update the blueprint's labels. **Supported for Cloudify Manager 5.3 and above.**
+Update the blueprint's labels.
 
 ### URI Parameters
 * `blueprint-id`: The id of the blueprint to update.
@@ -606,7 +606,7 @@ client.blueprints_labels.list_keys()
 
 `GET "<manager-ip>/api/v3.1/labels/blueprints"`
 
-Get all blueprints' labels' keys in the specified tenant. **Supported for Cloudify Manager 5.3 and above.**
+Get all blueprints' labels' keys in the specified tenant.
 
 ### Response
 
@@ -651,7 +651,7 @@ client.blueprints_labels.list_key_values(label_key='<label-key>')
 
 `GET "<manager-ip>/api/v3.1/labels/blueprints/<label-key>"`
 
-Get all blueprints' labels' values for the specified key. **Supported for Cloudify Manager 5.3 and above.**
+Get all blueprints' labels' values for the specified key.
 
 ### Response
 

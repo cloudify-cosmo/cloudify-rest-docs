@@ -2,8 +2,8 @@
 
 The `/searches/<resource>` endpoint is used to get a filtered list of a resource (currently, deployments or blueprints) 
 based on its labels and certain attributes.
-Deployments can be filtered be the following attributes: `blueprint_id`, `created_by`, `site_name`, and `schedules`.
-Blueprints can be filters by the attribute `created_by`. 
+Deployments can be filtered by the following attributes: `blueprint_id`, `created_by`, `site_name`, and `schedules`.
+Blueprints can be filtered by the attribute `created_by`. 
 
 Filtering can be done by specifying a pre-created filter ID, or by providing a list of filter rules. 
 A filter rule is a dictionary of the following form: 

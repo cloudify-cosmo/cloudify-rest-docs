@@ -12,6 +12,7 @@ Attribute | Type | Description
 `main_file_name` | string | The blueprint's main file name.
 `plan` | dict | The parsed result of the blueprint.
 `updated_at` | datetime | The last time the blueprint was updated.
+`labels` | list | A list of the deployment's labels.
 
 
 ## Get Blueprint
@@ -84,13 +85,13 @@ A `Blueprint` resource.
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>&blueprint_archive_url=https://url/to/archive/master.zip"
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>&blueprint_archive_url=https://url/to/archive/master.zip&labels=<key1>=<val1>,<key2>=<val2>"
 
 # create blueprint from uploaded archive
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>" -T <blueprint_archive>.tar.gz
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>&labels=<key1>=<val1>,<key2>=<val2>" -T <blueprint_archive>.tar.gz
 ```
 
 ```python
@@ -99,14 +100,16 @@ client.blueprints.publish_archive(
     blueprint_id='<blueprint-id>',
     archive_location='https://url/to/archive/master.zip',
     blueprint_filename='<blueprint-id>.yaml',
-    visibility='<visibility>'
+    visibility='<visibility>',
+    labels=[{'<key1>': '<val1>'}, ...]
 )
 # Using CloudifyClient, uploading a directory
 # (will be tar'ed on the fly)
 client.blueprints.upload(
     'path/to/blueprint.yaml',
     '<blueprint-id>',
-    visibility='<visibility>'
+    visibility='<visibility>',
+    labels=[{'<key1>': '<val1>'}, ...]
 )
 
 # Using requests
@@ -115,7 +118,8 @@ headers = {'Tenant': '<manager-tenant>'}
 querystring = {
     'application_file_name': '<blueprint-id>.yaml',
     'blueprint_archive_url': 'https://url/to/archive/master.zip',
-    'visibility': '<visibility>'
+    'visibility': '<visibility>',
+    'labels': '<key1>=<val1>,<key2>=<val2>,...'
 }
 response = requests.put(
     url,
@@ -133,14 +137,17 @@ response.json()
   "main_file_name": "singlehost-blueprint.yaml",
   "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
   "tenant_name": "default_tenant",
-  "created_at": "2017-04-19T10:56:06.267Z",
-  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_at": "2021-03-25T15:51:30.526Z",
+  "updated_at": "2021-03-25T15:51:30.526Z",
   "created_by": "admin",
   "private_resource": false,
   "visibility": "tenant",
   "plan": {
     ...
   },
+  "labels": [
+    ...
+  ],
   "id": "hello-world"
 }
 ```
@@ -403,14 +410,17 @@ client.blueprints.set_global('<blueprint-id>')
   "main_file_name": "singlehost-blueprint.yaml",
   "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
   "tenant_name": "default_tenant",
-  "created_at": "2017-04-19T10:56:06.267Z",
-  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_at": "2021-03-25T15:51:30.526Z",
+  "updated_at": "2021-03-25T15:51:30.526Z",
   "created_by": "admin",
   "private_resource": false,
   "visibility": "global",
   "plan": {
     ...
   },
+  "labels": [
+    ...
+  ],
   "id": "hello-world"
 }
 ```
@@ -452,14 +462,17 @@ client.blueprints.set_visibility('<blueprint-id>', '<visibility>')
   "main_file_name": "singlehost-blueprint.yaml",
   "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
   "tenant_name": "default_tenant",
-  "created_at": "2017-04-19T10:56:06.267Z",
-  "updated_at": "2017-04-19T10:56:06.267Z",
+  "created_at": "2021-03-25T15:51:30.526Z",
+  "updated_at": "2021-03-25T15:51:30.526Z",
   "created_by": "admin",
   "private_resource": false,
   "visibility": "global",
   "plan": {
     ...
   },
+  "labels": [
+    ...
+  ],
   "id": "hello-world"
 }
 ```
@@ -481,3 +494,167 @@ Valid values are `tenant` or `global`.
 
 ### Response
 A `Blueprint` resource.
+
+
+## Update (add / delete) Blueprint Labels
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"labels": [{"<key1>": "<val1>"}, {"<key2>": "<val2>"}]}' \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>"
+```
+
+```python
+# Python Client
+client.blueprints.update(
+blueprint_id='<deployment-id>', 
+update_dict={'labels': [{'<key1>': '<val1>', '<key2>': '<val2>'}]}
+)
+```
+
+> Response Example
+
+```json
+{
+  "main_file_name": "singlehost-blueprint.yaml",
+  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
+  "tenant_name": "default_tenant",
+  "created_at": "2021-03-25T15:51:30.526Z",
+  "updated_at": "2021-03-25T16:04:20.496Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "visibility": "global",
+  "plan": {
+    ...
+  },
+  "labels": [
+   {
+      "key": "<key1>",
+      "value": "<val1>",
+      "created_at": "2021-03-25T16:04:20.486Z",
+      "creator_id": 0
+    },
+    {
+      "key": "<key2>",
+      "value": "<val2>",
+      "created_at": "2021-03-25T16:04:20.486Z",
+      "creator_id": 0
+    }
+  ],
+  "id": "hello-world"
+}
+
+```
+
+`PATCH "<manager-ip>/api/v3.1/blueprints/{blueprint-id}"`
+
+Update the blueprint's labels.
+
+### URI Parameters
+* `blueprint-id`: The id of the blueprint to update.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`labels` | list | A list of the new deployment's labels (required).
+
+
+### Response
+A `Blueprint` resource.
+
+
+## Get all Blueprints' Labels' Keys
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/labels/blueprints"
+```
+
+```python
+# Python Client
+client.blueprints_labels.list_keys()
+```
+
+> Response Example
+
+```json
+{
+  "metadata": {
+    "pagination": {
+      "total": 2,
+      "size": 1000,
+      "offset": 0
+    }
+  },
+  "items": [
+    "key1",
+    "key2"
+  ]
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/labels/blueprints"`
+
+Get all blueprints' labels' keys in the specified tenant.
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of all blueprints' labels' keys.
+
+
+## Get All Blueprints' Labels' Values For a Specified Key
+
+> Request Example
+
+```shell
+$ curl -X GET \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/labels/blueprints/<label-key>"
+```
+
+```python
+# Python Client
+client.blueprints_labels.list_key_values(label_key='<label-key>')
+```
+
+> Response Example
+
+```json
+{
+  "metadata": {
+    "pagination": {
+      "total": 1,
+      "size": 1000,
+      "offset": 0
+    }
+  },
+  "items": [
+    "val1"
+  ]
+}
+
+```
+
+`GET "<manager-ip>/api/v3.1/labels/blueprints/<label-key>"`
+
+Get all blueprints' labels' values for the specified key.
+
+### Response
+
+Field | Type | Description
+--------- | ------- | -------
+`items` | list | A list of all blueprints' labels' values associated with the specified key.

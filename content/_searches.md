@@ -22,7 +22,7 @@ A filter rule is a dictionary of the following form:
 `<FilterRuleType>` can be one of: "label" or "attribute". If "label" is provided, then the operator must be a `<LabelsOperator>`, and if "attribute" is provided, then 
 the operator must be an `<AttrsOperator>`. 
 
-E.g. filtering by the following filter rules, will return all items of a resource that their creator name starts with "alice" or "bob", 
+E.g. filtering by the following filter rules, will return all items of a resource whose creator name starts with "alice" or "bob", 
 and have the label `environment:aws` assigned to them.
 
 ```json

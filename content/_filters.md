@@ -16,10 +16,10 @@ A filter rule is a dictionary of the following form:
 
 `<AttrsOperator>` can be one of: "any_of", "not_any_of", "contains", "not_contains", "starts_with", "ends_with", "is_not_empty".
 
-`<FilterRuleType>` can be one of: "label" or "attribute". If "label" is provided, then the operator must be a `<LabelsOperator>`, and if "attribute" is provided, then 
+`<FilterRuleType>` can be either "label" or "attribute". If "label" is provided, then the operator must be a `<LabelsOperator>`, and if "attribute" is provided, then 
 the operator must be an `<AttrsOperator>`. 
 
-E.g. filtering by the following filter rules, will return all deployments that their creator name starts with "alice" or "bob", 
+E.g. filtering by the following filter rules, will return all deployments whose creator name starts with "alice" or "bob", 
 and have the label `environment:aws` assigned to them.
 
 ```json
@@ -52,7 +52,7 @@ Attribute | Type | Description
 `visibility` | string | Defines who can see the filter. Can be private, tenant or global.
 `created_at` | datetime | The time when the filter was created.
 `updated_at` | datetime | The time the filter was last updated at.
-`tenant_name` | string | he name of the tenant that owns the filter.
+`tenant_name` | string | The name of the tenant that owns the filter.
 
 ## List Filters
 

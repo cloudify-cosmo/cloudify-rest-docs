@@ -1102,7 +1102,7 @@ client.deployments_labels.list_keys()
 {
   "metadata": {
     "pagination": {
-      "total": 5,
+      "total": 2,
       "size": 1000,
       "offset": 0
     }
@@ -1148,7 +1148,7 @@ client.deployments_labels.list_key_values(label_key='<label-key>')
 {
   "metadata": {
     "pagination": {
-      "total": 5,
+      "total": 1,
       "size": 1000,
       "offset": 0
     }

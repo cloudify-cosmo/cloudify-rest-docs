@@ -22,8 +22,16 @@ Attribute | Type | Description
 `updated_at` | datetime | The time the deployment was last updated at.
 `workflows` | list | A list of workflows that can be executed on a deployment.
 `labels` | list | A list of the deployment's labels. **Supported for Cloudify Manager 5.1.1 and above.**
-
-
+`latest_execution_status` | string | The The deployment latest execution status.
+`installation_status` | string | The deployment installation status.
+`deployment_status` | string | The overall deployment status.
+`sub_services_status` | string | The aggregated sub services(deployments) status.
+`sub_environments_status` | string | The aggregated sub environments(deployments) status.
+`sub_services_count` | integer | The aggregated sub services count.
+`sub_environments_count` | integer | The aggregated sub environments count.
+`environment_type` | string | The environment type. Represents the value of `csys-env-type` label attached to deployment.
+`latest_execution_total_operations` | integer | The total operations for latest execution of deployment.
+`latest_execution_finished_operations` | integer | The finished operations for latest execution of deployment.
 ## List Deployments
 
 > Request Example
@@ -119,6 +127,7 @@ response = requests.get(
 )
 response.json()
 ```
+Get Deployment API supports query string param called `all_sub_deployments` where the default value is `True` which means the values for `sub_services_count` and `sub_environments_count` will contain the numbers of deployments attached to this deployment recursively. Otherwise, if `all_sub_deployments` is `False` it will only contains the first level of deployments (services/environments) 
 
 > Response Example
 

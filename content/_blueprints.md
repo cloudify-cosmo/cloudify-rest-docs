@@ -168,6 +168,7 @@ Property | Type | Description
 `application_file_name` | string | The main blueprint file name in the blueprint's archive.
 `blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
 `visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
+`async_upload` | boolean | Optional parameter, setting it to True means the REST service won't wait for the upload workflow to complete, allowing a batch upload (default: False). **Supported for Cloudify Manager 5.2 and above.**
 
 Valid visibility values are:
 

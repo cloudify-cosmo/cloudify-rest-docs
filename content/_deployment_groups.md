@@ -328,6 +328,7 @@ different ways, eg. added by filter but removed by id), it stays removed.
 ### Adding deployments
 The `add` object can contain the following fields (those are the same fields
 that were available for specifying deployments in the PUT request):
+
 * `deployment_ids`: add deployments specified by their IDs
 * `filter_id`: add deployments returned by this filter
 * `deployments_from_group`: add deployments belonging to another group, specified by that group's ID
@@ -347,6 +348,7 @@ that were available for specifying deployments in the PUT request):
 ### Removing deployments
 The `remove` object can contain the following fields (these are similar to
 the ones available in `add` or in the PUT request, except for `new_deployments`):
+
 * `deployment_ids`: remove the deployment specified by their IDs
 * `filter_id`: remove deployments returned by this filter
 * `deployments_from_group`: remove deployments belonging to the group given by this ID

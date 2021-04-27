@@ -154,20 +154,26 @@ A `DeploymentGroup` resource.
 
 The PUT method creates-or-replaces the deployment group attributes with the ones provided in the request body.
 
-<aside class="warning">
-  Providing <strong>filter_id</strong>, <strong>deployment_ids</strong>, or <strong>deployments_from_group</strong> to PUT will replace the group's deployments with the ones defined by these arguments, and deployments belonging to the group before will be unassigned from it.
-</aside>
-
 ### New deployments
 This endpoint can also create new deployments. Provide the specification of the deployments to be created as the `new_deployments` request body field, and new deployments will be created.
 This specification is a list of objects that can contain the fields:
- - `id` - if absent, a new deployment ID will be auto-generated
- - `inputs` - these inputs will be used when creating the new deployment, merged with the `default_inputs` group attribute
- - `labels` - the newly-created deployment will contain these labels. By providing `labels`, it is possible to assign deployment object type, or deployment parents.
+ * `id` - if absent, a new deployment ID will be auto-generated
+ * `inputs` - these inputs will be used when creating the new deployment, merged with the `default_inputs` group attribute
+ * `labels` - the newly-created deployment will contain these labels. By providing `labels`, it is possible to assign deployment object type, or deployment parents.
 Note that this means that `new_deployments` can also be a list of empty objects.
 
 <aside class="note">
   If <strong>deployment_ids</strong>, <strong>filter_id</strong>, and <strong>deployments_from_group</strong> are all passed in the same request, the group will contain the union of deployments specified by these fields.
+</aside>
+
+### Adding existing deployments
+There's several ways of adding existing deployments to the group:
+ * `deployment_ids` - specify the deployments to be added by the deployments' IDs
+ * `filter_id` - add deployments returned by this filter
+ * `deployments_from_group` - add deployments belonging to another group, specified by that group's ID
+
+<aside class="warning">
+  Providing <strong>filter_id</strong>, <strong>deployment_ids</strong>, or <strong>deployments_from_group</strong> to PUT will replace the group's deployments with the ones defined by these arguments, and deployments belonging to the group before will be unassigned from it.
 </aside>
 
 ### Labels
@@ -199,7 +205,11 @@ $ curl -X PUT \
 client.deployment_groups.put(
     blueprint_id='<blueprint-id>',
     new_deployments=[
-      {'labels': [{'csys-environment': 'env1'}]}
+      {
+        'labels': [{'csys-environment': 'env1'}],
+        'id': 'dep-1',
+        'inputs': {'inp1': 'value'}
+      }
     ],
     labels=[{'<key1': '<val1>', '<key2>': '<val2>'}]
 )

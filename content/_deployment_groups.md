@@ -162,6 +162,10 @@ This specification is a list of objects that can contain the fields:
  * `labels` - the newly-created deployment will contain these labels. By providing `labels`, it is possible to assign deployment object type, or deployment parents.
 Note that this means that `new_deployments` can also be a list of empty objects.
 
+If there are new deployments created, an ExecutionGroup resource will also be
+created, containing the new deployments' `create_deployment_environment`
+executions.
+
 <aside class="note">
   If <strong>deployment_ids</strong>, <strong>filter_id</strong>, and <strong>deployments_from_group</strong> are all passed in the same request, the group will contain the union of deployments specified by these fields.
 </aside>

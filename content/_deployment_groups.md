@@ -267,6 +267,99 @@ the deployment was created have permissions to execute workflow on it. **Support
 ### Response
 A `DeploymentGroup` resource.
 
+## Add or remove deployments from group
+
+> Request Example
+
+```shell
+$ curl -X PATCH \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"add": {"deployment_ids": ["dep1", "dep2"]}, "remove": {"deployment_ids": ["dep3"]}}'
+    "http://<manager-ip>/api/v3.1/deployment-groups/<group-id>
+```
+
+```python
+client.deployment_groups.add_deployments(
+  'group1',
+  deployment_ids=['dep1'],
+  new_deployments=[{}, {}, {}],
+  filter_id='filter1',
+  deployments_from_group='group2',
+)
+
+client.deployment_groups.add_deployments(
+  'group1',
+  # the REST client has a `count` shorthand - this is equivalent
+  # to `new_deployments` with 10 empty objects
+  count=10
+)
+
+client.deployment_groups.add_deployments(
+  'group1',
+  count=20000,
+  # the REST client can split creating huge amount of deployments into
+  # several requests: in this case it would do 20 PATCH requests behind
+  # the scenes
+  batch_size=1000,
+)
+
+client.deployment_groups.remove_deployments(
+  'group1',
+  deployment_ids=['dep2'],
+  filter_id='filter2',
+  deployments_from_group='group3',
+)
+```
+
+`PATCH "{manager-ip}/api/v3.1/deployment-groups/{group-id}"`
+
+Adding or removing deployments from a group without overwriting the whole group
+or its contents is done by specifying the deployments to add and to remove in the
+body of a PATCH request.
+
+The body of that request can contain the objects `add` or `remove`, specifying
+the deployments to be added and deleted. These object contain keys similar to the
+deployment-adding fields that the PUT request supports.
+
+If a deployment is both added and removed at the same time (possibly using
+different ways, eg. added by filter but removed by id), it stays removed.
+
+### Adding deployments
+The `add` object can contain the following fields (those are the same fields
+that were available for specifying deployments in the PUT request):
+* `deployment_ids`: add deployments specified by their IDs
+* `filter_id`: add deployments returned by this filter
+* `deployments_from_group`: add deployments belonging to another group, specified by that group's ID
+* `new_deployments`: create new deployments in the group. Same semantics as in the PUT request.
+
+<aside class="note">
+  When adding huge amounts of deployments (tens of thousands), you might want to split the request
+  into several batches, to only create reasonable amounts in each request: remember that the manager
+  will have to parse and process the inputs for each deployment, and this object could become
+  many megabytes of data.
+
+  The time this request would take depends highly on the manager machine and the connection to it,
+  but amounts on the order of 5000 are considered safe, while amounts on the order of 50000 are
+  considered too high.
+</aside>
+
+### Removing deployments
+The `remove` object can contain the following fields (these are similar to
+the ones available in `add` or in the PUT request, except for `new_deployments`):
+* `deployment_ids`: remove the deployment specified by their IDs
+* `filter_id`: remove deployments returned by this filter
+* `deployments_from_group`: remove deployments belonging to the group given by this ID
+
+
+### Request Body
+Property | Type | Description
+--------- | ------- | -----------
+add | object | Specify the deployments to be added to the group
+remove | object | Specify the deployments to be removed from the group
+
+### Response
+A `DeploymentGroup` resource.
 
 ## Delete Deployment Group
 

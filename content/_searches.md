@@ -1,9 +1,10 @@
 # Searches
 
-The `/searches/<resource>` endpoint is used to get a filtered list of a resource (currently, deployments or blueprints) 
-based on its labels and certain attributes.
-Deployments can be filtered by the following attributes: `blueprint_id`, `created_by`, `site_name`, and `schedules`.
-Blueprints can be filtered by the attribute `created_by`. 
+The `/searches/<resource>` endpoint is used to get a filtered list of resources (currently:
+blueprints, deployments or deployments' workflows) based on their labels and certain attributes.
+Blueprints can be filtered by the attribute `created_by`.
+Deployments can be filtered by the following attributes: `blueprint_id`, `created_by`, `site_name`,
+and `schedules`.  The same list applies when searching for deployments' workflows.
 
 Filtering can be done by specifying a pre-created filter ID, or by providing a list of filter rules. 
 A filter rule is a dictionary of the following form: 
@@ -53,7 +54,7 @@ $ curl -X POST \
     "http://<manager-ip>/api/v3.1/searches/<resource>?_include=id"
 ```
 
-`<resource>` can be either `deployments` or `blueprints`.
+`<resource>` can be either `blueprints`, `deployments` or `workflows`.
 
 ```python
 # Using CloudifyClient
@@ -62,7 +63,7 @@ deployments = client.deployments.list(filter_rules=[...])
 blueprints = client.blueprints.list(filter_rules=[...])
 
 # Using requests
-url = 'http://<manager-ip>/api/v3.1/searches/<resource>' # `<resource>` can be either `deployments` or `blueprints`
+url = 'http://<manager-ip>/api/v3.1/searches/<resource>' # `<resource>` can be either `blueprints`, `deployments` or `workflows`
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
 payload = {'filter_rules': [...]}
@@ -104,7 +105,7 @@ response.json()
 
 `POST "{manager-ip}/api/v3.1/searches/<resource>"`
 
-Get a filtered list of resource's items. Resource can be either deployments of blueprints.
+Get a filtered list of resource's items. Resource can be either blueprints, deployments or workflows.
 
 ### Response
 

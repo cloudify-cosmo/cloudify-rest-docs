@@ -12,7 +12,7 @@ A filter rule is a dictionary of the following form:
  "type": "<FilterRuleType>"
 }
 ```
-`<LabelsOperator>` can be one of: "any_of", "not_any_of", "is_null" or "is_not_null".
+`<LabelsOperator>` can be one of: "any_of", "not_any_of", "is_null", "is_not_null", or "is_not".
 
 `<AttrsOperator>` can be one of: "any_of", "not_any_of", "contains", "not_contains", "starts_with", "ends_with", "is_not_empty".
 

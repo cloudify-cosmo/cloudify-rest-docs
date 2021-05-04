@@ -193,3 +193,57 @@ default parameters.
 ### Response
 An `ExecutionGroup` resource.
 
+## Cancel/Resume an Execution Group
+
+> Request Example
+
+```shell
+curl -X POST \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"action": "cancel"}'
+    "http://<manager-ip>/api/v3.1/execution-groups/<group-id>"
+```
+
+```python
+# Using CloudifyClient
+client.execution_groups.cancel('<group-id>')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/execution-groups/<group-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload ={'action': 'cancel'}
+response = requests.post(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+response.json()
+```
+
+`POST -d '{"action":"<action-method>"}' "{manager-ip}/api/v3.1/executions/{execution-id}"`
+
+Cancels or resumes an execution group.
+
+This cancels or resumes all the executions belonging to this group.
+
+When cancelling, executions that are still queued, will be put in the cancelled state immediately.
+When resuming, executions that never started to run, will have the resume flag set nonetheless.
+
+Each action's semantics are the same as in their single-execution case.
+
+### URI Parameters
+* `group-id`: The id of the execution group.
+
+### Request Body
+Property | Type | Description
+--------- | ------- | -----------
+`action` | string | The method to perform: `cancel`, `force-cancel`, `kill`, `resume`, or `force-resume`.
+
+### Response
+An `ExecutionGroup` resource.

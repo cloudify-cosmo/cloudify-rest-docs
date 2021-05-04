@@ -158,6 +158,7 @@ The PUT method creates-or-replaces the deployment group attributes with the ones
 This endpoint can also create new deployments. Provide the specification of the deployments to be created as the `new_deployments` request body field, and new deployments will be created.
 This specification is a list of objects that can contain the fields:
  * `id` - if absent, a new deployment ID will be auto-generated
+ * `display_name` - sets the display name for the deployment
  * `inputs` - these inputs will be used when creating the new deployment, merged with the `default_inputs` group attribute
  * `labels` - the newly-created deployment will contain these labels. By providing `labels`, it is possible to assign deployment object type, or deployment parents.
 Note that this means that `new_deployments` can also be a list of empty objects.

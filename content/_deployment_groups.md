@@ -161,6 +161,9 @@ This specification is a list of objects that can contain the fields:
  * `inputs` - these inputs will be used when creating the new deployment, merged with the `default_inputs` group attribute
  * `labels` - the newly-created deployment will contain these labels. By providing `labels`, it is possible to assign deployment object type, or deployment parents.
 Note that this means that `new_deployments` can also be a list of empty objects.
+ * `site_name` - the newly-created deployments will have that site assigned
+ * `runtime_only_evaluation` - sets the `runtime_only_evaluation` flag for the deployment
+ * `skip_plugins_validation` - sets the `skip_plugins_validation` flag for the deployment
 
 If there are new deployments created, an ExecutionGroup resource will also be
 created, containing the new deployments' `create_deployment_environment`

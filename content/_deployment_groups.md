@@ -169,7 +169,10 @@ Note that this means that `new_deployments` can also be a list of empty objects.
 ### Deployment ID template
 The `id` parameter is a string that can contain template parameters:
  * `{uuid}` - replaced with a new UUID4
+ * `{count}` - sequential number, increasing for every deployment created by the group
  * `{group_id}` - replaced with the Deployment Group ID
+ * `{blueprint_id}` - ID of the Deployment Group's default blueprint
+ * `{site_name}` - the site name passed in the new deployment spec
 
 <aside class="note">
   If the ID template contains the `{uuid}` template, additional uniqueness checks can be skipped, which greatly speeds up creating new deployments.

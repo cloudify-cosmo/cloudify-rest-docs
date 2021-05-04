@@ -165,6 +165,15 @@ Note that this means that `new_deployments` can also be a list of empty objects.
  * `runtime_only_evaluation` - sets the `runtime_only_evaluation` flag for the deployment
  * `skip_plugins_validation` - sets the `skip_plugins_validation` flag for the deployment
 
+### Deployment ID template
+The `id` parameter is a string that can contain template parameters:
+ * `{uuid}` - replaced with a new UUID4
+ * `{group_id}` - replaced with the Deployment Group ID
+
+<aside class="note">
+  If the ID template contains the `{uuid}` template, additional uniqueness checks can be skipped, which greatly speeds up creating new deployments.
+</aside>
+
 If there are new deployments created, an ExecutionGroup resource will also be
 created, containing the new deployments' `create_deployment_environment`
 executions.

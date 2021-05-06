@@ -186,17 +186,18 @@ created, containing the new deployments' `create_deployment_environment`
 executions.
 
 <aside class="note">
-  If <strong>deployment_ids</strong>, <strong>filter_id</strong>, and <strong>deployments_from_group</strong> are all passed in the same request, the group will contain the union of deployments specified by these fields.
+  If <strong>deployment_ids</strong>, <strong>filter_id</strong>, <strong>filter_rules</strong>, and <strong>deployments_from_group</strong> are all passed in the same request, the group will contain the union of deployments specified by these fields.
 </aside>
 
 ### Adding existing deployments
 There's several ways of adding existing deployments to the group:
  * `deployment_ids` - specify the deployments to be added by the deployments' IDs
  * `filter_id` - add deployments returned by this filter
+ * `filter_rules` - add deployments returned by these filter rules
  * `deployments_from_group` - add deployments belonging to another group, specified by that group's ID
 
 <aside class="warning">
-  Providing <strong>filter_id</strong>, <strong>deployment_ids</strong>, or <strong>deployments_from_group</strong> to PUT will replace the group's deployments with the ones defined by these arguments, and deployments belonging to the group before will be unassigned from it.
+  Providing <strong>filter_id</strong>, <strong>filter_rules</strong>, <strong>deployment_ids</strong>, or <strong>deployments_from_group</strong> to PUT will replace the group's deployments with the ones defined by these arguments, and deployments belonging to the group before will be unassigned from it.
 </aside>
 
 ### Labels
@@ -271,6 +272,7 @@ Property | Type | Description
 `visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
 `deployment_ids` | list | A list of deployments this group should contain.
 `filter_id` | string | The group will contain deployments returned by this filter.
+`filter_rules` | list | The group will contain deployments returned by these filter rules.
 `deployments_from_group` | string | The group will contain deployments that belong to this group.
 `new_deployments` | list | Create new deployments specified by this list and add them to the group.
 
@@ -304,6 +306,10 @@ client.deployment_groups.add_deployments(
   deployment_ids=['dep1'],
   new_deployments=[{}, {}, {}],
   filter_id='filter1',
+  filter_rules=[{'key': 'label1',
+                 'values': ['value1', 'value2'],
+                 'operator': 'any_of',
+                 'type': 'label'}],
   deployments_from_group='group2',
 )
 
@@ -327,6 +333,10 @@ client.deployment_groups.remove_deployments(
   'group1',
   deployment_ids=['dep2'],
   filter_id='filter2',
+  filter_rules=[{'key': 'label1',
+                 'values': ['value1'],
+                 'operator': 'any_of',
+                 'type': 'label'}],
   deployments_from_group='group3',
 )
 ```
@@ -350,6 +360,7 @@ that were available for specifying deployments in the PUT request):
 
 * `deployment_ids`: add deployments specified by their IDs
 * `filter_id`: add deployments returned by this filter
+* `filter_rules`: add deployments returned by these filter rules
 * `deployments_from_group`: add deployments belonging to another group, specified by that group's ID
 * `new_deployments`: create new deployments in the group. Same semantics as in the PUT request.
 
@@ -370,6 +381,7 @@ the ones available in `add` or in the PUT request, except for `new_deployments`)
 
 * `deployment_ids`: remove the deployment specified by their IDs
 * `filter_id`: remove deployments returned by this filter
+* `filter_rules`: remove deployments returned by these filter rules
 * `deployments_from_group`: remove deployments belonging to the group given by this ID
 
 

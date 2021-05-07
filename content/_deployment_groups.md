@@ -148,6 +148,7 @@ response.json()
 Gets a deployment group.
 
 ### Response
+
 A `DeploymentGroup` resource.
 
 ## Create/update Deployment Group
@@ -155,8 +156,10 @@ A `DeploymentGroup` resource.
 The PUT method creates-or-replaces the deployment group attributes with the ones provided in the request body.
 
 ### New deployments
+
 This endpoint can also create new deployments. Provide the specification of the deployments to be created as the `new_deployments` request body field, and new deployments will be created.
 This specification is a list of objects that can contain the fields:
+
  * `id` - if absent, a new deployment ID will be auto-generated
  * `display_name` - sets the display name for the deployment
  * `inputs` - these inputs will be used when creating the new deployment, merged with the `default_inputs` group attribute
@@ -170,7 +173,9 @@ Visibility and private_resource are not parameters that can be passed in: instea
 inherit their visibility from the group.
 
 ### Deployment ID template
+
 The `id` parameter is a string that can contain template parameters:
+
  * `{uuid}` - replaced with a new UUID4
  * `{count}` - sequential number, increasing for every deployment created by the group
  * `{group_id}` - replaced with the Deployment Group ID
@@ -190,7 +195,9 @@ executions.
 </aside>
 
 ### Adding existing deployments
+
 There's several ways of adding existing deployments to the group:
+
  * `deployment_ids` - specify the deployments to be added by the deployments' IDs
  * `filter_id` - add deployments returned by this filter
  * `filter_rules` - add deployments returned by these filter rules
@@ -201,6 +208,7 @@ There's several ways of adding existing deployments to the group:
 </aside>
 
 ### Labels
+
 Labels added to the group will also be added to all deployments in the group.
 New deployments created as part of the group, will inherit the group's labels.
 Removing a label from the group will remove it from all deployments in the group.
@@ -260,9 +268,11 @@ response.json()
 `PUT "{manager-ip}/api/v3.1/deployment-groups/{group-id}"`
 
 ### URI Parameters
+
 * `group-id`: The id of the new-or-updated group.
 
 ### Request Body
+
 Property | Type | Description
 --------- | ------- | -----------
 `blueprint_id` | string | The ID of the default blueprint for this group.
@@ -286,6 +296,7 @@ also global. Only administrators or users with access to the tenant on which
 the deployment was created have permissions to execute workflow on it. **Supported for Cloudify Manager 4.5.5 and above.**
 
 ### Response
+
 A `DeploymentGroup` resource.
 
 ## Add or remove deployments from group
@@ -355,6 +366,7 @@ If a deployment is both added and removed at the same time (possibly using
 different ways, eg. added by filter but removed by id), it stays removed.
 
 ### Adding deployments
+
 The `add` object can contain the following fields (those are the same fields
 that were available for specifying deployments in the PUT request):
 
@@ -376,6 +388,7 @@ that were available for specifying deployments in the PUT request):
 </aside>
 
 ### Removing deployments
+
 The `remove` object can contain the following fields (these are similar to
 the ones available in `add` or in the PUT request, except for `new_deployments`):
 
@@ -386,12 +399,14 @@ the ones available in `add` or in the PUT request, except for `new_deployments`)
 
 
 ### Request Body
+
 Property | Type | Description
 --------- | ------- | -----------
 add | object | Specify the deployments to be added to the group
 remove | object | Specify the deployments to be removed from the group
 
 ### Response
+
 A `DeploymentGroup` resource.
 
 ## Delete Deployment Group
@@ -437,10 +452,12 @@ In case of deleting deployments, same semantics as in Deployments DELETE apply, 
 </aside>
 
 ### URI Parameters
+
 * `delete_deployments`: if "true", also delete all deployments belonging to this group
 * `force`: Same meaning as in Deployments DELETE
 * `delete_logs`: Same meaning as in Deployments DELETE
 
 
 ### Response
+
 No content - HTTP code 204.

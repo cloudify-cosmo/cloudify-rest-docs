@@ -169,8 +169,7 @@ Note that this means that `new_deployments` can also be a list of empty objects.
  * `runtime_only_evaluation` - sets the `runtime_only_evaluation` flag for the deployment
  * `skip_plugins_validation` - sets the `skip_plugins_validation` flag for the deployment
 
-Visibility and private_resource are not parameters that can be passed in: instead, newly-created deployments
-inherit their visibility from the group.
+Visibility and private_resource for the newly-created deployment are inherited from the group.
 
 ### Deployment ID template
 

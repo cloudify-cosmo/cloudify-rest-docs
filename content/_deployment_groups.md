@@ -278,7 +278,7 @@ Property | Type | Description
 `default_inputs` | object | Default inputs for creating new deployments in this group.
 `description` | string | A freeform description.
 `labels` | list | A list of labels to assign to the group.
-`visibility` | string | Optional parameter, defines who can see the deployment (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
+`visibility` | string | Optional parameter, defines who can see the deployment (default: tenant).
 `deployment_ids` | list | A list of deployments this group should contain.
 `filter_id` | string | The group will contain deployments returned by this filter.
 `filter_rules` | list | The group will contain deployments returned by these filter rules.

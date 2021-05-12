@@ -226,7 +226,7 @@ response = requests.post(
 response.json()
 ```
 
-`POST -d '{"action":"<action-method>"}' "{manager-ip}/api/v3.1/executions/{execution-id}"`
+`POST -d '{"action":"<action-method>"}' "{manager-ip}/api/v3.1/execution-groups/{group-id}"`
 
 Cancels or resumes an execution group.
 
@@ -244,6 +244,52 @@ Each action's semantics are the same as in their single-execution case.
 Property | Type | Description
 --------- | ------- | -----------
 `action` | string | The method to perform: `cancel`, `force-cancel`, `kill`, `resume`, or `force-resume`.
+
+### Response
+An `ExecutionGroup` resource.
+
+
+## Attach target success/failure groups
+
+> Request Example
+
+```shell
+curl -X PATCH \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"success_group_id": "g1"}'
+    "http://<manager-ip>/api/v3.1/execution-groups/<group-id>"
+```
+
+```python
+# Using CloudifyClient
+client.execution_groups.set_target_group(
+    '<group-id>',
+    success_group='g1',
+    failed_group='g2'
+)
+
+```
+`PATCH -d '{"success_group_id":"<dep-group>"}' "{manager-ip}/api/v3.1/execution-groups/{group-id}"`
+
+Set target deployment groups, success and failure: deployments, for which the
+execution in this execution-group succeeds, will be added to the "success"
+target deployment group. Deployments, for which the execution in this
+execution-group fails, will be added to the "failure" target deployment group.
+
+If an execution is cancelled, the deployment will be added to neither group.
+
+The target group must already exist.
+
+### URI Parameters
+* `group-id`: The id of the execution group.
+
+### Request Body
+Property | Type | Description
+--------- | ------- | -----------
+`success_group_id` | string | The "success" target deployment group ID
+`failure_group_id` | string | The "failure" target deployment group ID
 
 ### Response
 An `ExecutionGroup` resource.

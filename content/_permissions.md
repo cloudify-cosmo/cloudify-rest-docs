@@ -7,6 +7,7 @@ The permissions endpoints allow assigning and removing specific permissions from
 ### Attributes:
 
 Attribute | Type | Description
+----------|------|------------
 `permission` | string | The name of the permission, eg. "blueprint_list"
 `role` | string | The role that has the permission, eg. "operations"
 

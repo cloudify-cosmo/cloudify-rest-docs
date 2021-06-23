@@ -43,6 +43,12 @@ and have the label `environment:aws` assigned to them.
 ]
 ```
 
+Additionally, a query string can be used to filter out specific resources.  In case of blueprints
+and workflows the  `_search` field name is being used to filter these by `id`.  It is slightly more
+complicated for deployments.  Two fields can be used: `_search` (to find deployments by `id`)
+and `_search_name` (to find deployments by their `display_name`).  The resulting set of deployments
+will be the union of both sub-sets.
+
 > Request Example
 
 ```shell

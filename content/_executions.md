@@ -20,7 +20,7 @@ Attribute | Type | Description
 `workflow_id` | string | The id/name of the workflow the execution is of.
 `started_at` | datetime | The time the execution was started at. **Supported for Cloudify Manager 4.5 and above.**
 `scheduled_for` | datetime | The time this execution is scheduled to start at. **Supported for Cloudify Manager 4.5.5 and above.**
-
+`deployment_display_name` | string | A display_name of the deployment the execution is in the context of.
 
 ## List Executions
 

@@ -483,7 +483,7 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X PUT \
+$ curl -X POST \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
@@ -546,9 +546,15 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
 
 ```
 
-`PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
+`POST "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
 
 Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
+
+<aside class="note">
+  The old PUT based call `PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"` is now deprecated and will be removed in the next major Cloudify versions.
+</aside>
+
+
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment to update.

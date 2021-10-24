@@ -282,18 +282,15 @@ Deletes a deployment.
 
 An error is raised if the deployment has any live node instances, or there
  are installations which depend on this deployment. In order to ignore this
- validation, the `force` argument in request body can be used.
+ validation, the `force` argument in the URI can be used.
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
-* `delete_logs`: Determines if to delete the deployment logs, default: false.
-
-
-### Request Body
-Property | Type | Description
---------- | ------- | -----------
-`force` | boolean | Specifies whether to force deployment deletion even if there are existing live nodes for it, or existing installations which depend on it
-
+* `delete_logs`: Determines whether to delete the deployment logs, default: 
+  false.
+* `force`: Specifies whether to force deployment deletion even if there are 
+  existing live nodes for it, or existing installations which depend on it. 
+  Default: false
 
 
 ### Response
@@ -483,17 +480,17 @@ Attribute | Type | Description
 > Request Example
 
 ```shell
-$ curl -X POST \
+$ curl -X PUT \
     -H "Content-Type: application/json" \
     -H "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>", "update_plugins": "<update_plugins>", "runtime_eval": "<runtime_eval>", "auto_correct_args": "<auto_correct_args>", "reevaluate_active_statuses": "<reevaluate_active_statuses>"}' \
+    -d '{"skip_install": "<skip_install>", "skip_uninstall": "<skip_uninstall>", "skip_reinstall": "<skip_reinstall>", "force": "<force>", "ignore_failure": "<ignore_failure>", "install_first": "<install_first>", "blueprint_id": "<blueprint_id>", "inputs": "<inputs>", "reinstall_list": "<reinstall_list>", "update_plugins": "<update_plugins>"}' \
     "http://<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"
 ```
 
 ```python
 # Python Client
-client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_install>", skip_uninstall="<skip_uninstall>", skip_reinstall="<skip_reinstall>", force="<force>", ignore_failure="<ignore_failure>", install_first="<install_first>", blueprint_id="<blueprint_id>", inputs="<inputs>", reinstall_list="<reinstall_list>", runtime_eval="<runtime_eval>", auto_correct_args="<auto_correct_args>", reevaluate_active_statuses="<reevaluate_active_statuses>")
+client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_install>", skip_uninstall="<skip_uninstall>", skip_reinstall="<skip_reinstall>", force="<force>", ignore_failure="<ignore_failure>", install_first="<install_first>", blueprint_id="<blueprint_id>", inputs="<inputs>", reinstall_list="<reinstall_list>")
 ```
 
 > Response Example
@@ -546,15 +543,9 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
 
 ```
 
-`POST "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
+`PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
 
 Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
-
-<aside class="note">
-  The old PUT based call `PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"` is now deprecated and will be removed in the next major Cloudify versions.
-</aside>
-
-
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment to update.
@@ -567,15 +558,12 @@ Property | Type | Description
 `skip_install` | boolean | Determines whether to skip installing node instances in update workflow
 `skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
 `skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
-`force` | boolean | Force running the update also in case a deployment is used as a component
+`force` | boolean | Force running update even if previous update failed
 `ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
 `install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
 `inputs` | object | Dictionary containing inputs to update in the deployment
 `reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
 `preview` | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.**
-`runtime_eval` | boolean | If set, all intrinsic functions will only be evaluated at runtime, and no intrinsic functions will be evaluated at parse time (such as _get_input_, _get_property_)
-`auto_correct_args` | boolean | If set, before creating plan for a new deployment, an attempt will be made to cast old inputs' values to the valid types declared in blueprint
-`reevaluate_active_statuses` | boolean | If set, before attempting to update, the statuses of previous active update operations will be reevaluated based on relevant executions' statuses
 
 
 ### Response

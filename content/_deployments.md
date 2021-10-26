@@ -282,18 +282,15 @@ Deletes a deployment.
 
 An error is raised if the deployment has any live node instances, or there
  are installations which depend on this deployment. In order to ignore this
- validation, the `force` argument in request body can be used.
+ validation, the `force` argument in the URI can be used.
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
-* `delete_logs`: Determines if to delete the deployment logs, default: false.
-
-
-### Request Body
-Property | Type | Description
---------- | ------- | -----------
-`force` | boolean | Specifies whether to force deployment deletion even if there are existing live nodes for it, or existing installations which depend on it
-
+* `delete_logs`: Determines whether to delete the deployment logs, default: 
+  false.
+* `force`: Specifies whether to force deployment deletion even if there are 
+  existing live nodes for it, or existing installations which depend on it. 
+  Default: false
 
 
 ### Response

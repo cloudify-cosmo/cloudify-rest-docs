@@ -29,8 +29,8 @@ Attribute | Type | Description
 `sub_services_count` | integer | The aggregated sub services count.
 `sub_environments_count` | integer | The aggregated sub environments count.
 `environment_type` | string | The environment type. Represents the value of `csys-env-type` label attached to deployment.
-`create_execution` | string | The ID of the create_deployment_environment execution for this deployment
-`latest_execution` | string | The ID of the most-recent execution on this deployment
+`create_execution` | string | The ID of the create_deployment_environment execution for this deployment.
+`latest_execution` | string | The ID of the most-recent execution on this deployment.
 `latest_execution_status` | string | The The deployment latest execution status.
 `latest_execution_total_operations` | integer | The total operations for latest execution of deployment.
 `latest_execution_finished_operations` | integer | The finished operations for latest execution of deployment.

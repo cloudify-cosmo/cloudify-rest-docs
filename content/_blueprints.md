@@ -497,6 +497,68 @@ Valid values are `tenant` or `global`.
 A `Blueprint` resource.
 
 
+## Set Blueprint's Icon
+
+> Request Example
+
+```shell
+# Update blueprint's icon with <icon_image>.png
+$ curl -X PATCH \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -T <icon_image>.png \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/icon"
+
+# Remove blueprint's icon
+$ curl -X PATCH \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/icon"
+```
+
+```python
+# Python Client: Update blueprint'e icon with PNG file located at <icon_path>
+client.blueprints.upload_icon('<blueprint-id>', '<icon_path>')
+
+
+# Python Client: Remove blueprint'e icon
+client.blueprints.remove_icon('<blueprint-id>')
+```
+
+> Response Example
+
+```json
+{
+  "main_file_name": "singlehost-blueprint.yaml",
+  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
+  "tenant_name": "default_tenant",
+  "created_at": "2021-03-25T15:51:30.526Z",
+  "updated_at": "2021-03-25T15:51:30.526Z",
+  "created_by": "admin",
+  "private_resource": false,
+  "visibility": "tenant",
+  "plan": {
+    ...
+  },
+  "labels": [
+    ...
+  ],
+  "id": "hello-world"
+}
+```
+
+`PATCH "<manager-ip>/api/v3.1/blueprints/{blueprint-id}/icon"`
+
+Set blueprint's icon if icon file is uploaded along the request or remove it otherwise.
+**Supported for Cloudify Manager 6.3 and above.**
+
+### URI Parameters
+* `blueprint-id`: The id of the blueprint to update.
+
+### Response
+A `Blueprint` resource.
+
+
 ## Update (add / delete) Blueprint Labels
 
 > Request Example

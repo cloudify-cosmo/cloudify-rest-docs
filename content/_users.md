@@ -14,18 +14,21 @@ Since Cloudify 4.0, Cloudify user management has been added
 Attribute | Type | Description
 --------- | ------- | -------
 `active` | boolean | Whether the user's status is active or suspended.
-`created_at` | UTCDateTime | Date on which the user was created.
-`first_name` | string | The user's first name..
-`id` | integer | Auto increment, unique identifier for the tenant.
-`last_login_at` | UTCDateTime | Date of last request performed by the user.
-`last_name` | string | The user's last name.
-`password` | string | The user hashed password.
 `username` | string | The username.
+`first_login_at` | UTCDateTime | Date of first request performed by the user.
+`last_login_at` | UTCDateTime | Date of last request performed by the user.
+`is_locked` | boolean | Whether the user is temporarily locked out (due to numerous failed login attempts).
+`tenant_roles` | set | The roles of the tenant user is associated with.
+`role` | string | The role of the user (the first one in case there are many).
+`groups` | list | The groups the user belongs to
+`tenants` | object | Dictionary of tenants the user is associated with.
+`group_system_roles` | object | Dictionary of lists of groups the user is associated with, per the role.
+`show_getting_started` | boolean | Whether the user will be displayed the "Getting started" modal upon logging in.
 
 
 ## List Users
 
-> Request Example - Get tenants and user groups count
+> Request Example - List users (tenants and user groups count)
 
 ```shell
 $ curl -X GET \
@@ -59,31 +62,37 @@ response = requests.get(
 )
 ```
 
-> Response Example - Get tenants and user groups count
+> Response Example - List users (tenants and user groups count)
 
 ```json
 {
   "items": [
     {
-      "username": "admin",
-      "last_login_at": "2017-10-30T15:45:25.703Z",
-      "role": "sys_admin",
-      "groups": 0,
       "active": true,
-      "tenants": 1
+      "first_login_at": "2021-12-20T16:17:13.673Z",
+      "group_system_roles": {},
+      "groups": 0,
+      "is_locked": false,
+      "last_login_at": "2021-12-21T13:05:47.533Z",
+      "role": "sys_admin",
+      "show_getting_started": false,
+      "tenant_roles": null,
+      "tenants": 1,
+      "username": "admin"
     }
   ],
   "metadata": {
+    "filtered": null,
     "pagination": {
-      "total": 1,
       "offset": 0,
-      "size": 0
+      "size": 1000,
+      "total": 1
     }
   }
 }
 ```
 
-> Request Example - Get tenants and user groups details
+> Request Example - List users (tenants and user groups details)
 
 ```shell
 $ curl -X GET \
@@ -123,26 +132,38 @@ response = requests.get(
 {
   "items": [
     {
-      "username": "admin",
-      "last_login_at": "2017-10-31T10:38:53.227Z",
-      "role": "sys_admin",
-      "groups": [],
       "active": true,
+      "first_login_at": "2021-12-20T16:17:13.673Z",
+      "group_system_roles": {},
+      "groups": [],
+      "is_locked": false,
+      "last_login_at": "2021-12-21T13:29:07.079Z",
+      "password_hash": null,
+      "role": "sys_admin",
+      "show_getting_started": false,
+      "tenant_roles": {
+        "direct": {
+          "default_tenant": "user"
+        },
+        "groups": {}
+      },
       "tenants": {
         "default_tenant": {
-          "tenant-role": "user",
           "roles": [
             "user"
-          ]
+          ],
+          "tenant-role": "user"
         }
-      }
+      },
+      "username": "admin"
     }
   ],
   "metadata": {
+    "filtered": null,
     "pagination": {
-      "total": 1,
       "offset": 0,
-      "size": 0
+      "size": 1000,
+      "total": 1
     }
   }
 }
@@ -158,12 +179,9 @@ Field | Type | Description
 `items` | list | A list of `User` resources.
 
 
-
-
-
 ## Get User
 
-> Request Example - Get tenants and user groups count
+> Request Example - Get user
 
 ```shell
 $ curl -X GET \
@@ -197,20 +215,26 @@ response = requests.get(
 )
 ```
 
-> Response Example - Get tenants and user groups count
+> Response Example - Get user
 
 ```json
 {
-  "username": "admin",
-  "last_login_at": "2017-10-30T15:53:04.951Z",
-  "role": "sys_admin",
-  "groups": 0,
-  "active": true,
-  "tenants": 1
+    "active": true,
+    "first_login_at": "2021-12-20T16:17:13.673Z",
+    "group_system_roles": {},
+    "groups": 0,
+    "is_locked": false,
+    "last_login_at": "2021-12-21T13:32:06.194Z",
+    "password_hash": null,
+    "role": "sys_admin",
+    "show_getting_started": false,
+    "tenant_roles": null,
+    "tenants": 1,
+    "username": "admin"
 }
 ```
 
-> Request Example - Get tenants and user groups details
+> Request Example - Get user
 
 ```shell
 $ curl -X GET \
@@ -244,23 +268,34 @@ response = requests.get(
 )
 ```
 
-> Response Example - Get tenants and user groups details
+> Response Example - Get user
 
 ```json
 {
-  "username": "admin",
-  "last_login_at": "2017-10-31T10:47:20.220Z",
-  "role": "sys_admin",
-  "groups": [],
   "active": true,
+  "first_login_at": "2021-12-20T16:17:13.673Z",
+  "group_system_roles": {},
+  "groups": [],
+  "is_locked": false,
+  "last_login_at": "2021-12-21T15:48:25.067Z",
+  "password_hash": null,
+  "role": "sys_admin",
+  "show_getting_started": false,
+  "tenant_roles": {
+    "direct": {
+      "default_tenant": "user"
+    },
+    "groups": {}
+  },
   "tenants": {
     "default_tenant": {
-      "tenant-role": "user",
       "roles": [
         "user"
-      ]
+      ],
+      "tenant-role": "user"
     }
-  }
+  },
+  "username": "admin"
 }
 ```
 
@@ -277,7 +312,7 @@ A `User` resource.
 
 ## Create User
 
-> Request Example - Get tenants and user groups count
+> Request Example - Create user
 
 ```shell
 $ curl -X PUT \
@@ -323,81 +358,24 @@ response = requests.put(
 )
 ```
 
-> Response Example - Get tenants and user groups count
+> Response Example - Create user
 
 ```json
 {
-  "username": "<new_username>",
-  "last_login_at": null,
-  "role": "<role_name>",
+  "active": true,
+  "first_login_at": "2021-12-20t16:17:13.673z",
+  "group_system_roles": {},
   "groups": 0,
-  "active": true,
-  "tenants": 0
+  "is_locked": false,
+  "last_login_at": "2021-12-21t13:32:06.194z",
+  "password_hash": null,
+  "role": "sys_admin",
+  "show_getting_started": false,
+  "tenant_roles": null,
+  "tenants": 1,
+  "username": "admin"
 }
 ```
-
-> Request Example - Get tenants and user groups details
-
-```shell
-$ curl -X PUT \
-    -H "Content-Type: application/json"
-    -H "Tenant: <manager_tenant>" \
-    -u <manager_username>:<manager_password> \
-    -d '{"username": <new_username>, "password": <password>, "role": <role_name>}'
-    "http://{manager_ip}/api/v3.1/users?_get_data=true"
-```
-
-```python
-# Using Cloudify client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-    host='<manager_ip>',
-    username='<manager_username>',
-    password='<manager_password>',
-    tenant='<manager_tenant>',
-)
-client.users.create(
-    '<new_username>',
-    '<password>',
-    '<role_name>',
-    _get_data=True,
-)
-
-# Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
-url = 'http://<manager_ip>/api/v3.1/users?_get_data=true'
-auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
-headers = {'Tenant': '<manager_tenant>'}
-payload = {
-    'username': '<new_username>',
-    'password': '<password>',
-    'role': '<role_name>',
-}
-response = requests.put(
-    url,
-    auth=auth,
-    headers=headers,
-    json=payload,
-)
-```
-
-> Response Example - Get tenants and user groups details
-
-```json
-{
-  "username": "<new_username>",
-  "last_login_at": null,
-  "role": "<role_name>",
-  "groups": [],
-  "active": true,
-  "tenants": {}
-}
-```
-`PUT -d '{"username": <new_username>, "password": <password>, "role": <role_name>}' "{manager_ip}/api/v3.1/users"`
-
-Creates a new user.
 
 ### Request Body
 
@@ -469,7 +447,7 @@ No content - HTTP code 204.
 
 ## Set user password
 
-> Request Example - Get tenants and user groups count
+> Request Example - Set user password
 
 ```shell
 $ curl -X POST \
@@ -507,75 +485,24 @@ response = requests.post(
 )
 ```
 
-> Response Example - Get tenants and user groups count
+> Response Example - Set user password
 
 ```json
 {
-  "username": "<username>",
-  "last_login_at": null,
-  "role": "default",
+  "active": true,
+  "first_login_at": "2021-12-20T16:17:13.673Z",
+  "group_system_roles": {},
   "groups": 0,
-  "active": true,
-  "tenants": 0
+  "is_locked": false,
+  "last_login_at": "2021-12-21T13:32:06.194Z",
+  "password_hash": null,
+  "role": "sys_admin",
+  "show_getting_started": false,
+  "tenant_roles": null,
+  "tenants": 1,
+  "username": "admin"
 }
 ```
-
-> Request Example - Get tenants and user groups details
-
-```shell
-$ curl -X POST \
-    -H "Content-Type: application/json"
-    -H "Tenant: <manager_tenant>" \
-    -u <manager_username>:<manager_password> \
-    -d '{"password": <new_password>}' \
-    "http://<manager_ip>/api/v3.1/users/<username>?_get_data=true"
-```
-
-```python
-# Using Cloudify client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-    host='<manager_ip>',
-    username='<manager_username>',
-    password='<manager_password>',
-    tenant='<manager_tenant>',
-)
-client.users.set_password(
-    '<username>',
-    '<new_password>',
-    _get_data=True,
-)
-
-# Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
-url = 'http://<manager_ip>/api/v3.1/users/<username>?_get_data=true'
-auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
-headers = {'Tenant': '<manager_tenant>'}
-payload = {'password': '<new_password>'}
-response = requests.post(
-    url,
-    auth=auth,
-    headers=headers,
-    json=payload,
-)
-```
-
-> Response Example - Get tenants and user groups details
-
-```json
-{
-  "username": "<username>",
-  "last_login_at": null,
-  "role": "default",
-  "groups": [],
-  "active": true,
-  "tenants": {}
-}
-```
-
-`POST -d '{"password": <new_password>}' '"{manager_ip}/api/v3.1/users/{username}"`
 
 Specify a password.
 
@@ -592,10 +519,9 @@ Property | Type | Description
 A `User` resource.
 
 
-
 ## Set user role
 
-> Request Example - Get tenants and user groups count
+> Request Example - Set user role
 
 ```shell
 $ curl -X POST \
@@ -633,75 +559,27 @@ response = requests.post(
 )
 ```
 
-> Response Example - Get tenants and user groups count
+> Response Example - Set user role
 
 ```json
 {
-  "username": "<username>",
-  "last_login_at": null,
-  "role": "default",
+  "active": true,
+  "first_login_at": "2021-12-20T16:17:13.673Z",
+  "group_system_roles": {},
   "groups": 0,
-  "active": true,
-  "tenants": 0
+  "is_locked": false,
+  "last_login_at": "2021-12-21T13:32:06.194Z",
+  "password_hash": null,
+  "role": "sys_admin",
+  "show_getting_started": false,
+  "tenant_roles": null,
+  "tenants": 1,
+  "username": "admin"
 }
 ```
 
-> Request Example - Get tenants and user groups details
 
-```shell
-$ curl -X POST \
-    -H "Content-Type: application/json" \
-    -H "tenant: <manager_tenant>" \
-    -u <manager_username>:<manager_password> \
-    -d '{"role": <user_role>}' \
-    "http://<manager_ip>/api/v3.1/users/<username>?_get_data=true"
-```
-
-```python
-# Using Cloudify client
-from cloudify_rest_client import CloudifyClient
-client = CloudifyClient(
-    host='<manager_ip>',
-    username='<manager_username>',
-    password='<manager_password>',
-    tenant='<manager_tenant>',
-)
-client.users.set_role(
-    '<username>',
-    '<new_role_name>',
-    _get_data=True,
-)
-
-# Using requests
-import requests
-from requests.auth import HTTPBasicAuth
-
-url = 'http://<manager_ip>/api/v3.1/users/<username>?_get_data=true'
-auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
-headers = {'Tenant': '<manager_tenant>'}
-payload = {'role': '<new_role_name>'}
-response = requests.post(
-    url,
-    auth=auth,
-    headers=headers,
-    json=payload,
-)
-```
-
-> Response Example - Get tenants and user groups details
-
-```json
-{
-  "username": "<username>",
-  "last_login_at": null,
-  "role": "default",
-  "groups": [],
-  "active": true,
-  "tenants": {}
-}
-```
-
-`POST -d '{"role": <new_role_name>}' '"{manager_ip}/api/v3.1/users/{username}"`
+`POST -d '{"role": <new_role_name>}' "{manager_ip}/api/v3.1/users/{username}"`
 
 Set a new system role for the user.
 

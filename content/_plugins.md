@@ -7,11 +7,14 @@
 Attribute | Type | Description
 --------- | ------- | -------
 `archive_name` | string | The plugin archive file name.
+`blueprint_labels` | dict | The blueprint labels which describe blueprints using this plugin.
+`created_by` | string | The user who created the plugin.
 `distribution_release` | string | The OS distribution release name the plugin was compiled on. 'None' in-case the plugin is cross platform.
 `distribution_version` | string | The OS distribution version the plugin was compiled on. 'None' in-case the plugin is cross platform.
 `distribution` | string | The OS distribution the plugin was compiled on. 'None' in-case the plugin is cross platform.
 `excluded_wheels` | list | a list of wheels that were excluded from the plugin package.
 `id` | string | The ID assigned to the plugin upon upload.
+`installation_state` | list | The state of plugin installation (usually either empty list or '["installed"]').
 `package_name` | string | The python package name.
 `package_source` | string | The python package source, i.e git, pip etc.
 `package_version` | string | The python package version.
@@ -20,6 +23,7 @@ Attribute | Type | Description
 `tenant_name` | string | The name of the tenant that owns the plugin.
 `title` | string | The plugin title used e.g. in UI topology view.
 `uploaded_at` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time and date the plugin was uploaded on to the Cloudify-Manager.
+`visibility` | string | Defines who can see (and use) the plugin.
 `wheels` | list | A list of wheels contained in the plugin package.
 
 
@@ -128,6 +132,63 @@ Gets a plugin.
 
 ### URI Parameters
 * `plugin-id`: The id of the plugin.
+
+### Response
+A `Plugin` resource.
+
+
+## Update Plugin
+
+> Request Example
+```shell
+# curl -X PATCH \
+    --header "Content-Type: application/json" \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"creator": <new-owner>, "blueprint_labels": <new-blueprint-labels>, "labels": <new-labels>}' \
+    "http://<manager-ip>/api/v3.1/plugins/<plugin-id>"
+```
+
+```python
+# Using CloudifyClient
+client.plugins.update(plugin_id='<plugin-id>',
+                      creator='<new-owner>',
+                      blueprint_labels='<new-blueprint-labels>',
+                      labels='<new-labels>')
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/plugins/<plugin-id>'
+headers = {
+    'Content-Type': 'application/json',
+    'Tenant': '<manager-tenant>',
+}
+payload = {
+    'creator': '<new-owner>',
+    'blueprint_labels': '<new-blueprint-labels>',
+    'labels': '<new-labels>',
+}
+requests.patch(
+    url,
+    auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+    headers=headers,
+    json=payload,
+)
+```
+
+`PATCH "{manager-ip}/api/v3.1/plugins/{plugin-id}"`
+
+Updates (some) plugin's attributes, currently supported are: `creator` (user changing this attribute
+must be granted special `set_owner` permission), `blueprint_labels` and `labels`.
+
+### URI Parameters
+* `plugin-id`: The id of the plugin.
+
+### Request Body
+Property               | Type   | Description
+-----------------------|--------|-------------
+`new-owner`            | string | Specifies the new owner of the plugin (optional).
+`new-blueprint-labels` | dict   | Specifies new blueprint_labels for the plugin (optional).
+`new-labels`           | dict   | Specifies new (deployment) labels for the plugin (optional).
 
 ### Response
 A `Plugin` resource.

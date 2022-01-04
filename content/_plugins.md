@@ -18,6 +18,7 @@ Attribute | Type | Description
 `package_name` | string | The python package name.
 `package_source` | string | The python package source, i.e git, pip etc.
 `package_version` | string | The python package version.
+`resource_tags` | dict | The resource tags which for this plugin.
 `supported_platform` | string | The supported platform for the plugin package, 'any' if the plugin is compatible with all platforms.
 `supported_py_versions` | list | a list of python platforms supported by the plugin.
 `tenant_name` | string | The name of the tenant that owns the plugin.

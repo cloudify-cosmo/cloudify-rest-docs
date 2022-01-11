@@ -8,6 +8,7 @@ Attribute | Type | Description
 --------- | ------- | -------
 `created_by` | string | The name of the user that created the node instance.
 `deployment_id` | string | The id of the deployment the node instance belongs to.
+`node_id` | string |  The id of the node of which this is an instance.
 `host_id` | string | The Compute node instance id the node is contained within.
 `id` | string | The id of the node instance.
 `relationships` | list | The relationships the node has with other nodes.

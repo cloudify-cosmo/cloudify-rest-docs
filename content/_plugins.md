@@ -146,7 +146,7 @@ A `Plugin` resource.
     --header "Content-Type: application/json" \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    -d '{"creator": <new-owner>, "blueprint_labels": <new-blueprint-labels>, "labels": <new-labels>}' \
+    -d '{"creator": <new-owner>, "blueprint_labels": <new-blueprint-labels>, "labels": <new-labels>}', "resource_tags": <new-resource-tags> \
     "http://<manager-ip>/api/v3.1/plugins/<plugin-id>"
 ```
 
@@ -155,7 +155,8 @@ A `Plugin` resource.
 client.plugins.update(plugin_id='<plugin-id>',
                       creator='<new-owner>',
                       blueprint_labels='<new-blueprint-labels>',
-                      labels='<new-labels>')
+                      labels='<new-labels>',
+                      resource_tags='<new-resource-tags>')
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/plugins/<plugin-id>'
@@ -167,6 +168,7 @@ payload = {
     'creator': '<new-owner>',
     'blueprint_labels': '<new-blueprint-labels>',
     'labels': '<new-labels>',
+    'resource_tags': '<new-resource-tags>',
 }
 requests.patch(
     url,
@@ -179,7 +181,7 @@ requests.patch(
 `PATCH "{manager-ip}/api/v3.1/plugins/{plugin-id}"`
 
 Updates (some) plugin's attributes, currently supported are: `creator` (user changing this attribute
-must be granted special `set_owner` permission), `blueprint_labels` and `labels`.
+must be granted special `set_owner` permission), `blueprint_labels`, `labels` and `resource_tags`.
 
 ### URI Parameters
 * `plugin-id`: The id of the plugin.
@@ -190,6 +192,7 @@ Property               | Type   | Description
 `new-owner`            | string | Specifies the new owner of the plugin (optional).
 `new-blueprint-labels` | dict   | Specifies new blueprint_labels for the plugin (optional).
 `new-labels`           | dict   | Specifies new (deployment) labels for the plugin (optional).
+`new-resource-tags`    | dict   | Specifies new resource tags for the plugin (optional).
 
 ### Response
 A `Plugin` resource.

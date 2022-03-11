@@ -1,14 +1,19 @@
 # Searches
 
 The `/searches/<resource>` endpoint is used to get a filtered list of resources (currently:
-blueprints, deployments or deployments' workflows) based on their labels and certain attributes.
+blueprints, deployments, deployments' workflows or deployments' capabilities) based on their
+labels and certain attributes or constraints.
+
+
+## Filtering
+
 Blueprints can be filtered by the attribute `created_by`.
 Deployments can be filtered by the following attributes: `blueprint_id`, `created_by`, `site_name`,
 `schedules`, `tenant_name` and `display_name`.  The same list applies when searching for
 deployments' workflows.
 
-Filtering can be done by specifying a pre-created filter ID, or by providing a list of filter rules. 
-A filter rule is a dictionary of the following form: 
+Filtering can be done by specifying a pre-created filter ID, or by providing a list of filter rules.
+A filter rule is a dictionary of the following form:
 ```text
 {
  "key": "<key>",
@@ -21,10 +26,10 @@ A filter rule is a dictionary of the following form:
 
 `<AttrsOperator>` can be one of: "any_of", "not_any_of", "contains", "not_contains", "starts_with", "ends_with", "is_not_empty".
 
-`<FilterRuleType>` can be one of: "label" or "attribute". If "label" is provided, then the operator must be a `<LabelsOperator>`, and if "attribute" is provided, then 
-the operator must be an `<AttrsOperator>`. 
+`<FilterRuleType>` can be one of: "label" or "attribute". If "label" is provided, then the operator must be a `<LabelsOperator>`, and if "attribute" is provided, then
+the operator must be an `<AttrsOperator>`.
 
-E.g. filtering by the following filter rules, will return all items of a resource whose creator name starts with "alice" or "bob", 
+E.g. filtering by the following filter rules, will return all items of a resource whose creator name starts with _alice_ or _bob_,
 and have the label `environment:aws` assigned to them.
 
 ```json
@@ -43,6 +48,33 @@ and have the label `environment:aws` assigned to them.
  }
 ]
 ```
+
+
+## Constraints
+
+Alternatively `constraints` dictionary can be used instead of `filter_rules` and `filter_id` to
+search for the resources matching given constraints.  If you want to know more about the
+constraints, visit [this Cloudify Documentation section](https://docs.cloudify.co/latest/developer/blueprints/spec-inputs/#constraints).
+
+The following constraints can be used to find the blueprints, which have at least these two labels
+set (_environment=k8s_ and _tier=staging_) and IDs containing the string _cellar_ and ending
+with _app_ (e.g. _wine_cellar_app_).
+
+```json
+{
+  "labels": [
+    {"environment": "k8s"},
+    {"tier": "staging"}
+  ],
+  "name_pattern": {
+    "ends_with": "app",
+    "contains": "cellar"
+  }
+}
+```
+
+
+## Additional features
 
 Additionally, a query string can be used to filter out specific resources.  In case of blueprints
 and workflows the  `_search` field name is being used to filter these by `id`.  It is slightly more
@@ -67,13 +99,13 @@ $ curl -X POST \
 # Using CloudifyClient
 deployments = client.deployments.list(filter_rules=[...])
 # Or
-blueprints = client.blueprints.list(filter_rules=[...])
+blueprints = client.blueprints.list(constraints={...})
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/searches/<resource>' # `<resource>` can be either `blueprints`, `deployments` or `workflows`
 headers = {'Tenant': '<manager-tenant>'}
 querystring = {'_include': 'id'}
-payload = {'filter_rules': [...]}
+payload = {'constraints': {...}}
 response = requests.post(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
@@ -84,6 +116,9 @@ response = requests.post(
 response.json()
 
 ```
+
+
+## Response
 
 > Response Example
 
@@ -114,8 +149,6 @@ response.json()
 
 Get a filtered list of resource's items. Resource can be either blueprints, deployments or workflows.
 
-### Response
-
 Field | Type | Description
 --------- | ------- | -------
-`items` | list | A filtered list of resource's items. 
+`items` | list | A filtered list of resource's items.

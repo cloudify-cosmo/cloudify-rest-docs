@@ -9,8 +9,8 @@ labels and certain attributes or constraints.
 
 Blueprints can be filtered by the attribute `created_by`.
 Deployments can be filtered by the following attributes: `blueprint_id`, `created_by`, `site_name`,
-`schedules`, `tenant_name` and `display_name`.  The same list applies when searching for
-deployments' workflows.
+`schedules`, `tenant_name`, `display_name`, and `installation_status`.
+The same list applies when searching for deployments' workflows.
 
 Filtering can be done by specifying a pre-created filter ID, or by providing a list of filter rules.
 A filter rule is a dictionary of the following form:

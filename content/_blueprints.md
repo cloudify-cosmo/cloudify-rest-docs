@@ -245,8 +245,9 @@ Valid visibility values are:
 * `global`: The resource is visible to all users in all tenants across the manager.
 
 ### Response
-`204 NO CONTENT` HTTP status and no body at all if uploaded blueprint and `blueprint-id` were valid.
-`400 BAD REQUEST` HTTP status and a body containing description of the cause of the error otherwise.
+An `Execution` resource, representing the `upload_blueprint` workflow execution that will validate the blueprint.
+Users should follow that execution to completion, and examine its status, error, and logs, to see if the blueprint
+validated successfully, and if not - what are the invalid parts.
 
 ## List Blueprints
 
@@ -575,7 +576,7 @@ $ curl -X PATCH \
 ```python
 # Python Client
 client.blueprints.update(
-blueprint_id='<deployment-id>', 
+blueprint_id='<deployment-id>',
 update_dict={'labels': [{'<key1>': '<val1>', '<key2>': '<val2>'}]}
 )
 ```

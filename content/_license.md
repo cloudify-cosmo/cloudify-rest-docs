@@ -88,7 +88,7 @@ license = client.license.list()
 
 # Using requests
 url = 'http://<manager-ip>/api/v3.1/license'
-headers = {'Tenant': '<manager-tenant>'
+headers = {'Tenant': '<manager-tenant>'}
 response = requests.get(
     url,
     auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
@@ -133,3 +133,31 @@ List license.
 Field | Type | Description
 --------- | ------- | -------
 `items` | list | A `License` resource.
+
+
+## Delete License
+
+> Request Example
+
+```shell
+$ curl -X DELETE \
+    --header "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    "<manager-ip>/api/v3.1/license"
+```
+
+```python
+# Using CloudifyClient
+import requests
+
+license = client.license.delete()
+
+# Using requests
+url = 'http://<manager-ip>/api/v3.1/license'
+headers = {'Tenant': '<manager-tenant>'}
+requests.delete(
+   url,
+   auth=HTTPBasicAuth('<manager-username>', '<manager-password>'),
+   headers=headers
+)
+```

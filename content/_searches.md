@@ -1,18 +1,26 @@
 # Searches
 
-The `/searches/<resource>` endpoint is used to get a filtered list of resources (currently:
-blueprints, deployments, deployments' workflows or deployments' capabilities) based on their
+The `/searches/<resource>` endpoint is used to get a filtered list of resources based on their
 labels and certain attributes or constraints.
 
 
-## Filtering
+## Resources
 
-Blueprints can be filtered by the attribute `created_by`.
-Deployments can be filtered by the following attributes: `blueprint_id`, `created_by`, `site_name`,
-`schedules`, `tenant_name`, `display_name`, and `installation_status`.
-The same list applies when searching for deployments' workflows.
+| Resource         | Pre-created filter | Attributes which can be used to filter by                                                      | Filter by label    |
+|------------------|--------------------|------------------------------------------------------------------------------------------------|--------------------|
+| `blueprints`     | blueprints filter  | id, state, tenant_name, created_by                                                             | yes                |
+| `secrets`        |                    | key                                                                                            | no                 |
+| `deployments`    | deployments filter | blueprint_id, created_by, site_name, schedules, tenant_name, display_name, installation_status | yes                |
+| `nodes`          |                    | id                                                                                             | no                 |
+| `node-instances` |                    | id                                                                                             | no                 |
+| `workflows`      | deployments filter | —                                                                                              | deployment's label |
 
-Filtering can be done by specifying a pre-created filter ID, or by providing a list of filter rules.
+## Filtering rules
+
+Filtering can be done by specifying a pre-created filter ID (for some resources) or by providing
+a list of filter rules.
+
+
 A filter rule is a dictionary of the following form:
 ```text
 {

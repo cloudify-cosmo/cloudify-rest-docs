@@ -11,7 +11,8 @@ labels and certain attributes or constraints.
 | `blueprints`     | blueprints filter  | id, state, tenant_name, created_by                                                             | yes                |
 | `secrets`        |                    | key                                                                                            | no                 |
 | `deployments`    | deployments filter | blueprint_id, created_by, site_name, schedules, tenant_name, display_name, installation_status | yes                |
-| `nodes`          |                    | id                                                                                             | no                 |
+| `nodes`          |                    | id, type                                                                                       | no                 |
+| `node-types`     |                    | id, type                                                                                       | no                 |
 | `node-instances` |                    | id                                                                                             | no                 |
 | `workflows`      | deployments filter | —                                                                                              | deployment's label |
 

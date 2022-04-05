@@ -11,10 +11,16 @@ labels and certain attributes or constraints.
 | `blueprints`     | blueprints filter  | id, state, tenant_name, created_by                                                             | yes                |
 | `secrets`        |                    | key                                                                                            | no                 |
 | `deployments`    | deployments filter | blueprint_id, created_by, site_name, schedules, tenant_name, display_name, installation_status | yes                |
+| `capabilities`   |                    | —                                                                                              | no                 |
 | `nodes`          |                    | id, type                                                                                       | no                 |
 | `node-types`     |                    | id, type                                                                                       | no                 |
 | `node-instances` |                    | id                                                                                             | no                 |
 | `workflows`      | deployments filter | —                                                                                              | deployment's label |
+
+_Note: `capabilities` search will return only these values which are stored in the database in
+already evaluated form.  Do not expect values such as `{get_attribute: [node, property]}` to be
+evaluated "on fly"._
+
 
 ## Filtering rules
 

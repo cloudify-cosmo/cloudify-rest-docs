@@ -11,6 +11,7 @@ Attribute | Type | Description
 `parameters` | object | A dictionary containing definitions of the workflow's parameters.
 `plugin` | string | The name of the plugin containing workflow implementation.
 `operation` | string | The name of the system task performed by the workflow.
+`is_available` | boolean | Whether or not this workflow is currently available for running
 
 ## List Workflows
 
@@ -56,21 +57,24 @@ response.json()
       "created_at": "2021-04-27T06:51:29.541Z",
       "parameters": {},
       "plugin": "cloudify-hello-plugin",
-      "operation": ""
+      "operation": "",
+      "is_available": true
     },
     {
       "name": "hello2"
       "created_at": "2021-04-27T06:51:29.542Z",
       "parameters": {},
       "plugin": "cloudify-hello-plugin",
-      "operation": ""
+      "operation": "",
+      "is_available": false
     },
     {
       "name": "hello3"
       "created_at": "2021-04-27T06:51:29.543Z",
       "parameters": {},
       "plugin": "cloudify-hello-plugin",
-      "operation": ""
+      "operation": "",
+      "is_available": true
     }
   ],
   "metadata": {

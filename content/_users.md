@@ -602,3 +602,81 @@ Valid system roles are:
 
 ### Response
 A `User` resource.
+
+
+## Set show getting started
+
+> Request Example - Set user `show getting started` parameter 
+
+```shell
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "tenant: <manager_tenant>" \
+    -u <manager_username>:<manager_password> \
+    -d '{"show_getting_started": <true|false>}' \
+    "http://<manager_ip>/api/v3.1/users/<username>"
+```
+
+```python
+# Using Cloudify client
+from cloudify_rest_client import CloudifyClient
+client = CloudifyClient(
+    host='<manager_ip>',
+    username='<manager_username>',
+    password='<manager_password>',
+    tenant='<manager_tenant>',
+)
+client.users.set_show_getting_started('<username>', True)
+
+# Using requests
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = 'http://<manager_ip>/api/v3.1/users/<username>'
+auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
+headers = {'Tenant': '<manager_tenant>'}
+payload = {'show_getting_started': True}
+response = requests.post(
+    url,
+    auth=auth,
+    headers=headers,
+    json=payload,
+)
+```
+
+> Response Example - Set user `show getting started` parameter 
+
+```json
+{
+  "active": true,
+  "first_login_at": "2021-12-20T16:17:13.673Z",
+  "group_system_roles": {},
+  "groups": 0,
+  "is_locked": false,
+  "last_login_at": "2021-12-21T13:32:06.194Z",
+  "password_hash": null,
+  "role": "sys_admin",
+  "show_getting_started": true,
+  "tenant_roles": null,
+  "tenants": 1,
+  "username": "admin"
+}
+```
+
+
+`POST -d '{"show_getting_started": <true|false>}' "{manager_ip}/api/v3.1/users/{username}"`
+
+Set the `show getting started` parameter for the user.
+
+
+### URI Parameters
+* `username`: The name of the user for whom to set the `show getting started` parameter.
+
+### Request Body
+
+Property | Type | Description
+--------- | ------- | -----------
+`show_getting_started` | bool | Whether to show the **Getting Started** popup at login.
+
+### Response
+A `User` resource.

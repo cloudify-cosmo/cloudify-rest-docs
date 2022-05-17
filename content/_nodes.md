@@ -25,6 +25,8 @@ Attribute | Type | Description
 `tenant_name` | string | The name of the tenant that owns the node.
 `type_hierarchy` | list | The type hierarchy of the node (ancestors).
 `type` | string | The type of the node.
+`unavailable_instances` | integer | Amount of instances that failed their status check.
+`drifted_instances` | integer | Amount of instances that have configuration drift.
 
 * `id` and `deployment_id` are combined together for uniquely identifying a node.
 
@@ -83,6 +85,16 @@ response.json()
 `GET "{manager-ip}/api/v3.1/nodes"`
 
 Lists all nodes.
+
+### URI Parameters
+
+For filtering, or returning additional data, the following parameters can be provided in the querystring:
+
+* `deployment_id` - return nodes of this deployment
+* `id` - return only the node matching this id
+* `evaluate_functions` - evaluate intrinsic functions
+* `_instance_counts` - count unavailable and drifted instances. This is only available when used together with `deployment_id`. When this is set, the `unavailable_instances` and `drifted_instances` fields are populated.
+
 
 ### Response
 

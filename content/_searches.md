@@ -25,9 +25,8 @@ For more details on the pre-created filters see the documentation about
 All the search queries can be extended with the `_search` parameter.  The attribute being searched
 for is indicated in the last column of the above table.
 
-_Note: `capabilities` search will return only these values which are stored in the database in
-already evaluated form.  Do not expect values such as `{get_attribute: [node, property]}` to be
-evaluated "on fly"._
+_Note: `capabilities` search will return both the values which are stored in the database (already
+evaluated) and the ones defined with intrinsic functions (evaluated during the search)._
 
 
 ## Search with Filtering Rules

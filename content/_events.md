@@ -21,6 +21,8 @@ Attribute | Type | Description
 `timestamp` | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) | The time at which the event was logged on the management machine
 `type` | string | Indicates whether the resource is a `cloudify_event` or a `cloudify_log`
 `workflow_id` | string | Workflow id
+`manager_name` | string | The name of the manager that emitted this event
+`agent_name` | string | The name of the agent that emitted this event
 
 ## The ErrorCause object
 
@@ -84,7 +86,9 @@ response.json()
       "deployment_id": "linuxdp1",
       "type": "cloudify_log",
       "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387",
-      "logger": "22e710c6-18b8-4e96-b8a3-2104b81c5bfc"
+      "logger": "22e710c6-18b8-4e96-b8a3-2104b81c5bfc",
+      "manager_name": "manager-1",
+      "agent_name": null
     },
     {
       "node_instance_id": "vm_ke9e2d",
@@ -99,7 +103,9 @@ response.json()
       "reported_timestamp": "2017-03-22T11:42:00.083Z",
       "deployment_id": "linuxdp1",
       "type": "cloudify_event",
-      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387"
+      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387",
+      "manager_name": "manager-1",
+      "agent_name": null
     },
     {
       "node_instance_id": "vm_ke9e2d",
@@ -122,7 +128,9 @@ estmockoperations/tasks.py\", line 476, in execution_logging\n    raise NonRecov
       "reported_timestamp": "2017-03-22T11:43:01.823Z",
       "deployment_id": "linuxdp1",
       "type": "cloudify_event",
-      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387"
+      "execution_id": "19ce78d6-babc-4a18-ba8e-74b853f2b387",
+      "manager_name": "manager-1",
+      "agent_name": null
     }
   ],
   "metadata": {

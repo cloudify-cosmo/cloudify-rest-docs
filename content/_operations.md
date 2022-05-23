@@ -24,6 +24,8 @@ Attribute | Type | Description
 `type` | string | Type of this operation, eg. RemoteWorkflowTask, LocalWorkflowTask or SubgraphTask
 `parameters` | dict | Parameters as serialized by the operation class, to be used when reconstructing the operation
 `tasks_graph` | string | ID of the tasks graph this operation belongs to
+`manager_name` | string | The name of the manager that executed this operation
+`agent_name` | string | The name of the agent that executed this operation
 
 ## List operations
 
@@ -47,7 +49,9 @@ client.operations.list(graph_id)
         "dependencies": [],
         "type": "SubgraphTask",
         "name": "my-subgraph",
-        "parameters": {}
+        "parameters": {},
+        "manager_name": "manager-1",
+        "agent_name": null
     }
 ]
 ```

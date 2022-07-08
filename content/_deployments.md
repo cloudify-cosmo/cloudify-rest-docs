@@ -561,6 +561,7 @@ Property | Type | Description
 `skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
 `skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
 `skip_drift_check` | boolean | If set, do not run check_drift as part of the update
+`force_reinstall` | boolean | Reinstall all changed instances, instead of running the update operations
 `force` | boolean | Force running update even if previous update failed
 `ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
 `install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)

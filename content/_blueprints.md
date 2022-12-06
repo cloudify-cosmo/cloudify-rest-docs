@@ -11,6 +11,7 @@ Attribute | Type | Description
 `id` | string | A unique identifier for the blueprint.
 `main_file_name` | string | The blueprint's main file name.
 `plan` | dict | The parsed result of the blueprint.
+`requirements` | dict | Description of the blueprint deploy requirements.
 `updated_at` | datetime | The last time the blueprint was updated.
 `labels` | list | A list of the deployment's labels.
 

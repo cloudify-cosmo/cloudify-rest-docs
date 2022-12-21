@@ -104,7 +104,7 @@ List all secrets providers.
 | `items`    | list | A list of `Secrets Provider` resources.  |
 | `metadata` | dict | Information about pagination result.     |
 
-## Get Secret Provider
+## Get Secrets Provider
 
 > Request Example
 
@@ -358,7 +358,7 @@ Updates a Secrets Provider.
 ### Response
 A `Secrets Provider` resource.
 
-## Delete Secret
+## Delete Secrets Provider
 
 > Request Example
 
@@ -451,7 +451,6 @@ payload = {
     'name': '<provider_name>',
     'type': '<provider_type>',
     'connection_parameters': {},
-    'test': True,
 }
 response = requests.put(
     url,
@@ -468,4 +467,4 @@ response.json()
 Test a Secrets Provider.
 
 ### Response
-No content - HTTP code 200.
+No content - HTTP code 204.

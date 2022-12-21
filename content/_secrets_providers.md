@@ -16,7 +16,7 @@ and adhere to isolation requirements between different tenants.
 | `id`                    | string   | The Secrets Provider's name, unique per tenant.                                                                       |
 | `name`                  | string   | The Secrets Provider's name, unique per tenant.                                                                       |
 | `type`                  | string   | The Secrets Provider's type.                                                                                          |
-| `connection_parameters` | JSON     | The Secrets Provider's connection parameters (e.g. host, username, password etc).                                     |
+| `connection_parameters` | dict     | The Secrets Provider's connection parameters (e.g. host, username, password etc).                                     |
 | `visibility`            | string   | Defines who can see the provider. Can be private, tenant or global. **Supported for Cloudify Manager 4.3 and above.** |
 | `tenant_name`           | string   | The name of the tenant of the provider.                                                                               |
 | `created_by`            | string   | The author of the provider.                                                                                           |
@@ -255,7 +255,7 @@ Creates a Secrets Provider.
 |-------------------------|--------|---------------------------------------------------------------------------------------------------------------------------|
 | `name`                  | string | The Secrets Provider's name.                                                                                              |
 | `type`                  | string | The Secrets Provider's type.                                                                                              |
-| `connection_parameters` | JSON   | The Secrets Provider's connection parameters (e.g. host, username, password etc).                                         |
+| `connection_parameters` | dict   | The Secrets Provider's connection parameters (e.g. host, username, password etc).                                         |
 | `visibility`            | string | Optional parameter, defines who can see the provider (default: tenant). **Supported for Cloudify Manager 4.3 and above.** |
 
 Valid type values are:

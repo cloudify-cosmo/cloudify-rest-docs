@@ -392,54 +392,6 @@ with open('<blueprint-archive-filename>.tar.gz', 'wb') as blueprint_archive:
 The blueprint as an archive using an `application/octet-stream` content type.
 
 
-## Set Global Blueprint
-
-> Request Example
-
-```shell
-$ curl -X PATCH -H "Content-Type: application/json" -H "tenant: <tenant-name>"
-    -u user:password "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/set-global"
-```
-
-```python
-# Python Client
-client.blueprints.set_global('<blueprint-id>')
-```
-
-> Response Example
-
-```json
-{
-  "main_file_name": "singlehost-blueprint.yaml",
-  "description": "This blueprint installs a simple web server on the manager VM using Cloudify's script plugin.\n",
-  "tenant_name": "default_tenant",
-  "created_at": "2021-03-25T15:51:30.526Z",
-  "updated_at": "2021-03-25T15:51:30.526Z",
-  "created_by": "admin",
-  "private_resource": false,
-  "visibility": "global",
-  "plan": {
-    ...
-  },
-  "labels": [
-    ...
-  ],
-  "id": "hello-world"
-}
-```
-
-`PATCH "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/set-global"`
-
-Set the blueprint's visibility to global.
-Will be deprecated soon. For Cloudify Manager 4.3 and above, use 'set-visibility'.
-
-### URI Parameters
-* `blueprint-id`: The id of the blueprint to update.
-
-### Response
-A `Blueprint` resource.
-
-
 ## Set Blueprint Visibility
 
 > Request Example

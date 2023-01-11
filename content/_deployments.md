@@ -129,7 +129,7 @@ response = requests.get(
 )
 response.json()
 ```
-Get Deployment API supports query string param called `all_sub_deployments` where the default value is `True` which means the values for `sub_services_count` and `sub_environments_count` will contain the numbers of deployments attached to this deployment recursively. Otherwise, if `all_sub_deployments` is `False` it will only contains the first level of deployments (services/environments) 
+Get Deployment API supports query string param called `all_sub_deployments` where the default value is `True` which means the values for `sub_services_count` and `sub_environments_count` will contain the numbers of deployments attached to this deployment recursively. Otherwise, if `all_sub_deployments` is `False` it will only contains the first level of deployments (services/environments)
 
 > Response Example
 
@@ -288,10 +288,10 @@ An error is raised if the deployment has any live node instances, or there
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
-* `delete_logs`: Determines whether to delete the deployment logs, default: 
+* `delete_logs`: Determines whether to delete the deployment logs, default:
   false.
-* `force`: Specifies whether to force deployment deletion even if there are 
-  existing live nodes for it, or existing installations which depend on it. 
+* `force`: Specifies whether to force deployment deletion even if there are
+  existing live nodes for it, or existing installations which depend on it.
   Default: false
 
 
@@ -1019,7 +1019,7 @@ $ curl -X PATCH \
 ```python
 # Python Client
 client.deployments.update_labels(
-deployment_id='<deployment-id>', 
+deployment_id='<deployment-id>',
 labels=[{'<key1>': '<val1>', '<key2>': '<val2>'}]
 )
 ```

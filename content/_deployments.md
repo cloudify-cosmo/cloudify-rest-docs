@@ -545,9 +545,10 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
 
 ```
 
-`PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
+`POST "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
 
-Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
+Update the deployment, supported for Cloudify Manager 4.4 and above.  **Since Cloudify 7.0,
+previously deprecated `PUT` method is no longer supported.**
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment to update.

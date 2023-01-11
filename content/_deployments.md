@@ -555,22 +555,22 @@ previously deprecated `PUT` method is no longer supported.**
 
 ### Request Body
 
-Property | Type | Description
---------- | ------- | -----------
-`blueprint_id` | string | The id of the blueprint to use for the update
-`skip_install` | boolean | Determines whether to skip installing node instances in update workflow
-`skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
-`skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
-`skip_drift_check` | boolean | If set, do not run check_drift as part of the update
-`force_reinstall` | boolean | Reinstall all changed instances, instead of running the update operations
-`skip_heal` | boolean | Do not run check_status and heal before the update
-`force` | boolean | Force running update even if previous update failed
-`ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
-`install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
-`inputs` | object | Dictionary containing inputs to update in the deployment
-`reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
-`preview` | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.**
-
+| Property                  | Type    | Description                                                                                                                                          |
+|---------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `blueprint_id`            | string  | The id of the blueprint to use for the update                                                                                                        |
+| `skip_install`            | boolean | Determines whether to skip installing node instances in update workflow                                                                              |
+| `skip_install`            | boolean | Determines whether to skip uninstalling node instances in update workflow                                                                            |
+| `skip_reinstall`          | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update                              |
+| `skip_drift_check`        | boolean | If set, do not run check_drift as part of the update                                                                                                 |
+| `force_reinstall`         | boolean | Reinstall all changed instances, instead of running the update operations                                                                            |
+| `skip_heal`               | boolean | Do not run check_status and heal before the update                                                                                                   |
+| `force`                   | boolean | Force running update even if previous update failed                                                                                                  |
+| `ignore_failure`          | boolean | Ignore operation failures while unisntalling node instances in update workflow                                                                       |
+| `install_first`           | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)                                                 |
+| `inputs`                  | object  | Dictionary containing inputs to update in the deployment                                                                                             |
+| `reinstall_list`          | object  | List of IDs for node instances to reinstall (even if skip_reinstall is true)                                                                         |
+| `preview`                 | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.** |
+| `runtime_only_evaluation` | boolean | sets the `runtime_only_evaluation` flag for the deployment                                                                                           |
 
 ### Response
 A `Deployment Update` resource.

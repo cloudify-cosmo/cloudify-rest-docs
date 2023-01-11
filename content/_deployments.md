@@ -129,7 +129,7 @@ response = requests.get(
 )
 response.json()
 ```
-Get Deployment API supports query string param called `all_sub_deployments` where the default value is `True` which means the values for `sub_services_count` and `sub_environments_count` will contain the numbers of deployments attached to this deployment recursively. Otherwise, if `all_sub_deployments` is `False` it will only contains the first level of deployments (services/environments) 
+Get Deployment API supports query string param called `all_sub_deployments` where the default value is `True` which means the values for `sub_services_count` and `sub_environments_count` will contain the numbers of deployments attached to this deployment recursively. Otherwise, if `all_sub_deployments` is `False` it will only contains the first level of deployments (services/environments)
 
 > Response Example
 
@@ -288,10 +288,10 @@ An error is raised if the deployment has any live node instances, or there
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment.
-* `delete_logs`: Determines whether to delete the deployment logs, default: 
+* `delete_logs`: Determines whether to delete the deployment logs, default:
   false.
-* `force`: Specifies whether to force deployment deletion even if there are 
-  existing live nodes for it, or existing installations which depend on it. 
+* `force`: Specifies whether to force deployment deletion even if there are
+  existing live nodes for it, or existing installations which depend on it.
   Default: false
 
 
@@ -545,31 +545,32 @@ client.deployment_updates.update_with_existing_blueprint(skip_install="<skip_ins
 
 ```
 
-`PUT "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
+`POST "<manager-ip>/api/v3.1/deployment-updates/<deployment-id>/update/initiate"`
 
-Update the deployment. **Supported for Cloudify Manager 4.4 and above.**
+Update the deployment, supported for Cloudify Manager 4.4 and above.  **Since Cloudify 7.0,
+previously deprecated `PUT` method is no longer supported.**
 
 ### URI Parameters
 * `deployment-id`: The id of the deployment to update.
 
 ### Request Body
 
-Property | Type | Description
---------- | ------- | -----------
-`blueprint_id` | string | The id of the blueprint to use for the update
-`skip_install` | boolean | Determines whether to skip installing node instances in update workflow
-`skip_install` | boolean | Determines whether to skip uninstalling node instances in update workflow
-`skip_reinstall` | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update
-`skip_drift_check` | boolean | If set, do not run check_drift as part of the update
-`force_reinstall` | boolean | Reinstall all changed instances, instead of running the update operations
-`skip_heal` | boolean | Do not run check_status and heal before the update
-`force` | boolean | Force running update even if previous update failed
-`ignore_failure` | boolean | Ignore operation failures while unisntalling node instances in update workflow
-`install_first` | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)
-`inputs` | object | Dictionary containing inputs to update in the deployment
-`reinstall_list` | object | List of IDs for node instances to reinstall (even if skip_reinstall is true)
-`preview` | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.**
-
+| Property                  | Type    | Description                                                                                                                                          |
+|---------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `blueprint_id`            | string  | The id of the blueprint to use for the update                                                                                                        |
+| `skip_install`            | boolean | Determines whether to skip installing node instances in update workflow                                                                              |
+| `skip_install`            | boolean | Determines whether to skip uninstalling node instances in update workflow                                                                            |
+| `skip_reinstall`          | boolean | Determines whether to reinstall the node instances whose properties or operations are modified in the deployment update                              |
+| `skip_drift_check`        | boolean | If set, do not run check_drift as part of the update                                                                                                 |
+| `force_reinstall`         | boolean | Reinstall all changed instances, instead of running the update operations                                                                            |
+| `skip_heal`               | boolean | Do not run check_status and heal before the update                                                                                                   |
+| `force`                   | boolean | Force running update even if previous update failed                                                                                                  |
+| `ignore_failure`          | boolean | Ignore operation failures while unisntalling node instances in update workflow                                                                       |
+| `install_first`           | boolean | Install new node instances before reinstalling removed ones (default: first uninstall, then install)                                                 |
+| `inputs`                  | object  | Dictionary containing inputs to update in the deployment                                                                                             |
+| `reinstall_list`          | object  | List of IDs for node instances to reinstall (even if skip_reinstall is true)                                                                         |
+| `preview`                 | boolean | If set, does not perform the update and returns the steps this update would make (default: False). **Supported for Cloudify Manager 5.0 and above.** |
+| `runtime_only_evaluation` | boolean | sets the `runtime_only_evaluation` flag for the deployment                                                                                           |
 
 ### Response
 A `Deployment Update` resource.
@@ -1018,7 +1019,7 @@ $ curl -X PATCH \
 ```python
 # Python Client
 client.deployments.update_labels(
-deployment_id='<deployment-id>', 
+deployment_id='<deployment-id>',
 labels=[{'<key1>': '<val1>', '<key2>': '<val2>'}]
 )
 ```

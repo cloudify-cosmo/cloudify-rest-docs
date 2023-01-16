@@ -183,7 +183,7 @@ $ curl -X PUT \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
     --cacert <path_to_ca_cert> \
-    -d '{"value": "<secret_value>", "update_if_exists": false, "visibility": "<visibility>", "is_hidden_value": false, "schema": {}, "provider": "<provider_name>", "provider_options": {}}' \
+    -d '{"value": "<secret_value>", "update_if_exists": false, "visibility": "<visibility>", "is_hidden_value": false, "schema": {}, "provider_name": "<provider_name>", "provider_options": {}}' \
     "https://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
@@ -205,7 +205,7 @@ client.secrets.create(
     visibility='<visibility>',
     is_hidden_value=False,
     schema={},
-    provider='<provider_name>',
+    provider_name='<provider_name>',
     provider_options={},
 )
 
@@ -222,7 +222,7 @@ payload = {
     'visibility': '<visibility>',
     'is_hidden_value': False,
     'schema': {},
-    'provider': '<provider_name>',
+    'provider_name': '<provider_name>',
     'provider_options': {},
 }
 response = requests.get(
@@ -255,7 +255,7 @@ response.json()
 }
 ```
 
-`PUT -d '{"value": "<secret_value>", "update_if_exists": false, "visibility": "<visibility>", "is_hidden_value": false, "schema": {}, "provider": "<provider_name>", "provider_options": {}}'`
+`PUT -d '{"value": "<secret_value>", "update_if_exists": false, "visibility": "<visibility>", "is_hidden_value": false, "schema": {}, "provider_name": "<provider_name>", "provider_options": {}}'`
 
 Creates a secret.
 
@@ -270,7 +270,7 @@ Creates a secret.
 | `visibility`       | string  | Optional parameter, defines who can see the secret (default: tenant). **Supported for Cloudify Manager 4.3 and above.**                                                                                                                   |
 | `is_hidden_value`  | boolean | Optional parameter, determines who can see the value of the secret. If True, the value of the secret is only shown to the user that created the secret and to admins. (default: false). **Supported for Cloudify Manager 4.4 and above.** |
 | `schema`           | dict    | Optional parameter, defines how the secret should be validated.                                                                                                                                                                           |
-| `provider`         | string  | Optional parameter, defines which provider should be used to get the secret's value.                                                                                                                                                      |
+| `provider_name`    | string  | Optional parameter, defines which provider should be used to get the secret's value.                                                                                                                                                      |
 | `provider_options` | dict    | Optional parameter, defines additional options to get the secret's value via provider.                                                                                                                                                    |
 
 Valid visibility values are:
@@ -292,7 +292,7 @@ $ curl -X PATCH \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
     --cacert <path_to_ca_cert> \
-    -d '{"value": "<secret_value>", "visibility": "<visibility>", "is_hidden_value": false, "creator": "<creator_name>", "provider": "<provider_name>", "provider_options": {}}' \
+    -d '{"value": "<secret_value>", "visibility": "<visibility>", "is_hidden_value": false, "creator": "<creator_name>", "provider_name": "<provider_name>", "provider_options": {}}' \
     "https://<manager_ip>/api/v3.1/secrets/<secret_key>"
 ```
 
@@ -350,7 +350,7 @@ response.json()
 }
 ```
 
-`PATCH -d '{"value": "<secret_value>", "visibility": "<visibility>", "is_hidden_value": false, "creator": "<creator_name>", "provider": "<provider_name>", "provider_options": {}}' "{manager_ip}/api/v3.1/secrets/{secret_key}"`
+`PATCH -d '{"value": "<secret_value>", "visibility": "<visibility>", "is_hidden_value": false, "creator": "<creator_name>", "provider_name": "<provider_name>", "provider_options": {}}' "{manager_ip}/api/v3.1/secrets/{secret_key}"`
 
 Updates a secret.
 
@@ -364,7 +364,7 @@ Updates a secret.
 | `visibility`       | string  | Optional parameter, defines who can see the secret (default: tenant). **Supported for Cloudify Manager 4.3 and above.**                                                                                                                   |
 | `is_hidden_value`  | boolean | Optional parameter, determines who can see the value of the secret. If True, the value of the secret is only shown to the user that created the secret and to admins. (default: false). **Supported for Cloudify Manager 4.4 and above.** |
 | `creator`          | string  | The secret's owner (username).                                                                                                                                                                                                            |
-| `provider`         | string  | Optional parameter, defines which provider should be used to get the secret's value.                                                                                                                                                      |
+| `provider_name`    | string  | Optional parameter, defines which provider should be used to get the secret's value.                                                                                                                                                      |
 | `provider_options` | dict    | Optional parameter, defines additional options to get the secret's value via provider.                                                                                                                                                    |
 
 ### Response

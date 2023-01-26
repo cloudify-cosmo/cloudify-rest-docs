@@ -85,8 +85,7 @@ response.json()
             "tenant_name": "default_tenant",
             "created_by": "admin",
             "is_hidden_value": false,
-            "provider_name": null,
-            "provider_options": null
+            "provider_name": null
         }
     ]
 }
@@ -111,7 +110,7 @@ $ curl -X GET \
     -H "Tenant: <manager_tenant>" \
     -u <manager_username>:<manager_password> \
     --cacert <path_to_ca_cert> \
-    "https://<manager_ip>/api/v3.1/secrets/<secret_key>"
+    "https://<manager_ip>/api/v3.1/secrets/<secret_key>?_skip_value={true/false}"
 ```
 
 ```python
@@ -134,10 +133,12 @@ from requests.auth import HTTPBasicAuth
 url = 'https://<manager_ip>/api/v3.1/secrets/<secret_key>'
 auth = HTTPBasicAuth('<manager_username>', '<manager_password>')
 headers = {'Tenant': '<manager_tenant>'}
+querystring = {'_skip_value': False}
 response = requests.get(
     url,
     auth=auth,
     headers=headers,
+    params=querystring,
     verify='<path_to_ca_cert>',
 )
 response.json()
@@ -163,12 +164,13 @@ response.json()
 }
 ```
 
-`GET "{manager_ip}/api/v3.1/secrets/{secret_key}"`
+`GET "{manager_ip}/api/v3.1/secrets/{secret_key}?_skip_value={true/false}"`
 
 Retrieves a specific secret.
 
 ### URI Parameters
 * `secret_key`: The key of the secret to retrieve.
+* `_skip_value`: (Default: `false`) Optional parameter, determine if value should be skipped in response.
 
 ### Response
 A `Secret` resource.

@@ -293,3 +293,42 @@ Property | Type | Description
 
 ### Response
 An `ExecutionGroup` resource.
+
+
+## Change execution-group concurrency
+
+> Request Example
+
+```shell
+curl -X PATCH \
+    --header "Tenant: <manager-tenant>" \
+    --header "Content-Type: application/json" \
+    -u <manager-username>:<manager-password> \
+    -d '{"concurrency": 15}'
+    "http://<manager-ip>/api/v3.1/execution-groups/<group-id>"
+```
+
+```python
+# Using CloudifyClient
+client.execution_groups.set_concurrency(
+    '<group-id>',
+    concurrency=15,
+)
+
+```
+`PATCH -d '{"concurrency":15}' "{manager-ip}/api/v3.1/execution-groups/{group-id}"`
+
+Set the concurrency parameter of the execution group. De-queueing executions
+will use the new setting. Note: setting concurrency to 0, effectively pauses
+the group.
+
+### URI Parameters
+* `group-id`: The id of the execution group.
+
+### Request Body
+Property | Type | Description
+--------- | ------- | -----------
+`concurrency` | integer | The new concurrency setting, a nonnegative integer
+
+### Response
+An `ExecutionGroup` resource.

@@ -10,7 +10,7 @@ labels and certain attributes or constraints.
 |------------------|--------------------|------------------------------------------------------------------------------------------------|--------------------|--------------------|
 | `blueprints`     | blueprints filter  | id, state, tenant_name, created_by                                                             | yes                | id                 |
 | `secrets`        |                    | key                                                                                            | no                 | id (key)           |
-| `deployments`    | deployments filter | blueprint_id, created_by, site_name, schedules, tenant_name, display_name, installation_status | yes                | id, display_name   |
+| `deployments`    | deployments filter | id, blueprint_id, created_by, site_name, schedules, tenant_name, display_name, installation_status | yes            | id, display_name   |
 | `workflows`      | deployments filter | —                                                                                              | deployment's label | (deployment) id    |
 | `capabilities`   |                    | —                                                                                              | no                 | capability value   |
 | `scaling-groups` |                    | —                                                                                              | no                 | scaling_group name |

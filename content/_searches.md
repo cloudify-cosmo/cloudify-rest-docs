@@ -139,6 +139,17 @@ response.json()
 
 ```
 
+When searching for `workflows`, the `_common_only` flag can be used in the query string
+to list only the workflows which are common between the filtered deployments.
+```shell
+$ curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Tenant: <manager-tenant>" \
+    -u <manager-username>:<manager-password> \
+    -d '{"filter_rules": <a list of filter rules as described above>}' \
+    "https://<manager-ip>/api/v3.1/searches/workflows?_common_only=True"
+```
+
 
 ## Search Response
 

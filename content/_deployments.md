@@ -293,7 +293,9 @@ An error is raised if the deployment has any live node instances, or there
 * `force`: Specifies whether to force deployment deletion even if there are
   existing live nodes for it, or existing installations which depend on it.
   Default: false
-
+* `recursive`: Also delete all service deployments that use the selected
+  deployment as their environment.
+  Default: false
 
 ### Response
 No content - HTTP code 204.

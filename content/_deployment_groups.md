@@ -455,7 +455,7 @@ In case of deleting deployments, same semantics as in Deployments DELETE apply, 
 * `delete_deployments`: if "true", also delete all deployments belonging to this group
 * `force`: Same meaning as in Deployments DELETE
 * `delete_logs`: Same meaning as in Deployments DELETE
-
+* `recursive`: Same meaning as in Deployments DELETE
 
 ### Response
 

@@ -86,13 +86,16 @@ A `Blueprint` resource.
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>&blueprint_archive_url=https://url/to/archive/master.zip&labels=<key1>=<val1>,<key2>=<val2>"
+    -F 'params={"blueprint_archive_url": "http://url/to/archive.zip", application_file_name": "<filename>.yaml", "visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>"
 
-# create blueprint from uploaded archive
+# create blueprint from a .tgz archive, with additional parameters
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>?application_file_name=<blueprint-id>.yaml&visibility=<visibility>&labels=<key1>=<val1>,<key2>=<val2>" -T <blueprint_archive>.tar.gz
+    -F blueprint_archive=@<blueprint_archive>.tar.gz \
+    -F 'params={"application_file_name": "<filename>.yaml", "visibility": "<visibility>", "labels": [{"key": "<label key>", "value": "<label value>"}]}' \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>"
 ```
 
 ```python
@@ -153,23 +156,29 @@ response.json()
 }
 ```
 
-`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip&visibility=<visibility>"`
+`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}"`
 
 Uploads a blueprint to Cloudify's manager.
-The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
-It is possible to upload a blueprint from a URL by specifying the URL in the `blueprint_archive_url` request body property.
+The call expects a `multipart/form-data`-encoded request body, containing the fields `blueprint_archive` - a zip or tgz of the blueprint, and `params` - a JSON-encoded field containing blueprint metadata.
+The "params" field may contain the keys `application_file_name`, `visibility`, `labels`, and `async_upload`.
+It is also possible to upload a blueprint from a URL by specifying the URL in the `blueprint_archive_url` key in the `params` field.
 
 
 ### URI Parameters
 * `blueprint-id`: The id of the uploaded blueprint.
 
 ### Request Body
+
+The request body must be `multipart/form-data`.
+
 Property | Type | Description
--------- | ---- | -----------
-`application_file_name` | string | The main blueprint file name in the blueprint's archive.
-`blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
-`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
-`async_upload` | boolean | Optional parameter, setting it to True means the REST service won't wait for the upload workflow to complete, allowing a batch upload (default: False). **Supported for Cloudify Manager 5.2 and above.**
+`blueprint_archive` | binary | The contents of a zip or tgz-compressed archive of the blueprint directory.
+`params` | string | JSON-encoded object containing additional parameters. This field may contain the other parameters listed below.
+`blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager. May be provided as a key in the `params` field, or as a field in the querystring.
+`application_file_name` | string | The main blueprint file name in the blueprint's archive. May be provided as a key in the `params` field, or as a field in the querystring.
+`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant). May be provided as a key in the `params` field.
+`async_upload` | boolean | Optional parameter, setting it to True means the REST service won't wait for the upload workflow to complete, allowing a batch upload (default: False). May be provided as a key in the `params` field. **Supported for Cloudify Manager 5.2 and above.**
+`labels` | list | Labels to apply to the blueprint - a list of objects containing the keys `key` and `value`. May be provided as a key in the `params` field.
 
 Valid visibility values are:
 
@@ -189,13 +198,16 @@ A `Blueprint` resource.
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/validate?application_file_name=blueprint.yaml&visibility=<visibility>&blueprint_archive_url=https://url/to/archive/master.zip"
+    -F 'params={"blueprint_archive_url": "http://url/to/archive.zip", application_file_name": "<filename>.yaml", "visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/validate"
 
 # validate a  blueprint from uploaded archive
 $ curl -X PUT \
     --header "Tenant: <manager-tenant>" \
     -u <manager-username>:<manager-password> \
-    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>/validate?application_file_name=blueprint.yaml&visibility=<visibility>" -T <blueprint_archive>.tar.gz
+    -F blueprint_archive=@<blueprint_archive>.tar.gz \
+    -F 'params={"application_file_name": "<filename>.yaml", "visibility": "<visibility>"}' \
+    "http://<manager-ip>/api/v3.1/blueprints/<blueprint-id>"
 ```
 
 ```python
@@ -222,7 +234,7 @@ response = requests.put(
 )
 ```
 
-`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/validate?application_file_name={blueprint-id}.yaml&blueprint_archive_url=https://url/to/archive/master.zip&visibility=<visibility>"`
+`PUT "{manager-ip}/api/v3.1/blueprints/{blueprint-id}/validate"`
 
 Validates a blueprint with Cloudify's manager.
 The call expects an "application/octet-stream" content type where the content is a zip/tar.gz/bz2 archive.
@@ -233,17 +245,7 @@ It is possible to upload a blueprint from a URL by specifying the URL in the `bl
 * `blueprint-id`: The id of the uploaded blueprint.
 
 ### Request Body
-Property | Type | Description
--------- | ---- | -----------
-`application_file_name` | string | The main blueprint file name in the blueprint's archive.
-`blueprint_archive_url` | string | A URL the blueprint to be uploaded should be downloaded from by the manager.
-`visibility` | string | Optional parameter, defines who can see the blueprint (default: tenant). **Supported for Cloudify Manager 4.3 and above.**
-
-Valid visibility values are:
-
-* `private`: The resource is visible to the user that created the resource, the tenant’s managers and the system’s admins.
-* `tenant`: The resource is visible to all users in the current tenant. (Default value)
-* `global`: The resource is visible to all users in all tenants across the manager.
+The request body is the same as in the Blueprint Upload endpoint.
 
 ### Response
 An `Execution` resource, representing the `upload_blueprint` workflow execution that will validate the blueprint.
